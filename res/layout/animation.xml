@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:keepScreenOn="true">
+  
+  <fi.testbed2.AnimationView
+    android:id="@+id/animation_view"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+  />
+
+  <TextView android:id="@+id/timestamp_view"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="timestamp"
+      android:textColor="#000000"
+      android:textSize="20.0dip"
+      android:layout_y="5dip"
+      android:layout_x="10dip"
+      android:paddingLeft="4dip"
+      android:paddingRight="4dip"
+      android:paddingTop="1dip"
+      android:paddingBottom="1dip"
+      android:background="#80bdbdbd">
+  </TextView>
+    
+  <LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="fill_parent"
+    android:layout_y="0dip"
+    android:layout_x="0dip">
+
+    <ImageButton android:id="@+id/playpause_button"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="bottom"
+      android:src="@drawable/ic_media_play"
+      android:paddingBottom="5dip"
+      android:background="@android:color/transparent">
+    </ImageButton>
+           
+    <ImageButton android:id="@+id/previous_button"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:text="prev"
+      android:layout_gravity="bottom"
+      android:src="@drawable/ic_media_previous"
+      android:paddingBottom="5dip"
+      android:paddingLeft="20dip"
+      android:background="@android:color/transparent">
+    </ImageButton>
+    
+    <ImageButton android:id="@+id/forward_button"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:text="next"
+      android:layout_gravity="bottom"
+      android:src="@drawable/ic_media_next"
+      android:paddingBottom="5dip"
+      android:paddingLeft="20dip"
+      android:background="@android:color/transparent">
+    </ImageButton>  
+    
+  </LinearLayout>
+  
+</AbsoluteLayout>

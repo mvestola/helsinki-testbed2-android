@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Helsinki Testbed Weather 2.0</string>
+    <string name="main_menu_preferences">Settings</string>
+    <string name="main_menu_about">About</string>
+    <string name="about_title">About</string>
+    <string name="about_text">This application has nothing to do with Helsinki Testbed project. All map data is downloaded from Helsinki Testbed website which is copyrighted by Helsinki Testbed project. Please visit http://testbed.fmi.fi/</string>
+    <string name="testbed_base_url" formatted="false">http://testbed.fmi.fi/history_browser.php?imgtype=%s&amp;t=%s&amp;n=%s</string>
+</resources>

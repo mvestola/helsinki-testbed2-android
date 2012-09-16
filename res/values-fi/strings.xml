@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Helsinki Testbed Weather 2.0</string>
+    <string name="main_menu_preferences">Asetukset</string>
+    <string name="main_menu_about">Tietoja</string>
+    <string name="about_title">Tietoja ohjelmasta</string>
+    <string name="about_text">Tällä ohjelmalla ei ole mitään tekemistä Helsinki Testbed -projektin kanssa. Kaikki karttadata ladataan Helsinki Testbedin verkkosivuilta, joiden tekijänoikeus kuuluu Helsinki Testbed -projektille. Lisätietoa Helsinki Testbed -projektsta löytyy osoitteesta: http://testbed.fmi.fi/</string>
+</resources>
+
