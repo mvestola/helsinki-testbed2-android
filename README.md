@@ -34,9 +34,9 @@ Previous versions and original author
 
 Helsinki Testbed Weather 2.0 is based on the GPL licensed sources from the
 [Helsinki Testbed Weather View](https://play.google.com/store/apps/details?id=fi.asd.testbed)
-android application originally developed by Petri Laakso. The original version is currently
-not working anymore and is not updated anymore. Therefore, this project was created to continue
-the work.
+android application originally developed by Petri Laakso (petri+testbed@asd.fi).
+The original version is currently not working anymore and is not updated anymore.
+Therefore, this project was created to continue the work.
 
 License
 -------
