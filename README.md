@@ -25,8 +25,9 @@ The application supports displaying the following weather maps:
 Download
 -------
 
-The stable version of this application can be downloaded from [the application site in Google Play]
-(https://play.google.com/store/apps/details?id=fi.testbed2)
+The latest stable version of this application can be downloaded to an Android phone
+from [the application website in Google Play]
+(https://play.google.com/store/apps/details?id=fi.testbed2).
 
 Previous versions and original author
 -------
