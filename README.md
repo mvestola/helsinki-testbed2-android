@@ -11,6 +11,7 @@ The Helsinki Testbed project is owned by the
 application HAS NOTHING TO DO WITH the Helsinki Testbed project or the Finnish Meteorological Institute__.
 This application is a private project and it just downloads the weather maps from
 the Helsinki Testbed project websites and shows the maps on Android phones.
+All map data is copyrighted to the Helsinki Testbed project.
 
 The application supports displaying the following weather maps:
  * Rain & temperature
@@ -42,3 +43,5 @@ License
 
 Helsinki Testbed Weather 2.0 is a completely free and open project. The source code is
 licensed as GNU GENERAL PUBLIC LICENSE Version 3. See more from the LICENSE file.
+
+All map data is copyrighted to the Helsinki Testbed project.

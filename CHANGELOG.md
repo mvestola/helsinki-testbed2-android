@@ -1,6 +1,12 @@
 Helsinki Testbed Weather 2.0
 =============
 
+Changelog 2.0.1
+-------
+
+* Translated to Finnish
+* Sources published to GitHub
+
 Changelog 2.0.0
 -------
 

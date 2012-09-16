@@ -6,32 +6,32 @@
     android:title="Helsinki Testbed Settings"
     <ListPreference
       android:key="PREF_MAP_TYPE"
-      android:title="Weather Map"
-      android:summary="Which weather map to show"
+      android:title="@string/preference_map_type_title"
+      android:summary="@string/preference_map_type_summary"
       android:entries="@array/map_type_options"
       android:entryValues="@array/map_type_values"
       android:defaultValue="radar"
     />
     <ListPreference
       android:key="PREF_MAP_TIME_STEP"
-      android:title="Time-step"
-      android:summary="Span of time to show on animation"
+      android:title="@string/preference_time_step_title"
+      android:summary="@string/preference_time_step_summary"
       android:entries="@array/map_time_step_options"
       android:entryValues="@array/map_time_step_values"
       android:defaultValue="15"
     />
     <ListPreference
       android:key="PREF_MAP_NUMBER_OF_IMAGES"
-      android:title="Number of images"
-      android:summary="How many map images to download"
+      android:title="@string/preference_number_of_images_title"
+      android:summary="@string/preference_number_of_images_summary"
       android:entries="@array/map_number_of_images_options"
       android:entryValues="@array/map_number_of_images_values"
       android:defaultValue="10"
     />
     <ListPreference
       android:key="PREF_ANIM_FRAME_DELAY"
-      android:title="Animation speed"
-      android:summary="Delay between animation frames"
+      android:title="@string/preference_anim_frame_delay_title"
+      android:summary="@string/preference_anim_frame_delay_summary"
       android:entries="@array/anim_frame_delay_options"
       android:entryValues="@array/anim_frame_delay_values"
       android:defaultValue="1000"

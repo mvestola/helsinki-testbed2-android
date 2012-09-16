@@ -115,12 +115,12 @@ public class DownloadTask extends AsyncTask<Void, DownloadTaskProgress, Download
 		try
 		{
 			long downloadStart = System.currentTimeMillis();
-			
-			publishProgress(new DownloadTaskProgress(0, 0, true, "Parsing HTML..."));
+
+			publishProgress(new DownloadTaskProgress(0, 0, true, activity.getString(R.string.progress_parsing)));
 			
 			parseHTMLResult parsed = parseHTML(url);
 			
-			publishProgress(new DownloadTaskProgress(100, 0, true, " done"));
+			publishProgress(new DownloadTaskProgress(100, 0, true, activity.getString(R.string.progress_done)));
 						
 			List<Bitmap> bitmapList = downloadImages(parsed.imageUrls);
 			
@@ -313,8 +313,9 @@ public class DownloadTask extends AsyncTask<Void, DownloadTaskProgress, Download
 		String progressText;
 		
 		for(String url : imageUrls)
-		{		
-			progressText = String.format("Downloading %d of %d ...", downloaded + 1, imageUrls.length);
+		{
+
+			progressText = String.format(activity.getString(R.string.progress_downloading), downloaded + 1, imageUrls.length);
 			publishProgress(new DownloadTaskProgress(m_progress, s_progress, progressText));
 
             try {

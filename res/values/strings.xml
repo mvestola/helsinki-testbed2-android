@@ -1,9 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Helsinki Testbed Weather 2.0</string>
+
+    <string name="testbed_base_url" formatted="false">http://testbed.fmi.fi/history_browser.php?imgtype=%s&amp;t=%s&amp;n=%s</string>
+
     <string name="main_menu_preferences">Settings</string>
     <string name="main_menu_about">About</string>
+
     <string name="about_title">About</string>
     <string name="about_text">This application has nothing to do with Helsinki Testbed project. All map data is downloaded from Helsinki Testbed website which is copyrighted by Helsinki Testbed project. Please visit http://testbed.fmi.fi/</string>
-    <string name="testbed_base_url" formatted="false">http://testbed.fmi.fi/history_browser.php?imgtype=%s&amp;t=%s&amp;n=%s</string>
+
+    <string name="activity_label_settings">Settings</string>
+    <string name="activity_label_downloading">Downloading maps...</string>
+    <string name="activity_label_anim">Maps</string>
+
+    <string name="preference_map_type_title">Map type</string>
+    <string name="preference_map_type_summary">Which type of weather map to show</string>
+
+    <string name="preference_time_step_title">Time-step</string>
+    <string name="preference_time_step_summary">The time-step between the map images</string>
+
+    <string name="preference_number_of_images_title">Number of images</string>
+    <string name="preference_number_of_images_summary">How many map images to download</string>
+
+    <string name="preference_anim_frame_delay_title">Animation speed</string>
+    <string name="preference_anim_frame_delay_summary">Delay between animation frames</string>
+
+    <string name="progress_parsing">Reading page from testbed.fmi.fi...</string>
+    <string name="progress_downloading" formatted="false">Downloading map %d of %d ...</string>
+    <string name="progress_done">Done</string>
+
 </resources>
