@@ -1,6 +1,12 @@
 Helsinki Testbed Viewer 2.0
 =============
 
+Version 2.0.2
+-------
+
+* More detailed error messages
+
+
 Version 2.0.1
 -------
 

@@ -1,5 +1,6 @@
 Helsinki Testbed Viewer 2.0 on android-ohjelma, joka näyttää sääkarttoja Helsinki Testbed -projektin sivuilta (http://testbed.fmi.fi/). Ohjelman avulla voi katsoa helposti mm. reaaliaikaista sadetutkaa tai karttaa tuulen nopeuksista. Kartat kattavat Etelä-Suomen alueen.
 
+
 Ohjelma tukee mm. seuraavia sääkarttoja:
 
  * Sadetutka & lämpötila
