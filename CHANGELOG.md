@@ -1,4 +1,4 @@
-Helsinki Testbed Weather 2.0
+Helsinki Testbed Viewer 2.0
 =============
 
 Version 2.0.1

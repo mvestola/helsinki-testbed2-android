@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Helsinki Testbed Weather 2.0</string>
+    <string name="app_name">Helsinki Testbed Viewer 2.0</string>
 
     <string name="main_menu_preferences">Asetukset</string>
     <string name="main_menu_about">Tietoja</string>

@@ -3,7 +3,7 @@
   xmlns:android="http://schemas.android.com/apk/res/android">
 
   <PreferenceCategory>
-    android:title="Helsinki Testbed Settings"
+    android:title="Helsinki Testbed Viewer Settings"
     <ListPreference
       android:key="PREF_MAP_TYPE"
       android:title="@string/preference_map_type_title"
