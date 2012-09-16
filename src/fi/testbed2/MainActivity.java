@@ -1,7 +1,9 @@
 package fi.testbed2;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -74,18 +76,36 @@ public class MainActivity extends Activity implements OnClickListener {
 				startActivity(intent);
 				break;
 			case Activity.RESULT_CANCELED:
-				// do nothing
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        this.getString(R.string.notice_cancelled),
+                        Toast.LENGTH_SHORT);
+                toast.show();
 				break;
 			case MyApplication.RESULT_ERROR:
-				// TODO show user friendly error message
-				Toast toast = Toast.makeText(getApplicationContext(), "Download failed", Toast.LENGTH_LONG);
-				toast.show();
+                String errorMsg = this.getString(R.string.error_message_detailed,
+                        data.getStringExtra(DownloadTaskResult.MSG_CODE));
+                this.showErrorDialog(errorMsg);
 				break;
 			default:
 				super.onActivityResult(requestCode, resultCode, data);
 			}
 		}
 	}
+
+    private void showErrorDialog(String errorMessage) {
+
+        AlertDialog ad = new AlertDialog.Builder(this).create();
+        ad.setCancelable(false); // This blocks the 'BACK' button
+        ad.setMessage(errorMessage);
+        ad.setButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        ad.show();
+
+    }
 
 	@Override
 	protected Dialog onCreateDialog(int id) {

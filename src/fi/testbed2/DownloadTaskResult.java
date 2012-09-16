@@ -7,6 +7,8 @@ public class DownloadTaskResult {
 	public static final int DL_CODE_OK = 0;
 	public static final int DL_CODE_ERROR = 1;
 
+    public static final String MSG_CODE = "downloadTaskMsg";
+
 	public int code;
 	public String message;
 	public List<MapImage> mapImageList;

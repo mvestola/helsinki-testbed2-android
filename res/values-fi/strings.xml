@@ -8,6 +8,9 @@
     <string name="about_title">Tietoja ohjelmasta</string>
     <string name="about_text">Tällä ohjelmalla ei ole mitään tekemistä Helsinki Testbed -projektin kanssa. Kaikki karttadata ladataan Helsinki Testbedin verkkosivuilta, joiden tekijänoikeus kuuluu Helsinki Testbed -projektille. Lisätietoa Helsinki Testbed -projektsta löytyy osoitteesta: http://testbed.fmi.fi/</string>
 
+    <string name="error_message_detailed" formatted="false">Tapahtui odottamaton virhe: %s</string>
+    <string name="notice_cancelled" formatted="false">Lataus keskeytetty</string>
+
     <string name="activity_label_settings">Asetukset</string>
     <string name="activity_label_downloading">Ladataan karttoja...</string>
     <string name="activity_label_anim">Kartat</string>

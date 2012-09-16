@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.*;
 
+import android.content.Intent;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -72,18 +73,21 @@ public class DownloadTask extends AsyncTask<Void, DownloadTaskProgress, Download
 	@Override
 	protected void onPostExecute(DownloadTaskResult result) {
 		super.onPostExecute(result);
-		
-		if(result.code == DownloadTaskResult.DL_CODE_OK)
+
+        Intent intent = new Intent();
+        intent.putExtra(DownloadTaskResult.MSG_CODE, result.message);
+
+        if(result.code == DownloadTaskResult.DL_CODE_OK)
 		{
 			Log.i(MyApplication.TAG, result.message);
 			MyApplication.setMapImageList(result.mapImageList);
-			activity.setResult(Activity.RESULT_OK);
+			activity.setResult(Activity.RESULT_OK, intent);
 			activity.finish();
 		}
 		else if(result.code == DownloadTaskResult.DL_CODE_ERROR)
 		{
 			Log.e(MyApplication.TAG, result.message);
-			activity.setResult(MyApplication.RESULT_ERROR);
+			activity.setResult(MyApplication.RESULT_ERROR, intent);
 			activity.finish();
 		}
 		
