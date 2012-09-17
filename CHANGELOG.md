@@ -1,6 +1,13 @@
 Helsinki Testbed Viewer 2.0
 =============
 
+Version 2.0.3
+-------
+
+* Now immediately loads and shows the latest weather map image and continues downloading
+the rest map images in the background.
+
+
 Version 2.0.2
 -------
 

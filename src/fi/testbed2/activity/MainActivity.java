@@ -1,4 +1,4 @@
-package fi.testbed2;
+package fi.testbed2.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -14,12 +14,15 @@ import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import fi.testbed2.app.MainApplication;
+import fi.testbed2.result.AbstractTaskResult;
+import fi.testbed2.R;
 
 public class MainActivity extends Activity implements OnClickListener {
 
-	private static final int DOWNLOAD_SUBACTIVITY = 1;
+    public static final int PARSING_SUBACTIVITY = 1;
 
-	private static final int ABOUT_DIALOG = 0;
+    private static final int ABOUT_DIALOG = 0;
 	
 	private ImageButton refreshButton;
 
@@ -60,37 +63,47 @@ public class MainActivity extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		if(v.getId() == R.id.button_refresh) {
-			Intent intent = new Intent(this, DownloadActivity.class);
-			startActivityForResult(intent, DOWNLOAD_SUBACTIVITY);
+            MainApplication.setParsedHTML(null);
+            MainApplication.setMapImageList(null);
+            Intent intent = new Intent(this, ParsingActivity.class);
+            startActivityForResult(intent, PARSING_SUBACTIVITY);
 		}
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-	
-		if(requestCode == DOWNLOAD_SUBACTIVITY) {
-			switch(resultCode) {
-			case Activity.RESULT_OK:
-				// open animation
-				Intent intent = new Intent(this, AnimationActivity.class);
-				startActivity(intent);
-				break;
-			case Activity.RESULT_CANCELED:
+
+        switch (requestCode) {
+            case PARSING_SUBACTIVITY:
+                handleParsingResult(resultCode, data);
+                break;
+            default:
+                super.onActivityResult(requestCode, resultCode, data);
+                break;
+        }
+
+	}
+
+    private void handleParsingResult(int resultCode, Intent data) {
+
+        switch(resultCode) {
+            case MainApplication.RESULT_OK:
+                startActivity(new Intent(this, AnimationActivity.class));
+                break;
+            case Activity.RESULT_CANCELED:
                 Toast toast = Toast.makeText(getApplicationContext(),
                         this.getString(R.string.notice_cancelled),
                         Toast.LENGTH_SHORT);
                 toast.show();
-				break;
-			case MyApplication.RESULT_ERROR:
+                break;
+            case MainApplication.RESULT_ERROR:
                 String errorMsg = this.getString(R.string.error_message_detailed,
-                        data.getStringExtra(DownloadTaskResult.MSG_CODE));
+                        data.getStringExtra(AbstractTaskResult.MSG_CODE));
                 this.showErrorDialog(errorMsg);
-				break;
-			default:
-				super.onActivityResult(requestCode, resultCode, data);
-			}
-		}
-	}
+                break;
+        }
+
+    }
 
     private void showErrorDialog(String errorMessage) {
 

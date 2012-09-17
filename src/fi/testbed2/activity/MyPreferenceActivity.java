@@ -1,7 +1,8 @@
-package fi.testbed2;
+package fi.testbed2.activity;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import fi.testbed2.R;
 
 public class MyPreferenceActivity extends PreferenceActivity {
 

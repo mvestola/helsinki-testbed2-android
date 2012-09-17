@@ -1,11 +1,13 @@
-package fi.testbed2;
+package fi.testbed2.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import fi.testbed2.R;
+import fi.testbed2.task.ParseAndInitTask;
 
 
-public class DownloadActivity extends Activity {
-    private DownloadTask dl;
+public class ParsingActivity extends Activity {
+    private ParseAndInitTask task;
 
 	/** Called when the activity is first created. */
     @Override
@@ -17,14 +19,13 @@ public class DownloadActivity extends Activity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		dl.abort();
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		dl = new DownloadTask(getApplicationContext(), this);
-		dl.execute();
+		task = new ParseAndInitTask(getApplicationContext(), this);
+		task.execute();
 	}
     
     

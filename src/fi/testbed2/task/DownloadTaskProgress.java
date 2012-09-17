@@ -1,4 +1,4 @@
-package fi.testbed2;
+package fi.testbed2.task;
 
 public class DownloadTaskProgress {
 
@@ -6,14 +6,6 @@ public class DownloadTaskProgress {
 	public int s_progress;
 	public boolean intermediate;
 	public String message;
-	
-	public DownloadTaskProgress(int mProgress, int sProgress, String message) {
-		super();
-		this.m_progress = mProgress;
-		this.s_progress = sProgress;
-		this.intermediate = false;
-		this.message = message;
-	}
 
 	public DownloadTaskProgress(int mProgress, int sProgress, boolean intermediate, String message) {
 		super();

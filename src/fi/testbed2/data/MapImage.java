@@ -1,7 +1,10 @@
-package fi.testbed2;
+package fi.testbed2.data;
 
 import android.graphics.drawable.BitmapDrawable;
 
+/**
+ * MapImage used in drawing the UI
+ */
 public class MapImage {
 
 	public String timestamp;

@@ -1,4 +1,4 @@
-package fi.testbed2;
+package fi.testbed2.exception;
 
 public class DownloadTaskException extends Exception {
 

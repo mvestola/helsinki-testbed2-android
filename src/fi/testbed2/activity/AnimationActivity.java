@@ -1,4 +1,4 @@
-package fi.testbed2;
+package fi.testbed2.activity;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -13,6 +13,9 @@ import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import fi.testbed2.task.DownloadImagesTask;
+import fi.testbed2.view.AnimationView;
+import fi.testbed2.R;
 
 public class AnimationActivity extends Activity implements OnClickListener {
 
@@ -21,14 +24,16 @@ public class AnimationActivity extends Activity implements OnClickListener {
 	private boolean play = true;
 	private TextView timestampView;
 	private int orientation;
-	
+
+    private DownloadImagesTask task;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
           
         // we want more space for the animation
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        
+
         setContentView(R.layout.animation);
         
         final ImageButton previousButton = (ImageButton) findViewById(R.id.previous_button);
@@ -42,15 +47,24 @@ public class AnimationActivity extends Activity implements OnClickListener {
 
         animationView = (AnimationView) findViewById(R.id.animation_view);
         timestampView = (TextView) findViewById(R.id.timestamp_view);
-        
         //
 
+    }
+
+    public void reload() {
+        this.animationView.refresh(getApplicationContext());
+        this.animationView.previous();
+        this.animationView.stop();
     }
 	
 	@Override
 	protected void onResume() {
-		super.onResume();		
-		// restore animation bounds if saved before
+		super.onResume();
+
+        task = new DownloadImagesTask(this);
+        task.execute();
+
+        // restore animation bounds if saved before
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 		Display display = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay();  
 		orientation = display.getOrientation();  
@@ -77,6 +91,7 @@ public class AnimationActivity extends Activity implements OnClickListener {
 				}
 			});
 		}
+
 	}
 
 	@Override
