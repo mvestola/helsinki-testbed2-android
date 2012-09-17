@@ -51,8 +51,19 @@ public class AnimationActivity extends Activity implements OnClickListener {
 
     }
 
+    public void updateDownloadProgressInfo(final String text) {
+
+        runOnUiThread(new Runnable() {
+            public void run() {
+                animationView.setDownloadProgressText(text);
+                timestampView.invalidate();
+            }
+        });
+    }
+
     public void reload() {
 
+        animationView.setDownloadProgressText(null);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         boolean startAutomatically = sharedPreferences.getBoolean("PREF_ANIM_AUTOSTART", true);
 

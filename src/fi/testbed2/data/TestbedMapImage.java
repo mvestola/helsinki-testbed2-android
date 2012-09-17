@@ -53,6 +53,7 @@ public class TestbedMapImage {
         if (downloadedBitmapImage==null) {
             try {
 
+                //Log.e(MainApplication.TAG, "downloading image: "+imageURL);
                 downloadedBitmapImage = BitmapFactory.decodeStream((InputStream) new URL(imageURL).getContent());
 
                 if (downloadedBitmapImage==null) {

@@ -33,8 +33,8 @@ public class AnimationView extends View {
 	private boolean moveMap;
 	private TextView timestampView;
 	private boolean play;
-	
-	
+    private String downloadProgressText;
+
 	public AnimationView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		init(context);
@@ -99,12 +99,20 @@ public class AnimationView extends View {
 	public void stop() {
 		this.play = false;
 	}
+
+    public void setDownloadProgressText(String text) {
+        downloadProgressText = text;
+    }
 	
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 		
 		String text = String.format("%1$2d/%2$2d @ ", currentFrame + 1 , frames + 1) + mapImageList.get(currentFrame).timestamp;
+
+        if (downloadProgressText!=null) {
+            text+=downloadProgressText;
+        }
 
 		timestampView.setText(text);
 		timestampView.invalidate();

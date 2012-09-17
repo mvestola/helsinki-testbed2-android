@@ -49,7 +49,13 @@ public class DownloadImagesTask extends AbstractTask<DownloadImagesTaskResult> {
     private DownloadImagesTaskResult processImages() throws DownloadTaskException {
 
         List<MapImage> mapImageList = new ArrayList<MapImage>();
-        for(TestbedMapImage image : MainApplication.getParsedHTML().getTestbedImages()) {
+        List<TestbedMapImage> testbedMapImages = MainApplication.getParsedHTML().getTestbedImages();
+        int i= 1;
+        for(TestbedMapImage image : testbedMapImages) {
+
+            String progressText = activity.getString(R.string.progress_anim_downloading, i, testbedMapImages.size());
+            this.activity.updateDownloadProgressInfo(progressText);
+
             if (isAbort()) {
                 doCancel();
                 return null;
@@ -58,6 +64,8 @@ public class DownloadImagesTask extends AbstractTask<DownloadImagesTaskResult> {
             String localTimestamp = image.getLocalTimestamp();
             MapImage mapImage = new MapImage(localTimestamp, new BitmapDrawable(bitmap));
             mapImageList.add(mapImage);
+            i++;
+
         }
 
         DownloadImagesTaskResult result = new DownloadImagesTaskResult(TaskResultType.OK, "All images downloaded");

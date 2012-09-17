@@ -73,6 +73,7 @@ public final class R {
         public static final int preference_number_of_images_title=0x7f06000f;
         public static final int preference_time_step_summary=0x7f06000e;
         public static final int preference_time_step_title=0x7f06000d;
+        public static final int progress_anim_downloading=0x7f060018;
         public static final int progress_done=0x7f060017;
         public static final int progress_downloading=0x7f060016;
         public static final int progress_parsing=0x7f060015;
