@@ -53,9 +53,12 @@ public class TestbedMapImage {
         if (downloadedBitmapImage==null) {
             try {
 
-                Log.e(MainApplication.TAG, "!!!!!!!!!!! Downloading image: " + this.imageURL);
-
                 downloadedBitmapImage = BitmapFactory.decodeStream((InputStream) new URL(imageURL).getContent());
+
+                if (downloadedBitmapImage==null) {
+                    throw new DownloadTaskException("Could not download map image.");
+                }
+
             } catch (IllegalStateException e) {
                 throw new DownloadTaskException("IllegalStateException: " + e.getMessage(), e);
             } catch (IOException e) {
