@@ -107,11 +107,12 @@ public class AnimationView extends View {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-		
-		String text = String.format("%1$2d/%2$2d @ ", currentFrame + 1 , frames + 1) + mapImageList.get(currentFrame).timestamp;
+
+        String timestamp = mapImageList.get(currentFrame).timestamp;
+		String text = String.format("%1$2d/%2$2d @ ", currentFrame + 1 , frames + 1) + timestamp;
 
         if (downloadProgressText!=null) {
-            text+=downloadProgressText;
+            text="@ "+timestamp+"  "+downloadProgressText;
         }
 
 		timestampView.setText(text);

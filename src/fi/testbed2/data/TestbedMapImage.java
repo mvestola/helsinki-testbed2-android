@@ -43,6 +43,10 @@ public class TestbedMapImage {
         this.timestamp = timestamp;
     }
 
+    public boolean hasBitmapDataDownloaded() {
+        return downloadedBitmapImage !=null;
+    }
+
     /**
      * Returns the downloaded bitmap image. If image not yet downloaded, downloads it.
      * @return

@@ -53,8 +53,10 @@ public class DownloadImagesTask extends AbstractTask<DownloadImagesTaskResult> {
         int i= 1;
         for(TestbedMapImage image : testbedMapImages) {
 
-            String progressText = activity.getString(R.string.progress_anim_downloading, i, testbedMapImages.size());
-            this.activity.updateDownloadProgressInfo(progressText);
+            if (!image.hasBitmapDataDownloaded()) {
+                String progressText = activity.getString(R.string.progress_anim_downloading, i, testbedMapImages.size());
+                this.activity.updateDownloadProgressInfo(progressText);
+            }
 
             if (isAbort()) {
                 doCancel();

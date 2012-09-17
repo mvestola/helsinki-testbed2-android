@@ -35,6 +35,6 @@
     <string name="progress_parsing">Reading page from testbed.fmi.fi...</string>
     <string name="progress_downloading" formatted="false">Downloading latest weather map...</string>
     <string name="progress_done">Done</string>
-    <string name="progress_anim_downloading" formatted="false">&nbsp;&nbsp;(Downloading: %d/%d)</string>
+    <string name="progress_anim_downloading" formatted="false">(Downloading: %d/%d)</string>
 
 </resources>

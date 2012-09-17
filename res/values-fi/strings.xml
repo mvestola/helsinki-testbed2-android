@@ -33,7 +33,7 @@
     <string name="progress_parsing">Luetaan sivua osoitteesta testbed.fmi.fi...</string>
     <string name="progress_downloading" formatted="false">Ladataan viimeisin sääkartta...</string>
     <string name="progress_done">Valmis</string>
-    <string name="progress_anim_downloading" formatted="false">&nbsp;&nbsp;(Ladataan: %d/%d)</string>
+    <string name="progress_anim_downloading" formatted="false">(Ladataan: %d/%d)</string>
 
 </resources>
 
