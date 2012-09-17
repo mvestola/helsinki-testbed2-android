@@ -6,6 +6,7 @@ Version 2.0.3
 
 * Now immediately loads and shows the latest weather map image and continues downloading
 the rest map images in the background.
+* Added option to enable/disable animation auto-start
 
 
 Version 2.0.2
