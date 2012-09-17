@@ -15,6 +15,7 @@ public abstract class AbstractTask<T extends AbstractTaskResult> extends AsyncTa
 	private ProgressBar progressBar;
 	private TextView progressTextView;
 	protected Activity activity;
+    private boolean abort;
 
 	public AbstractTask(final Activity activity) {
 		progressBar = (ProgressBar) activity.findViewById(R.id.progressbar);
@@ -22,7 +23,21 @@ public abstract class AbstractTask<T extends AbstractTaskResult> extends AsyncTa
 		this.activity = activity;
 	}
 
-	@Override
+    public void abort() {
+        this.abort = true;
+    }
+
+    public boolean isAbort() {
+        return abort;
+    }
+
+    protected void doCancel() {
+        activity.setResult(Activity.RESULT_CANCELED);
+        activity.finish();
+        this.cancel(true);
+    }
+
+    @Override
 	protected void onCancelled() {
 		super.onCancelled();
 //		activity.setResult(Activity.RESULT_CANCELED);
@@ -32,6 +47,10 @@ public abstract class AbstractTask<T extends AbstractTaskResult> extends AsyncTa
 	@Override
 	protected void onPostExecute(T result) {
 		super.onPostExecute(result);
+
+        if (isCancelled()) {
+            return;
+        }
 
         Intent intent = new Intent();
         intent.putExtra(AbstractTaskResult.MSG_CODE, result.getMessage());

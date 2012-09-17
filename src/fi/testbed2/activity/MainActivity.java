@@ -20,7 +20,8 @@ import fi.testbed2.R;
 
 public class MainActivity extends Activity implements OnClickListener {
 
-    public static final int PARSING_SUBACTIVITY = 1;
+    public static final int PARSING_SUB_ACTIVITY = 1;
+    public static final int ANIMATION_SUB_ACTIVITY = 2;
 
     private static final int ABOUT_DIALOG = 0;
 	
@@ -66,7 +67,7 @@ public class MainActivity extends Activity implements OnClickListener {
             MainApplication.setParsedHTML(null);
             MainApplication.setMapImageList(null);
             Intent intent = new Intent(this, ParsingActivity.class);
-            startActivityForResult(intent, PARSING_SUBACTIVITY);
+            startActivityForResult(intent, PARSING_SUB_ACTIVITY);
 		}
 	}
 
@@ -74,8 +75,11 @@ public class MainActivity extends Activity implements OnClickListener {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         switch (requestCode) {
-            case PARSING_SUBACTIVITY:
+            case PARSING_SUB_ACTIVITY:
                 handleParsingResult(resultCode, data);
+                break;
+            case ANIMATION_SUB_ACTIVITY:
+                handleAnimationResult(resultCode, data);
                 break;
             default:
                 super.onActivityResult(requestCode, resultCode, data);
@@ -88,8 +92,26 @@ public class MainActivity extends Activity implements OnClickListener {
 
         switch(resultCode) {
             case MainApplication.RESULT_OK:
-                startActivity(new Intent(this, AnimationActivity.class));
+                startActivityForResult(new Intent(this, AnimationActivity.class), ANIMATION_SUB_ACTIVITY);
                 break;
+            case Activity.RESULT_CANCELED:
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        this.getString(R.string.notice_cancelled),
+                        Toast.LENGTH_SHORT);
+                toast.show();
+                break;
+            case MainApplication.RESULT_ERROR:
+                String errorMsg = this.getString(R.string.error_message_detailed,
+                        data.getStringExtra(AbstractTaskResult.MSG_CODE));
+                this.showErrorDialog(errorMsg);
+                break;
+        }
+
+    }
+
+    private void handleAnimationResult(int resultCode, Intent data) {
+
+        switch(resultCode) {
             case Activity.RESULT_CANCELED:
                 Toast toast = Toast.makeText(getApplicationContext(),
                         this.getString(R.string.notice_cancelled),

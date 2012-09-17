@@ -53,11 +53,16 @@ public class ParseAndInitTask extends AbstractTask<ParseAndInitTaskResult> {
 	protected ParseAndInitTaskResult doInBackground(Void... params) {
 
         try {
-            ParseAndInitTaskResult result = new ParseAndInitTaskResult(TaskResultType.OK, "OK");
+            ParseAndInitTaskResult result = new ParseAndInitTaskResult(TaskResultType.OK, "Parsing and initialization OK");
 
             publishProgress(new DownloadTaskProgress(0, 0, true, activity.getString(R.string.progress_parsing)));
-            ParsedHTML parsed = HTMLUtil.parseHTML(url);
+            ParsedHTML parsed = HTMLUtil.parseHTML(url, this);
             result.setParsedHTML(parsed);
+
+            if (parsed==null || isAbort()) {
+                doCancel();
+                return null;
+            }
 
             publishProgress(new DownloadTaskProgress(50, 0, false, activity.getString(R.string.progress_downloading)));
             result.setLatestImage(processLatestImage(parsed));

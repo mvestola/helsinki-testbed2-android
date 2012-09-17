@@ -19,6 +19,7 @@ public class ParsingActivity extends Activity {
 	@Override
 	protected void onPause() {
 		super.onPause();
+        task.abort();
 	}
 
 	@Override

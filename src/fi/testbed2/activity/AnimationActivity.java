@@ -105,7 +105,8 @@ public class AnimationActivity extends Activity implements OnClickListener {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		animationView.stop();
+        task.abort();
+        animationView.stop();
 		// save bounds to persistent storage
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 		Editor editor = sharedPreferences.edit();

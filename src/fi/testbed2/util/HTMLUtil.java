@@ -3,6 +3,7 @@ package fi.testbed2.util;
 import fi.testbed2.exception.DownloadTaskException;
 import fi.testbed2.data.ParsedHTML;
 import fi.testbed2.data.TestbedMapImage;
+import fi.testbed2.task.AbstractTask;
 import org.apache.http.HttpEntity;
 
 import java.io.BufferedReader;
@@ -26,7 +27,7 @@ public class HTMLUtil {
      * @return ParseHTMLResult container for parsed data
      * @throws fi.testbed2.exception.DownloadTaskException on any error
      */
-    public static ParsedHTML parseHTML(final String url) throws DownloadTaskException {
+    public static ParsedHTML parseHTML(final String url, AbstractTask task) throws DownloadTaskException {
 
         ParsedHTML parsed = new ParsedHTML();
         HttpEntity entity = HTTPUtil.getHttpEntityForUrl(url);
@@ -39,7 +40,7 @@ public class HTMLUtil {
             String[] timestamps = null;
             String[] imageUrls = null;
 
-            while(true)
+            while(!task.isAbort())
             {
                 String line = reader.readLine();
 
@@ -61,6 +62,10 @@ public class HTMLUtil {
             }
 
             in.close();
+
+            if (task.isAbort()) {
+                return null;
+            }
 
             // validate timestamps and imageUrls
             if(timestamps == null) {

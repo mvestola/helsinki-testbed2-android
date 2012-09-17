@@ -50,13 +50,17 @@ public class DownloadImagesTask extends AbstractTask<DownloadImagesTaskResult> {
 
         List<MapImage> mapImageList = new ArrayList<MapImage>();
         for(TestbedMapImage image : MainApplication.getParsedHTML().getTestbedImages()) {
+            if (isAbort()) {
+                doCancel();
+                return null;
+            }
             Bitmap bitmap = image.getDownloadedBitmapImage();
             String localTimestamp = image.getLocalTimestamp();
             MapImage mapImage = new MapImage(localTimestamp, new BitmapDrawable(bitmap));
             mapImageList.add(mapImage);
         }
 
-        DownloadImagesTaskResult result = new DownloadImagesTaskResult(TaskResultType.OK, "Images downloaded");
+        DownloadImagesTaskResult result = new DownloadImagesTaskResult(TaskResultType.OK, "All images downloaded");
         result.setMapImages(mapImageList);
         return result;
 
