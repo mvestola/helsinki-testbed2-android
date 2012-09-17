@@ -52,9 +52,17 @@ public class AnimationActivity extends Activity implements OnClickListener {
     }
 
     public void reload() {
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        boolean startAutomatically = sharedPreferences.getBoolean("PREF_ANIM_AUTOSTART", true);
+
         this.animationView.refresh(getApplicationContext());
-        this.animationView.previous();
-        this.animationView.stop();
+
+        if (!startAutomatically) {
+            this.animationView.previous();
+            this.animationView.stop();
+        }
+
     }
 	
 	@Override

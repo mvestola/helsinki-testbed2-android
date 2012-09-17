@@ -27,6 +27,9 @@
     <string name="preference_anim_frame_delay_title">Animaation nopeus</string>
     <string name="preference_anim_frame_delay_summary">Kuinka nopeasti karttakuvat vaihtuvat animaatiossa</string>
 
+    <string name="preference_anim_autostart_title">Automaattinen animaatio</string>
+    <string name="preference_anim_autostart_summary">Rastita, jos haluat että animaatio alkaa automaattisesti</string>
+
     <string name="progress_parsing">Luetaan sivua osoitteesta testbed.fmi.fi...</string>
     <string name="progress_downloading" formatted="false">Ladataan viimeisin sääkartta...</string>
     <string name="progress_done">Valmis</string>

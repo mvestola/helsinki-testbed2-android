@@ -36,6 +36,12 @@
       android:entryValues="@array/anim_frame_delay_values"
       android:defaultValue="1000"
     />
+     <CheckBoxPreference
+        android:key="PREF_ANIM_AUTOSTART"
+        android:title="@string/preference_anim_autostart_title"
+        android:summary="@string/preference_anim_autostart_summary"
+        android:defaultValue="true"
+    />
   </PreferenceCategory>
   
 </PreferenceScreen>

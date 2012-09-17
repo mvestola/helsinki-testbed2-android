@@ -29,6 +29,9 @@
     <string name="preference_anim_frame_delay_title">Animation speed</string>
     <string name="preference_anim_frame_delay_summary">Delay between animation frames</string>
 
+    <string name="preference_anim_autostart_title">Automatic animation</string>
+    <string name="preference_anim_autostart_summary">Check this if you want the animation to start automatically</string>
+
     <string name="progress_parsing">Reading page from testbed.fmi.fi...</string>
     <string name="progress_downloading" formatted="false">Downloading latest weather map...</string>
     <string name="progress_done">Done</string>
