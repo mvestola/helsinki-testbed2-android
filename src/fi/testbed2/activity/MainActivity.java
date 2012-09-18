@@ -38,7 +38,6 @@ public class MainActivity extends AbstractActivity implements OnClickListener {
         
     }
 
-
 	@Override
 	public void onClick(View v) {
 		if(v.getId() == R.id.button_refresh) {
@@ -106,7 +105,6 @@ public class MainActivity extends AbstractActivity implements OnClickListener {
     }
 
     private void showErrorDialog(String errorMessage) {
-
         AlertDialog ad = new AlertDialog.Builder(this).create();
         ad.setCancelable(false); // This blocks the 'BACK' button
         ad.setMessage(errorMessage);
@@ -117,7 +115,6 @@ public class MainActivity extends AbstractActivity implements OnClickListener {
             }
         });
         ad.show();
-
     }
 
 }

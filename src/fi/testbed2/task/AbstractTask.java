@@ -56,12 +56,12 @@ public abstract class AbstractTask<T extends AbstractTaskResult> extends AsyncTa
         intent.putExtra(AbstractTaskResult.MSG_CODE, result.getMessage());
 
         if(!result.isError()) {
-			Log.i(MainApplication.TAG, result.getMessage());
+			Log.i(MainApplication.LOG_IDENTIFIER, result.getMessage());
 			saveResultToApplication(result);
 			activity.setResult(MainApplication.RESULT_OK, intent);
 		}
 		else {
-			Log.e(MainApplication.TAG, result.getMessage());
+			Log.e(MainApplication.LOG_IDENTIFIER, result.getMessage());
 			activity.setResult(MainApplication.RESULT_ERROR, intent);
 		}
         this.onTaskEnd();

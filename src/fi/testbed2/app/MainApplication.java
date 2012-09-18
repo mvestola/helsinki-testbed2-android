@@ -8,7 +8,8 @@ import fi.testbed2.data.MapImage;
 import fi.testbed2.data.ParsedHTML;
 
 public class MainApplication extends Application {
-	public static final String TAG = "testbed2";
+
+	public static final String LOG_IDENTIFIER = "testbed2";
 
 	public static final int RESULT_ERROR = Activity.RESULT_FIRST_USER;
     public static final int RESULT_OK = Activity.RESULT_OK;

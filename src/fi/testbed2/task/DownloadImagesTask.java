@@ -2,18 +2,14 @@ package fi.testbed2.task;
 
 import java.util.*;
 
-import android.view.View;
-import android.view.ViewGroup;
 import fi.testbed2.activity.AnimationActivity;
 import fi.testbed2.app.MainApplication;
 import fi.testbed2.data.MapImage;
 import fi.testbed2.data.TestbedMapImage;
 
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import fi.testbed2.exception.DownloadTaskException;
-import fi.testbed2.result.AbstractTaskResult;
 import fi.testbed2.result.DownloadImagesTaskResult;
 import fi.testbed2.result.TaskResultType;
 import fi.testbed2.R;
@@ -32,7 +28,7 @@ public class DownloadImagesTask extends AbstractTask<DownloadImagesTaskResult> {
 
     @Override
     protected void onTaskEnd() {
-        activity.reload();
+        activity.onAllImagesDownloaded();
     }
 
     @Override

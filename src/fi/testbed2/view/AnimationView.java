@@ -86,7 +86,17 @@ public class AnimationView extends View {
 		invalidate();
 	}
 
-	public void forward() {
+    public void play() {
+        play = true;
+        invalidate();
+    }
+
+    public void pause() {
+        play = false;
+        invalidate();
+    }
+
+    public void forward() {
 		this.play = false;
 		currentFrame++;
 		
@@ -259,5 +269,13 @@ public class AnimationView extends View {
 	public Rect getBounds() {
 		return bounds;
 	}
-	
+
+    public void updateBounds(Rect bounds) {
+        if (bounds==null) {
+            initializeBounds();
+        } else {
+            this.bounds = bounds;
+        }
+    }
+
 }

@@ -10,6 +10,10 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import fi.testbed2.R;
 
+/**
+ * Base activity class for all activities.
+ * Handles options menu.
+ */
 public abstract class AbstractActivity extends Activity {
 
     public static final int ABOUT_DIALOG = 0;
@@ -55,18 +59,18 @@ public abstract class AbstractActivity extends Activity {
         return dialog;
     }
 
+    /**
+     * Returns the version name (number), e.g. 2.0.3
+     * @return
+     */
     private String getVersionName() {
-
         String versionName;
-
         try {
             versionName = this.getPackageManager().getPackageInfo(this.getPackageName(), 0).versionName;
         } catch (PackageManager.NameNotFoundException e) {
             versionName = "Unknown";
         }
-
         return versionName;
-
     }
 
 }

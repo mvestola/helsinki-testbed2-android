@@ -9,7 +9,6 @@ import fi.testbed2.task.ParseAndInitTask;
 public class ParsingActivity extends AbstractActivity {
     private ParseAndInitTask task;
 
-	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

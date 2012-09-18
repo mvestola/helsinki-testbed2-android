@@ -1,6 +1,14 @@
 Helsinki Testbed Viewer 2.0
 =============
 
+Version 2.0.4
+-------
+
+* Orientation change does not stop download anymore
+* Settings menu accessible also in download and map view
+* Version number visible in about box
+
+
 Version 2.0.3
 -------
 

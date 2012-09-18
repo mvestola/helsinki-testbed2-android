@@ -19,7 +19,7 @@ import fi.testbed2.R;
 public class AnimationActivity extends AbstractActivity implements OnClickListener {
 
 	private AnimationView animationView;
-	private ImageButton playpauseButton;
+	private ImageButton playPauseButton;
 	private boolean isPlaying = true;
 	private TextView timestampView;
 
@@ -35,25 +35,58 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.animation);
-        
-        final ImageButton previousButton = (ImageButton) findViewById(R.id.previous_button);
-        previousButton.setOnClickListener(this);
-        
-        playpauseButton = (ImageButton) findViewById(R.id.playpause_button);
-        playpauseButton.setOnClickListener(this);
-        
-        final ImageButton forwardButton = (ImageButton) findViewById(R.id.forward_button);
-        forwardButton.setOnClickListener(this);
 
-        animationView = (AnimationView) findViewById(R.id.animation_view);
-        timestampView = (TextView) findViewById(R.id.timestamp_view);
+        initButtons();
+        initViews();
+        initAnimation();
 
         orientation = this.getResources().getConfiguration().orientation;
 
     }
 
-    public void updateDownloadProgressInfo(final String text) {
+    private void initButtons() {
+        final ImageButton previousButton = (ImageButton) findViewById(R.id.previous_button);
+        previousButton.setOnClickListener(this);
 
+        playPauseButton = (ImageButton) findViewById(R.id.playpause_button);
+        playPauseButton.setOnClickListener(this);
+
+        final ImageButton forwardButton = (ImageButton) findViewById(R.id.forward_button);
+        forwardButton.setOnClickListener(this);
+    }
+
+    private void initViews() {
+        animationView = (AnimationView) findViewById(R.id.animation_view);
+        timestampView = (TextView) findViewById(R.id.timestamp_view);
+    }
+
+    private void initAnimation() {
+
+        animationView.post(new Runnable() {
+            @Override
+            public void run() {
+                final Rect bounds = getSavedMapBounds();
+
+                isPlaying = true;
+                playPauseButton.setImageResource(R.drawable.ic_media_pause);
+
+                if (bounds==null) {
+                    animationView.start(timestampView);
+                } else {
+                    animationView.start(timestampView, bounds);
+                }
+
+            }
+        });
+
+    }
+
+
+    /**
+     * Updates the Downloading text in top left corner
+     * @param text
+     */
+    public void updateDownloadProgressInfo(final String text) {
         runOnUiThread(new Runnable() {
             public void run() {
                 animationView.setDownloadProgressText(text);
@@ -65,15 +98,19 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        saveMapPosition();
+        saveMapBounds();
         orientation = newConfig.orientation;
-        startAnimation();
+        updateBoundsToView();
+    }
+
+    private String getMapBoundsPreferenceKey() {
+        return "PREF_ANIM_BOUNDS_ORIENTATION_" + orientation;
     }
 
     /**
-     * Saves the position of the map user has selected to persistent storage.
+     * Saves the bounds of the map user has previously viewed to persistent storage.
      */
-    private void saveMapPosition() {
+    private void saveMapBounds() {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Editor editor = sharedPreferences.edit();
@@ -81,7 +118,7 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
 
         // bounds String format is left:top:right:bottom
         if (editor!=null && bounds!=null) {
-            editor.putString(getMapPositionKey(),
+            editor.putString(getMapBoundsPreferenceKey(),
                     "" + bounds.left + ":" + bounds.top + ":" + bounds.right + ":" + bounds.bottom);
             editor.commit();
         }
@@ -89,14 +126,14 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
     }
 
     /**
-     * Returns the saved map position user has previously used
+     * Returns the saved map bounds user has previously used
      * @return
      */
-    private Rect getSavedMapPosition() {
+    private Rect getSavedMapBounds() {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         // left:top:right:bottom
-        String frameBoundsPref = sharedPreferences.getString(getMapPositionKey(), null);
+        String frameBoundsPref = sharedPreferences.getString(getMapBoundsPreferenceKey(), null);
 
         if (frameBoundsPref==null) {
             return null;
@@ -109,88 +146,76 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
 
     }
 
-    private String getMapPositionKey() {
-        return "PREF_ANIM_BOUNDS_ORIENTATION_" + orientation;
+    private void updateBoundsToView() {
+        animationView.updateBounds(getSavedMapBounds());
     }
 
-    public void reload() {
-        animationView.setDownloadProgressText(null);
-        this.animationView.refresh(getApplicationContext());
-        if (!startAutomatically()) {
-            this.animationView.previous();
-            this.stopAnimation();
-        } else {
-            playpauseButton.setImageResource(R.drawable.ic_media_pause);
-        }
-
-    }
-
-    private boolean startAutomatically() {
+    private boolean startAnimationAutomatically() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         return sharedPreferences.getBoolean("PREF_ANIM_AUTOSTART", true);
-    }
-
-    private void startAnimation() {
-
-        final Rect bounds = this.getSavedMapPosition();
-
-        animationView.post(new Runnable() {
-            @Override
-            public void run() {
-                playpauseButton.setImageResource(R.drawable.ic_media_pause);
-                if (bounds==null) {
-                    animationView.start(timestampView);
-                } else {
-                    animationView.start(timestampView, bounds);
-                }
-                if (!startAutomatically()) {
-                    stopAnimation();
-                }
-            }
-        });
-
     }
 
     @Override
 	protected void onPause() {
         super.onPause();
         task.abort();
-        this.stopAnimation();
-        this.saveMapPosition();
+        this.pauseAnimation();
+        this.saveMapBounds();
 	}
 
     @Override
     protected void onResume() {
         super.onResume();
+        updateBoundsToView();
         task = new DownloadImagesTask(this);
         task.execute();
-        this.startAnimation();
-
+        if (startAnimationAutomatically()) {
+            this.playAnimation();
+        }
     }
 
-    private void stopAnimation() {
+    public void onAllImagesDownloaded() {
+        animationView.setDownloadProgressText(null);
+        this.animationView.refresh(getApplicationContext());
+        if (!startAnimationAutomatically()) {
+            pauseAnimation();
+            animationView.previous();
+        }
+    }
+
+    private void playAnimation() {
+        isPlaying = true;
+        playPauseButton.setImageResource(R.drawable.ic_media_pause);
+        animationView.play();
+    }
+
+    private void pauseAnimation() {
         isPlaying = false;
-        animationView.stop();
-        playpauseButton.setImageResource(R.drawable.ic_media_play);
+        playPauseButton.setImageResource(R.drawable.ic_media_play);
+        animationView.pause();
     }
+
+/*    private void startAnimation() {
+    isPlaying = true;
+    animationView.forward();
+    playPauseButton.setImageResource(R.drawable.ic_media_pause);
+}*/
 
     @Override
 	public void onClick(View v) {
 		switch(v.getId()) {
 		case R.id.previous_button:
-            this.stopAnimation();
 			animationView.previous();
 			break;
 		case R.id.playpause_button:
 			isPlaying = !isPlaying;
 			animationView.playpause();
 			if(isPlaying)
-                playpauseButton.setImageResource(R.drawable.ic_media_pause);
+                playPauseButton.setImageResource(R.drawable.ic_media_pause);
 			else
-                playpauseButton.setImageResource(R.drawable.ic_media_play);
+                playPauseButton.setImageResource(R.drawable.ic_media_play);
             break;
 		case R.id.forward_button:
-            this.stopAnimation();
             animationView.forward();
 			break;
 		default:
