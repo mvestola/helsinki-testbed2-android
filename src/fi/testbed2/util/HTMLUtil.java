@@ -80,7 +80,7 @@ public class HTMLUtil {
 
             int i = 0;
             for(String imageUrl : imageUrls) {
-                TestbedMapImage image = new TestbedMapImage(imageUrl, timestamps[i]);
+                TestbedMapImage image = new TestbedMapImage(imageUrl, timestamps[i], i);
                 i++;
                 parsed.addTestbedMapImage(image);
             }

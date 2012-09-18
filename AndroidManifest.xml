@@ -18,10 +18,12 @@
 				  android:label="@string/activity_label_settings" >
 		</activity>
         <activity android:name=".activity.ParsingActivity"
-                  android:label="@string/activity_label_downloading" >
+                  android:label="@string/activity_label_downloading"
+                  android:configChanges="orientation">
         </activity>
         <activity android:name=".activity.AnimationActivity"
-				  android:label="@string/activity_label_anim" >
+				  android:label="@string/activity_label_anim"
+                  android:configChanges="orientation">
 		</activity>
     </application>
     <uses-sdk

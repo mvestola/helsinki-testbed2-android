@@ -21,10 +21,12 @@ public class TestbedMapImage {
     private String imageURL;
     private String timestamp;
     private Bitmap downloadedBitmapImage;
+    private int index;
 
-    public TestbedMapImage(String imageURL, String timestamp) {
+    public TestbedMapImage(String imageURL, String timestamp, int index) {
         this.imageURL = imageURL;
         this.timestamp = timestamp;
+        this.index = index;
     }
 
     public String getImageURL() {

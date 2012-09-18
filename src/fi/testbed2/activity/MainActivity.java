@@ -5,7 +5,9 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,13 +20,11 @@ import fi.testbed2.app.MainApplication;
 import fi.testbed2.result.AbstractTaskResult;
 import fi.testbed2.R;
 
-public class MainActivity extends Activity implements OnClickListener {
+public class MainActivity extends AbstractActivity implements OnClickListener {
 
     public static final int PARSING_SUB_ACTIVITY = 1;
     public static final int ANIMATION_SUB_ACTIVITY = 2;
 
-    private static final int ABOUT_DIALOG = 0;
-	
 	private ImageButton refreshButton;
 
 	/** Called when the activity is first created. */
@@ -38,28 +38,6 @@ public class MainActivity extends Activity implements OnClickListener {
         
     }
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		super.onCreateOptionsMenu(menu);
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.main_menu, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.main_menu_preferences:
-			Intent intent = new Intent(this, MyPreferenceActivity.class);
-			startActivity(intent);
-			return true;
-		case R.id.main_menu_about:
-			showDialog(ABOUT_DIALOG);
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
-	}
 
 	@Override
 	public void onClick(View v) {
@@ -142,21 +120,4 @@ public class MainActivity extends Activity implements OnClickListener {
 
     }
 
-	@Override
-	protected Dialog onCreateDialog(int id) {
-		Dialog dialog;
-		switch(id) {
-		case ABOUT_DIALOG:
-			dialog = new Dialog(this);
-			dialog.setContentView(R.layout.about);
-			dialog.setTitle(R.string.about_title);
-			TextView text = (TextView) dialog.findViewById(R.id.about_text);
-			text.setText(R.string.about_text);
-			break;
-		default:
-			dialog = null;
-		}
-		
-		return dialog;
-	}
 }

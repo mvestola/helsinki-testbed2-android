@@ -5,8 +5,12 @@
     <string name="main_menu_preferences">Asetukset</string>
     <string name="main_menu_about">Tietoja</string>
 
-    <string name="about_title">Tietoja ohjelmasta</string>
-    <string name="about_text">Tällä ohjelmalla ei ole mitään tekemistä Helsinki Testbed -projektin kanssa. Kaikki karttadata ladataan Helsinki Testbedin verkkosivuilta, joiden tekijänoikeus kuuluu Helsinki Testbed -projektille. Lisätietoa Helsinki Testbed -projektsta löytyy osoitteesta: http://testbed.fmi.fi/</string>
+    <string name="about_title">Tietoja ohjelmasta (versio %s)</string>
+    <string name="about_text"><b>Tällä ohjelmalla EI OLE MITÄÄN TEKEMISTÄ Helsinki Testbed -projektin kanssa.</b>
+        Kaikki karttadata ladataan Helsinki Testbedin verkkosivuilta,
+        joiden tekijänoikeus kuuluu Helsinki Testbed -projektille.
+        Lisätietoa Helsinki Testbed -projektista löytyy osoitteesta: <a href="http://testbed.fmi.fi/">testbed.fmi.fi</a>
+    </string>
 
     <string name="error_message_detailed" formatted="false">Tapahtui odottamaton virhe: %s</string>
     <string name="notice_cancelled" formatted="false">Lataus keskeytetty</string>

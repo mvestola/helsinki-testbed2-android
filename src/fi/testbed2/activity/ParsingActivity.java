@@ -6,7 +6,7 @@ import fi.testbed2.R;
 import fi.testbed2.task.ParseAndInitTask;
 
 
-public class ParsingActivity extends Activity {
+public class ParsingActivity extends AbstractActivity {
     private ParseAndInitTask task;
 
 	/** Called when the activity is first created. */
@@ -18,13 +18,13 @@ public class ParsingActivity extends Activity {
 
 	@Override
 	protected void onPause() {
-		super.onPause();
+        super.onPause();
         task.abort();
 	}
 
 	@Override
 	protected void onResume() {
-		super.onResume();
+        super.onResume();
 		task = new ParseAndInitTask(getApplicationContext(), this);
 		task.execute();
 	}
