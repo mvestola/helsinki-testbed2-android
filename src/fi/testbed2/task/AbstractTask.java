@@ -33,15 +33,13 @@ public abstract class AbstractTask<T extends AbstractTaskResult> extends AsyncTa
 
     protected void doCancel() {
         activity.setResult(Activity.RESULT_CANCELED);
-        //activity.finish();
+        activity.finish();
         this.cancel(true);
     }
 
     @Override
 	protected void onCancelled() {
         super.onCancelled();
-//		activity.setResult(Activity.RESULT_CANCELED);
-//		activity.finish();
 	}
 
 	@Override

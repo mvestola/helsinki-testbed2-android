@@ -1,9 +1,15 @@
 package fi.testbed2.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.text.SpannableString;
+import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -43,20 +49,40 @@ public abstract class AbstractActivity extends Activity {
 
     @Override
     protected Dialog onCreateDialog(int id) {
-        Dialog dialog;
+        AlertDialog alertDialog;
         switch(id) {
             case ABOUT_DIALOG:
-                dialog = new Dialog(this);
-                dialog.setContentView(R.layout.about);
-                dialog.setTitle(this.getString(R.string.about_title, this.getVersionName()));
-                TextView text = (TextView) dialog.findViewById(R.id.about_text);
-                text.setText(R.string.about_text);
+                TextView messageBoxText = new TextView(this);
+                messageBoxText.setTextSize(16);
+                messageBoxText.setPadding(10,5,5,5);
+                final SpannableString s = new SpannableString(this.getText(R.string.about_text));
+                Linkify.addLinks(s, Linkify.WEB_URLS);
+                messageBoxText.setText(s);
+                messageBoxText.setMovementMethod(LinkMovementMethod.getInstance());
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setView(messageBoxText)
+                .setPositiveButton(this.getText(R.string.about_visit_website), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Open app homepage
+                        Uri url = Uri.parse(getString(R.string.app_homepage));
+                        Intent intent = new Intent(Intent.ACTION_VIEW, url);
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeButton(this.getText(R.string.close_button), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+                alertDialog = builder.create();
+                alertDialog.setTitle(this.getString(R.string.about_title, this.getVersionName()));
                 break;
             default:
-                dialog = null;
+                alertDialog = null;
         }
 
-        return dialog;
+        return alertDialog;
     }
 
     /**
