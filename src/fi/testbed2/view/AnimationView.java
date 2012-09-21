@@ -1,5 +1,6 @@
 package fi.testbed2.view;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -14,7 +15,6 @@ import android.view.View;
 import android.widget.TextView;
 import fi.testbed2.app.MainApplication;
 import fi.testbed2.data.TestbedMapImage;
-import fi.testbed2.exception.DownloadTaskException;
 
 public class AnimationView extends View {
 
@@ -34,6 +34,7 @@ public class AnimationView extends View {
 	private TextView timestampView;
 	private boolean play;
     private String downloadProgressText;
+    private boolean allImagesDownloaded;
 
 	public AnimationView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -118,7 +119,7 @@ public class AnimationView extends View {
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 
-        TestbedMapImage currentMap = MainApplication.getTestbedParsedPage().getTestbedImages().get(currentFrame);
+        TestbedMapImage currentMap = getMapImagesToBeDrawn().get(currentFrame);
         String timestamp = currentMap.getTimestamp();
 		String text = String.format("%1$2d/%2$2d @ ", currentFrame + 1 , frames + 1) + timestamp;
 
@@ -216,14 +217,14 @@ public class AnimationView extends View {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 		frameDelay = Integer.parseInt(sharedPreferences.getString("PREF_ANIM_FRAME_DELAY", "1000"));
 		
-        BitmapDrawable firstMap = new BitmapDrawable(MainApplication.getTestbedParsedPage().getLatestTestbedImage().getDownloadedBitmapImage());
+        BitmapDrawable firstMap = new BitmapDrawable(getMapImagesToBeDrawn().get(0).getDownloadedBitmapImage());
         
     	// Assume all frames have same dimensions
         frameWidth = firstMap.getMinimumWidth();
         frameHeight = firstMap.getMinimumHeight();
 
 		currentFrame = 0;
-		frames = MainApplication.getTestbedParsedPage().getTestbedImages().size() - 1;
+		frames = getMapImagesToBeDrawn().size() - 1;
 	}
 
 	private void initializeBounds() {
@@ -277,6 +278,22 @@ public class AnimationView extends View {
         } else {
             this.bounds = bounds;
         }
+    }
+
+    public void setAllImagesDownloaded(boolean allImagesDownloaded) {
+        this.allImagesDownloaded = allImagesDownloaded;
+    }
+
+    private List<TestbedMapImage> getMapImagesToBeDrawn() {
+
+        if (allImagesDownloaded) {
+            return MainApplication.getTestbedParsedPage().getAllTestbedImages();
+        } else {
+            List<TestbedMapImage> list = new ArrayList<TestbedMapImage>();
+            list.add(MainApplication.getTestbedParsedPage().getLatestTestbedImage());
+            return list;
+        }
+
     }
 
 }

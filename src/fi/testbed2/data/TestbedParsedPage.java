@@ -14,8 +14,20 @@ public class TestbedParsedPage {
         return testbedMapImages.get(testbedMapImages.size()-1);
     }
 
-    public List<TestbedMapImage> getTestbedImages() {
+    public List<TestbedMapImage> getAllTestbedImages() {
         return testbedMapImages;
+    }
+
+    public List<TestbedMapImage> getDownloadedTestbedImages() {
+
+        List<TestbedMapImage> downloaded = new ArrayList<TestbedMapImage>();
+        for (TestbedMapImage mapImage : testbedMapImages) {
+            if (mapImage.hasBitmapDataDownloaded()) {
+                downloaded.add(mapImage);
+            }
+        }
+
+        return downloaded;
     }
 
     public void addTestbedMapImage(TestbedMapImage image) {

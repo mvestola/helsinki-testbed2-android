@@ -6,9 +6,7 @@ import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
@@ -61,6 +59,7 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
 
     private void initViews() {
         animationView = (AnimationView) findViewById(R.id.animation_view);
+        animationView.setAllImagesDownloaded(false);
         timestampView = (TextView) findViewById(R.id.timestamp_view);
     }
 
@@ -70,10 +69,7 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
             @Override
             public void run() {
                 final Rect bounds = getSavedMapBounds();
-
-                isPlaying = true;
-                playPauseButton.setImageResource(R.drawable.ic_media_pause);
-
+                updatePlayingState(true);
                 if (bounds==null) {
                     animationView.start(timestampView);
                 } else {
@@ -180,23 +176,23 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
 
     public void onAllImagesDownloaded() {
         allImagesDownloaded = true;
+        animationView.setAllImagesDownloaded(true);
         animationView.setDownloadProgressText(null);
         animationView.refresh(getApplicationContext());
-        if (!startAnimationAutomatically()) {
-            pauseAnimation();
-            animationView.previous();
+        animationView.previous();
+        updatePlayingState(false);
+        if (startAnimationAutomatically()) {
+            playAnimation();
         }
     }
 
     private void playAnimation() {
-        isPlaying = true;
-        playPauseButton.setImageResource(R.drawable.ic_media_pause);
+        updatePlayingState(true);
         animationView.play();
     }
 
     private void pauseAnimation() {
-        isPlaying = false;
-        playPauseButton.setImageResource(R.drawable.ic_media_play);
+        updatePlayingState(false);
         animationView.pause();
     }
 
@@ -208,22 +204,32 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
 		switch(v.getId()) {
             case R.id.previous_button:
                 animationView.previous();
+                updatePlayingState(false);
                 break;
             case R.id.playpause_button:
-                isPlaying = !isPlaying;
                 animationView.playpause();
-                if(isPlaying)
-                    playPauseButton.setImageResource(R.drawable.ic_media_pause);
-                else
-                    playPauseButton.setImageResource(R.drawable.ic_media_play);
+                updatePlayingState(!isPlaying);
                 break;
             case R.id.forward_button:
                 animationView.forward();
+                updatePlayingState(false);
                 break;
             default:
                 return;
 		}
 	}
+
+    private void updatePlayingState(boolean animationIsPlaying) {
+
+        isPlaying = animationIsPlaying;
+
+        if (isPlaying) {
+            playPauseButton.setImageResource(R.drawable.ic_media_pause);
+        } else {
+            playPauseButton.setImageResource(R.drawable.ic_media_play);
+        }
+
+    }
 
     @Override
     protected void onDestroy() {

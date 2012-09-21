@@ -41,7 +41,7 @@ public class DownloadImagesTask extends AbstractTask<DownloadImagesTaskResult> {
 
     private DownloadImagesTaskResult processImages() throws DownloadTaskException {
 
-        List<TestbedMapImage> testbedMapImages = MainApplication.getTestbedParsedPage().getTestbedImages();
+        List<TestbedMapImage> testbedMapImages = MainApplication.getTestbedParsedPage().getAllTestbedImages();
         int i= 1;
         for(TestbedMapImage image : testbedMapImages) {
 
