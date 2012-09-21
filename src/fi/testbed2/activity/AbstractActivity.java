@@ -20,9 +20,6 @@ import fi.testbed2.R;
  */
 public abstract class AbstractActivity extends Activity {
 
-    public static final int PARSING_SUB_ACTIVITY = 1;
-    public static final int ANIMATION_SUB_ACTIVITY = 2;
-
     public static final int ABOUT_DIALOG = 0;
 
     @Override
@@ -116,6 +113,10 @@ public abstract class AbstractActivity extends Activity {
         return versionName;
     }
 
+    /**
+     * Possibly helps freeing up memory
+     * @param view
+     */
     protected void unbindDrawables(View view) {
         if (view.getBackground() != null) {
             view.getBackground().setCallback(null);

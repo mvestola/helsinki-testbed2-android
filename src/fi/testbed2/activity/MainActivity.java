@@ -15,7 +15,10 @@ import fi.testbed2.R;
 
 public class MainActivity extends AbstractActivity implements OnClickListener {
 
-	private ImageButton refreshButton;
+    public static final int PARSING_SUB_ACTIVITY = 1;
+    public static final int ANIMATION_SUB_ACTIVITY = 2;
+
+    private ImageButton refreshButton;
 
 	/** Called when the activity is first created. */
     @Override
