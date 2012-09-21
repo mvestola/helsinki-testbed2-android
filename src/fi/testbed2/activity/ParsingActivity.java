@@ -2,6 +2,7 @@ package fi.testbed2.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import fi.testbed2.R;
 import fi.testbed2.task.ParseAndInitTask;
 
@@ -27,6 +28,11 @@ public class ParsingActivity extends AbstractActivity {
 		task = new ParseAndInitTask(getApplicationContext(), this);
 		task.execute();
 	}
-    
-    
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbindDrawables(findViewById(R.id.DownloadRootView));
+        System.gc();
+    }
 }

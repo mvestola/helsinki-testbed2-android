@@ -10,15 +10,13 @@ import android.net.Uri;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.view.*;
 import android.widget.TextView;
 import fi.testbed2.R;
 
 /**
  * Base activity class for all activities.
- * Handles options menu.
+ * Handles options menu, for instance.
  */
 public abstract class AbstractActivity extends Activity {
 
@@ -52,16 +50,19 @@ public abstract class AbstractActivity extends Activity {
         AlertDialog alertDialog;
         switch(id) {
             case ABOUT_DIALOG:
-                TextView messageBoxText = new TextView(this);
-                messageBoxText.setTextSize(16);
-                messageBoxText.setPadding(10,5,5,5);
-                final SpannableString s = new SpannableString(this.getText(R.string.about_text));
-                Linkify.addLinks(s, Linkify.WEB_URLS);
-                messageBoxText.setText(s);
-                messageBoxText.setMovementMethod(LinkMovementMethod.getInstance());
+                alertDialog = getAboutAlertDialog();
+                break;
+            default:
+                alertDialog = null;
+        }
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setView(messageBoxText)
+        return alertDialog;
+    }
+
+    private AlertDialog getAboutAlertDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(getAboutDialogContents())
                 .setPositiveButton(this.getText(R.string.about_visit_website), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // Open app homepage
@@ -75,14 +76,23 @@ public abstract class AbstractActivity extends Activity {
                         dialog.cancel();
                     }
                 });
-                alertDialog = builder.create();
-                alertDialog.setTitle(this.getString(R.string.about_title, this.getVersionName()));
-                break;
-            default:
-                alertDialog = null;
-        }
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setTitle(this.getString(R.string.about_title, this.getVersionName()));
+        return  alertDialog;
+    }
 
-        return alertDialog;
+    private TextView getAboutDialogContents() {
+
+        TextView messageBoxText = new TextView(this);
+        messageBoxText.setTextSize(16);
+        messageBoxText.setPadding(10,5,5,5);
+        final SpannableString s = new SpannableString(this.getText(R.string.about_text));
+        Linkify.addLinks(s, Linkify.WEB_URLS);
+        messageBoxText.setText(s);
+        messageBoxText.setMovementMethod(LinkMovementMethod.getInstance());
+
+        return messageBoxText;
+
     }
 
     /**
@@ -97,6 +107,18 @@ public abstract class AbstractActivity extends Activity {
             versionName = "Unknown";
         }
         return versionName;
+    }
+
+    protected void unbindDrawables(View view) {
+        if (view.getBackground() != null) {
+            view.getBackground().setCallback(null);
+        }
+        if (view instanceof ViewGroup) {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+                unbindDrawables(((ViewGroup) view).getChildAt(i));
+            }
+            ((ViewGroup) view).removeAllViews();
+        }
     }
 
 }

@@ -1,34 +1,25 @@
 package fi.testbed2.result;
 
-import fi.testbed2.data.MapImage;
-import fi.testbed2.data.ParsedHTML;
+import fi.testbed2.data.TestbedParsedPage;
+import fi.testbed2.data.TestbedMapImage;
 
 /**
  * Results from parsing the HTML page and downloading the latest map image.
  */
 public class ParseAndInitTaskResult extends AbstractTaskResult {
 
-    private ParsedHTML parsedHTML;
-    private MapImage latestImage;
+    private TestbedParsedPage testbedParsedPage;
 
     public ParseAndInitTaskResult(TaskResultType type, String message) {
         super(type, message);
     }
 
-    public ParsedHTML getParsedHTML() {
-        return parsedHTML;
+    public TestbedParsedPage getTestbedParsedPage() {
+        return testbedParsedPage;
     }
 
-    public void setParsedHTML(ParsedHTML parsedHTML) {
-        this.parsedHTML = parsedHTML;
-    }
-
-    public MapImage getLatestImage() {
-        return latestImage;
-    }
-
-    public void setLatestImage(MapImage latestImage) {
-        this.latestImage = latestImage;
+    public void setTestbedParsedPage(TestbedParsedPage testbedParsedPage) {
+        this.testbedParsedPage = testbedParsedPage;
     }
 
 }

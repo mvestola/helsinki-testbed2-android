@@ -2,19 +2,12 @@ package fi.testbed2.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 import fi.testbed2.app.MainApplication;
 import fi.testbed2.result.AbstractTaskResult;
@@ -41,8 +34,7 @@ public class MainActivity extends AbstractActivity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		if(v.getId() == R.id.button_refresh) {
-            MainApplication.setParsedHTML(null);
-            MainApplication.setMapImageList(null);
+            MainApplication.setTestbedParsedPage(null);
             Intent intent = new Intent(this, ParsingActivity.class);
             startActivityForResult(intent, PARSING_SUB_ACTIVITY);
 		}

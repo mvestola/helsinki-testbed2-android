@@ -3,7 +3,8 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="fill_parent"
   android:layout_height="fill_parent"
-  android:keepScreenOn="true">
+  android:keepScreenOn="true"
+  android:id="@+id/AnimationRootView">
   
   <fi.testbed2.view.AnimationView
     android:id="@+id/animation_view"

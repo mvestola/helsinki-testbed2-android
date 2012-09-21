@@ -31,17 +31,19 @@ public final class R {
         public static final int ic_refresh=0x7f020007;
     }
     public static final class id {
+        public static final int AnimationRootView=0x7f080001;
+        public static final int DownloadRootView=0x7f080007;
         public static final int about_text=0x7f080000;
-        public static final int animation_view=0x7f080001;
-        public static final int button_refresh=0x7f080008;
-        public static final int forward_button=0x7f080005;
-        public static final int main_menu_about=0x7f08000a;
-        public static final int main_menu_preferences=0x7f080009;
-        public static final int playpause_button=0x7f080003;
-        public static final int previous_button=0x7f080004;
-        public static final int progressbar=0x7f080006;
-        public static final int progresstext=0x7f080007;
-        public static final int timestamp_view=0x7f080002;
+        public static final int animation_view=0x7f080002;
+        public static final int button_refresh=0x7f08000a;
+        public static final int forward_button=0x7f080006;
+        public static final int main_menu_about=0x7f08000c;
+        public static final int main_menu_preferences=0x7f08000b;
+        public static final int playpause_button=0x7f080004;
+        public static final int previous_button=0x7f080005;
+        public static final int progressbar=0x7f080008;
+        public static final int progresstext=0x7f080009;
+        public static final int timestamp_view=0x7f080003;
     }
     public static final class layout {
         public static final int about=0x7f030000;

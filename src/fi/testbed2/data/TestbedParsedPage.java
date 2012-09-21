@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Represents the results (images) parsed from the testbed's HTML page.
  */
-public class ParsedHTML {
+public class TestbedParsedPage {
 
     private List<TestbedMapImage> testbedMapImages;
 

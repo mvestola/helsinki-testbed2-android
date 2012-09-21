@@ -4,11 +4,8 @@ import java.util.*;
 
 import fi.testbed2.activity.AnimationActivity;
 import fi.testbed2.app.MainApplication;
-import fi.testbed2.data.MapImage;
 import fi.testbed2.data.TestbedMapImage;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import fi.testbed2.exception.DownloadTaskException;
 import fi.testbed2.result.DownloadImagesTaskResult;
 import fi.testbed2.result.TaskResultType;
@@ -44,8 +41,7 @@ public class DownloadImagesTask extends AbstractTask<DownloadImagesTaskResult> {
 
     private DownloadImagesTaskResult processImages() throws DownloadTaskException {
 
-        List<MapImage> mapImageList = new ArrayList<MapImage>();
-        List<TestbedMapImage> testbedMapImages = MainApplication.getParsedHTML().getTestbedImages();
+        List<TestbedMapImage> testbedMapImages = MainApplication.getTestbedParsedPage().getTestbedImages();
         int i= 1;
         for(TestbedMapImage image : testbedMapImages) {
 
@@ -58,22 +54,17 @@ public class DownloadImagesTask extends AbstractTask<DownloadImagesTaskResult> {
                 doCancel();
                 return null;
             }
-            Bitmap bitmap = image.getDownloadedBitmapImage();
-            String localTimestamp = image.getLocalTimestamp();
-            MapImage mapImage = new MapImage(localTimestamp, new BitmapDrawable(bitmap));
-            mapImageList.add(mapImage);
+            image.downloadAndCacheImage();
             i++;
 
         }
 
-        DownloadImagesTaskResult result = new DownloadImagesTaskResult(TaskResultType.OK, "All images downloaded");
-        result.setMapImages(mapImageList);
-        return result;
+        return new DownloadImagesTaskResult(TaskResultType.OK, "All images downloaded");
 
     }
 
     @Override
     protected void saveResultToApplication(DownloadImagesTaskResult result) {
-        MainApplication.setMapImageList(result.getMapImages());
+        // No need to save result, task just loads the TestbedMapImages already saved to the application
     }
 }

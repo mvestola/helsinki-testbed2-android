@@ -13,7 +13,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 import fi.testbed2.app.MainApplication;
-import fi.testbed2.data.MapImage;
+import fi.testbed2.data.TestbedMapImage;
+import fi.testbed2.exception.DownloadTaskException;
 
 public class AnimationView extends View {
 
@@ -22,7 +23,6 @@ public class AnimationView extends View {
 	private int frameDelay;
 	private int currentFrame;
 	private int frames;
-	private List<MapImage> mapImageList;
 	private int frameWidth;
 	private int frameHeight;
 	private Rect bounds;
@@ -118,7 +118,8 @@ public class AnimationView extends View {
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 
-        String timestamp = mapImageList.get(currentFrame).timestamp;
+        TestbedMapImage currentMap = MainApplication.getTestbedParsedPage().getTestbedImages().get(currentFrame);
+        String timestamp = currentMap.getTimestamp();
 		String text = String.format("%1$2d/%2$2d @ ", currentFrame + 1 , frames + 1) + timestamp;
 
         if (downloadProgressText!=null) {
@@ -128,8 +129,8 @@ public class AnimationView extends View {
 		timestampView.setText(text);
 		timestampView.invalidate();
 
-		BitmapDrawable frame = mapImageList.get(currentFrame).bitmapDrawable;
-		frame.setBounds(bounds);
+        BitmapDrawable frame = new BitmapDrawable(currentMap.getDownloadedBitmapImage());
+        frame.setBounds(bounds);
 		frame.draw(canvas);
 
 	}
@@ -215,16 +216,16 @@ public class AnimationView extends View {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 		frameDelay = Integer.parseInt(sharedPreferences.getString("PREF_ANIM_FRAME_DELAY", "1000"));
 		
-        mapImageList = MainApplication.getMapImageList();
+        BitmapDrawable firstMap = new BitmapDrawable(MainApplication.getTestbedParsedPage().getLatestTestbedImage().getDownloadedBitmapImage());
         
     	// Assume all frames have same dimensions
-    	frameWidth = mapImageList.get(0).bitmapDrawable.getMinimumWidth();
-    	frameHeight = mapImageList.get(0).bitmapDrawable.getMinimumHeight();
-    	
+        frameWidth = firstMap.getMinimumWidth();
+        frameHeight = firstMap.getMinimumHeight();
+
 		currentFrame = 0;
-		frames = mapImageList.size() - 1;
+		frames = MainApplication.getTestbedParsedPage().getTestbedImages().size() - 1;
 	}
-	
+
 	private void initializeBounds() {
 		
 		// scale bounds

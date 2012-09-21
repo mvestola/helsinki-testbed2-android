@@ -1,9 +1,5 @@
 package fi.testbed2.result;
 
-import fi.testbed2.data.MapImage;
-
-import java.util.List;
-
 public abstract class AbstractTaskResult {
 
     public static final String MSG_CODE = "downloadTaskMsg";

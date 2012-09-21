@@ -1,7 +1,7 @@
 package fi.testbed2.util;
 
 import fi.testbed2.exception.DownloadTaskException;
-import fi.testbed2.data.ParsedHTML;
+import fi.testbed2.data.TestbedParsedPage;
 import fi.testbed2.data.TestbedMapImage;
 import fi.testbed2.task.AbstractTask;
 import org.apache.http.HttpEntity;
@@ -27,9 +27,9 @@ public class HTMLUtil {
      * @return ParseHTMLResult container for parsed data
      * @throws fi.testbed2.exception.DownloadTaskException on any error
      */
-    public static ParsedHTML parseHTML(final String url, AbstractTask task) throws DownloadTaskException {
+    public static TestbedParsedPage parseTestbedPage(final String url, AbstractTask task) throws DownloadTaskException {
 
-        ParsedHTML parsed = new ParsedHTML();
+        TestbedParsedPage testbedParsedPage = new TestbedParsedPage();
         HttpEntity entity = HTTPUtil.getHttpEntityForUrl(url);
 
         try {
@@ -82,7 +82,7 @@ public class HTMLUtil {
             for(String imageUrl : imageUrls) {
                 TestbedMapImage image = new TestbedMapImage(imageUrl, timestamps[i], i);
                 i++;
-                parsed.addTestbedMapImage(image);
+                testbedParsedPage.addTestbedMapImage(image);
             }
 
         } catch (IllegalStateException e) {
@@ -94,6 +94,6 @@ public class HTMLUtil {
             throw new DownloadTaskException(message, e);
         }
 
-        return parsed;
+        return testbedParsedPage;
     }
 }

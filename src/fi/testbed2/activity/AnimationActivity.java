@@ -8,10 +8,12 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import fi.testbed2.app.MainApplication;
 import fi.testbed2.task.DownloadImagesTask;
 import fi.testbed2.view.AnimationView;
 import fi.testbed2.R;
@@ -26,6 +28,8 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
     private DownloadImagesTask task;
 
     private int orientation;
+
+    private boolean allImagesDownloaded;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -175,8 +179,9 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
     }
 
     public void onAllImagesDownloaded() {
+        allImagesDownloaded = true;
         animationView.setDownloadProgressText(null);
-        this.animationView.refresh(getApplicationContext());
+        animationView.refresh(getApplicationContext());
         if (!startAnimationAutomatically()) {
             pauseAnimation();
             animationView.previous();
@@ -195,32 +200,36 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
         animationView.pause();
     }
 
-/*    private void startAnimation() {
-    isPlaying = true;
-    animationView.forward();
-    playPauseButton.setImageResource(R.drawable.ic_media_pause);
-}*/
-
     @Override
 	public void onClick(View v) {
+        if (!allImagesDownloaded) {
+            return;
+        }
 		switch(v.getId()) {
-		case R.id.previous_button:
-			animationView.previous();
-			break;
-		case R.id.playpause_button:
-			isPlaying = !isPlaying;
-			animationView.playpause();
-			if(isPlaying)
-                playPauseButton.setImageResource(R.drawable.ic_media_pause);
-			else
-                playPauseButton.setImageResource(R.drawable.ic_media_play);
-            break;
-		case R.id.forward_button:
-            animationView.forward();
-			break;
-		default:
-			return;
+            case R.id.previous_button:
+                animationView.previous();
+                break;
+            case R.id.playpause_button:
+                isPlaying = !isPlaying;
+                animationView.playpause();
+                if(isPlaying)
+                    playPauseButton.setImageResource(R.drawable.ic_media_pause);
+                else
+                    playPauseButton.setImageResource(R.drawable.ic_media_play);
+                break;
+            case R.id.forward_button:
+                animationView.forward();
+                break;
+            default:
+                return;
 		}
 	}
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbindDrawables(findViewById(R.id.AnimationRootView));
+        MainApplication.clearData();
+    }
 
 }

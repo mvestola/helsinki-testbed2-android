@@ -7,6 +7,7 @@ Version 2.0.4
 * Orientation change does not stop download anymore
 * Settings menu accessible also in download and map view
 * Version number visible in about box
+* Fixed possible OutOfMemory errors
 
 
 Version 2.0.3

@@ -3,21 +3,15 @@ package fi.testbed2.task;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.preference.PreferenceManager;
 import fi.testbed2.*;
 import fi.testbed2.app.MainApplication;
-import fi.testbed2.data.MapImage;
-import fi.testbed2.data.ParsedHTML;
+import fi.testbed2.data.TestbedParsedPage;
 import fi.testbed2.data.TestbedMapImage;
 import fi.testbed2.exception.DownloadTaskException;
 import fi.testbed2.result.ParseAndInitTaskResult;
 import fi.testbed2.result.TaskResultType;
 import fi.testbed2.util.HTMLUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Task which parses the testbed HTML page and initializes the animation view
@@ -43,10 +37,7 @@ public class ParseAndInitTask extends AbstractTask<ParseAndInitTaskResult> {
 
     @Override
     protected void saveResultToApplication(ParseAndInitTaskResult result) {
-        List<MapImage> latestMapImage = new ArrayList<MapImage>();
-        latestMapImage.add(result.getLatestImage());
-        MainApplication.setMapImageList(latestMapImage);
-        MainApplication.setParsedHTML(result.getParsedHTML());
+        MainApplication.setTestbedParsedPage(result.getTestbedParsedPage());
     }
 
     @Override
@@ -56,32 +47,22 @@ public class ParseAndInitTask extends AbstractTask<ParseAndInitTaskResult> {
             ParseAndInitTaskResult result = new ParseAndInitTaskResult(TaskResultType.OK, "Parsing and initialization OK");
 
             publishProgress(new DownloadTaskProgress(0, 0, true, activity.getString(R.string.progress_parsing)));
-            ParsedHTML parsed = HTMLUtil.parseHTML(url, this);
-            result.setParsedHTML(parsed);
+            TestbedParsedPage testbedParsedPage = HTMLUtil.parseTestbedPage(url, this);
+            result.setTestbedParsedPage(testbedParsedPage);
 
-            if (parsed==null || isAbort()) {
+            if (testbedParsedPage ==null || isAbort()) {
                 doCancel();
                 return null;
             }
 
             publishProgress(new DownloadTaskProgress(50, 0, false, activity.getString(R.string.progress_downloading)));
-            result.setLatestImage(processLatestImage(parsed));
-
+            testbedParsedPage.getLatestTestbedImage().downloadAndCacheImage();
             publishProgress(new DownloadTaskProgress(100, 0, false, activity.getString(R.string.progress_done)));
+
             return result;
         } catch(DownloadTaskException e) {
             return new ParseAndInitTaskResult(TaskResultType.ERROR, e.getMessage());
         }
-
-    }
-
-    private MapImage processLatestImage(ParsedHTML parsed) throws DownloadTaskException {
-
-        TestbedMapImage image = parsed.getLatestTestbedImage();
-        Bitmap bitmap = image.getDownloadedBitmapImage();
-        String localTimestamp = image.getLocalTimestamp();
-        MapImage mapImage = new MapImage(localTimestamp, new BitmapDrawable(bitmap));
-        return mapImage;
 
     }
 
