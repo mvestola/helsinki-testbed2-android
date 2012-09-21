@@ -19,6 +19,8 @@ import fi.testbed2.R;
 
 public class AnimationActivity extends AbstractActivity implements OnClickListener {
 
+    public static final String ORIENTATION_PREFERENCE_KEY_PREFIX = "PREFERENCE_ANIM_BOUNDS_ORIENTATION_";
+
 	private AnimationView animationView;
 	private ImageButton playPauseButton;
 	private boolean isPlaying = true;
@@ -105,7 +107,7 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
     }
 
     private String getMapBoundsPreferenceKey() {
-        return "PREF_ANIM_BOUNDS_ORIENTATION_" + orientation;
+        return ORIENTATION_PREFERENCE_KEY_PREFIX + orientation;
     }
 
     /**
