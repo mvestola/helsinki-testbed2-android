@@ -32,7 +32,7 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-          
+
         // we want more space for the animation
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
@@ -167,10 +167,9 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
     protected void onResume() {
         super.onResume();
         updateBoundsToView();
-        task = new DownloadImagesTask(this);
-        task.execute();
-        if (startAnimationAutomatically()) {
-            this.playAnimation();
+        if (!allImagesDownloaded) {
+            task = new DownloadImagesTask(this);
+            task.execute();
         }
     }
 
