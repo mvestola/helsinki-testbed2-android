@@ -15,9 +15,6 @@ import fi.testbed2.R;
 
 public class MainActivity extends AbstractActivity implements OnClickListener {
 
-    public static final int PARSING_SUB_ACTIVITY = 1;
-    public static final int ANIMATION_SUB_ACTIVITY = 2;
-
 	private ImageButton refreshButton;
 
 	/** Called when the activity is first created. */
@@ -34,14 +31,17 @@ public class MainActivity extends AbstractActivity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		if(v.getId() == R.id.button_refresh) {
-            MainApplication.setTestbedParsedPage(null);
-            Intent intent = new Intent(this, ParsingActivity.class);
-            startActivityForResult(intent, PARSING_SUB_ACTIVITY);
+            startMainParsingActivity();
 		}
 	}
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    private void startMainParsingActivity() {
+        Intent intent = new Intent(this, ParsingActivity.class);
+        startActivityForResult(intent, PARSING_SUB_ACTIVITY);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         switch (requestCode) {
             case PARSING_SUB_ACTIVITY:
@@ -55,11 +55,14 @@ public class MainActivity extends AbstractActivity implements OnClickListener {
                 break;
         }
 
-	}
+    }
 
     private void handleParsingResult(int resultCode, Intent data) {
 
         switch(resultCode) {
+            case MainApplication.RESULT_REFRESH:
+                startMainParsingActivity();
+                break;
             case MainApplication.RESULT_OK:
                 startActivityForResult(new Intent(this, AnimationActivity.class), ANIMATION_SUB_ACTIVITY);
                 break;
@@ -81,6 +84,9 @@ public class MainActivity extends AbstractActivity implements OnClickListener {
     private void handleAnimationResult(int resultCode, Intent data) {
 
         switch(resultCode) {
+            case MainApplication.RESULT_REFRESH:
+                startMainParsingActivity();
+                break;
             case Activity.RESULT_CANCELED:
                 Toast toast = Toast.makeText(getApplicationContext(),
                         this.getString(R.string.notice_cancelled),
@@ -107,6 +113,11 @@ public class MainActivity extends AbstractActivity implements OnClickListener {
             }
         });
         ad.show();
+    }
+
+    @Override
+    public void onRefreshButtonSelected() {
+        startMainParsingActivity();
     }
 
 }

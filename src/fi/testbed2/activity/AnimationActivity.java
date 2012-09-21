@@ -1,5 +1,6 @@
 package fi.testbed2.activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
@@ -237,4 +238,12 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
         MainApplication.clearData();
     }
 
+    @Override
+    public void onRefreshButtonSelected() {
+        this.pauseAnimation();
+        this.allImagesDownloaded = false;
+        Intent intent = new Intent();
+        this.setResult(MainApplication.RESULT_REFRESH, intent);
+        this.finish();
+    }
 }

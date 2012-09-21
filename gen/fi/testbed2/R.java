@@ -28,7 +28,8 @@ public final class R {
         public static final int ic_media_previous=0x7f020004;
         public static final int ic_menu_info_details=0x7f020005;
         public static final int ic_menu_preferences=0x7f020006;
-        public static final int ic_refresh=0x7f020007;
+        public static final int ic_menu_refresh=0x7f020007;
+        public static final int ic_refresh=0x7f020008;
     }
     public static final class id {
         public static final int AnimationRootView=0x7f080001;
@@ -37,8 +38,9 @@ public final class R {
         public static final int animation_view=0x7f080002;
         public static final int button_refresh=0x7f08000a;
         public static final int forward_button=0x7f080006;
-        public static final int main_menu_about=0x7f08000c;
-        public static final int main_menu_preferences=0x7f08000b;
+        public static final int main_menu_about=0x7f08000d;
+        public static final int main_menu_preferences=0x7f08000c;
+        public static final int main_menu_refresh=0x7f08000b;
         public static final int playpause_button=0x7f080004;
         public static final int previous_button=0x7f080005;
         public static final int progressbar=0x7f080008;
@@ -55,33 +57,34 @@ public final class R {
         public static final int main_menu=0x7f070000;
     }
     public static final class string {
-        public static final int about_text=0x7f060006;
-        public static final int about_title=0x7f060005;
-        public static final int about_visit_website=0x7f060007;
-        public static final int activity_label_anim=0x7f06000d;
-        public static final int activity_label_downloading=0x7f06000c;
-        public static final int activity_label_settings=0x7f06000b;
+        public static final int about_text=0x7f060007;
+        public static final int about_title=0x7f060006;
+        public static final int about_visit_website=0x7f060008;
+        public static final int activity_label_anim=0x7f06000e;
+        public static final int activity_label_downloading=0x7f06000d;
+        public static final int activity_label_settings=0x7f06000c;
         public static final int app_homepage=0x7f060001;
         public static final int app_name=0x7f060000;
-        public static final int close_button=0x7f060008;
-        public static final int error_message_detailed=0x7f060009;
-        public static final int main_menu_about=0x7f060004;
-        public static final int main_menu_preferences=0x7f060003;
-        public static final int notice_cancelled=0x7f06000a;
-        public static final int preference_anim_autostart_summary=0x7f060017;
-        public static final int preference_anim_autostart_title=0x7f060016;
-        public static final int preference_anim_frame_delay_summary=0x7f060015;
-        public static final int preference_anim_frame_delay_title=0x7f060014;
-        public static final int preference_map_type_summary=0x7f06000f;
-        public static final int preference_map_type_title=0x7f06000e;
-        public static final int preference_number_of_images_summary=0x7f060013;
-        public static final int preference_number_of_images_title=0x7f060012;
-        public static final int preference_time_step_summary=0x7f060011;
-        public static final int preference_time_step_title=0x7f060010;
-        public static final int progress_anim_downloading=0x7f06001b;
-        public static final int progress_done=0x7f06001a;
-        public static final int progress_downloading=0x7f060019;
-        public static final int progress_parsing=0x7f060018;
+        public static final int close_button=0x7f060009;
+        public static final int error_message_detailed=0x7f06000a;
+        public static final int main_menu_about=0x7f060005;
+        public static final int main_menu_preferences=0x7f060004;
+        public static final int main_menu_refresh=0x7f060003;
+        public static final int notice_cancelled=0x7f06000b;
+        public static final int preference_anim_autostart_summary=0x7f060018;
+        public static final int preference_anim_autostart_title=0x7f060017;
+        public static final int preference_anim_frame_delay_summary=0x7f060016;
+        public static final int preference_anim_frame_delay_title=0x7f060015;
+        public static final int preference_map_type_summary=0x7f060010;
+        public static final int preference_map_type_title=0x7f06000f;
+        public static final int preference_number_of_images_summary=0x7f060014;
+        public static final int preference_number_of_images_title=0x7f060013;
+        public static final int preference_time_step_summary=0x7f060012;
+        public static final int preference_time_step_title=0x7f060011;
+        public static final int progress_anim_downloading=0x7f06001c;
+        public static final int progress_done=0x7f06001b;
+        public static final int progress_downloading=0x7f06001a;
+        public static final int progress_parsing=0x7f060019;
         public static final int testbed_base_url=0x7f060002;
     }
     public static final class xml {

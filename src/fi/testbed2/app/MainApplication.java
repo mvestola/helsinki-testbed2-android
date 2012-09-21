@@ -14,6 +14,7 @@ public class MainApplication extends Application {
 
 	public static final int RESULT_ERROR = Activity.RESULT_FIRST_USER;
     public static final int RESULT_OK = Activity.RESULT_OK;
+    public static final int RESULT_REFRESH = 10;
 
     private static TestbedParsedPage testbedParsedPage;
     private static LruCache<String, Bitmap> imageCache;

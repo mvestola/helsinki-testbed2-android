@@ -1,9 +1,9 @@
 package fi.testbed2.activity;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import fi.testbed2.R;
+import fi.testbed2.app.MainApplication;
 import fi.testbed2.task.ParseAndInitTask;
 
 
@@ -34,5 +34,13 @@ public class ParsingActivity extends AbstractActivity {
         super.onDestroy();
         unbindDrawables(findViewById(R.id.DownloadRootView));
         System.gc();
+    }
+
+    @Override
+    public void onRefreshButtonSelected() {
+        task.abort();
+        Intent intent = new Intent();
+        this.setResult(MainApplication.RESULT_REFRESH, intent);
+        this.finish();
     }
 }

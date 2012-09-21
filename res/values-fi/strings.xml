@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">Helsinki Testbed Viewer 2.0</string>
 
+    <string name="main_menu_refresh">Päivitä</string>
     <string name="main_menu_preferences">Asetukset</string>
     <string name="main_menu_about">Tietoja</string>
 

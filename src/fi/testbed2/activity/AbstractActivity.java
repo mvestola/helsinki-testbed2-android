@@ -20,6 +20,9 @@ import fi.testbed2.R;
  */
 public abstract class AbstractActivity extends Activity {
 
+    public static final int PARSING_SUB_ACTIVITY = 1;
+    public static final int ANIMATION_SUB_ACTIVITY = 2;
+
     public static final int ABOUT_DIALOG = 0;
 
     @Override
@@ -30,12 +33,16 @@ public abstract class AbstractActivity extends Activity {
         return true;
     }
 
+    public abstract void onRefreshButtonSelected();
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.main_menu_refresh:
+                onRefreshButtonSelected();
+                return true;
             case R.id.main_menu_preferences:
-                Intent intent = new Intent(this, MyPreferenceActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(this, MyPreferenceActivity.class));
                 return true;
             case R.id.main_menu_about:
                 showDialog(ABOUT_DIALOG);

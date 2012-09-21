@@ -5,9 +5,10 @@ Version 2.0.4
 -------
 
 * Orientation change does not stop download anymore
-* Settings menu accessible also in download and map view
-* Version number visible in about box
+* Context menu accessible also in download and map view
+* Added refresh button to context menu
 * Fixed possible OutOfMemory errors
+* Version number visible in about box
 
 
 Version 2.0.3
