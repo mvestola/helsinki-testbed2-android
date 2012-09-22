@@ -233,7 +233,8 @@ public class AnimationView extends View {
         
 		// get default frame delay
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-		frameDelay = Integer.parseInt(sharedPreferences.getString("PREF_ANIM_FRAME_DELAY", "1000"));
+		frameDelay = Integer.parseInt(
+                sharedPreferences.getString(MainApplication.PREF_ANIM_FRAME_DELAY, "1000"));
 		
         BitmapDrawable firstMap = new BitmapDrawable(getMapImagesToBeDrawn().get(0).getDownloadedBitmapImage());
 
@@ -285,6 +286,10 @@ public class AnimationView extends View {
 			}
 		}, frameDelay);
 	}
+
+    public void setFrameDelay(int frameDelay) {
+        this.frameDelay = frameDelay;
+    }
 
 	public Rect getBounds() {
 		return bounds;

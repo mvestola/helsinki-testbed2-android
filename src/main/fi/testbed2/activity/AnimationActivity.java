@@ -155,9 +155,15 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
         animationView.updateBounds(getSavedMapBounds());
     }
 
+    private void updateFrameDelayToView() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        animationView.setFrameDelay(Integer.parseInt(
+                sharedPreferences.getString(MainApplication.PREF_ANIM_FRAME_DELAY, "1000")));
+    }
+
     private boolean startAnimationAutomatically() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        return sharedPreferences.getBoolean("PREF_ANIM_AUTOSTART", true);
+        return sharedPreferences.getBoolean(MainApplication.PREF_ANIM_AUTOSTART, true);
     }
 
     @Override
@@ -172,6 +178,7 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
     protected void onResume() {
         super.onResume();
         updateBoundsToView();
+        updateFrameDelayToView();
         if (!allImagesDownloaded) {
             task = new DownloadImagesTask(this);
             task.execute();

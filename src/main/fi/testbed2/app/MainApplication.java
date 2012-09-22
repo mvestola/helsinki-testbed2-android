@@ -16,6 +16,12 @@ public class MainApplication extends Application {
     public static final int RESULT_OK = Activity.RESULT_OK;
     public static final int RESULT_REFRESH = 10;
 
+    public static final String PREF_ANIM_FRAME_DELAY = "PREF_ANIM_FRAME_DELAY";
+    public static final String PREF_ANIM_AUTOSTART = "PREF_ANIM_AUTOSTART";
+    public static final String PREF_MAP_TYPE = "PREF_MAP_TYPE";
+    public static final String PREF_MAP_TIME_STEP = "PREF_MAP_TIME_STEP";
+    public static final String PREF_MAP_NUMBER_OF_IMAGES = "PREF_MAP_NUMBER_OF_IMAGES";
+
     private static TestbedParsedPage testbedParsedPage;
     private static LruCache<String, Bitmap> imageCache;
 
