@@ -21,17 +21,20 @@
     <string name="activity_label_downloading">Ladataan karttoja...</string>
     <string name="activity_label_anim">Kartat</string>
 
+    <string name="preference_category_maps">Karttakuvien latauksen asetukset</string>
+    <string name="preference_category_animation">Animaation asetukset</string>
+
     <string name="preference_map_type_title">Karttatyyppi</string>
-    <string name="preference_map_type_summary">Mikä karttatyyppi näytetään</string>
+    <string name="preference_map_type_summary">Näytettävä karttatyyppi</string>
 
     <string name="preference_time_step_title">Aikaväli</string>
     <string name="preference_time_step_summary">Karttakuvien aikaväli</string>
 
     <string name="preference_number_of_images_title">Karttakuvien määrä</string>
-    <string name="preference_number_of_images_summary">Kuinka monta karttakuvaa ladataan animaatioon</string>
+    <string name="preference_number_of_images_summary">Ladattavien karttakuvien määrä</string>
 
     <string name="preference_anim_frame_delay_title">Animaation nopeus</string>
-    <string name="preference_anim_frame_delay_summary">Kuinka nopeasti karttakuvat vaihtuvat animaatiossa</string>
+    <string name="preference_anim_frame_delay_summary">Karttakuvien vaihtumisväli</string>
 
     <string name="preference_anim_autostart_title">Automaattinen animaatio</string>
     <string name="preference_anim_autostart_summary">Rastita, jos haluat että animaatio alkaa automaattisesti</string>

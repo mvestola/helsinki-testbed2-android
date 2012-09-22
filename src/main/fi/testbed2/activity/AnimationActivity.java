@@ -11,13 +11,15 @@ import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import fi.testbed2.app.MainApplication;
 import fi.testbed2.task.DownloadImagesTask;
+import fi.testbed2.util.SeekBarUtil;
 import fi.testbed2.view.AnimationView;
 import fi.testbed2.R;
 
-public class AnimationActivity extends AbstractActivity implements OnClickListener {
+public class AnimationActivity extends AbstractActivity implements OnClickListener, SeekBar.OnSeekBarChangeListener {
 
     public static final String ORIENTATION_PREFERENCE_KEY_PREFIX = "PREFERENCE_ANIM_BOUNDS_ORIENTATION_";
 
@@ -25,6 +27,7 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
 	private ImageButton playPauseButton;
 	private boolean isPlaying = true;
 	private TextView timestampView;
+    private SeekBar seekBar;
 
     private DownloadImagesTask task;
 
@@ -50,14 +53,13 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
     }
 
     private void initButtons() {
-        final ImageButton previousButton = (ImageButton) findViewById(R.id.previous_button);
-        previousButton.setOnClickListener(this);
 
         playPauseButton = (ImageButton) findViewById(R.id.playpause_button);
         playPauseButton.setOnClickListener(this);
 
-        final ImageButton forwardButton = (ImageButton) findViewById(R.id.forward_button);
-        forwardButton.setOnClickListener(this);
+        seekBar = (SeekBar)findViewById(R.id.seek);
+        seekBar.setOnSeekBarChangeListener(this);
+
     }
 
     private void initViews() {
@@ -74,9 +76,9 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
                 final Rect bounds = getSavedMapBounds();
                 updatePlayingState(true);
                 if (bounds==null) {
-                    animationView.start(timestampView);
+                    animationView.start(timestampView, seekBar);
                 } else {
-                    animationView.start(timestampView, bounds);
+                    animationView.start(timestampView, seekBar, bounds);
                 }
 
             }
@@ -204,17 +206,9 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
             return;
         }
 		switch(v.getId()) {
-            case R.id.previous_button:
-                animationView.previous();
-                updatePlayingState(false);
-                break;
             case R.id.playpause_button:
                 animationView.playpause();
                 updatePlayingState(!isPlaying);
-                break;
-            case R.id.forward_button:
-                animationView.forward();
-                updatePlayingState(false);
                 break;
             default:
                 return;
@@ -247,5 +241,24 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
         Intent intent = new Intent();
         this.setResult(MainApplication.RESULT_REFRESH, intent);
         this.finish();
+    }
+
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        if (fromUser) {
+            animationView.goToFrame(SeekBarUtil.getFrameNumberFromSeekBarValue(progress));
+        }
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+        this.pauseAnimation();
+    }
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+        if (this.startAnimationAutomatically()) {
+            this.playAnimation();
+        }
     }
 }

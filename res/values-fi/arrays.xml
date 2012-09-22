@@ -21,10 +21,4 @@
   <item>3 tuntia</item>
 </string-array>
 
-<string-array name="anim_frame_delay_options">
-  <item>0.5 sekuntia</item>
-  <item>1.0 sekuntia</item>
-  <item>1.5 sekuntia</item>
-</string-array>
-
 </resources>

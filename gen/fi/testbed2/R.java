@@ -33,18 +33,21 @@ public final class R {
     }
     public static final class id {
         public static final int AnimationRootView=0x7f080001;
-        public static final int DownloadRootView=0x7f080007;
+        public static final int DownloadRootView=0x7f080006;
         public static final int about_text=0x7f080000;
         public static final int animation_view=0x7f080002;
-        public static final int button_refresh=0x7f08000a;
-        public static final int forward_button=0x7f080006;
-        public static final int main_menu_about=0x7f08000d;
-        public static final int main_menu_preferences=0x7f08000c;
-        public static final int main_menu_refresh=0x7f08000b;
+        public static final int button_refresh=0x7f080009;
+        public static final int main_menu_about=0x7f080010;
+        public static final int main_menu_preferences=0x7f08000f;
+        public static final int main_menu_refresh=0x7f08000e;
         public static final int playpause_button=0x7f080004;
-        public static final int previous_button=0x7f080005;
-        public static final int progressbar=0x7f080008;
-        public static final int progresstext=0x7f080009;
+        public static final int progressbar=0x7f080007;
+        public static final int progresstext=0x7f080008;
+        public static final int seek=0x7f080005;
+        public static final int seekBarPrefBarContainer=0x7f08000d;
+        public static final int seekBarPrefUnitsLeft=0x7f08000c;
+        public static final int seekBarPrefUnitsRight=0x7f08000a;
+        public static final int seekBarPrefValue=0x7f08000b;
         public static final int timestamp_view=0x7f080003;
     }
     public static final class layout {
@@ -52,6 +55,7 @@ public final class R {
         public static final int animation=0x7f030001;
         public static final int download=0x7f030002;
         public static final int main=0x7f030003;
+        public static final int seek_bar_preference=0x7f030004;
     }
     public static final class menu {
         public static final int main_menu=0x7f070000;
@@ -75,6 +79,8 @@ public final class R {
         public static final int preference_anim_autostart_title=0x7f060017;
         public static final int preference_anim_frame_delay_summary=0x7f060016;
         public static final int preference_anim_frame_delay_title=0x7f060015;
+        public static final int preference_category_animation=0x7f06001e;
+        public static final int preference_category_maps=0x7f06001d;
         public static final int preference_map_type_summary=0x7f060010;
         public static final int preference_map_type_title=0x7f06000f;
         public static final int preference_number_of_images_summary=0x7f060014;

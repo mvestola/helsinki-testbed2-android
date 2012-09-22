@@ -25,6 +25,9 @@
     <string name="activity_label_downloading">Downloading maps...</string>
     <string name="activity_label_anim">Maps</string>
 
+    <string name="preference_category_maps">Map image downloading settings</string>
+    <string name="preference_category_animation">Animation settings</string>
+
     <string name="preference_map_type_title">Map type</string>
     <string name="preference_map_type_summary">Which type of weather map to show</string>
 

@@ -14,6 +14,12 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import fi.testbed2.R;
+import fi.testbed2.util.MathUtil;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Code copied from: http://robobunny.com/wp/2011/08/13/android-seekbar-preference/
@@ -35,6 +41,8 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
     private String mUnitsLeft  = "";
     private String mUnitsRight = "";
     private SeekBar mSeekBar;
+    private List<Integer> allowedEntryValues;
+    private Map<Integer, String> allowedEntries;
 
     private TextView mStatusText;
 
@@ -55,9 +63,82 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
         mSeekBar.setOnSeekBarChangeListener(this);
     }
 
+    private boolean onlyAllowedValues() {
+        return allowedEntryValues!=null;
+    }
+
+    private String getValueText(Integer value) {
+
+        if (!onlyAllowedValues() || allowedEntries==null) {
+            return String.valueOf(value);
+        }
+
+        String text = allowedEntries.get(value);
+        if (text==null) {
+            text = String.valueOf(value);
+        }
+        return text;
+
+    }
+
+    private List<Integer> getAllowedEntryValues(String[] allowedValuesArray) {
+
+        if (allowedValuesArray==null) {
+            return null;
+        }
+
+        List<Integer> allowedValues = new ArrayList<Integer>();
+        for (String valueAsString : allowedValuesArray) {
+            try {
+                allowedValues.add(Integer.parseInt(valueAsString.trim()));
+            } catch (Exception e) {
+                // Not an integer
+                e.printStackTrace();
+            }
+        }
+
+        return allowedValues;
+
+    }
+
+    private Map<Integer, String> getAllowedEntries(String[] allowedEntriesArray, List<Integer> allowedEntryValues) {
+
+        if (allowedEntriesArray==null) {
+            return null;
+        }
+
+        Map<Integer, String> allowedEntriesMap = new HashMap<Integer, String>();
+        int i = 0;
+        for (String entryText : allowedEntriesArray) {
+            try {
+                allowedEntriesMap.put(allowedEntryValues.get(i), entryText.trim());
+            } catch (Exception e) {
+                // Value not found, ignore
+                e.printStackTrace();
+            }
+            i++;
+        }
+
+        return allowedEntriesMap;
+
+    }
+
     private void setValuesFromXml(AttributeSet attrs) {
         mMaxValue = attrs.getAttributeIntValue(ANDROIDNS, "max", 100);
         mMinValue = attrs.getAttributeIntValue(ROBOBUNNYNS, "min", 0);
+
+        int allowedEntryValuesResId = attrs.getAttributeResourceValue(ROBOBUNNYNS, "allowedEntryValues", -1);
+        int allowedEntriesResId = attrs.getAttributeResourceValue(ROBOBUNNYNS, "allowedEntries", -1);
+
+        if (allowedEntryValuesResId!=-1) {
+            allowedEntryValues = getAllowedEntryValues(
+                    getContext().getResources().getStringArray(allowedEntryValuesResId));
+        }
+
+        if (allowedEntriesResId!=-1) {
+            allowedEntries = getAllowedEntries(
+                    getContext().getResources().getStringArray(allowedEntriesResId), allowedEntryValues);
+        }
 
         mUnitsLeft = getAttributeStringValue(attrs, ROBOBUNNYNS, "unitsLeft", "");
         String units = getAttributeStringValue(attrs, ROBOBUNNYNS, "units", "");
@@ -139,7 +220,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
             RelativeLayout layout = (RelativeLayout)view;
 
             mStatusText = (TextView)layout.findViewById(R.id.seekBarPrefValue);
-            mStatusText.setText(String.valueOf(mCurrentValue));
+            mStatusText.setText(getValueText(mCurrentValue));
             mStatusText.setMinimumWidth(30);
 
             mSeekBar.setProgress(mCurrentValue - mMinValue);
@@ -159,14 +240,18 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
         int newValue = progress + mMinValue;
 
-        if(newValue > mMaxValue)
+        if(newValue > mMaxValue) {
             newValue = mMaxValue;
-        else if(newValue < mMinValue)
+        } else if(newValue < mMinValue) {
             newValue = mMinValue;
-        else if(mInterval != 1 && newValue % mInterval != 0)
+        } else if (onlyAllowedValues()) {
+            newValue = MathUtil.getClosestValue(newValue, allowedEntryValues);
+        } else if(mInterval != 1 && newValue % mInterval != 0) {
             newValue = Math.round(((float)newValue)/mInterval)*mInterval;
+        }
 
         // change rejected, revert to the previous value
         if(!callChangeListener(newValue)){
@@ -176,8 +261,8 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 
         // change accepted, store it
         mCurrentValue = newValue;
-        mStatusText.setText(String.valueOf(newValue));
-        persistInt(newValue);
+        mStatusText.setText(getValueText(newValue));
+        persistString(""+newValue);
 
     }
 
@@ -202,7 +287,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
     protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
 
         if(restoreValue) {
-            mCurrentValue = getPersistedInt(mCurrentValue);
+            mCurrentValue = Integer.valueOf(getPersistedString(""+mCurrentValue));
         }
         else {
             int temp = 0;
@@ -213,7 +298,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
                 Log.e(TAG, "Invalid default value: " + defaultValue.toString());
             }
 
-            persistInt(temp);
+            persistString(""+temp);
             mCurrentValue = temp;
         }
 

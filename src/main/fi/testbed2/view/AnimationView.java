@@ -12,9 +12,11 @@ import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import fi.testbed2.app.MainApplication;
 import fi.testbed2.data.TestbedMapImage;
+import fi.testbed2.util.SeekBarUtil;
 
 public class AnimationView extends View {
 
@@ -35,6 +37,7 @@ public class AnimationView extends View {
 	private boolean play;
     private String downloadProgressText;
     private boolean allImagesDownloaded;
+    private SeekBar seekBar;
 
 	public AnimationView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -51,17 +54,19 @@ public class AnimationView extends View {
 		init(context);
 	}
 	
-	public void start(TextView timestampView) {
+	public void start(TextView timestampView, SeekBar seekBar) {
 		this.play = true;
 		this.timestampView = timestampView;
-		initializeBounds();
+        this.seekBar = seekBar;
+        initializeBounds();
 		next();
 	}
 	
-	public void start(TextView timestampView, Rect bounds) {
+	public void start(TextView timestampView, SeekBar seekBar, Rect bounds) {
 		this.play = true;
 		this.timestampView = timestampView;
-		this.bounds = bounds;
+        this.seekBar = seekBar;
+        this.bounds = bounds;
 		next();
 	}
 	
@@ -106,6 +111,16 @@ public class AnimationView extends View {
 		
 		invalidate();
 	}
+
+    public void goToFrame(int frameNumber) {
+        this.play = false;
+        currentFrame=frameNumber;
+
+        if(currentFrame > frames)
+            currentFrame = 0;
+
+        invalidate();
+    }
 	
 	public void stop() {
 		this.play = false;
@@ -126,6 +141,8 @@ public class AnimationView extends View {
         if (downloadProgressText!=null) {
             text="@ "+timestamp+"  "+downloadProgressText;
         }
+
+        seekBar.setProgress(SeekBarUtil.getSeekBarValueFromFrameNumber(currentFrame));
 
 		timestampView.setText(text);
 		timestampView.invalidate();
@@ -218,7 +235,7 @@ public class AnimationView extends View {
 		frameDelay = Integer.parseInt(sharedPreferences.getString("PREF_ANIM_FRAME_DELAY", "1000"));
 		
         BitmapDrawable firstMap = new BitmapDrawable(getMapImagesToBeDrawn().get(0).getDownloadedBitmapImage());
-        
+
     	// Assume all frames have same dimensions
         frameWidth = firstMap.getMinimumWidth();
         frameHeight = firstMap.getMinimumHeight();
