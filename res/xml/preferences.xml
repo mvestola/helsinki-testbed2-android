@@ -50,7 +50,7 @@
                 android:max="3000"
                 robobunny:min="100"
                 robobunny:unitsLeft=""
-                robobunny:unitsRight="s"
+                robobunny:unitsRight=" s"
                 robobunny:allowedEntries="@array/anim_frame_delay_options"
                 robobunny:allowedEntryValues="@array/anim_frame_delay_values"
                 />

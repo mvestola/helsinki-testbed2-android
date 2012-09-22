@@ -32,7 +32,7 @@
     <string name="preference_map_type_summary">Which type of weather map to show</string>
 
     <string name="preference_time_step_title">Time-step</string>
-    <string name="preference_time_step_summary">The time-step between the map images</string>
+    <string name="preference_time_step_summary">Time-step between map images</string>
 
     <string name="preference_number_of_images_title">Number of images</string>
     <string name="preference_number_of_images_summary">How many map images to download</string>
