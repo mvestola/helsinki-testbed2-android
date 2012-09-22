@@ -21,9 +21,7 @@ import fi.testbed2.R;
 
 public class AnimationActivity extends AbstractActivity implements OnClickListener, SeekBar.OnSeekBarChangeListener {
 
-    public static final String ORIENTATION_PREFERENCE_KEY_PREFIX = "PREFERENCE_ANIM_BOUNDS_ORIENTATION_";
-
-	private AnimationView animationView;
+    private AnimationView animationView;
 	private ImageButton playPauseButton;
 	private boolean isPlaying = true;
 	private TextView timestampView;
@@ -109,7 +107,7 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
     }
 
     private String getMapBoundsPreferenceKey() {
-        return ORIENTATION_PREFERENCE_KEY_PREFIX + orientation;
+        return MainApplication.PREF_ORIENTATION_PREFERENCE_KEY_PREFIX + orientation;
     }
 
     /**
@@ -253,6 +251,7 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         if (fromUser) {
+            this.pauseAnimation();
             animationView.goToFrame(SeekBarUtil.getFrameIndexFromSeekBarValue(progress,
                     MainApplication.getTestbedParsedPage().getAllTestbedImages().size()));
         }
@@ -265,8 +264,6 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
-        if (this.startAnimationAutomatically()) {
-            this.playAnimation();
-        }
+        // Don't do anything
     }
 }
