@@ -67,6 +67,12 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
         return allowedEntryValues!=null;
     }
 
+    /**
+     * Returns the value shown to the user.
+     *
+     * @param value
+     * @return
+     */
     private String getValueText(Integer value) {
 
         if (!onlyAllowedValues() || allowedEntries==null) {
@@ -81,6 +87,12 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 
     }
 
+    /**
+     * Returns the allowed entry values (not visible to the user but used by the system)
+     *
+     * @param allowedValuesArray
+     * @return
+     */
     private List<Integer> getAllowedEntryValues(String[] allowedValuesArray) {
 
         if (allowedValuesArray==null) {
@@ -101,6 +113,13 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 
     }
 
+    /**
+     * Returns the allowed entries (these are visible to the user)
+     *
+     * @param allowedEntriesArray
+     * @param allowedEntryValues
+     * @return
+     */
     private Map<Integer, String> getAllowedEntries(String[] allowedEntriesArray, List<Integer> allowedEntryValues) {
 
         if (allowedEntriesArray==null) {

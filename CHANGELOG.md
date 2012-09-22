@@ -1,6 +1,13 @@
 Helsinki Testbed Viewer 2.0
 =============
 
+Version 2.0.5
+-------
+
+* Added slider control to the animation view
+* Added sliders to the preference screen
+
+
 Version 2.0.4
 -------
 

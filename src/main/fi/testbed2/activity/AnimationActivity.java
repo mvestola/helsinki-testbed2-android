@@ -246,7 +246,8 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         if (fromUser) {
-            animationView.goToFrame(SeekBarUtil.getFrameNumberFromSeekBarValue(progress));
+            animationView.goToFrame(SeekBarUtil.getFrameIndexFromSeekBarValue(progress,
+                    MainApplication.getTestbedParsedPage().getAllTestbedImages().size()));
         }
     }
 

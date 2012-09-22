@@ -142,7 +142,8 @@ public class AnimationView extends View {
             text="@ "+timestamp+"  "+downloadProgressText;
         }
 
-        seekBar.setProgress(SeekBarUtil.getSeekBarValueFromFrameNumber(currentFrame));
+        seekBar.setProgress(SeekBarUtil.getSeekBarValueFromFrameNumber(currentFrame,
+                MainApplication.getTestbedParsedPage().getAllTestbedImages().size()));
 
 		timestampView.setText(text);
 		timestampView.invalidate();
