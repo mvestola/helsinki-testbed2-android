@@ -1,7 +1,6 @@
 package fi.testbed2.result;
 
 import fi.testbed2.data.TestbedParsedPage;
-import fi.testbed2.data.TestbedMapImage;
 
 /**
  * Results from parsing the HTML page and downloading the latest map image.

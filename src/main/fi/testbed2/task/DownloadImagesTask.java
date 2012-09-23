@@ -1,15 +1,14 @@
 package fi.testbed2.task;
 
-import java.util.*;
-
+import fi.testbed2.R;
 import fi.testbed2.activity.AnimationActivity;
 import fi.testbed2.app.MainApplication;
 import fi.testbed2.data.TestbedMapImage;
-
 import fi.testbed2.exception.DownloadTaskException;
 import fi.testbed2.result.DownloadImagesTaskResult;
 import fi.testbed2.result.TaskResultType;
-import fi.testbed2.R;
+
+import java.util.List;
 
 /**
  * Task which downloads all map images and reloads the animation view.

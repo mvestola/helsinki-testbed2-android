@@ -18,7 +18,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 @RunWith(PowerMockRunner.class)
@@ -131,20 +130,22 @@ public class HTMLUtilTest {
 
     }
 
-    @Test(expected = DownloadTaskException.class)
+    @Test
     public void testParseTestbedPageWithAddedNewlines() throws Exception {
 
         initHTMLPage("testbed_changed_newlines.html");
         TestbedParsedPage page = HTMLUtil.parseTestbedPage("http://url.is.irrelevant.here", task);
+        assertEquals(5, page.getAllTestbedImages().size());
+        assertEquals(0,page.getDownloadedTestbedImages().size());
 
         // These test are not currently executed since there will be exception
 
         assertEquals("06:00",page.getAllTestbedImages().get(0).getTimestamp());
-        assertEquals("07:00",page.getAllTestbedImages().get(0).getTimestamp());
+        assertEquals("07:00",page.getAllTestbedImages().get(1).getTimestamp());
         // There was a time gap in the servers while saving test data
-        assertEquals("12:00",page.getAllTestbedImages().get(0).getTimestamp());
-        assertEquals("13:00",page.getAllTestbedImages().get(0).getTimestamp());
-        assertEquals("14:00",page.getAllTestbedImages().get(0).getTimestamp());
+        assertEquals("12:00",page.getAllTestbedImages().get(2).getTimestamp());
+        assertEquals("13:00",page.getAllTestbedImages().get(3).getTimestamp());
+        assertEquals("14:00",page.getAllTestbedImages().get(4).getTimestamp());
 
         assertEquals("http://2.img.fmi.fi/php/img.php?A=dA4ndr1aWd17/dRUXRLUWda7Rd9ULdq1Uqd1qWq1dRU4rU1qR71UdbHhvJNvJYvMJMJJ.r/D",page.getAllTestbedImages().get(0).getImageURL());
         assertEquals("http://4.img.fmi.fi/php/img.php?A=dA4ndr1aWd17/dRUXRLUWda7Rd9ULdq1Uqd1qWq1dRU4rU1qR71UdbHhvJNvJYvMJzJJ.r/D",page.getAllTestbedImages().get(1).getImageURL());

@@ -3,7 +3,6 @@ package fi.testbed2.data;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
-import android.util.Log;
 import fi.testbed2.app.MainApplication;
 import fi.testbed2.exception.DownloadTaskException;
 

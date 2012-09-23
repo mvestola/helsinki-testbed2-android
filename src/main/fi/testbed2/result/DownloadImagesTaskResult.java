@@ -1,8 +1,5 @@
 package fi.testbed2.result;
 
-import java.util.List;
-import fi.testbed2.data.TestbedMapImage;
-
 /**
  * Results from downloading all map images.
  */

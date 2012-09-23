@@ -1,8 +1,5 @@
 package fi.testbed2.view;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
@@ -17,6 +14,9 @@ import android.widget.TextView;
 import fi.testbed2.app.MainApplication;
 import fi.testbed2.data.TestbedMapImage;
 import fi.testbed2.util.SeekBarUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AnimationView extends View {
 

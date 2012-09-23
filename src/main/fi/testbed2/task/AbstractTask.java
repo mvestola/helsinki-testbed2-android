@@ -6,8 +6,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import fi.testbed2.app.MainApplication;
 import fi.testbed2.R;
+import fi.testbed2.app.MainApplication;
 import fi.testbed2.result.AbstractTaskResult;
 
 public abstract class AbstractTask<T extends AbstractTaskResult> extends AsyncTask<Void, DownloadTaskProgress, T> implements Task {

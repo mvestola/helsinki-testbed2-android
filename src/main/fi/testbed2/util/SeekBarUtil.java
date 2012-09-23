@@ -1,7 +1,5 @@
 package fi.testbed2.util;
 
-import fi.testbed2.app.MainApplication;
-
 import java.math.BigDecimal;
 
 public class SeekBarUtil {
