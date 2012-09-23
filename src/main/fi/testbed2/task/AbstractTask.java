@@ -10,7 +10,7 @@ import fi.testbed2.app.MainApplication;
 import fi.testbed2.R;
 import fi.testbed2.result.AbstractTaskResult;
 
-public abstract class AbstractTask<T extends AbstractTaskResult> extends AsyncTask<Void, DownloadTaskProgress, T> {
+public abstract class AbstractTask<T extends AbstractTaskResult> extends AsyncTask<Void, DownloadTaskProgress, T> implements Task {
 
 	private ProgressBar progressBar;
 	private TextView progressTextView;

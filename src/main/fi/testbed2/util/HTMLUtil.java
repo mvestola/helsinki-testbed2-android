@@ -3,7 +3,7 @@ package fi.testbed2.util;
 import fi.testbed2.exception.DownloadTaskException;
 import fi.testbed2.data.TestbedParsedPage;
 import fi.testbed2.data.TestbedMapImage;
-import fi.testbed2.task.AbstractTask;
+import fi.testbed2.task.Task;
 import org.apache.http.HttpEntity;
 
 import java.io.BufferedReader;
@@ -27,7 +27,7 @@ public class HTMLUtil {
      * @return ParseHTMLResult container for parsed data
      * @throws fi.testbed2.exception.DownloadTaskException on any error
      */
-    public static TestbedParsedPage parseTestbedPage(final String url, AbstractTask task) throws DownloadTaskException {
+    public static TestbedParsedPage parseTestbedPage(final String url, Task task) throws DownloadTaskException {
 
         TestbedParsedPage testbedParsedPage = new TestbedParsedPage();
         HttpEntity entity = HTTPUtil.getHttpEntityForUrl(url);

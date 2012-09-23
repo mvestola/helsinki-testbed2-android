@@ -1,0 +1,723 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Refresh" content="300">
+<meta http-equiv="Pragma" content="no-cache">
+<style type="text/css">
+* {
+  font-size: 12px;
+}
+h1 {
+  font-size: 14px;
+  text-align: center;
+  padding-bottom: 5px;
+}
+a {
+  text-decoration: none;
+  color: #0000ff;
+}
+a.visited {
+  text-decoration: none;
+  color: #0000ff;
+}
+div.anim_txt_play {
+  margin-top: 20px;
+}
+</style>
+<script type="text/javascript">
+<!--
+function MM_openBrWindow(theURL, winName, features) {
+  window.open(theURL, winName, features);
+}
+//-->
+</script>
+<title>Helsinki Testbed - Air pressure (at sea level) animation</title>
+<script type="text/JavaScript"><!--
+var anim_count = 5;
+var anim_speed = 1000;
+var anim_timestamps = new Array("201209222100","201209230000","201209230300","201209230600","201209230900");
+var anim_images_anim_anim = new Array("http://1.img.fmi.fi/php/img.php?A=dA4ndr1aWd17/dRUXRLUWda7Rd9ULdq1Uqdr1UXX71UdbHhvJNvJYvvvNJJ.r/D","http://3.img.fmi.fi/php/img.php?A=dA4ndr1aWd17/dRUXRLUWda7Rd9ULdq1Uqdr1UXX71UdbHhvJNvJYvMJJJJ.r/D","http://4.img.fmi.fi/php/img.php?A=dA4ndr1aWd17/dRUXRLUWda7Rd9ULdq1Uqdr1UXX71UdbHhvJNvJYvMJMJJ.r/D","http://1.img.fmi.fi/php/img.php?A=dA4ndr1aWd17/dRUXRLUWda7Rd9ULdq1Uqdr1UXX71UdbHhvJNvJYvMJ_JJ.r/D","http://2.img.fmi.fi/php/img.php?A=dA4ndr1aWd17/dRUXRLUWda7Rd9ULdq1Uqdr1UXX71UdbHhvJNvJYvMJYJJ.r/D");
+var imagecache = new Array();
+var anim_idx = -1;
+var anim_on = false;
+var anim_timer = null;
+var anim_maxloops = 10;
+var anim_loop = 0;
+function settextcolor(name,col){if(document.getElementById)document.getElementById(name).style.color = col;else{document.all[name].style.color = col;}}
+function setimage(name,value){if(document.getElementById){img = document.getElementById(name); img.src = value; }else{document.images[name].src = value;}}
+function setAnimSpeed(percentage){ anim_speed = percentage*1000;}
+function handleMousewheel(node, callback){if (node.addEventListener) {node.addEventListener("DOMMouseScroll", callback, false);node.addEventListener("mousewheel", callback, false);} else {node.onmousewheel = callback;}}
+function mouseWheelCallback(e){if (!e) e = window.event;if ( e.wheelDelta <= 0 || e.detail > 0) {if(anim_timer) clearTimeout(anim_timer); anim_on = false; anim_image((anim_idx+1)%anim_count,0);}else {if(anim_timer) clearTimeout(anim_timer); anim_on = false; if (anim_idx==0) anim_image(anim_count-1);else anim_image((anim_idx-1)%anim_count,0);} settextcolor("anim_txt_play",'#0000ff');return cancelEvent(e);}
+function cancelEvent(e){e = e ? e : window.event;if(e.stopPropagation)e.stopPropagation();if(e.preventDefault)e.preventDefault();e.cancelBubble = true;e.cancel = true;e.returnValue = false;return false;}
+function handleMouseClick(node, callback){if (node.addEventListener) {node.addEventListener("DOMClick", callback, false);node.addEventListener("click", callback, false);} else {node.onclick = callback;}}
+function mouseClickCallback(e){if(anim_timer) clearTimeout(anim_timer);if (anim_on){ anim_on=false; settextcolor("anim_txt_play",'#0000ff');}else anim_play();return true;}
+function anim_preload() { var names = new Array(); names = names.concat(anim_images_anim_anim); names.sort(); var n = imagecache.length; var lastname = ''; for(var i=0; i<names.length; i++) if(names[i]!=lastname) { lastname = names[i]; imagecache[n]=new Image(); imagecache[n].src = lastname; n++; }}
+function anim_play(over) { if(!anim_on) { anim_on = true; anim_timer = setTimeout("anim_next()",anim_speed); anim_loop = 0;} settextcolor("anim_txt_play",'#ff0000');}
+function anim_stop(over) { if(anim_timer) clearTimeout(anim_timer); anim_on = false; settextcolor("anim_txt_play",'#0000ff');}
+function anim_image(idx,over) { if(idx==anim_idx) return; if(over) { settextcolor("anim_txt_play",'#0000ff'); if(anim_timer) clearTimeout(anim_timer); anim_on = false; } if(anim_idx>=0) { settextcolor("anim_txt_time_"+anim_idx,'#0000ff'); } settextcolor("anim_txt_time_"+idx,'#ff0000'); setimage("anim_image_anim_anim",anim_images_anim_anim[idx]); anim_idx = idx;}
+function anim_next() { if(!anim_on) return; anim_image((anim_idx+1)%anim_count,0); if(anim_idx+1==anim_count) if(++anim_loop > anim_maxloops){anim_stop(); return;} var nextdelay = (anim_idx+1==anim_count ? 2000 : anim_speed); anim_timer = setTimeout("anim_next()",nextdelay);}
+function anim_start() { if(anim_timer) clearTimeout(anim_timer); anim_on = false; anim_image(0,1); anim_preload(); setTimeout("anim_play(1)",2000); setTimeout("window.location.href = window.location.href",1800000);if (document.getElementById('anim_image_anim_anim')) handleMousewheel(document.getElementById('anim_image_anim_anim'), mouseWheelCallback); if (document.getElementById('animtimer')) handleMousewheel(document.getElementById('animtimer'), mouseWheelCallback); if (document.getElementById('anim_image_anim_anim')) handleMouseClick(document.getElementById('anim_image_anim_anim'), mouseClickCallback); }
+// -->
+</script>
+<style type="text/css">
+.animimg { display: block; border:0px }
+</style>
+
+</head><body onload="anim_preload()"><h1>Helsinki Testbed - Air pressure (at sea level) animation</h1>
+<center><b>Images:</b> <a href="history_browser.php?imgtype=radar&amp;t=180&amp;n=5">Rain &amp; temperature</a> | <a href="history_browser.php?imgtype=temperature&amp;t=180&amp;n=5">Temperature</a> | <a href="history_browser.php?imgtype=relativehumidity&amp;t=180&amp;n=5">Humidity</a> | <a href="history_browser.php?imgtype=wind&amp;t=180&amp;n=5">Wind</a> | <a href="history_browser.php?imgtype=windspeed&amp;t=180&amp;n=5">Wind speed</a> | <a href="history_browser.php?imgtype=winddirection&amp;t=180&amp;n=5">Wind direction</a> | <a href="history_browser.php?imgtype=pressure&amp;t=180&amp;n=5">Air pressure</a> | <a href="history_browser.php?imgtype=dewpoint&amp;t=180&amp;n=5">Dew point</a><br><b>Time-step:</b> <a href="history_browser.php?imgtype=pressure&amp;t=5&amp;n=5">5 min</a> | <a href="history_browser.php?imgtype=pressure&amp;t=15&amp;n=5">15 min</a> | <a href="history_browser.php?imgtype=pressure&amp;t=30&amp;n=5">30 min</a> | <a href="history_browser.php?imgtype=pressure&amp;t=60&amp;n=5">1 hour</a> | <a href="history_browser.php?imgtype=pressure&amp;t=120&amp;n=5">2 hours</a> | <a href="history_browser.php?imgtype=pressure&amp;t=180&amp;n=5">3 hours</a><br><b>Number of images:</b> <a href="history_browser.php?imgtype=pressure&amp;t=180&amp;n=1">1</a> | <a href="history_browser.php?imgtype=pressure&amp;t=180&amp;n=2">2</a> | <a href="history_browser.php?imgtype=pressure&amp;t=180&amp;n=3">3</a> | <a href="history_browser.php?imgtype=pressure&amp;t=180&amp;n=5">5</a> | <a href="history_browser.php?imgtype=pressure&amp;t=180&amp;n=10">10</a> | <a href="history_browser.php?imgtype=pressure&amp;t=180&amp;n=15">15</a><map name="stations">
+<area
+  shape="rect"
+  coords="306,239 330,246"
+  href="javascript: alert('Station: Sep&auml;nkyl&auml;\nCity: Espoo\nProducer: Synop AWS\nLat: 60.22\nLon: 24.77\nAltitude: 30 m asl\nMembers: 1');"
+  title="Espoo, Sep&auml;nkyl&auml; (Synop AWS)"
+  alt="Espoo, Sep&auml;nkyl&auml; (Synop AWS)"
+  onmouseover="window.status='Espoo, Sep&auml;nkyl&auml; (Synop AWS)'; return true;" />
+<area
+  shape="rect"
+  coords="30,370 54,377"
+  href="javascript: alert('Station: Russar&ouml;\nCity: Hanko\nProducer: Synop AWS\nLat: 59.767\nLon: 22.95\nAltitude: 5 m asl\nMembers: 1');"
+  title="Hanko, Russar&ouml; (Synop AWS)"
+  alt="Hanko, Russar&ouml; (Synop AWS)"
+  onmouseover="window.status='Hanko, Russar&ouml; (Synop AWS)'; return true;" />
+<area
+  shape="rect"
+  coords="76,346 100,353"
+  href="javascript: alert('Station: Tv&auml;rminne\nCity: Hanko\nProducer: Synop AWS\nLat: 59.85\nLon: 23.25\nAltitude: 3 m asl\nMembers: 1');"
+  title="Hanko, Tv&auml;rminne (Synop AWS)"
+  alt="Hanko, Tv&auml;rminne (Synop AWS)"
+  onmouseover="window.status='Hanko, Tv&auml;rminne (Synop AWS)'; return true;" />
+<area
+  shape="rect"
+  coords="337,274 361,281"
+  href="javascript: alert('Station: Harmaja\nCity: Helsinki\nProducer: Synop AWS\nLat: 60.10472\nLon: 24.97861\nAltitude: 3 m asl\nMembers: 1');"
+  title="Helsinki, Harmaja (Synop AWS)"
+  alt="Helsinki, Harmaja (Synop AWS)"
+  onmouseover="window.status='Helsinki, Harmaja (Synop AWS)'; return true;" />
+<area
+  shape="rect"
+  coords="333,255 357,262"
+  href="javascript: alert('Station: Kaisaniemi\nCity: Helsinki\nProducer: Synop AWS\nLat: 60.1833\nLon: 24.95\nAltitude: 4 m asl\nMembers: 1');"
+  title="Helsinki, Kaisaniemi (Synop AWS)"
+  alt="Helsinki, Kaisaniemi (Synop AWS)"
+  onmouseover="window.status='Helsinki, Kaisaniemi (Synop AWS)'; return true;" />
+<area
+  shape="rect"
+  coords="336,232 360,239"
+  href="javascript: alert('Station: Kumpula\nCity: Helsinki\nProducer: Synop AWS\nLat: 60.2\nLon: 24.97\nAltitude: 26 m asl\nMembers: 1');"
+  title="Helsinki, Kumpula (Synop AWS)"
+  alt="Helsinki, Kumpula (Synop AWS)"
+  onmouseover="window.status='Helsinki, Kumpula (Synop AWS)'; return true;" />
+<area
+  shape="rect"
+  coords="330,320 354,327"
+  href="javascript: alert('Station: Majakka\nCity: Helsinki\nProducer: Synop AWS\nLat: 59.95\nLon: 24.93\nAltitude: 0 m asl\nMembers: 1');"
+  title="Helsinki, Majakka (Synop AWS)"
+  alt="Helsinki, Majakka (Synop AWS)"
+  onmouseover="window.status='Helsinki, Majakka (Synop AWS)'; return true;" />
+<area
+  shape="rect"
+  coords="311,125 335,132"
+  href="javascript: alert('Station: Mutila\nCity: Hyvink&auml;&auml;\nProducer: Synop AWS\nLat: 60.6\nLon: 24.8\nAltitude: 86 m asl\nMembers: 1');"
+  title="Hyvink&auml;&auml;, Mutila (Synop AWS)"
+  alt="Hyvink&auml;&auml;, Mutila (Synop AWS)"
+  onmouseover="window.status='Hyvink&auml;&auml;, Mutila (Synop AWS)'; return true;" />
+<area
+  shape="rect"
+  coords="269,11 293,18"
+  href="javascript: alert('Station: H&auml;meenlinna\nCity: H&auml;meenlinna\nProducer: Synop AWS\nLat: 60.98\nLon: 24.51\nAltitude: 87 m asl\nMembers: 1');"
+  title="H&auml;meenlinna, H&auml;meenlinna (Synop AWS)"
+  alt="H&auml;meenlinna, H&auml;meenlinna (Synop AWS)"
+  onmouseover="window.status='H&auml;meenlinna, H&auml;meenlinna (Synop AWS)'; return true;" />
+<area
+  shape="rect"
+  coords="141,162 165,169"
+  href="javascript: alert('Station: Kiikala airport\nCity: Kiikala\nProducer: Synop AWS\nLat: 60.47\nLon: 23.65\nAltitude: 116 m asl\nMembers: 1');"
+  title="Kiikala, Kiikala airport (Synop AWS)"
+  alt="Kiikala, Kiikala airport (Synop AWS)"
+  onmouseover="window.status='Kiikala, Kiikala airport (Synop AWS)'; return true;" />
+<area
+  shape="rect"
+  coords="242,329 266,336"
+  href="javascript: alert('Station: M&auml;kiluoto\nCity: Kirkkonummi\nProducer: Synop AWS\nLat: 59.92\nLon: 24.35\nAltitude: 2 m asl\nMembers: 1');"
+  title="Kirkkonummi, M&auml;kiluoto (Synop AWS)"
+  alt="Kirkkonummi, M&auml;kiluoto (Synop AWS)"
+  onmouseover="window.status='Kirkkonummi, M&auml;kiluoto (Synop AWS)'; return true;" />
+<area
+  shape="rect"
+  coords="432,17 456,24"
+  href="javascript: alert('Station: Laune\nCity: Lahti\nProducer: Synop AWS\nLat: 60.9618\nLon: 25.6341\nAltitude: 78 m asl\nMembers: 1');"
+  title="Lahti, Laune (Synop AWS)"
+  alt="Lahti, Laune (Synop AWS)"
+  onmouseover="window.status='Lahti, Laune (Synop AWS)'; return true;" />
+<area
+  shape="rect"
+  coords="556,222 580,229"
+  href="javascript: alert('Station: Orrengrund\nCity: Loviisa\nProducer: Synop AWS\nLat: 60.27\nLon: 26.45\nAltitude: 5 m asl\nMembers: 1');"
+  title="Loviisa, Orrengrund (Synop AWS)"
+  alt="Loviisa, Orrengrund (Synop AWS)"
+  onmouseover="window.status='Loviisa, Orrengrund (Synop AWS)'; return true;" />
+<area
+  shape="rect"
+  coords="305,164 329,171"
+  href="javascript: alert('Station: Nurmij&auml;rvi\nCity: Nurmij&auml;rvi\nProducer: Synop AWS\nLat: 60.47\nLon: 24.76\nAltitude: 111 m asl\nMembers: 1');"
+  title="Nurmij&auml;rvi, Nurmij&auml;rvi (Synop AWS)"
+  alt="Nurmij&auml;rvi, Nurmij&auml;rvi (Synop AWS)"
+  onmouseover="window.status='Nurmij&auml;rvi, Nurmij&auml;rvi (Synop AWS)'; return true;" />
+<area
+  shape="rect"
+  coords="434,245 458,252"
+  href="javascript: alert('Station: Em&auml;salo\nCity: Porvoo\nProducer: Synop AWS\nLat: 60.2\nLon: 25.63\nAltitude: 20 m asl\nMembers: 1');"
+  title="Porvoo, Em&auml;salo (Synop AWS)"
+  alt="Porvoo, Em&auml;salo (Synop AWS)"
+  onmouseover="window.status='Porvoo, Em&auml;salo (Synop AWS)'; return true;" />
+<area
+  shape="rect"
+  coords="431,187 455,194"
+  href="javascript: alert('Station: Harabacka\nCity: Porvoo\nProducer: Synop AWS\nLat: 60.3914\nLon: 25.6114\nAltitude: 22 m asl\nMembers: 1');"
+  title="Porvoo, Harabacka (Synop AWS)"
+  alt="Porvoo, Harabacka (Synop AWS)"
+  onmouseover="window.status='Porvoo, Harabacka (Synop AWS)'; return true;" />
+<area
+  shape="rect"
+  coords="431,310 455,317"
+  href="javascript: alert('Station: Kalb&aring;dagrund\nCity: Porvoo\nProducer: Synop AWS\nLat: 59.9833\nLon: 25.6\nAltitude: 0 m asl\nMembers: 1');"
+  title="Porvoo, Kalb&aring;dagrund (Synop AWS)"
+  alt="Porvoo, Kalb&aring;dagrund (Synop AWS)"
+  onmouseover="window.status='Porvoo, Kalb&aring;dagrund (Synop AWS)'; return true;" />
+<area
+  shape="rect"
+  coords="126,353 150,360"
+  href="javascript: alert('Station: Jussar&ouml;\nCity: Raasepori\nProducer: Synop AWS\nLat: 59.8333\nLon: 23.58\nAltitude: 15 m asl\nMembers: 1');"
+  title="Raasepori, Jussar&ouml; (Synop AWS)"
+  alt="Raasepori, Jussar&ouml; (Synop AWS)"
+  onmouseover="window.status='Raasepori, Jussar&ouml; (Synop AWS)'; return true;" />
+<area
+  shape="rect"
+  coords="61,189 85,196"
+  href="javascript: alert('Station: K&auml;rkk&auml;\nCity: Salo\nProducer: Synop AWS\nLat: 60.37361\nLon: 23.11611\nAltitude: 3 m asl\nMembers: 1');"
+  title="Salo, K&auml;rkk&auml; (Synop AWS)"
+  alt="Salo, K&auml;rkk&auml; (Synop AWS)"
+  onmouseover="window.status='Salo, K&auml;rkk&auml; (Synop AWS)'; return true;" />
+<area
+  shape="rect"
+  coords="336,206 360,213"
+  href="javascript: alert('Station: Vantaa\nCity: Vantaa\nProducer: Synop AWS\nLat: 60.33\nLon: 24.97\nAltitude: 53 m asl\nMembers: 1');"
+  title="Vantaa, Vantaa (Synop AWS)"
+  alt="Vantaa, Vantaa (Synop AWS)"
+  onmouseover="window.status='Vantaa, Vantaa (Synop AWS)'; return true;" />
+<area
+  shape="rect"
+  coords="567,459 591,466"
+  href="javascript: alert('Station: Kunda\nCity: Viro, Kunda\nProducer: Synop AWS\nLat: 59.48\nLon: 26.48\nMembers: 1');"
+  title="Viro, Kunda, Kunda (Synop AWS)"
+  alt="Viro, Kunda, Kunda (Synop AWS)"
+  onmouseover="window.status='Viro, Kunda, Kunda (Synop AWS)'; return true;" />
+<area
+  shape="rect"
+  coords="194,500 218,507"
+  href="javascript: alert('Station: Pakri\nCity: Viro, Pakri\nProducer: Synop AWS\nLat: 59.35\nLon: 24.05\nMembers: 1');"
+  title="Viro, Pakri, Pakri (Synop AWS)"
+  alt="Viro, Pakri, Pakri (Synop AWS)"
+  onmouseover="window.status='Viro, Pakri, Pakri (Synop AWS)'; return true;" />
+<area
+  shape="rect"
+  coords="300,471 324,478"
+  href="javascript: alert('Station: Tallinna\nCity: Viro, Tallinna\nProducer: Synop AWS\nLat: 59.45\nLon: 24.74\nMembers: 1');"
+  title="Viro, Tallinna, Tallinna (Synop AWS)"
+  alt="Viro, Tallinna, Tallinna (Synop AWS)"
+  onmouseover="window.status='Viro, Tallinna, Tallinna (Synop AWS)'; return true;" />
+<area
+  shape="rect"
+  coords="420,153 444,160"
+  href="javascript: alert('Station: Monninkyl&auml;\nCity: Askola\nProducer: Weather transmitter WXT\nLat: 60.5063\nLon: 25.5376\nAltitude: 47 m asl\nFounded: 2005-05-26\nMembers: 3');"
+  title="Askola, Monninkyl&auml; (Weather transmitter WXT)"
+  alt="Askola, Monninkyl&auml; (Weather transmitter WXT)"
+  onmouseover="window.status='Askola, Monninkyl&auml; (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="303,250 327,257"
+  href="javascript: alert('Station: Juhanila\nCity: Espoo\nProducer: Weather transmitter WXT\nLat: 60.1834\nLon: 24.7509\nAltitude: 32 m asl\nFounded: 2005-06-13\nMembers: 2');"
+  title="Espoo, Juhanila (Weather transmitter WXT)"
+  alt="Espoo, Juhanila (Weather transmitter WXT)"
+  onmouseover="window.status='Espoo, Juhanila (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="313,240 337,247"
+  href="javascript: alert('Station: Lepp&auml;vaara\nCity: Espoo\nProducer: Weather transmitter WXT\nLat: 60.2167\nLon: 24.8167\nAltitude: 10 m asl\nFounded: 2005-05-23\nMembers: 1');"
+  title="Espoo, Lepp&auml;vaara (Weather transmitter WXT)"
+  alt="Espoo, Lepp&auml;vaara (Weather transmitter WXT)"
+  onmouseover="window.status='Espoo, Lepp&auml;vaara (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="291,209 315,216"
+  href="javascript: alert('Station: Luukki\nCity: Espoo\nProducer: Weather transmitter WXT\nLat: 60.3204\nLon: 24.6716\nAltitude: 60 m asl\nFounded: 2006-06-20\nMembers: 1');"
+  title="Espoo, Luukki (Weather transmitter WXT)"
+  alt="Espoo, Luukki (Weather transmitter WXT)"
+  onmouseover="window.status='Espoo, Luukki (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="315,250 339,257"
+  href="javascript: alert('Station: Otaniemi - athletes village #1\nCity: Espoo\nProducer: Weather transmitter WXT\nLat: 60.1847\nLon: 24.8315\nFounded: 2005-08-02\nMembers: 1');"
+  title="Espoo, Otaniemi - athletes village #1 (Weather transmitter WXT)"
+  alt="Espoo, Otaniemi - athletes village #1 (Weather transmitter WXT)"
+  onmouseover="window.status='Espoo, Otaniemi - athletes village #1 (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="315,250 339,257"
+  href="javascript: alert('Station: Otaniemi - athletes village #2\nCity: Espoo\nProducer: Weather transmitter WXT\nLat: 60.184\nLon: 24.8318\nAltitude: 9 m asl\nFounded: 2005-08-03\nMembers: 1');"
+  title="Espoo, Otaniemi - athletes village #2 (Weather transmitter WXT)"
+  alt="Espoo, Otaniemi - athletes village #2 (Weather transmitter WXT)"
+  onmouseover="window.status='Espoo, Otaniemi - athletes village #2 (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="297,271 321,278"
+  href="javascript: alert('Station: Suvisaaristo\nCity: Espoo\nProducer: Weather transmitter WXT\nLat: 60.1125\nLon: 24.7139\nAltitude: 20 m asl\nFounded: 2005-05-31\nMembers: 2');"
+  title="Espoo, Suvisaaristo (Weather transmitter WXT)"
+  alt="Espoo, Suvisaaristo (Weather transmitter WXT)"
+  onmouseover="window.status='Espoo, Suvisaaristo (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="28,349 52,356"
+  href="javascript: alert('Station: Hanko\nCity: Hanko\nProducer: Weather transmitter WXT\nLat: 59.8372\nLon: 22.9349\nAltitude: 21 m asl\nFounded: 2005-05-31\nMembers: 2');"
+  title="Hanko, Hanko (Weather transmitter WXT)"
+  alt="Hanko, Hanko (Weather transmitter WXT)"
+  onmouseover="window.status='Hanko, Hanko (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="348,61 372,68"
+  href="javascript: alert('Station: Latola\nCity: Hausj&auml;rvi\nProducer: Weather transmitter WXT\nLat: 60.8154\nLon: 25.0508\nAltitude: 95 m asl\nFounded: 2005-05-26\nMembers: 2');"
+  title="Hausj&auml;rvi, Latola (Weather transmitter WXT)"
+  alt="Hausj&auml;rvi, Latola (Weather transmitter WXT)"
+  onmouseover="window.status='Hausj&auml;rvi, Latola (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="330,252 354,259"
+  href="javascript: alert('Station: Finlandia-house\nCity: Helsinki\nProducer: Weather transmitter WXT\nLat: 60.1765\nLon: 24.9311\nAltitude: 7 m asl\nFounded: 2005-08-03\nMembers: 1');"
+  title="Helsinki, Finlandia-house (Weather transmitter WXT)"
+  alt="Helsinki, Finlandia-house (Weather transmitter WXT)"
+  onmouseover="window.status='Helsinki, Finlandia-house (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="327,253 351,260"
+  href="javascript: alert('Station: Hietaniemi\nCity: Helsinki\nProducer: Weather transmitter WXT\nLat: 60.1759\nLon: 24.9096\nFounded: 2005-07-31\nMembers: 1');"
+  title="Helsinki, Hietaniemi (Weather transmitter WXT)"
+  alt="Helsinki, Hietaniemi (Weather transmitter WXT)"
+  onmouseover="window.status='Helsinki, Hietaniemi (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="331,241 355,248"
+  href="javascript: alert('Station: Ilmala\nCity: Helsinki\nProducer: Weather transmitter WXT\nLat: 60.2147\nLon: 24.9343\nAltitude: 18 m asl\nFounded: 2006-09-05\nMembers: 1');"
+  title="Helsinki, Ilmala (Weather transmitter WXT)"
+  alt="Helsinki, Ilmala (Weather transmitter WXT)"
+  onmouseover="window.status='Helsinki, Ilmala (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="334,255 358,262"
+  href="javascript: alert('Station: Market square\nCity: Helsinki\nProducer: Weather transmitter WXT\nLat: 60.1674\nLon: 24.9555\nAltitude: 1.5 m asl\nFounded: 2005-08-03\nMembers: 1');"
+  title="Helsinki, Market square (Weather transmitter WXT)"
+  alt="Helsinki, Market square (Weather transmitter WXT)"
+  onmouseover="window.status='Helsinki, Market square (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="329,249 353,256"
+  href="javascript: alert('Station: Olympic stadium field #1\nCity: Helsinki\nProducer: Weather transmitter WXT\nLat: 60.1869\nLon: 24.9271\nFounded: 2005-07-31\nMembers: 1');"
+  title="Helsinki, Olympic stadium field #1 (Weather transmitter WXT)"
+  alt="Helsinki, Olympic stadium field #1 (Weather transmitter WXT)"
+  onmouseover="window.status='Helsinki, Olympic stadium field #1 (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="330,249 354,256"
+  href="javascript: alert('Station: Olympic stadium field #2\nCity: Helsinki\nProducer: Weather transmitter WXT\nLat: 60.1866\nLon: 24.9279\nAltitude: 12 m asl\nFounded: 2005-08-03\nMembers: 1');"
+  title="Helsinki, Olympic stadium field #2 (Weather transmitter WXT)"
+  alt="Helsinki, Olympic stadium field #2 (Weather transmitter WXT)"
+  onmouseover="window.status='Helsinki, Olympic stadium field #2 (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="329,250 353,257"
+  href="javascript: alert('Station: Olympic stadium ticket booth #1\nCity: Helsinki\nProducer: Weather transmitter WXT\nLat: 60.1858\nLon: 24.9265\nFounded: 2005-06-16\nMembers: 1');"
+  title="Helsinki, Olympic stadium ticket booth #1 (Weather transmitter WXT)"
+  alt="Helsinki, Olympic stadium ticket booth #1 (Weather transmitter WXT)"
+  onmouseover="window.status='Helsinki, Olympic stadium ticket booth #1 (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="348,242 372,249"
+  href="javascript: alert('Station: Roihupelto\nCity: Helsinki\nProducer: Weather transmitter WXT\nLat: 60.2094\nLon: 25.0504\nAltitude: 29 m asl\nFounded: 2005-05-31\nMembers: 4');"
+  title="Helsinki, Roihupelto (Weather transmitter WXT)"
+  alt="Helsinki, Roihupelto (Weather transmitter WXT)"
+  onmouseover="window.status='Helsinki, Roihupelto (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="330,249 354,256"
+  href="javascript: alert('Station: Swimming stadium\nCity: Helsinki\nProducer: Weather transmitter WXT\nLat: 60.1885\nLon: 24.9302\nAltitude: 15 m asl\nFounded: 2006-06-20\nMembers: 1');"
+  title="Helsinki, Swimming stadium (Weather transmitter WXT)"
+  alt="Helsinki, Swimming stadium (Weather transmitter WXT)"
+  onmouseover="window.status='Helsinki, Swimming stadium (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="335,247 359,254"
+  href="javascript: alert('Station: Vallila\nCity: Helsinki\nProducer: Weather transmitter WXT\nLat: 60.195\nLon: 24.963\nAltitude: 21 m asl\nFounded: 2005-05-22\nMembers: 1');"
+  title="Helsinki, Vallila (Weather transmitter WXT)"
+  alt="Helsinki, Vallila (Weather transmitter WXT)"
+  onmouseover="window.status='Helsinki, Vallila (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="343,130 367,137"
+  href="javascript: alert('Station: Kaukas\nCity: Hyvink&auml;&auml;\nProducer: Weather transmitter WXT\nLat: 60.5836\nLon: 25.0176\nAltitude: 90 m asl\nFounded: 2005-05-31\nMembers: 3');"
+  title="Hyvink&auml;&auml;, Kaukas (Weather transmitter WXT)"
+  alt="Hyvink&auml;&auml;, Kaukas (Weather transmitter WXT)"
+  onmouseover="window.status='Hyvink&auml;&auml;, Kaukas (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="287,124 311,131"
+  href="javascript: alert('Station: Kyt&auml;j&auml;\nCity: Hyvink&auml;&auml;\nProducer: Weather transmitter WXT\nLat: 60.6023\nLon: 24.6383\nAltitude: 90 m asl\nFounded: 2006-06-20\nMembers: 1');"
+  title="Hyvink&auml;&auml;, Kyt&auml;j&auml; (Weather transmitter WXT)"
+  alt="Hyvink&auml;&auml;, Kyt&auml;j&auml; (Weather transmitter WXT)"
+  onmouseover="window.status='Hyvink&auml;&auml;, Kyt&auml;j&auml; (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="193,324 217,331"
+  href="javascript: alert('Station: B&aring;gask&auml;r\nCity: Inkoo\nProducer: Weather transmitter WXT\nLat: 59.9336\nLon: 24.0192\nAltitude: 12 m asl\nFounded: 2005-05-31\nMembers: 2');"
+  title="Inkoo, B&aring;gask&auml;r (Weather transmitter WXT)"
+  alt="Inkoo, B&aring;gask&auml;r (Weather transmitter WXT)"
+  onmouseover="window.status='Inkoo, B&aring;gask&auml;r (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="214,293 238,300"
+  href="javascript: alert('Station: Deger&ouml;\nCity: Inkoo\nProducer: Weather transmitter WXT\nLat: 60.0365\nLon: 24.1599\nAltitude: 15 m asl\nFounded: 2005-05-31\nMembers: 2');"
+  title="Inkoo, Deger&ouml; (Weather transmitter WXT)"
+  alt="Inkoo, Deger&ouml; (Weather transmitter WXT)"
+  onmouseover="window.status='Inkoo, Deger&ouml; (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="274,33 298,40"
+  href="javascript: alert('Station: Virala\nCity: Janakkala\nProducer: Weather transmitter WXT\nLat: 60.9087\nLon: 24.5442\nAltitude: 115 m asl\nFounded: 2005-06-21\nMembers: 2');"
+  title="Janakkala, Virala (Weather transmitter WXT)"
+  alt="Janakkala, Virala (Weather transmitter WXT)"
+  onmouseover="window.status='Janakkala, Virala (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="121,58 145,65"
+  href="javascript: alert('Station: Jokioinen observatory\nCity: Jokioinen\nProducer: Weather transmitter WXT\nLat: 60.8162\nLon: 23.499\nAltitude: 100 m asl\nFounded: 2007-03-18\nMembers: 1');"
+  title="Jokioinen, Jokioinen observatory (Weather transmitter WXT)"
+  alt="Jokioinen, Jokioinen observatory (Weather transmitter WXT)"
+  onmouseover="window.status='Jokioinen, Jokioinen observatory (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="352,160 376,167"
+  href="javascript: alert('Station: Sorto\nCity: J&auml;rvenp&auml;&auml;\nProducer: Weather transmitter WXT\nLat: 60.4842\nLon: 25.0817\nAltitude: 52 m asl\nFounded: 2006-08-20\nMembers: 1');"
+  title="J&auml;rvenp&auml;&auml;, Sorto (Weather transmitter WXT)"
+  alt="J&auml;rvenp&auml;&auml;, Sorto (Weather transmitter WXT)"
+  onmouseover="window.status='J&auml;rvenp&auml;&auml;, Sorto (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="164,237 188,244"
+  href="javascript: alert('Station: Lohjansaari\nCity: Karjalohja\nProducer: Weather transmitter WXT\nLat: 60.2227\nLon: 23.8169\nAltitude: 54 m asl\nFounded: 2005-06-13\nMembers: 1');"
+  title="Karjalohja, Lohjansaari (Weather transmitter WXT)"
+  alt="Karjalohja, Lohjansaari (Weather transmitter WXT)"
+  onmouseover="window.status='Karjalohja, Lohjansaari (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="255,260 279,267"
+  href="javascript: alert('Station: Ingels\nCity: Kirkkonummi\nProducer: Weather transmitter WXT\nLat: 60.1482\nLon: 24.4297\nAltitude: 43 m asl\nFounded: 2005-05-31\nMembers: 2');"
+  title="Kirkkonummi, Ingels (Weather transmitter WXT)"
+  alt="Kirkkonummi, Ingels (Weather transmitter WXT)"
+  onmouseover="window.status='Kirkkonummi, Ingels (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="266,303 290,310"
+  href="javascript: alert('Station: Svartviken\nCity: Kirkkonummi\nProducer: Weather transmitter WXT\nLat: 60.0081\nLon: 24.5078\nAltitude: 24 m asl\nFounded: 2005-06-01\nMembers: 2');"
+  title="Kirkkonummi, Svartviken (Weather transmitter WXT)"
+  alt="Kirkkonummi, Svartviken (Weather transmitter WXT)"
+  onmouseover="window.status='Kirkkonummi, Svartviken (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="245,98 269,105"
+  href="javascript: alert('Station: Hevosoja\nCity: Loppi\nProducer: Weather transmitter WXT\nLat: 60.6891\nLon: 24.353\nAltitude: 132 m asl\nFounded: 2005-05-26\nMembers: 2');"
+  title="Loppi, Hevosoja (Weather transmitter WXT)"
+  alt="Loppi, Hevosoja (Weather transmitter WXT)"
+  onmouseover="window.status='Loppi, Hevosoja (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="505,180 529,187"
+  href="javascript: alert('Station: Grevb&ouml;le\nCity: Loviisa\nProducer: Weather transmitter WXT\nLat: 60.413\nLon: 26.1112\nAltitude: 16 m asl\nFounded: 2005-06-06\nMembers: 2');"
+  title="Loviisa, Grevb&ouml;le (Weather transmitter WXT)"
+  alt="Loviisa, Grevb&ouml;le (Weather transmitter WXT)"
+  onmouseover="window.status='Loviisa, Grevb&ouml;le (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="492,119 516,126"
+  href="javascript: alert('Station: Mickelspiltom\nCity: Loviisa\nProducer: Weather transmitter WXT\nLat: 60.6176\nLon: 26.0342\nAltitude: 35 m asl\nFounded: 2005-06-06\nMembers: 1');"
+  title="Loviisa, Mickelspiltom (Weather transmitter WXT)"
+  alt="Loviisa, Mickelspiltom (Weather transmitter WXT)"
+  onmouseover="window.status='Loviisa, Mickelspiltom (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="559,134 583,141"
+  href="javascript: alert('Station: Viiril&auml;\nCity: Loviisa\nProducer: Weather transmitter WXT\nLat: 60.5621\nLon: 26.4852\nAltitude: 35 m asl\nFounded: 2005-06-06\nMembers: 2');"
+  title="Loviisa, Viiril&auml; (Weather transmitter WXT)"
+  alt="Loviisa, Viiril&auml; (Weather transmitter WXT)"
+  onmouseover="window.status='Loviisa, Viiril&auml; (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="553,186 577,193"
+  href="javascript: alert('Station: &Ouml;sterby\nCity: Loviisa\nProducer: Weather transmitter WXT\nLat: 60.3895\nLon: 26.4342\nAltitude: 5 m asl\nFounded: 2005-06-06\nMembers: 2');"
+  title="Loviisa, &Ouml;sterby (Weather transmitter WXT)"
+  alt="Loviisa, &Ouml;sterby (Weather transmitter WXT)"
+  onmouseover="window.status='Loviisa, &Ouml;sterby (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="395,104 419,111"
+  href="javascript: alert('Station: M&auml;lli\nCity: M&auml;nts&auml;l&auml;\nProducer: Weather transmitter WXT\nLat: 60.6713\nLon: 25.374\nAltitude: 76 m asl\nFounded: 2005-05-31\nMembers: 3');"
+  title="M&auml;nts&auml;l&auml;, M&auml;lli (Weather transmitter WXT)"
+  alt="M&auml;nts&auml;l&auml;, M&auml;lli (Weather transmitter WXT)"
+  onmouseover="window.status='M&auml;nts&auml;l&auml;, M&auml;lli (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="175,156 199,163"
+  href="javascript: alert('Station: Heimoonkruoppi\nCity: Nummi-Pusula\nProducer: Weather transmitter WXT\nLat: 60.4925\nLon: 23.8822\nFounded: 2006-08-20\nMembers: 1');"
+  title="Nummi-Pusula, Heimoonkruoppi (Weather transmitter WXT)"
+  alt="Nummi-Pusula, Heimoonkruoppi (Weather transmitter WXT)"
+  onmouseover="window.status='Nummi-Pusula, Heimoonkruoppi (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="192,189 216,196"
+  href="javascript: alert('Station: Hyrsyl&auml;\nCity: Nummi-Pusula\nProducer: Weather transmitter WXT\nLat: 60.3845\nLon: 23.999\nAltitude: 47 m asl\nFounded: 2005-06-13\nMembers: 2');"
+  title="Nummi-Pusula, Hyrsyl&auml; (Weather transmitter WXT)"
+  alt="Nummi-Pusula, Hyrsyl&auml; (Weather transmitter WXT)"
+  onmouseover="window.status='Nummi-Pusula, Hyrsyl&auml; (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="166,116 190,123"
+  href="javascript: alert('Station: Loukku\nCity: Nummi-Pusula\nProducer: Weather transmitter WXT\nLat: 60.6256\nLon: 23.8169\nAltitude: 150 m asl\nFounded: 2005-05-31\nMembers: 2');"
+  title="Nummi-Pusula, Loukku (Weather transmitter WXT)"
+  alt="Nummi-Pusula, Loukku (Weather transmitter WXT)"
+  onmouseover="window.status='Nummi-Pusula, Loukku (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="289,153 313,160"
+  href="javascript: alert('Station: R&ouml;ykk&auml;\nCity: Nurmij&auml;rvi\nProducer: Weather transmitter WXT\nLat: 60.5087\nLon: 24.6536\nAltitude: 111 m asl\nFounded: 2005-08-10\nMembers: 1');"
+  title="Nurmij&auml;rvi, R&ouml;ykk&auml; (Weather transmitter WXT)"
+  alt="Nurmij&auml;rvi, R&ouml;ykk&auml; (Weather transmitter WXT)"
+  onmouseover="window.status='Nurmij&auml;rvi, R&ouml;ykk&auml; (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="129,280 153,287"
+  href="javascript: alert('Station: K&ouml;pskog\nCity: Pohja\nProducer: Weather transmitter WXT\nLat: 60.0761\nLon: 23.5904\nAltitude: 45 m asl\nFounded: 2005-06-21\nMembers: 2');"
+  title="Pohja, K&ouml;pskog (Weather transmitter WXT)"
+  alt="Pohja, K&ouml;pskog (Weather transmitter WXT)"
+  onmouseover="window.status='Pohja, K&ouml;pskog (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="429,218 453,225"
+  href="javascript: alert('Station: Essvik\nCity: Porvoo\nProducer: Weather transmitter WXT\nLat: 60.2909\nLon: 25.5965\nAltitude: 33 m asl\nFounded: 2005-06-14\nMembers: 2');"
+  title="Porvoo, Essvik (Weather transmitter WXT)"
+  alt="Porvoo, Essvik (Weather transmitter WXT)"
+  onmouseover="window.status='Porvoo, Essvik (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="438,190 462,197"
+  href="javascript: alert('Station: Kokonniemi\nCity: Porvoo\nProducer: Weather transmitter WXT\nLat: 60.3821\nLon: 25.6575\nAltitude: 57 m asl\nFounded: 2006-06-20\nMembers: 1');"
+  title="Porvoo, Kokonniemi (Weather transmitter WXT)"
+  alt="Porvoo, Kokonniemi (Weather transmitter WXT)"
+  onmouseover="window.status='Porvoo, Kokonniemi (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="405,254 429,261"
+  href="javascript: alert('Station: Pirttisaari\nCity: Porvoo\nProducer: Weather transmitter WXT\nLat: 60.1702\nLon: 25.435\nAltitude: 13 m asl\nFounded: 2005-05-31\nMembers: 2');"
+  title="Porvoo, Pirttisaari (Weather transmitter WXT)"
+  alt="Porvoo, Pirttisaari (Weather transmitter WXT)"
+  onmouseover="window.status='Porvoo, Pirttisaari (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="449,204 473,211"
+  href="javascript: alert('Station: Seitlax\nCity: Porvoo\nProducer: Weather transmitter WXT\nLat: 60.3366\nLon: 25.7323\nAltitude: 15 m asl\nFounded: 2005-06-13\nMembers: 2');"
+  title="Porvoo, Seitlax (Weather transmitter WXT)"
+  alt="Porvoo, Seitlax (Weather transmitter WXT)"
+  onmouseover="window.status='Porvoo, Seitlax (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="473,226 497,233"
+  href="javascript: alert('Station: Tirmo\nCity: Porvoo\nProducer: Weather transmitter WXT\nLat: 60.2606\nLon: 25.8885\nAltitude: 12 m asl\nFounded: 2005-06-01\nMembers: 2');"
+  title="Porvoo, Tirmo (Weather transmitter WXT)"
+  alt="Porvoo, Tirmo (Weather transmitter WXT)"
+  onmouseover="window.status='Porvoo, Tirmo (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="447,106 471,113"
+  href="javascript: alert('Station: Kantele\nCity: Pukkila\nProducer: Weather transmitter WXT\nLat: 60.6612\nLon: 25.7235\nAltitude: 75 m asl\nFounded: 2005-06-21\nMembers: 1');"
+  title="Pukkila, Kantele (Weather transmitter WXT)"
+  alt="Pukkila, Kantele (Weather transmitter WXT)"
+  onmouseover="window.status='Pukkila, Kantele (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="12,302 36,309"
+  href="javascript: alert('Station: Padva\nCity: Raasepori\nProducer: Weather transmitter WXT\nLat: 59.9905\nLon: 22.8195\nAltitude: 17 m asl\nFounded: 2005-05-31\nMembers: 2');"
+  title="Raasepori, Padva (Weather transmitter WXT)"
+  alt="Raasepori, Padva (Weather transmitter WXT)"
+  onmouseover="window.status='Raasepori, Padva (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="100,331 124,338"
+  href="javascript: alert('Station: Sk&auml;rlandet\nCity: Raasepori\nProducer: Weather transmitter WXT\nLat: 59.9049\nLon: 23.4065\nAltitude: 15 m asl\nFounded: 2005-06-01\nMembers: 2');"
+  title="Raasepori, Sk&auml;rlandet (Weather transmitter WXT)"
+  alt="Raasepori, Sk&auml;rlandet (Weather transmitter WXT)"
+  onmouseover="window.status='Raasepori, Sk&auml;rlandet (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="154,324 178,331"
+  href="javascript: alert('Station: Str&ouml;ms&ouml;\nCity: Raasepori\nProducer: Weather transmitter WXT\nLat: 59.9313\nLon: 23.762\nAltitude: 21 m asl\nFounded: 2005-05-31\nMembers: 2');"
+  title="Raasepori, Str&ouml;ms&ouml; (Weather transmitter WXT)"
+  alt="Raasepori, Str&ouml;ms&ouml; (Weather transmitter WXT)"
+  onmouseover="window.status='Raasepori, Str&ouml;ms&ouml; (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="311,89 335,96"
+  href="javascript: alert('Station: Huhtionm&auml;ki\nCity: Riihim&auml;ki\nProducer: Weather transmitter WXT\nLat: 60.7227\nLon: 24.8025\nAltitude: 121 m asl\nFounded: 2005-05-26\nMembers: 2');"
+  title="Riihim&auml;ki, Huhtionm&auml;ki (Weather transmitter WXT)"
+  alt="Riihim&auml;ki, Huhtionm&auml;ki (Weather transmitter WXT)"
+  onmouseover="window.status='Riihim&auml;ki, Huhtionm&auml;ki (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="139,191 163,198"
+  href="javascript: alert('Station: Kitula\nCity: Salo\nProducer: Weather transmitter WXT\nLat: 60.374\nLon: 23.6409\nAltitude: 120 m asl\nFounded: 2006-04-18\nMembers: 1');"
+  title="Salo, Kitula (Weather transmitter WXT)"
+  alt="Salo, Kitula (Weather transmitter WXT)"
+  onmouseover="window.status='Salo, Kitula (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="400,210 424,217"
+  href="javascript: alert('Station: Boxby\nCity: Sipoo\nProducer: Weather transmitter WXT\nLat: 60.316\nLon: 25.3996\nAltitude: 15 m asl\nFounded: 2005-05-31\nMembers: 2');"
+  title="Sipoo, Boxby (Weather transmitter WXT)"
+  alt="Sipoo, Boxby (Weather transmitter WXT)"
+  onmouseover="window.status='Sipoo, Boxby (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="365,186 389,193"
+  href="javascript: alert('Station: Martinkyl&auml;\nCity: Sipoo\nProducer: Weather transmitter WXT\nLat: 60.3988\nLon: 25.1638\nAltitude: 52 m asl\nFounded: 2005-05-31\nMembers: 4');"
+  title="Sipoo, Martinkyl&auml; (Weather transmitter WXT)"
+  alt="Sipoo, Martinkyl&auml; (Weather transmitter WXT)"
+  onmouseover="window.status='Sipoo, Martinkyl&auml; (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="366,186 390,193"
+  href="javascript: alert('Station: Talma\nCity: Sipoo\nProducer: Weather transmitter WXT\nLat: 60.3977\nLon: 25.1756\nAltitude: 53 m asl\nFounded: 2006-06-20\nMembers: 1');"
+  title="Sipoo, Talma (Weather transmitter WXT)"
+  alt="Sipoo, Talma (Weather transmitter WXT)"
+  onmouseover="window.status='Sipoo, Talma (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="347,170 371,177"
+  href="javascript: alert('Station: Lammaskallio (Kemira GrowHow)\nCity: Tuusula\nProducer: Weather transmitter WXT\nLat: 60.4506\nLon: 25.043\nAltitude: 40 m asl\nFounded: 2006-05-23\nMembers: 1');"
+  title="Tuusula, Lammaskallio (Kemira GrowHow) (Weather transmitter WXT)"
+  alt="Tuusula, Lammaskallio (Kemira GrowHow) (Weather transmitter WXT)"
+  onmouseover="window.status='Tuusula, Lammaskallio (Kemira GrowHow) (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="311,196 335,203"
+  href="javascript: alert('Station: Luhtaanm&auml;ki\nCity: Vantaa\nProducer: Weather transmitter WXT\nLat: 60.3631\nLon: 24.8016\nAltitude: 57 m asl\nFounded: 2005-05-31\nMembers: 2');"
+  title="Vantaa, Luhtaanm&auml;ki (Weather transmitter WXT)"
+  alt="Vantaa, Luhtaanm&auml;ki (Weather transmitter WXT)"
+  onmouseover="window.status='Vantaa, Luhtaanm&auml;ki (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="346,218 370,225"
+  href="javascript: alert('Station: Tikkurila\nCity: Vantaa\nProducer: Weather transmitter WXT\nLat: 60.2901\nLon: 25.0401\nAltitude: 17 m asl\nFounded: 2005-06-01\nMembers: 1');"
+  title="Vantaa, Tikkurila (Weather transmitter WXT)"
+  alt="Vantaa, Tikkurila (Weather transmitter WXT)"
+  onmouseover="window.status='Vantaa, Tikkurila (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="322,221 346,228"
+  href="javascript: alert('Station: Vantaanlaakso\nCity: Vantaa\nProducer: Weather transmitter WXT\nLat: 60.2815\nLon: 24.8798\nAltitude: 27 m asl\nFounded: 2005-04-28\nMembers: 1');"
+  title="Vantaa, Vantaanlaakso (Weather transmitter WXT)"
+  alt="Vantaa, Vantaanlaakso (Weather transmitter WXT)"
+  onmouseover="window.status='Vantaa, Vantaanlaakso (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="253,158 277,165"
+  href="javascript: alert('Station: Etu-Moksi\nCity: Vihti\nProducer: Weather transmitter WXT\nLat: 60.489\nLon: 24.4089\nAltitude: 102 m asl\nFounded: 2005-05-31\nMembers: 2');"
+  title="Vihti, Etu-Moksi (Weather transmitter WXT)"
+  alt="Vihti, Etu-Moksi (Weather transmitter WXT)"
+  onmouseover="window.status='Vihti, Etu-Moksi (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="251,180 275,187"
+  href="javascript: alert('Station: Maasoja\nCity: Vihti\nProducer: Weather transmitter WXT\nLat: 60.4168\nLon: 24.3967\nAltitude: 42 m asl\nFounded: 2005-08-16\nMembers: 1');"
+  title="Vihti, Maasoja (Weather transmitter WXT)"
+  alt="Vihti, Maasoja (Weather transmitter WXT)"
+  onmouseover="window.status='Vihti, Maasoja (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="242,188 266,195"
+  href="javascript: alert('Station: Oinasjoki\nCity: Vihti\nProducer: Weather transmitter WXT\nLat: 60.3894\nLon: 24.3393\nAltitude: 87 m asl\nFounded: 2005-06-15\nMembers: 2');"
+  title="Vihti, Oinasjoki (Weather transmitter WXT)"
+  alt="Vihti, Oinasjoki (Weather transmitter WXT)"
+  onmouseover="window.status='Vihti, Oinasjoki (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="250,217 274,224"
+  href="javascript: alert('Station: Paloj&auml;rvi\nCity: Vihti\nProducer: Weather transmitter WXT\nLat: 60.292\nLon: 24.3944\nAltitude: 64 m asl\nFounded: 2005-05-31\nMembers: 2');"
+  title="Vihti, Paloj&auml;rvi (Weather transmitter WXT)"
+  alt="Vihti, Paloj&auml;rvi (Weather transmitter WXT)"
+  onmouseover="window.status='Vihti, Paloj&auml;rvi (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="322,221 346,228"
+  href="javascript: alert('Station: \nCity: \nProducer: Weather transmitter WXT\nLat: 60.2814\nLon: 24.88\nFounded: 2010-08-31\nMembers: 1');"
+  title=",  (Weather transmitter WXT)"
+  alt=",  (Weather transmitter WXT)"
+  onmouseover="window.status=',  (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="97,-840 121,-833"
+  href="javascript: alert('Station: \nCity: \nProducer: Weather transmitter WXT\nLat: 63.8364\nLon: 23.1352\nFounded: 2009-11-16\nMembers: 1');"
+  title=",  (Weather transmitter WXT)"
+  alt=",  (Weather transmitter WXT)"
+  onmouseover="window.status=',  (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="335,244 359,251"
+  href="javascript: alert('Station: \nCity: \nProducer: Weather transmitter WXT\nLat: 60.2031\nLon: 24.9613\nMembers: 1');"
+  title=",  (Weather transmitter WXT)"
+  alt=",  (Weather transmitter WXT)"
+  onmouseover="window.status=',  (Weather transmitter WXT)'; return true;" />
+<area
+  shape="rect"
+  coords="541,193 565,200"
+  href="javascript: alert('Station: Loviisa\nCity: Loviisa\nProducer: Nuclear power plant mast\nLat: 60.367\nLon: 26.35\nAltitude: 13 m asl\nMembers: 1');"
+  title="Loviisa, Loviisa (Nuclear power plant mast)"
+  alt="Loviisa, Loviisa (Nuclear power plant mast)"
+  onmouseover="window.status='Loviisa, Loviisa (Nuclear power plant mast)'; return true;" />
+</map>
+<table cellpadding="20">
+<tr><td><img class="animimg" id="anim_image_anim_anim" name="anim_image_anim_anim" src="http://1.img.fmi.fi/php/img.php?A=dA4ndr1aWd17/dRUXRLUWda7Rd9ULdq1Uqdr1UXX71UdbHhvJNvJYvvvNJJ.r/D" width="600" height="508" usemap="#stations" alt=""></td>
+<td>
+<small>Local time</small>
+<p>
+<table id="animtimer" style="border-collapse:collapse; padding:0px; margin:0px">
+<tr><td><div class="anim_txt" id="anim_txt_time_0" name="anim_img_time_0" onMouseOver="anim_image(0,1)">00:00&nbsp;23.09.</div></td></tr><tr><td><div class="anim_txt" id="anim_txt_time_1" name="anim_img_time_1" onMouseOver="anim_image(1,1)">03:00&nbsp;23.09.</div></td></tr><tr><td><div class="anim_txt" id="anim_txt_time_2" name="anim_img_time_2" onMouseOver="anim_image(2,1)">06:00&nbsp;23.09.</div></td></tr><tr><td><div class="anim_txt" id="anim_txt_time_3" name="anim_img_time_3" onMouseOver="anim_image(3,1)">09:00&nbsp;23.09.</div></td></tr><tr><td><div class="anim_txt" id="anim_txt_time_4" name="anim_img_time_4" onMouseOver="anim_image(4,1)">12:00&nbsp;23.09.</div></td></tr><tr><td><div class="anim_txt anim_txt_play" id="anim_txt_play" name="anim_img_play" onMouseOver="anim_play()">PLAY</div></td></tr></table>
+
+</td>
+</tr>
+</table>
+<small>It may take a while until all images are loaded and animation runs smoothly.</small>
+<p>
+<small>
+<a href="index.html">Main page</a> |
+<a href="Current_weather.html">Current weather</a> |
+<a href="Misc/Data_product_info.html">Information about data products</a> |
+<a href="http://en.ilmatieteenlaitos.fi/rain-and-cloudiness">Precipitation in Finland (FMI web-site)</a><br/>
+<a href="http://en.ilmatieteenlaitos.fi/rain-and-cloudiness/southern-finland"><strong style="color: #c00">NEW!</strong> Precipitation in Southern Finland with 15 min. time-step (FMI web site)</a>
+</small>
+</center>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+  var pageTracker = _gat._getTracker("UA-9509467-2");
+  pageTracker._trackPageview();
+} catch(err) {}</script>
+</body>
+</html>
