@@ -130,7 +130,7 @@ public class HTMLUtilTest {
 
     }
 
-    @Test
+    @Test(expected = DownloadTaskException.class)
     public void testParseTestbedPageWithAddedNewlines() throws Exception {
 
         initHTMLPage("testbed_changed_newlines.html");
