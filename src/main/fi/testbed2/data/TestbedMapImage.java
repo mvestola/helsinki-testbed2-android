@@ -3,6 +3,7 @@ package fi.testbed2.data;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
+import android.util.Log;
 import fi.testbed2.app.MainApplication;
 import fi.testbed2.exception.DownloadTaskException;
 
@@ -25,13 +26,15 @@ public class TestbedMapImage {
     private String localTimestamp;
     private int index;
     private String bitmapCacheKey;
-    private boolean bitmapDataIsDownloaded;
 
     public TestbedMapImage(String imageURL, String timestamp, int index) {
+
         this.imageURL = imageURL;
         this.timestamp = timestamp;
         this.index = index;
-        this.bitmapCacheKey = CACHE_KEY_PREFIX+this.index;
+        // Should be unique key
+        this.bitmapCacheKey = CACHE_KEY_PREFIX + this.getImageURL();
+
     }
 
     public String getImageURL() {
@@ -43,7 +46,7 @@ public class TestbedMapImage {
     }
 
     public boolean hasBitmapDataDownloaded() {
-        return bitmapDataIsDownloaded;
+        return getDownloadedBitmapImage()!=null;
     }
 
     /**
@@ -53,13 +56,13 @@ public class TestbedMapImage {
      */
     public void downloadAndCacheImage() throws DownloadTaskException {
 
-        if (!bitmapDataIsDownloaded) {
+        if (!hasBitmapDataDownloaded()) {
 
             InputStream stream = null;
 
             try {
 
-                //Log.e(MainApplication.LOG_IDENTIFIER, "downloading image: "+getLocalTimestamp());
+                //Log.e(MainApplication.LOG_IDENTIFIER, "downloading image: " + getLocalTimestamp());
 
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inTempStorage =  new byte[16 * 1024];
@@ -75,7 +78,6 @@ public class TestbedMapImage {
                 }
 
                 MainApplication.addBitmapToImageCache(bitmapCacheKey, downloadedBitmapImage);
-                bitmapDataIsDownloaded = true;
 
             } catch (IllegalStateException e) {
                 throw new DownloadTaskException("IllegalStateException: " + e.getMessage(), e);
@@ -126,4 +128,25 @@ public class TestbedMapImage {
         return localTimestamp;
     }
 
+    public String getBitmapCacheKey() {
+        return bitmapCacheKey;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TestbedMapImage that = (TestbedMapImage) o;
+
+        if (bitmapCacheKey != null ? !bitmapCacheKey.equals(that.bitmapCacheKey) : that.bitmapCacheKey != null)
+            return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return bitmapCacheKey != null ? bitmapCacheKey.hashCode() : 0;
+    }
 }

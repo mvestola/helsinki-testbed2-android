@@ -41,11 +41,13 @@ public class DownloadImagesTask extends AbstractTask<DownloadImagesTaskResult> {
     private DownloadImagesTaskResult processImages() throws DownloadTaskException {
 
         List<TestbedMapImage> testbedMapImages = MainApplication.getTestbedParsedPage().getAllTestbedImages();
+        int totalImagesNotDownloaded = MainApplication.getTestbedParsedPage().getNotDownloadedCount();
         int i= 1;
         for(TestbedMapImage image : testbedMapImages) {
 
             if (!image.hasBitmapDataDownloaded()) {
-                String progressText = activity.getString(R.string.progress_anim_downloading, i, testbedMapImages.size());
+                String progressText = activity.getString(R.string.progress_anim_downloading,
+                        i, totalImagesNotDownloaded);
                 this.activity.updateDownloadProgressInfo(progressText);
             }
 

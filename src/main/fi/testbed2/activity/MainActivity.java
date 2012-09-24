@@ -101,6 +101,8 @@ public class MainActivity extends AbstractActivity implements OnClickListener {
                         data.getStringExtra(AbstractTaskResult.MSG_CODE));
                 this.showErrorDialog(errorMsg);
                 break;
+            default:
+                break;
         }
 
     }

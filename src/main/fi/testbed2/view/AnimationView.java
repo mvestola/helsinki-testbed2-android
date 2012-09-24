@@ -136,7 +136,7 @@ public class AnimationView extends View {
 
         TestbedMapImage currentMap = getMapImagesToBeDrawn().get(currentFrame);
         String timestamp = currentMap.getTimestamp();
-		String text = String.format("%1$2d/%2$2d @ ", currentFrame + 1 , frames + 1) + timestamp;
+		String text = String.format("%1$02d/%2$02d @ ", currentFrame + 1 , frames + 1) + timestamp;
 
         if (downloadProgressText!=null) {
             text="@ "+timestamp+"  "+downloadProgressText;

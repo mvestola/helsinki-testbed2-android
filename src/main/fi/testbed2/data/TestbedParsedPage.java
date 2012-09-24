@@ -18,6 +18,19 @@ public class TestbedParsedPage {
         return testbedMapImages;
     }
 
+    public int getNotDownloadedCount() {
+
+        int notDownloaded = 0;
+        for (TestbedMapImage mapImage : testbedMapImages) {
+            if (!mapImage.hasBitmapDataDownloaded()) {
+                notDownloaded++;
+            }
+        }
+
+        return notDownloaded;
+
+    }
+
     public List<TestbedMapImage> getDownloadedTestbedImages() {
 
         List<TestbedMapImage> downloaded = new ArrayList<TestbedMapImage>();

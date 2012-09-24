@@ -167,7 +167,9 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
     @Override
 	protected void onPause() {
         super.onPause();
-        task.abort();
+        if (task!=null) {
+            task.abort();
+        }
         this.pauseAnimation();
         this.saveMapBounds();
 	}
@@ -175,12 +177,31 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
     @Override
     protected void onResume() {
         super.onResume();
+
+        /*
+         * Parsed page should always be non-null. However, sometimes the system seems
+         * to clear it (possibly on low memory). So if the page is null,
+         * return to the main activity.
+         */
+        if (MainApplication.getTestbedParsedPage()==null) {
+            returnToMainActivity();
+            return;
+        }
+
         updateBoundsToView();
         updateFrameDelayToView();
         if (!allImagesDownloaded) {
             task = new DownloadImagesTask(this);
             task.execute();
         }
+    }
+
+    private void returnToMainActivity() {
+        this.pauseAnimation();
+        this.allImagesDownloaded = false;
+        Intent intent = new Intent();
+        this.setResult(MainApplication.RESULT_OK, intent);
+        this.finish();
     }
 
     public void onAllImagesDownloaded() {
@@ -236,7 +257,6 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
     protected void onDestroy() {
         super.onDestroy();
         unbindDrawables(findViewById(R.id.AnimationRootView));
-        MainApplication.clearData();
     }
 
     @Override

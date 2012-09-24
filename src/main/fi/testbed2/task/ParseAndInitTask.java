@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import fi.testbed2.R;
 import fi.testbed2.app.MainApplication;
+import fi.testbed2.data.TestbedMapImage;
 import fi.testbed2.data.TestbedParsedPage;
 import fi.testbed2.exception.DownloadTaskException;
 import fi.testbed2.result.ParseAndInitTaskResult;
@@ -39,6 +40,22 @@ public class ParseAndInitTask extends AbstractTask<ParseAndInitTaskResult> {
         MainApplication.setTestbedParsedPage(result.getTestbedParsedPage());
     }
 
+    private void clearPreviousOldData(TestbedParsedPage oldPage, TestbedParsedPage newPage) {
+
+        if (oldPage==null) {
+            return;
+        }
+
+        for (TestbedMapImage mapImg : oldPage.getAllTestbedImages()) {
+
+            if (!newPage.getAllTestbedImages().contains(mapImg)) {
+                MainApplication.deleteBitmapCacheEntry(mapImg.getBitmapCacheKey());
+            }
+
+        }
+
+    }
+
     @Override
 	protected ParseAndInitTaskResult doInBackground(Void... params) {
 
@@ -53,6 +70,8 @@ public class ParseAndInitTask extends AbstractTask<ParseAndInitTaskResult> {
                 doCancel();
                 return null;
             }
+
+            clearPreviousOldData(MainApplication.getTestbedParsedPage(), result.getTestbedParsedPage());
 
             publishProgress(new DownloadTaskProgress(50, 0, false, activity.getString(R.string.progress_downloading)));
             testbedParsedPage.getLatestTestbedImage().downloadAndCacheImage();

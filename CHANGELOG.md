@@ -1,6 +1,12 @@
 Helsinki Testbed Viewer 2.0
 =============
 
+Version 2.0.6
+-------
+
+* Fixed NullPointerException which occurred sometimes after resuming to the application
+* Refreshing the animation view after a short time does not download all images again but only new images.
+
 Version 2.0.5
 -------
 
