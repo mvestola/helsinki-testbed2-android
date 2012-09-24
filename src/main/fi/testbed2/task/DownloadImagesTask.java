@@ -49,6 +49,7 @@ public class DownloadImagesTask extends AbstractTask<DownloadImagesTaskResult> {
                 String progressText = activity.getString(R.string.progress_anim_downloading,
                         i, totalImagesNotDownloaded);
                 this.activity.updateDownloadProgressInfo(progressText);
+                i++;
             }
 
             if (isAbort()) {
@@ -56,7 +57,6 @@ public class DownloadImagesTask extends AbstractTask<DownloadImagesTaskResult> {
                 return null;
             }
             image.downloadAndCacheImage();
-            i++;
 
         }
 
