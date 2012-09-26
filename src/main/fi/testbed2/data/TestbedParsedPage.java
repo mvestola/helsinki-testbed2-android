@@ -20,9 +20,13 @@ public class TestbedParsedPage {
 
     public int getNotDownloadedCount() {
 
+        if (testbedMapImages==null || testbedMapImages.isEmpty()) {
+            return Integer.MAX_VALUE;
+        }
+
         int notDownloaded = 0;
         for (TestbedMapImage mapImage : testbedMapImages) {
-            if (!mapImage.hasBitmapDataDownloaded()) {
+            if (mapImage==null || !mapImage.hasBitmapDataDownloaded()) {
                 notDownloaded++;
             }
         }

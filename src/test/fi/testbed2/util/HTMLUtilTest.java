@@ -1,5 +1,6 @@
 package fi.testbed2.util;
 
+import fi.testbed2.app.MainApplication;
 import fi.testbed2.data.TestbedParsedPage;
 import fi.testbed2.exception.DownloadTaskException;
 import fi.testbed2.task.Task;
@@ -21,7 +22,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest( { HTTPUtil.class })
+@PrepareForTest( { HTTPUtil.class, MainApplication.class })
 public class HTMLUtilTest {
 
     public static final String TEST_DATA_PATH = "src/test/data/";
@@ -41,7 +42,6 @@ public class HTMLUtilTest {
         TestbedParsedPage page = HTMLUtil.parseTestbedPage("http://url.is.irrelevant.here", task);
 
         assertEquals(15, page.getAllTestbedImages().size());
-        assertEquals(0,page.getDownloadedTestbedImages().size());
 
         assertEquals("12:40",page.getAllTestbedImages().get(0).getTimestamp());
         assertEquals("12:45",page.getAllTestbedImages().get(1).getTimestamp());
@@ -84,7 +84,6 @@ public class HTMLUtilTest {
         TestbedParsedPage page = HTMLUtil.parseTestbedPage("http://url.is.irrelevant.here", task);
 
         assertEquals(1, page.getAllTestbedImages().size());
-        assertEquals(0,page.getDownloadedTestbedImages().size());
 
         assertEquals("14:30",page.getAllTestbedImages().get(0).getTimestamp());
         assertEquals("http://3.img.fmi.fi/php/img.php?A=dA4ndr1aWd17/dRUXRLUWda7Rd9ULdq1Uqd9n/WdbHhvJNvJYvMNNMJ.r/D",page.getAllTestbedImages().get(0).getImageURL());
@@ -98,7 +97,6 @@ public class HTMLUtilTest {
         TestbedParsedPage page = HTMLUtil.parseTestbedPage("http://url.is.irrelevant.here", task);
 
         assertEquals(5, page.getAllTestbedImages().size());
-        assertEquals(0,page.getDownloadedTestbedImages().size());
 
         assertEquals("00:00",page.getAllTestbedImages().get(0).getTimestamp());
         assertEquals("03:00",page.getAllTestbedImages().get(1).getTimestamp());
@@ -136,7 +134,6 @@ public class HTMLUtilTest {
         initHTMLPage("testbed_changed_newlines.html");
         TestbedParsedPage page = HTMLUtil.parseTestbedPage("http://url.is.irrelevant.here", task);
         assertEquals(5, page.getAllTestbedImages().size());
-        assertEquals(0,page.getDownloadedTestbedImages().size());
 
         // These test are not currently executed since there will be exception
 
@@ -174,6 +171,9 @@ public class HTMLUtilTest {
 
             HttpEntity httpEntity = mock(HttpEntity.class);
             when(httpEntity.getContent()).thenReturn(in);
+
+            PowerMockito.mockStatic(MainApplication.class);
+            when(MainApplication.getContext()).thenReturn(PowerMockito.mock(MainApplication.class));
 
             PowerMockito.mockStatic(HTTPUtil.class);
             when(HTTPUtil.getHttpEntityForUrl(any(String.class))).thenReturn(httpEntity);

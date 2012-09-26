@@ -1,5 +1,6 @@
 package fi.testbed2.util;
 
+import fi.testbed2.R;
 import fi.testbed2.data.TestbedMapImage;
 import fi.testbed2.data.TestbedParsedPage;
 import fi.testbed2.exception.DownloadTaskException;
@@ -69,13 +70,13 @@ public class HTMLUtil {
 
             // validate timestamps and imageUrls
             if(timestamps == null) {
-                throw new DownloadTaskException("Could not parse timestamps (null)");
+                throw new DownloadTaskException(R.string.error_msg_parsing_timestamp);
             }
             if(imageUrls == null) {
-                throw new DownloadTaskException("Could not parse image url's (null)");
+                throw new DownloadTaskException(R.string.error_msg_parsing_urls);
             }
             if(timestamps.length != imageUrls.length) {
-                throw new DownloadTaskException("Timestamps and image counts differ. timestamps.length=" + timestamps.length + ", imageUrls.length=" + imageUrls.length);
+                throw new DownloadTaskException(R.string.error_msg_parsing_length);
             }
 
             int i = 0;
@@ -85,13 +86,10 @@ public class HTMLUtil {
                 testbedParsedPage.addTestbedMapImage(image);
             }
 
-        } catch (IllegalStateException e) {
-            throw new DownloadTaskException("IllegalStateException: " + e.getMessage(), e);
         } catch (IOException e) {
-            throw new DownloadTaskException("IOException: " + e.getMessage(), e);
+            throw new DownloadTaskException(R.string.error_msg_parsing_page);
         } catch(IndexOutOfBoundsException e) {
-            String message = "Parse error. This is programmers fault or webpage has changed its syntax. please report. IndexOutOfBoundsException: " + e.getMessage();
-            throw new DownloadTaskException(message, e);
+            throw new DownloadTaskException(R.string.error_msg_parsing_page_changed);
         }
 
         return testbedParsedPage;

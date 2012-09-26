@@ -3,7 +3,7 @@ package fi.testbed2.data;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
-import android.util.Log;
+import fi.testbed2.R;
 import fi.testbed2.app.MainApplication;
 import fi.testbed2.exception.DownloadTaskException;
 
@@ -24,14 +24,12 @@ public class TestbedMapImage {
     private String imageURL;
     private String timestamp;
     private String localTimestamp;
-    private int index;
     private String bitmapCacheKey;
 
     public TestbedMapImage(String imageURL, String timestamp, int index) {
 
         this.imageURL = imageURL;
         this.timestamp = timestamp;
-        this.index = index;
         // Should be unique key
         this.bitmapCacheKey = CACHE_KEY_PREFIX + this.getImageURL();
 
@@ -74,15 +72,14 @@ public class TestbedMapImage {
                 Bitmap downloadedBitmapImage = BitmapFactory.decodeStream(stream, new Rect(-1,-1,-1,-1), options);
 
                 if (downloadedBitmapImage==null) {
-                    throw new DownloadTaskException("Could not download map image.");
+                    throw new DownloadTaskException(R.string.error_msg_map_image_could_not_download);
                 }
 
                 MainApplication.addBitmapToImageCache(bitmapCacheKey, downloadedBitmapImage);
 
-            } catch (IllegalStateException e) {
-                throw new DownloadTaskException("IllegalStateException: " + e.getMessage(), e);
             } catch (IOException e) {
-                throw new DownloadTaskException("IOException: " + e.getMessage(), e);
+                e.printStackTrace();
+                throw new DownloadTaskException(R.string.error_msg_io_exception);
             } finally {
                 if (stream!=null) {
                     try {

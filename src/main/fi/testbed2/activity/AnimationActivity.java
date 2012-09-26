@@ -15,6 +15,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import fi.testbed2.R;
 import fi.testbed2.app.MainApplication;
+import fi.testbed2.data.TestbedParsedPage;
 import fi.testbed2.task.DownloadImagesTask;
 import fi.testbed2.util.SeekBarUtil;
 import fi.testbed2.view.AnimationView;
@@ -36,6 +37,11 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (!compulsoryDataIsAvailable()) {
+            returnToMainActivity();
+            return;
+        }
 
         // we want more space for the animation
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -178,12 +184,7 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
     protected void onResume() {
         super.onResume();
 
-        /*
-         * Parsed page should always be non-null. However, sometimes the system seems
-         * to clear it (possibly on low memory). So if the page is null,
-         * return to the main activity.
-         */
-        if (MainApplication.getTestbedParsedPage()==null) {
+        if (!compulsoryDataIsAvailable()) {
             returnToMainActivity();
             return;
         }
@@ -196,9 +197,38 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
         }
     }
 
+    /**
+     * Check that we have all compulsory data before starting the activity.
+     * Android system might kill the app after onPause() and when resuming the
+     * app after it has been killed, all static data is null.
+     *
+     * @return
+     */
+    private boolean compulsoryDataIsAvailable() {
+
+        TestbedParsedPage page = MainApplication.getTestbedParsedPage();
+
+        /*
+        * Parsed page should always be non-null.
+        */
+        if (page==null) {
+            return false;
+        }
+
+        boolean noImagesExist = page.getAllTestbedImages()==null || page.getAllTestbedImages().isEmpty();
+        boolean allImagesDownloadedButSomeAreMissing = allImagesDownloaded && page.getNotDownloadedCount()>0;
+
+        if (noImagesExist || allImagesDownloadedButSomeAreMissing) {
+            return false;
+        }
+
+        return true;
+
+    }
+
     private void returnToMainActivity() {
-        this.pauseAnimation();
         this.allImagesDownloaded = false;
+        MainApplication.clearData();
         Intent intent = new Intent();
         this.setResult(MainApplication.RESULT_OK, intent);
         this.finish();

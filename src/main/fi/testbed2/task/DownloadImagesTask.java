@@ -23,8 +23,13 @@ public class DownloadImagesTask extends AbstractTask<DownloadImagesTaskResult> {
 	}
 
     @Override
-    protected void onTaskEnd() {
+    protected void onSuccessTaskEnd() {
         activity.onAllImagesDownloaded();
+    }
+
+    @Override
+    protected void onErrorTaskEnd() {
+        activity.finish();
     }
 
     @Override
@@ -44,6 +49,10 @@ public class DownloadImagesTask extends AbstractTask<DownloadImagesTaskResult> {
         int totalImagesNotDownloaded = MainApplication.getTestbedParsedPage().getNotDownloadedCount();
         int i= 1;
         for(TestbedMapImage image : testbedMapImages) {
+
+            if (image==null) {
+                throw new DownloadTaskException(activity.getString(R.string.error_msg_parsed_map_image_null));
+            }
 
             if (!image.hasBitmapDataDownloaded()) {
                 String progressText = activity.getString(R.string.progress_anim_downloading,

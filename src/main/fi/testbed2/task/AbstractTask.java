@@ -57,16 +57,19 @@ public abstract class AbstractTask<T extends AbstractTaskResult> extends AsyncTa
 			Log.i(MainApplication.LOG_IDENTIFIER, result.getMessage());
 			saveResultToApplication(result);
 			activity.setResult(MainApplication.RESULT_OK, intent);
-		}
+            this.onSuccessTaskEnd();
+        }
 		else {
 			Log.e(MainApplication.LOG_IDENTIFIER, result.getMessage());
 			activity.setResult(MainApplication.RESULT_ERROR, intent);
+            this.onErrorTaskEnd();
 		}
-        this.onTaskEnd();
-		
+
 	}
 
-    protected abstract void onTaskEnd();
+    protected abstract void onSuccessTaskEnd();
+
+    protected abstract void onErrorTaskEnd();
 
     protected abstract void saveResultToApplication(T result);
 

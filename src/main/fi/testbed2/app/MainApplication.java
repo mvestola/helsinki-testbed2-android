@@ -23,6 +23,8 @@ public class MainApplication extends Application {
     public static final String PREF_MAP_NUMBER_OF_IMAGES = "PREF_MAP_NUMBER_OF_IMAGES";
     public static final String PREF_ORIENTATION_PREFERENCE_KEY_PREFIX = "PREFERENCE_ANIM_BOUNDS_ORIENTATION_";
 
+    private static Context mContext;
+
     private static LruCache<String, Bitmap> imageCache;
     private static LruCache<String, TestbedParsedPage> pageCache;
 
@@ -43,8 +45,14 @@ public class MainApplication extends Application {
 
     @Override
     public void onCreate() {
+        super.onCreate();
+        mContext = this;
         initImageCache();
         initPageCache();
+    }
+
+    public static Context getContext(){
+        return mContext;
     }
 
     private void initImageCache() {
@@ -88,6 +96,11 @@ public class MainApplication extends Application {
         clearPageCache();
         clearImageCache();
         System.gc();
+    }
+
+    public void onTerminate() {
+        super.onTerminate();
+        clearData();
     }
 
     public static void deleteBitmapCacheEntry(String key) {

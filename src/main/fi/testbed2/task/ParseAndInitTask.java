@@ -48,7 +48,7 @@ public class ParseAndInitTask extends AbstractTask<ParseAndInitTaskResult> {
 
         for (TestbedMapImage mapImg : oldPage.getAllTestbedImages()) {
 
-            if (!newPage.getAllTestbedImages().contains(mapImg)) {
+            if (mapImg!=null && !newPage.getAllTestbedImages().contains(mapImg)) {
                 MainApplication.deleteBitmapCacheEntry(mapImg.getBitmapCacheKey());
             }
 
@@ -85,7 +85,12 @@ public class ParseAndInitTask extends AbstractTask<ParseAndInitTaskResult> {
     }
 
     @Override
-    protected void onTaskEnd() {
+    protected void onSuccessTaskEnd() {
+        activity.finish();
+    }
+
+    @Override
+    protected void onErrorTaskEnd() {
         activity.finish();
     }
 

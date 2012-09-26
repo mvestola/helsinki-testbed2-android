@@ -1,5 +1,6 @@
 package fi.testbed2.util;
 
+import fi.testbed2.R;
 import fi.testbed2.exception.DownloadTaskException;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -27,32 +28,35 @@ public class HTTPUtil {
             StatusLine statusLine = response.getStatusLine();
 
             if(statusLine == null) {
-                String message = "Invalid HTTP status line (init)";
-                throw new DownloadTaskException(message);
+                throw new DownloadTaskException(R.string.error_msg_http_status, "-1");
             }
 
             int statusCode = statusLine.getStatusCode();
 
             if(statusCode != HTTP_VALID_STATUS_CODE) {
-                String message = "Invalid HTTP status code (init): " + statusCode;
-                throw new DownloadTaskException(message);
+                throw new DownloadTaskException(R.string.error_msg_http_status, ""+statusCode);
             }
 
             HttpEntity entity = response.getEntity();
 
             if(entity == null) {
-                throw new DownloadTaskException("Unable to retrieve HttpEntity for url: " + url);
+                throw new DownloadTaskException(R.string.error_msg_http_error);
             }
 
             return entity;
+        } catch(IllegalStateException e) {
+            e.printStackTrace();
+            throw new DownloadTaskException(R.string.error_msg_invalid_url, url);
         }
-        catch(IllegalArgumentException e)
-        {
-            throw new DownloadTaskException("IllegalArgumentException. Invalid url? url=" + url, e);
+        catch(IllegalArgumentException e) {
+            e.printStackTrace();
+            throw new DownloadTaskException(R.string.error_msg_invalid_url, url);
         } catch (ClientProtocolException e) {
-            throw new DownloadTaskException("ClientProtocolException: " + e.getMessage(), e);
+            e.printStackTrace();
+            throw new DownloadTaskException(R.string.error_msg_http_error);
         } catch (IOException e) {
-            throw new DownloadTaskException("IOException: " + e.getMessage(), e);
+            e.printStackTrace();
+            throw new DownloadTaskException(R.string.error_msg_http_error);
         }
 
     }

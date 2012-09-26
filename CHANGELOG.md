@@ -1,11 +1,19 @@
 Helsinki Testbed Viewer 2.0
 =============
 
+Version 2.0.7
+-------
+
+* Fixed crash bug which occurred when resuming the application after long time of inactivity
+* More user-friendly error messages and translated them to Finnish
+
+
 Version 2.0.6
 -------
 
 * Fixed NullPointerException which occurred sometimes after resuming to the application
 * Refreshing the animation view after a short time does not download all images again but only new images.
+
 
 Version 2.0.5
 -------

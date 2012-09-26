@@ -18,7 +18,6 @@
     <string name="about_visit_website">Application website</string>
     <string name="close_button">Close</string>
 
-    <string name="error_message_detailed" formatted="false">Unexpected error occurred: %s</string>
     <string name="notice_cancelled" formatted="false">Download cancelled</string>
 
     <string name="activity_label_settings">Settings</string>
@@ -47,5 +46,18 @@
     <string name="progress_downloading" formatted="false">Downloading latest weather map...</string>
     <string name="progress_done">Done</string>
     <string name="progress_anim_downloading" formatted="false">(Downloading: %d/%d)</string>
+
+    <string name="error_message_detailed" formatted="false">Unexpected error occurred: %s</string>
+    <string name="error_msg_map_image_could_not_download">Could not open map image. Please try again later.</string>
+    <string name="error_msg_io_exception">Could not download map image. Please try again later.</string>
+    <string name="error_msg_parsed_map_image_null">Could not process map image. Please try again later.</string>
+    <string name="error_msg_http_status" formatted="false">Could not connect to the server (HTTP %s). Please try again later.</string>
+    <string name="error_msg_http_error" formatted="false">Could not connect to the server. Please try again later.</string>
+    <string name="error_msg_invalid_url" formatted="false">Invalid URL: %s</string>
+    <string name="error_msg_parsing_timestamp" formatted="false">Could not parse image timestamps from HTML page.</string>
+    <string name="error_msg_parsing_urls" formatted="false">Could not parse image URLs from HTML page.</string>
+    <string name="error_msg_parsing_length" formatted="false">Could not parse images from HTML page.</string>
+    <string name="error_msg_parsing_page" formatted="false">Could not read HTML page.</string>
+    <string name="error_msg_parsing_page_changed" formatted="false">Could not parse HTML page. Webpage has changed its syntax. please report this error.</string>
 
 </resources>
