@@ -118,6 +118,9 @@ public abstract class AbstractActivity extends Activity {
      * @param view
      */
     protected void unbindDrawables(View view) {
+        if (view==null) {
+            return;
+        }
         if (view.getBackground() != null) {
             view.getBackground().setCallback(null);
         }
