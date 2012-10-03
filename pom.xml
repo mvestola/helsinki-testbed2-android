@@ -14,6 +14,7 @@
     </properties>
 
     <repositories>
+
         <repository>
             <id>oss-sonatype</id>
             <name>oss-sonatype</name>
@@ -22,6 +23,14 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
+
+        <!-- Used for javaproj-noawt -->
+        <repository>
+            <id>testbed2repo</id>
+            <name>testbed2repo</name>
+            <url>https://raw.github.com/mvestola/helsinki-testbed2-android-repo/master/repo</url>
+        </repository>
+
     </repositories>
 
     <dependencies>
@@ -36,7 +45,14 @@
             <groupId>com.google.android</groupId>
             <artifactId>support-v4</artifactId>
             <version>r7</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jhlabs</groupId>
+            <artifactId>javaproj-noawt</artifactId>
+            <version>1.0.6</version>
+            <scope>compile</scope>
         </dependency>
 
         <!-- Make sure this is below the android dependencies -->

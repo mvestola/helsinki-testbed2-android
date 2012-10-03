@@ -4,7 +4,7 @@
     <facet type="android" name="Android">
       <configuration>
         <option name="GEN_FOLDER_RELATIVE_PATH_APT" value="/target/generated-sources/r" />
-        <option name="GEN_FOLDER_RELATIVE_PATH_AIDL" value="/target/generated-sources/r" />
+        <option name="GEN_FOLDER_RELATIVE_PATH_AIDL" value="/target/generated-sources/aidl" />
         <option name="MANIFEST_FILE_RELATIVE_PATH" value="/AndroidManifest.xml" />
         <option name="RES_FOLDER_RELATIVE_PATH" value="/res" />
         <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/assets" />
@@ -15,7 +15,7 @@
         <option name="CUSTOM_APK_RESOURCE_FOLDER" value="" />
         <option name="USE_CUSTOM_COMPILER_MANIFEST" value="false" />
         <option name="CUSTOM_COMPILER_MANIFEST" value="" />
-        <option name="APK_PATH" value="" />
+        <option name="APK_PATH" value="/target/testbed2.apk" />
         <option name="LIBRARY_PROJECT" value="false" />
         <option name="RUN_PROCESS_RESOURCES_MAVEN_TASK" value="false" />
         <option name="GENERATE_UNSIGNED_APK" value="false" />
@@ -58,7 +58,8 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: xerces:xmlParserAPIs:2.6.2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: xpp3:xpp3:1.1.4c" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.json:json:20080701" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: com.google.android:support-v4:r7" level="project" />
+    <orderEntry type="library" name="Maven: com.google.android:support-v4:r7" level="project" />
+    <orderEntry type="library" name="Maven: com.jhlabs:javaproj-noawt:1.0.6" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: com.pivotallabs:robolectric:1.2-SNAPSHOT" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.objenesis:objenesis:1.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.xerial:sqlite-jdbc:3.7.2" level="project" />
