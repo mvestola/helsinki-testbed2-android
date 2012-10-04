@@ -1,9 +1,8 @@
 package fi.testbed2.activity;
 
+import com.xtremelabs.robolectric.RobolectricTestRunner;
 import fi.testbed2.R;
 import org.junit.Test;
-
-import com.xtremelabs.robolectric.RobolectricTestRunner;
 import org.junit.runner.RunWith;
 
 import static org.hamcrest.CoreMatchers.equalTo;

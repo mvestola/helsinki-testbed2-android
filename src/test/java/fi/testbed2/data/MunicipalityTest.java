@@ -1,11 +1,10 @@
 package fi.testbed2.data;
 
 import org.junit.Test;
+
 import java.util.SortedMap;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertNull;
+import static junit.framework.Assert.*;
 
 public class MunicipalityTest {
 
