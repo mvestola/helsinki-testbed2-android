@@ -2,8 +2,7 @@ package fi.testbed2.view;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Canvas;
-import android.graphics.Rect;
+import android.graphics.*;
 import android.graphics.drawable.BitmapDrawable;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
@@ -11,8 +10,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import com.jhlabs.map.Point2D;
 import fi.testbed2.app.MainApplication;
+import fi.testbed2.data.Municipality;
 import fi.testbed2.data.TestbedMapImage;
+import fi.testbed2.util.CoordinateUtil;
 import fi.testbed2.util.SeekBarUtil;
 
 import java.util.ArrayList;
@@ -150,10 +152,33 @@ public class AnimationView extends View {
 
         BitmapDrawable frame = new BitmapDrawable(currentMap.getDownloadedBitmapImage());
         frame.setBounds(bounds);
-		frame.draw(canvas);
 
-	}
-	
+        frame.draw(canvas);
+
+        drawPoint(CoordinateUtil.convertLocationToTestbedImageXY(Municipality.getMunicipality("Kouvola").getLocation()),
+                Color.RED, 5, canvas);
+        drawPoint(CoordinateUtil.convertLocationToTestbedImageXY(Municipality.getMunicipality("Helsinki").getLocation()),
+                Color.RED, 5, canvas);
+        drawPoint(CoordinateUtil.convertLocationToTestbedImageXY(Municipality.getMunicipality("Hämeenlinna").getLocation()),
+                Color.RED, 5, canvas);
+    }
+
+    private void drawPoint(Point2D.Double point, int color, int radius, Canvas canvas) {
+
+        Paint paint = new Paint();
+        paint.setColor(color);
+
+        float x = Double.valueOf(point.x).floatValue();
+        float y = Double.valueOf(point.y).floatValue();
+        final float scale = getContext().getResources().getDisplayMetrics().density;
+
+        float xScaled = x/scale+bounds.left+0.5f;
+        float yScaled = y/scale+bounds.top+0.5f;
+
+        canvas.drawCircle(xScaled, yScaled, radius, paint);
+
+    }
+
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		

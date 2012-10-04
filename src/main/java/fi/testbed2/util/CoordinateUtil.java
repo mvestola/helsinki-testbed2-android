@@ -13,16 +13,15 @@ public class CoordinateUtil {
 
     public static final String PROVIDER_NAME = "dummy_provider";
 
-    public static Location knownPointInHumppila = new Location(PROVIDER_NAME);
-    public static Location knownPointInPorvoo = new Location(PROVIDER_NAME);
+    private static Location knownPointInHumppila = new Location(PROVIDER_NAME);
+    private static Location knownPointInPorvoo = new Location(PROVIDER_NAME);
 
-    public static Point2D.Double knownPointInHumppilaXY;
-    public static Point2D.Double knownPointInPorvooXY;
+    private static Point2D.Double knownPointInHumppilaXY;
 
     /**
      * Manually calculated known point in the testbed map image
      */
-    public static Point2D.Double knownPointInHumppilaXYInTestbedMap =
+    private static Point2D.Double knownPointInHumppilaXYInTestbedMap =
             new Point2D.Double(99d, 16d);
 
     /*
@@ -30,8 +29,8 @@ public class CoordinateUtil {
     * which are given from Mercator projection to the x,y coordinates
     * of the testbed map still image.
     */
-    public static double xScale = 8314.6379;
-    public static double yScale = -8525.3994;
+    private static double xScale = 8314.6379;
+    private static double yScale = -8525.3994;
 
     static {
 
@@ -42,7 +41,6 @@ public class CoordinateUtil {
         knownPointInPorvoo.setLongitude(25.61653);
 
         knownPointInHumppilaXY = convertLocationToMercatorXY(knownPointInHumppila);
-        knownPointInPorvooXY = convertLocationToMercatorXY(knownPointInPorvoo);
 
     }
 

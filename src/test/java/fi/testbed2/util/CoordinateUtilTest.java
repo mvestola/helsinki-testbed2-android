@@ -212,4 +212,32 @@ public class CoordinateUtilTest {
 
     }
 
+    @Test
+    public void testTopLeftPointOfTestbedImage() throws Exception {
+
+        Location point = new Location(CoordinateUtil.PROVIDER_NAME);
+        point.setLatitude(61.005);  // y
+        point.setLongitude(22.657);   // x
+
+        Point2D.Double pos = CoordinateUtil.convertLocationToTestbedImageXY(point);
+
+        assertEquals(0.0, pos.x, PRECISION_STRICT);
+        assertEquals(0.0, pos.y, PRECISION_STRICT);
+
+    }
+
+    @Test
+    public void testTopRightPointOfTestbedImage() throws Exception {
+
+        Location point = new Location(CoordinateUtil.PROVIDER_NAME);
+        point.setLatitude(61.005);  // y
+        point.setLongitude(26.792);   // x
+
+        Point2D.Double pos = CoordinateUtil.convertLocationToTestbedImageXY(point);
+
+        assertEquals(600.0, pos.x, PRECISION_STRICT);
+        assertEquals(0.0, pos.y, PRECISION_STRICT);
+
+    }
+
 }
