@@ -35,4 +35,18 @@ public class MunicipalityTest {
         assertNull(Municipality.getMunicipality("Utsjoki"));
 
     }
+
+    @Test
+    public void testGetFinlandMunicipalityNamesShownInTestbedMapRightOrder() throws Exception {
+
+        String[] municipalities = Municipality.getFinlandMunicipalityNamesShownInTestbedMap();
+
+        assertEquals(79, municipalities.length);
+        assertEquals("Alastaro", municipalities[0]);
+        assertEquals("Kouvola", municipalities[30]);
+        assertEquals("Ypäjä", municipalities[78]);
+
+    }
+
+
 }

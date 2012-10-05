@@ -26,6 +26,7 @@
 
     <string name="preference_category_maps">Map image downloading settings</string>
     <string name="preference_category_animation">Animation settings</string>
+    <string name="preference_category_location">Location settings</string>
 
     <string name="preference_map_type_title">Map type</string>
     <string name="preference_map_type_summary">Which type of weather map to show</string>
@@ -41,6 +42,12 @@
 
     <string name="preference_anim_autostart_title">Automatic animation</string>
     <string name="preference_anim_autostart_summary">Check this if you want the animation to start automatically</string>
+
+    <string name="preference_location_user_title">Shown your location</string>
+    <string name="preference_location_user_summary">Check to show your location on the map</string>
+
+    <string name="preference_location_municipalities_title">Municipalities on map</string>
+    <string name="preference_location_municipalities_summary">Choose which municipalities are shown on the map</string>
 
     <string name="progress_parsing">Reading page from testbed.fmi.fi...</string>
     <string name="progress_downloading" formatted="false">Downloading latest weather map...</string>

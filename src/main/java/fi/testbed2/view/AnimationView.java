@@ -157,16 +157,21 @@ public class AnimationView extends View {
 
         frame.draw(canvas);
 
-        Point2D.Double userLocation = MainApplication.getUserLocationInMapPixels();
-
-        if (userLocation!=null) {
-            drawPoint(userLocation, Color.BLACK, canvas, true);
-        }
+        drawUserLocation(canvas);
 
         drawPoint(Municipality.getMunicipality("Kouvola").getPositionInMapPx(),
                 Color.BLACK, canvas, false);
         drawPoint(Municipality.getMunicipality("Hämeenlinna").getPositionInMapPx(),
                 Color.BLACK, canvas, false);
+    }
+
+    private void drawUserLocation(Canvas canvas) {
+        if (showUserLocation()) {
+            Point2D.Double userLocation = MainApplication.getUserLocationInMapPixels();
+            if (userLocation!=null) {
+                drawPoint(userLocation, Color.BLACK, canvas, true);
+            }
+        }
     }
 
 
@@ -370,6 +375,10 @@ public class AnimationView extends View {
             return list;
         }
 
+    }
+    public boolean showUserLocation() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        return sharedPreferences.getBoolean(MainApplication.PREF_LOCATION_SHOW_USER_LOCATION, true);
     }
 
 }

@@ -52,14 +52,19 @@ public class Municipality {
         return getFinlandMunicipalitiesShownInTestbedMap().get(name);
     }
 
+    public static String[] getFinlandMunicipalityNamesShownInTestbedMap() {
+        SortedMap<String, Municipality> map = getFinlandMunicipalitiesShownInTestbedMap();
+        return map.keySet().toArray(new String[0]);
+    }
+
     /**
-     * Returns list of municipalities (kunnat) in Finland which are shown
-     * in the testbed map still image. List of municipalities is copied from
-     * http://fi.wikipedia.org/wiki/Luettelo_Suomen_kuntien_koordinaateista .
-     * Not all municipalities are shown but only a small number of them.
-     *
-     * @return
-     */
+        * Returns list of municipalities (kunnat) in Finland which are shown
+        * in the testbed map still image. List of municipalities is copied from
+        * http://fi.wikipedia.org/wiki/Luettelo_Suomen_kuntien_koordinaateista .
+        * Not all municipalities are shown but only a small number of them.
+        *
+        * @return
+        */
     public static SortedMap<String, Municipality> getFinlandMunicipalitiesShownInTestbedMap() {
 
         if (municipalitiesInTestbedMap==null) {

@@ -22,6 +22,7 @@
 
     <string name="preference_category_maps">Karttakuvien latauksen asetukset</string>
     <string name="preference_category_animation">Animaation asetukset</string>
+    <string name="preference_category_location">Sijainnin asetukset</string>
 
     <string name="preference_map_type_title">Karttatyyppi</string>
     <string name="preference_map_type_summary">Näytettävä karttatyyppi</string>
@@ -37,6 +38,12 @@
 
     <string name="preference_anim_autostart_title">Automaattinen animaatio</string>
     <string name="preference_anim_autostart_summary">Rastita, jos haluat että animaatio alkaa automaattisesti</string>
+
+    <string name="preference_location_user_title">Näytä sijaintisi</string>
+    <string name="preference_location_user_summary">Rastita, jos haluat nykyisen sijaintisi näkyvän kartalla</string>
+
+    <string name="preference_location_municipalities_title">Kunnat kartalla</string>
+    <string name="preference_location_municipalities_summary">Valitse kunnat, jotka haluat näyttää kartalla</string>
 
     <string name="progress_parsing">Luetaan sivua osoitteesta testbed.fmi.fi...</string>
     <string name="progress_downloading" formatted="false">Ladataan viimeisin sääkartta...</string>
