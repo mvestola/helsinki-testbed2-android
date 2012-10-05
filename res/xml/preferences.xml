@@ -74,9 +74,9 @@
                 />
             <com.threefiftynice.android.preference.ListPreferenceMultiSelect
                     app:checkAll="check"
-                    app:separator="|"
+                    app:separator="==="
                     android:defaultValue=""
-                    android:key="PREF_LOCATION_SHOW_MUNICIPALITIES"
+                    android:key="PREF_LOCATION_MUNICIPALITIES"
                     android:title="@string/preference_location_municipalities_title"
                     android:dialogTitle="@string/preference_location_municipalities_title"
                     android:summary="@string/preference_location_municipalities_summary"

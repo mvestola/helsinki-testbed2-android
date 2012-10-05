@@ -158,11 +158,8 @@ public class AnimationView extends View {
         frame.draw(canvas);
 
         drawUserLocation(canvas);
+        drawMunicipalities(canvas);
 
-        drawPoint(Municipality.getMunicipality("Kouvola").getPositionInMapPx(),
-                Color.BLACK, canvas, false);
-        drawPoint(Municipality.getMunicipality("Hämeenlinna").getPositionInMapPx(),
-                Color.BLACK, canvas, false);
     }
 
     private void drawUserLocation(Canvas canvas) {
@@ -172,6 +169,27 @@ public class AnimationView extends View {
                 drawPoint(userLocation, Color.BLACK, canvas, true);
             }
         }
+    }
+
+    private void drawMunicipalities(Canvas canvas) {
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String municipalitiesString = sharedPreferences.getString(MainApplication.PREF_LOCATION_SHOW_MUNICIPALITIES, "");
+
+        String[] municipalities = municipalitiesString.split(
+                MainApplication.PREF_LOCATION_SHOW_MUNICIPALITIES_SPLIT);
+
+        if (municipalities.length<1 || municipalities[0].length()==0) {
+            return;
+        }
+
+        for (String municipalityName : municipalities) {
+            Municipality municipality = Municipality.getMunicipality(municipalityName);
+            if (municipality!=null) {
+                drawPoint(municipality.getPositionInMapPx(), Color.BLACK, canvas, false);
+            }
+        }
+
     }
 
 
