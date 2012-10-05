@@ -5,8 +5,14 @@ import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Bundle;
 import android.support.v4.util.LruCache;
+import com.jhlabs.map.Point2D;
 import fi.testbed2.data.TestbedParsedPage;
+import fi.testbed2.util.CoordinateUtil;
 
 public class MainApplication extends Application {
 
@@ -30,6 +36,8 @@ public class MainApplication extends Application {
 
     private static String PAGE_CACHE_KEY = "TESTBED_PAGE";
 
+    private static Point2D.Double userLocationInMapPx;
+
     public static TestbedParsedPage getTestbedParsedPage() {
         return pageCache.get(PAGE_CACHE_KEY);
     }
@@ -47,6 +55,7 @@ public class MainApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mContext = this;
+        initLocationListener();
         initImageCache();
         initPageCache();
     }
@@ -89,6 +98,32 @@ public class MainApplication extends Application {
         final int cacheSizeInBytes = 1024 * 1024 * memClass / 8;
 
         pageCache = new LruCache<String, TestbedParsedPage>(cacheSizeInBytes);
+
+    }
+
+    public static Point2D.Double getUserLocationInMapPixels() {
+        return userLocationInMapPx;
+    }
+
+    private void initLocationListener() {
+
+        int minutes = 1;
+        int accuracyInMeters = 5000;
+
+        LocationManager locationManager =
+                (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+        LocationListener locationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+                userLocationInMapPx = CoordinateUtil.convertLocationToTestbedImageXY(location);
+            }
+            public void onStatusChanged(String provider, int status, Bundle extras) {}
+            public void onProviderEnabled(String provider) {}
+            public void onProviderDisabled(String provider) {}
+        };
+
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
+                minutes*60000, accuracyInMeters, locationListener);
 
     }
 

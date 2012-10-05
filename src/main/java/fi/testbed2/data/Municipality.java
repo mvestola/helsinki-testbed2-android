@@ -1,6 +1,7 @@
 package fi.testbed2.data;
 
 import android.location.Location;
+import com.jhlabs.map.Point2D;
 import fi.testbed2.util.CoordinateUtil;
 
 import java.util.SortedMap;
@@ -14,7 +15,7 @@ public class Municipality {
     private String name;
     private double lat;
     private double lon;
-    private Location location;
+    private Point2D.Double posInMapPx;
 
     private static SortedMap<String, Municipality> municipalitiesInTestbedMap;
 
@@ -24,14 +25,14 @@ public class Municipality {
         this.lon = lon;
     }
 
-    public Location getLocation() {
-        if (location==null) {
+    public Point2D.Double getPositionInMapPx() {
+        if (posInMapPx == null) {
             Location tempLocation = new Location(CoordinateUtil.PROVIDER_NAME);
             tempLocation.setLatitude(lat);
             tempLocation.setLongitude(lon);
-            location = tempLocation;
+            posInMapPx = CoordinateUtil.convertLocationToTestbedImageXY(tempLocation);
         }
-        return location;
+        return posInMapPx;
     }
 
     private static void addMunicipality(String name, double lat, double lon) {

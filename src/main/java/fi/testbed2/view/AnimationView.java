@@ -2,10 +2,7 @@ package fi.testbed2.view;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
+import android.graphics.*;
 import android.graphics.drawable.BitmapDrawable;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
@@ -14,10 +11,10 @@ import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import com.jhlabs.map.Point2D;
+import fi.testbed2.R;
 import fi.testbed2.app.MainApplication;
 import fi.testbed2.data.Municipality;
 import fi.testbed2.data.TestbedMapImage;
-import fi.testbed2.util.CoordinateUtil;
 import fi.testbed2.util.SeekBarUtil;
 
 import java.util.ArrayList;
@@ -43,6 +40,8 @@ public class AnimationView extends View {
     private String downloadProgressText;
     private boolean allImagesDownloaded;
     private SeekBar seekBar;
+
+    private Bitmap markerImage;
 
 	public AnimationView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -158,18 +157,24 @@ public class AnimationView extends View {
 
         frame.draw(canvas);
 
-        drawPoint(CoordinateUtil.convertLocationToTestbedImageXY(Municipality.getMunicipality("Kouvola").getLocation()),
-                Color.RED, 5, canvas);
-        drawPoint(CoordinateUtil.convertLocationToTestbedImageXY(Municipality.getMunicipality("Helsinki").getLocation()),
-                Color.RED, 5, canvas);
-        drawPoint(CoordinateUtil.convertLocationToTestbedImageXY(Municipality.getMunicipality("Hämeenlinna").getLocation()),
-                Color.RED, 5, canvas);
+        Point2D.Double userLocation = MainApplication.getUserLocationInMapPixels();
+
+        if (userLocation!=null) {
+            drawPoint(userLocation, Color.BLACK, canvas, true);
+        }
+
+        drawPoint(Municipality.getMunicipality("Kouvola").getPositionInMapPx(),
+                Color.BLACK, canvas, false);
+        drawPoint(Municipality.getMunicipality("Hämeenlinna").getPositionInMapPx(),
+                Color.BLACK, canvas, false);
     }
 
-    private void drawPoint(Point2D.Double point, int color, int radius, Canvas canvas) {
+
+    private void drawPoint(Point2D.Double point, int color, Canvas canvas, boolean useMarker) {
 
         Paint paint = new Paint();
         paint.setColor(color);
+        paint.setAntiAlias(true);
 
         float x = Double.valueOf(point.x).floatValue();
         float y = Double.valueOf(point.y).floatValue();
@@ -178,8 +183,28 @@ public class AnimationView extends View {
         float xScaled = x/scale+bounds.left+0.5f;
         float yScaled = y/scale+bounds.top+0.5f;
 
-        canvas.drawCircle(xScaled, yScaled, radius, paint);
+        if (useMarker) {
+            int markerImgSize = 32;
+            Bitmap bitmap = getMarkerImage(markerImgSize);
+            /*
+             * x, y coordinates are image's top left corner,
+             * so position the marker to the bottom center
+             */
+            canvas.drawBitmap(bitmap, xScaled-markerImgSize/2, yScaled-markerImgSize, paint);
+        } else {
+            canvas.drawCircle(xScaled, yScaled, 5, paint);
+        }
 
+    }
+
+    private Bitmap getMarkerImage (int size) {
+        if (markerImage ==null) {
+            Bitmap bmp = BitmapFactory.decodeResource( getResources(), R.drawable.marker);
+            Bitmap img = Bitmap.createScaledBitmap( bmp, size, size, true );
+            bmp.recycle();
+            markerImage = img;
+        }
+        return markerImage;
     }
 
 	@Override
