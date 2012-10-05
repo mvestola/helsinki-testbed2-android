@@ -165,6 +165,7 @@ public class AnimationView extends View {
     private void drawUserLocation(Canvas canvas) {
         if (showUserLocation()) {
             Point2D.Double userLocation = MainApplication.getUserLocationInMapPixels();
+            //Point2D.Double userLocation = Municipality.getMunicipality("Helsinki").getPositionInMapPx();
             if (userLocation!=null) {
                 drawPoint(userLocation, Color.BLACK, canvas, true);
             }
@@ -198,6 +199,7 @@ public class AnimationView extends View {
         Paint paint = new Paint();
         paint.setColor(color);
         paint.setAntiAlias(true);
+        paint.setAlpha(200); // 0...255, 255 = no transparency
 
         float x = Double.valueOf(point.x).floatValue();
         float y = Double.valueOf(point.y).floatValue();
