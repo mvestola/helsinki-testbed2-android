@@ -27,12 +27,19 @@ import fi.testbed2.R;
  * <attr format="string" name="separator" />
  * </declare-styleable>
  * Whether you decide to then use those attributes is up to you.
+ *
+ *
+ * NOTE: This code is quite crappy. DO NOT USE | character as a separator
+ * because it needs to be escaped and messes up everything. Although the code is crappy,
+ * it seems to somehow work and there is no better multiselect list available for Android 2.1.
+ *
  */
 public class ListPreferenceMultiSelect extends ListPreference {
     private String separator;
     private static final String DEFAULT_SEPARATOR = "OV=I=XseparatorX=I=VO";
     private static final String LOG_TAG = "ListPreferenceMultiSelect";
     private String checkAllKey = null;
+    private boolean[] mSavedClickedDialogEntryIndices;
     private boolean[] mClickedDialogEntryIndices;
 
     // Constructor
@@ -47,8 +54,10 @@ public class ListPreferenceMultiSelect extends ListPreference {
             separator = DEFAULT_SEPARATOR;
         }
         // Initialize the array of boolean to the same size as number of entries
-        if (getEntries() != null)
+        if (getEntries() != null) {
             mClickedDialogEntryIndices = new boolean[getEntries().length];
+            mSavedClickedDialogEntryIndices = new boolean[getEntries().length];
+        }
     }
 
     @Override
@@ -56,6 +65,7 @@ public class ListPreferenceMultiSelect extends ListPreference {
         super.setEntries(entries);
         // Initialize the array of boolean to the same size as number of entries
         mClickedDialogEntryIndices = new boolean[entries.length];
+        mSavedClickedDialogEntryIndices = new boolean[getEntries().length];
     }
 
     public ListPreferenceMultiSelect(Context context) {
@@ -116,22 +126,21 @@ public class ListPreferenceMultiSelect extends ListPreference {
 
         if (vals != null) {
             List<String> valuesList = Arrays.asList(vals);
-//        	for ( int j=0; j<vals.length; j++ ) {
-//    		TODO: Check why the trimming... Can there be some random spaces added somehow? What if we want a value with trailing spaces, is that an issue?
-//        		String val = vals[j].trim();
             for (int i = 0; i < entryValues.length; i++) {
                 CharSequence entry = entryValues[i];
                 if (valuesList.contains(entry)) {
+                    mSavedClickedDialogEntryIndices[i] = true;
                     mClickedDialogEntryIndices[i] = true;
+                } else {
+                    mSavedClickedDialogEntryIndices[i] = false;
+                    mClickedDialogEntryIndices[i] = false;
                 }
             }
-//        	}
         }
     }
 
     @Override
     protected void onDialogClosed(boolean positiveResult) {
-//        super.onDialogClosed(positiveResult);
         ArrayList<String> values = new ArrayList<String>();
 
         CharSequence[] entryValues = getEntryValues();
@@ -148,7 +157,12 @@ public class ListPreferenceMultiSelect extends ListPreference {
 
             if (callChangeListener(values)) {
                 setValue(join(values, separator));
+                mSavedClickedDialogEntryIndices = mClickedDialogEntryIndices.clone();
+            } else {
+                mClickedDialogEntryIndices = mSavedClickedDialogEntryIndices.clone();
             }
+        } else {
+            mClickedDialogEntryIndices = mSavedClickedDialogEntryIndices.clone();
         }
     }
 
