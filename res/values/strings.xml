@@ -52,7 +52,7 @@
     <string name="preference_anim_autostart_title">Automatic animation</string>
     <string name="preference_anim_autostart_summary">Check this if you want the animation to start automatically</string>
 
-    <string name="preference_location_user_title">Shown your location</string>
+    <string name="preference_location_user_title">Show your location</string>
     <string name="preference_location_user_summary">Check to show your current location on the map</string>
 
     <string name="preference_location_municipalities_title">Municipalities on map</string>
