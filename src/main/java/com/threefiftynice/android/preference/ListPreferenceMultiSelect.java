@@ -1,10 +1,5 @@
 package com.threefiftynice.android.preference;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
@@ -14,6 +9,11 @@ import android.preference.ListPreference;
 import android.util.AttributeSet;
 import android.widget.ListView;
 import fi.testbed2.R;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author declanshanaghy
@@ -176,8 +176,6 @@ public class ListPreferenceMultiSelect extends ListPreference {
             oBuilder.append(separator).append(oIter.next());
         return oBuilder.toString();
     }
-
-    // TODO: Would like to keep this static but separator then needs to be put in by hand or use default separator "OV=I=XseparatorX=I=VO"...
 
     /**
      * @param straw     String to be found

@@ -1,10 +1,14 @@
 package fi.testbed2.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.graphics.Rect;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -17,10 +21,14 @@ import fi.testbed2.R;
 import fi.testbed2.app.MainApplication;
 import fi.testbed2.data.TestbedParsedPage;
 import fi.testbed2.task.DownloadImagesTask;
+import fi.testbed2.util.CoordinateUtil;
 import fi.testbed2.util.SeekBarUtil;
 import fi.testbed2.view.AnimationView;
 
 public class AnimationActivity extends AbstractActivity implements OnClickListener, SeekBar.OnSeekBarChangeListener {
+
+    private static int LOCATION_UPDATE_INTERVAL_MINUTES = 1;
+    private static int LOCATION_UPDATE_ACCURACY_METERS = 1000;
 
     private AnimationView animationView;
 	private ImageButton playPauseButton;
@@ -33,6 +41,8 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
     private int orientation;
 
     private boolean allImagesDownloaded;
+
+    private LocationListener locationListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -90,6 +100,38 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
 
     }
 
+    private void initLocationListener() {
+
+        LocationManager locationManager =
+                (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+        Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        if (lastKnownLocation!=null) {
+            MainApplication.setUserLocationInMapPixels(CoordinateUtil.convertLocationToTestbedImageXY(lastKnownLocation));
+        }
+
+        locationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+                if (location!=null) {
+                    MainApplication.setUserLocationInMapPixels(
+                            CoordinateUtil.convertLocationToTestbedImageXY(location));
+                }
+            }
+            public void onStatusChanged(String provider, int status, Bundle extras) {}
+            public void onProviderEnabled(String provider) {}
+            public void onProviderDisabled(String provider) {}
+        };
+
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
+                LOCATION_UPDATE_INTERVAL_MINUTES * 60 * 1000, LOCATION_UPDATE_ACCURACY_METERS, locationListener);
+
+    }
+
+    private void removeLocationListener() {
+        LocationManager locationManager =
+                (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        locationManager.removeUpdates(locationListener);
+    }
 
     /**
      * Updates the Downloading text in top left corner
@@ -178,6 +220,7 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
         }
         this.pauseAnimation();
         this.saveMapBounds();
+        this.removeLocationListener();
 	}
 
     @Override
@@ -188,6 +231,8 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
             returnToMainActivity();
             return;
         }
+
+        this.initLocationListener();
 
         updateBoundsToView();
         updateFrameDelayToView();

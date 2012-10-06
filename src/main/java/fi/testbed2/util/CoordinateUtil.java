@@ -60,6 +60,9 @@ public class CoordinateUtil {
      * @return
      */
     public static Point2D.Double convertLocationToTestbedImageXY(Location location) {
+        if (location==null) {
+            return null;
+        }
         Point2D.Double mercatorPoint = convertLocationToMercatorXY(location);
         return convertToXYInTestbedMap(mercatorPoint);
     }
@@ -92,6 +95,10 @@ public class CoordinateUtil {
      * @return
      */
     private static Point2D.Double convertLocationToMercatorXY(Location coordinate) {
+
+        if (coordinate==null) {
+            return null;
+        }
 
         MercatorProjection projection = new MercatorProjection();
 

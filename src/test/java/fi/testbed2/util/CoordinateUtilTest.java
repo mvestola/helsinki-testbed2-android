@@ -8,6 +8,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNull;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * This class contains some tests to test that GPS coordinates are correctly
@@ -237,6 +239,18 @@ public class CoordinateUtilTest {
 
         assertEquals(600.0, pos.x, PRECISION_STRICT);
         assertEquals(0.0, pos.y, PRECISION_STRICT);
+
+    }
+
+    @Test
+    public void testErrorValues() throws Exception {
+
+        Point2D.Double nullPos = CoordinateUtil.convertLocationToTestbedImageXY(null);
+        assertNull(nullPos);
+
+        Location point = new Location(CoordinateUtil.PROVIDER_NAME);
+        Point2D.Double emptyPos = CoordinateUtil.convertLocationToTestbedImageXY(point);
+        assertNotNull(emptyPos);
 
     }
 
