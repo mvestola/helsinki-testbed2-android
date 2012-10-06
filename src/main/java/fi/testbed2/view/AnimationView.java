@@ -15,6 +15,7 @@ import fi.testbed2.R;
 import fi.testbed2.app.MainApplication;
 import fi.testbed2.data.Municipality;
 import fi.testbed2.data.TestbedMapImage;
+import fi.testbed2.util.CoordinateUtil;
 import fi.testbed2.util.SeekBarUtil;
 
 import java.util.ArrayList;
@@ -22,8 +23,15 @@ import java.util.List;
 
 public class AnimationView extends View {
 
-	// The gesture threshold expressed in dip
+    /**
+     * Original map image dimensions.
+     */
+    public static final double MAP_IMAGE_ORIG_WIDTH = 600d;
+    public static final double MAP_IMAGE_ORIG_HEIGHT = 508d;
+
+    // The gesture threshold expressed in dip
 	private static final float GESTURE_THRESHOLD_DIP = 16.0f;
+
 	private int frameDelay;
 	private int currentFrame;
 	private int frames;
@@ -157,9 +165,20 @@ public class AnimationView extends View {
 
         frame.draw(canvas);
 
+        //drawTestPoint(canvas);
         drawUserLocation(canvas);
         drawMunicipalities(canvas);
 
+    }
+
+    /**
+     * This method is used just for testing. It draws a red dot to the known
+     * point directly at the road intersection near Humppila. This can be used
+     * to check that the x,y coordinates are calculated correctly.
+     */
+    private void drawTestPoint(Canvas canvas) {
+        Point2D.Double point = CoordinateUtil.getKnownPositionForTesting();
+        drawPoint(point, Color.RED, canvas, false);
     }
 
     private void drawUserLocation(Canvas canvas) {
@@ -201,12 +220,14 @@ public class AnimationView extends View {
         paint.setAntiAlias(true);
         paint.setAlpha(200); // 0...255, 255 = no transparency
 
-        float x = Double.valueOf(point.x).floatValue();
-        float y = Double.valueOf(point.y).floatValue();
-        final float scale = getContext().getResources().getDisplayMetrics().density;
+        double imgScaledWidth = bounds.width();
+        double imgScaledHeight = bounds.height();
 
-        float xScaled = x/scale+bounds.left+0.5f;
-        float yScaled = y/scale+bounds.top+0.5f;
+        double widthRatio = imgScaledWidth / MAP_IMAGE_ORIG_WIDTH;
+        double heightRatio = imgScaledHeight / MAP_IMAGE_ORIG_HEIGHT;
+
+        float xScaled = Double.valueOf(bounds.left + point.x*widthRatio).floatValue();
+        float yScaled = Double.valueOf(bounds.top + point.y*heightRatio).floatValue();
 
         if (useMarker) {
             int markerImgSize = 32;

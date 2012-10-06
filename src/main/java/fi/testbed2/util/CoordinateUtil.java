@@ -45,6 +45,16 @@ public class CoordinateUtil {
     }
 
     /**
+     * Returns a known point directly at the road intersection near Humppila.
+     * This point can be used to check that the x,y coordinates are calculated correctly.
+     * The x,y coordinates correspond to the testbed map image x,y coordinates in pixels.
+     * @return
+     */
+    public static Point2D.Double getKnownPositionForTesting() {
+        return knownPointInHumppilaXYInTestbedMap;
+    }
+
+    /**
      * Converts given location coordinates to the x,y coordinates in the testbed map image.
      * @param location
      * @return
