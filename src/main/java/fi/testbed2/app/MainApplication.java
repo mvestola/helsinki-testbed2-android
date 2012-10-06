@@ -28,6 +28,7 @@ public class MainApplication extends Application {
     public static final String PREF_MAP_TIME_STEP = "PREF_MAP_TIME_STEP";
     public static final String PREF_MAP_NUMBER_OF_IMAGES = "PREF_MAP_NUMBER_OF_IMAGES";
     public static final String PREF_ORIENTATION_PREFERENCE_KEY_PREFIX = "PREFERENCE_ANIM_BOUNDS_ORIENTATION_";
+    public static final String PREF_WHATS_NEW_DIALOG_SHOWN_FOR_VERSION = "PREF_WHATS_NEW_DIALOG_SHOWN_FOR_VERSION";
     public static final String PREF_LOCATION_SHOW_USER_LOCATION = "PREF_LOCATION_SHOW_USER_LOCATION";
     public static final String PREF_LOCATION_SHOW_MUNICIPALITIES = "PREF_LOCATION_MUNICIPALITIES";
     public static final String PREF_LOCATION_SHOW_MUNICIPALITIES_SPLIT = "===";

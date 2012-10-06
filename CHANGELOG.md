@@ -1,6 +1,14 @@
 Helsinki Testbed Viewer 2.0
 =============
 
+Version 2.0.8
+-------
+
+* Shows user's current location on the map (see settings)
+* Shows selected municipalities/cities on the map (see settings)
+* Added "What's new" dialog for informing about new features
+
+
 Version 2.0.7
 -------
 

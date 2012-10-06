@@ -10,13 +10,22 @@
     <string name="main_menu_about">About</string>
 
     <string name="about_title">Helsinki Testbed Viewer %s</string>
-    <string name="about_text"><b>This application HAS NOTHING TO DO with the Helsinki Testbed project.</b>
-        All map data is downloaded from the Helsinki Testbed website which is
-        copyrighted by the Helsinki Testbed project.
-        More information about the Helsinki Testbed project: <a href="http://testbed.fmi.fi/">testbed.fmi.fi</a>
-    </string>
+    <string name="about_text"><b>This application HAS NOTHING TO DO with the
+        Helsinki Testbed project!\n\n</b>All map images are downloaded from the
+        Helsinki Testbed website which is copyrighted by the Helsinki Testbed project.
+        Location data (user and municipalities) DOES NOT come from the Helsinki Testbed Project.
+        More about the Helsinki Testbed project: testbed.fmi.fi.\n\n</string>
+    <string name="extra_license_text">Location marker icon by www.icons-land.com.</string>
+
     <string name="about_visit_website">Application website</string>
     <string name="close_button">Close</string>
+
+    <string name="whats_new_title">New in version %s</string>
+    <string name="whats_new_text">
+        - Shows user\'s current location on the map (see settings)\n
+        - Shows selected municipalities/cities on the map (see settings)\n
+        - Added \'What\'s new\' dialog for informing about new features
+    </string>
 
     <string name="notice_cancelled" formatted="false">Download cancelled</string>
 
