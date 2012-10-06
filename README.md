@@ -12,6 +12,7 @@ application HAS NOTHING TO DO WITH the Helsinki Testbed project or the Finnish M
 This application is a private project and it just downloads the weather maps from
 the Helsinki Testbed project websites and shows the maps on Android phones.
 All map data is copyrighted to the Helsinki Testbed project.
+Location data (user and municipalities) DOES NOT come from the Helsinki Testbed Project.
 
 The application supports displaying the following weather maps:
  * Rain & temperature
@@ -22,6 +23,9 @@ The application supports displaying the following weather maps:
  * Wind direction
  * Air pressure
  * Dew point
+
+The application also supports displaying the user's current location (coarse location based
+on the Cellular network) and the selected municipalities on top of the map.
 
 Download
 -------
@@ -45,3 +49,6 @@ Helsinki Testbed Viewer 2.0 is a completely free and open project. The source co
 licensed as GNU GENERAL PUBLIC LICENSE Version 3. See more from the LICENSE file.
 
 All map data is copyrighted to the Helsinki Testbed project.
+
+Location marker icons are from [Icons Land](http://www.icons-land.com) and are licensed
+as a custom license "Free for commercial use (Attribute author)".

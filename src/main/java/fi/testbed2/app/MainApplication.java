@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.preference.PreferenceManager;
 import android.support.v4.util.LruCache;
 import com.jhlabs.map.Point2D;
 import fi.testbed2.data.TestbedParsedPage;
@@ -140,4 +142,10 @@ public class MainApplication extends Application {
     public static Bitmap getBitmapFromImageCache(String key) {
         return imageCache.get(key);
     }
+
+    public static boolean showUserLocation() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        return sharedPreferences.getBoolean(PREF_LOCATION_SHOW_USER_LOCATION, true);
+    }
+
 }

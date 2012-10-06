@@ -36,10 +36,19 @@ Adding new custom jars to the project's Maven repository
 
 The maven repository for this project is hosted at github:
 https://raw.github.com/mvestola/helsinki-testbed2-android-repo/master/repo
+(yes, it returns 404 if you go to the url with your browser, but that does not matter)
 
 The repo was made by following the instructions below:
 http://blog.marrowboy.co.uk/2011/11/08/how-to-host-a-maven-repo-on-github/
 
 You can add more jars to the repo by cloning the repo and executing `mvn deploy:deploy-file`
-(http://maven.apache.org/guides/mini/guide-3rd-party-jars-remote.html). For example:
-`mvn deploy:deploy-file -DgroupId=com.jhlabs -DartifactId=javaproj-noawt -Dversion=1.0.6 -Dpackaging=jar -Dfile=/path/in/your/computer/javaproj-1.0.6-noawt.jar -DrepositoryId=testbed2repo -Durl=file:///path/in/your/computer/to/the/clonedrepo/helsinki-testbed2-android-repo/repo`
+(http://maven.apache.org/guides/mini/guide-3rd-party-jars-remote.html).
+For example (all in one line):
+`mvn deploy:deploy-file
+-DgroupId=com.jhlabs
+-DartifactId=javaproj-noawt
+-Dversion=1.0.6
+-Dpackaging=jar
+-Dfile=/path/in/your/computer/javaproj-1.0.6-noawt.jar
+-DrepositoryId=testbed2repo
+-Durl=file:///path/in/your/computer/to/the/clonedrepo/helsinki-testbed2-android-repo/repo`

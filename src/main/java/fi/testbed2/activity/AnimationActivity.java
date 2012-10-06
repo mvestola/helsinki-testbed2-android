@@ -102,35 +102,41 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
 
     private void initLocationListener() {
 
-        LocationManager locationManager =
-                (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        if (MainApplication.showUserLocation()) {
 
-        Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        if (lastKnownLocation!=null) {
-            MainApplication.setUserLocationInMapPixels(CoordinateUtil.convertLocationToTestbedImageXY(lastKnownLocation));
-        }
+            LocationManager locationManager =
+                    (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
-        locationListener = new LocationListener() {
-            public void onLocationChanged(Location location) {
-                if (location!=null) {
-                    MainApplication.setUserLocationInMapPixels(
-                            CoordinateUtil.convertLocationToTestbedImageXY(location));
-                }
+            Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            if (lastKnownLocation!=null) {
+                MainApplication.setUserLocationInMapPixels(CoordinateUtil.convertLocationToTestbedImageXY(lastKnownLocation));
             }
-            public void onStatusChanged(String provider, int status, Bundle extras) {}
-            public void onProviderEnabled(String provider) {}
-            public void onProviderDisabled(String provider) {}
-        };
 
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-                LOCATION_UPDATE_INTERVAL_MINUTES * 60 * 1000, LOCATION_UPDATE_ACCURACY_METERS, locationListener);
+            locationListener = new LocationListener() {
+                public void onLocationChanged(Location location) {
+                    if (location!=null) {
+                        MainApplication.setUserLocationInMapPixels(
+                                CoordinateUtil.convertLocationToTestbedImageXY(location));
+                    }
+                }
+                public void onStatusChanged(String provider, int status, Bundle extras) {}
+                public void onProviderEnabled(String provider) {}
+                public void onProviderDisabled(String provider) {}
+            };
+
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
+                    LOCATION_UPDATE_INTERVAL_MINUTES * 60 * 1000, LOCATION_UPDATE_ACCURACY_METERS, locationListener);
+
+        }
 
     }
 
     private void removeLocationListener() {
-        LocationManager locationManager =
-                (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        locationManager.removeUpdates(locationListener);
+        if (locationListener!=null) {
+            LocationManager locationManager =
+                    (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+            locationManager.removeUpdates(locationListener);
+        }
     }
 
     /**

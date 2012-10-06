@@ -182,7 +182,7 @@ public class AnimationView extends View {
     }
 
     private void drawUserLocation(Canvas canvas) {
-        if (showUserLocation()) {
+        if (MainApplication.showUserLocation()) {
             Point2D.Double userLocation = MainApplication.getUserLocationInMapPixels();
             //Point2D.Double userLocation = Municipality.getMunicipality("Helsinki").getPositionInMapPx();
             if (userLocation!=null) {
@@ -416,10 +416,6 @@ public class AnimationView extends View {
             return list;
         }
 
-    }
-    public boolean showUserLocation() {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        return sharedPreferences.getBoolean(MainApplication.PREF_LOCATION_SHOW_USER_LOCATION, true);
     }
 
 }
