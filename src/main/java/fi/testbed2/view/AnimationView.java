@@ -6,7 +6,9 @@ import android.graphics.*;
 import android.graphics.drawable.BitmapDrawable;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -21,6 +23,11 @@ import fi.testbed2.util.SeekBarUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * TODO: this class has grown quite large. Refactor it to smaller classes
+ * and remove as much logic from the view as possible.
+ *
+ */
 public class AnimationView extends View {
 
     /**
@@ -28,6 +35,15 @@ public class AnimationView extends View {
      */
     public static final double MAP_IMAGE_ORIG_WIDTH = 600d;
     public static final double MAP_IMAGE_ORIG_HEIGHT = 508d;
+
+    private ScaleGestureDetector mScaleDetector;
+    private GestureDetector mGestureDetector;
+    private float scaleFactor = 1.0f;
+    private float minScaleFactor = 0.5f;
+    private float maxScaleFactor = 3.0f;
+    private float scaleStepWhenDoubleTapping = 1.3f;
+
+    private boolean mapWasScaled;
 
     // The gesture threshold expressed in dip
 	private static final float GESTURE_THRESHOLD_DIP = 16.0f;
@@ -50,6 +66,7 @@ public class AnimationView extends View {
     private SeekBar seekBar;
 
     private Bitmap markerImage;
+    private int markerImageSize;
 
 	public AnimationView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -66,17 +83,19 @@ public class AnimationView extends View {
 		init(context);
 	}
 	
-	public void start(TextView timestampView, SeekBar seekBar) {
+	public void start(TextView timestampView, SeekBar seekBar, float scale) {
 		this.play = true;
+        this.scaleFactor = scale;
 		this.timestampView = timestampView;
         this.seekBar = seekBar;
         initializeBounds();
 		next();
 	}
 	
-	public void start(TextView timestampView, SeekBar seekBar, Rect bounds) {
+	public void start(TextView timestampView, SeekBar seekBar, Rect bounds, float scale) {
 		this.play = true;
-		this.timestampView = timestampView;
+        this.scaleFactor = scale;
+        this.timestampView = timestampView;
         this.seekBar = seekBar;
         this.bounds = bounds;
 		next();
@@ -146,6 +165,10 @@ public class AnimationView extends View {
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 
+        canvas.save();
+
+        canvas.scale(scaleFactor, scaleFactor);
+
         TestbedMapImage currentMap = getMapImagesToBeDrawn().get(currentFrame);
         String timestamp = currentMap.getTimestamp();
 		String text = String.format("%1$02d/%2$02d @ ", currentFrame + 1 , frames + 1) + timestamp;
@@ -169,6 +192,45 @@ public class AnimationView extends View {
         drawUserLocation(canvas);
         drawMunicipalities(canvas);
 
+        canvas.restore();
+
+    }
+
+    private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
+        @Override
+        public boolean onScale(ScaleGestureDetector detector) {
+            scaleFactor *= detector.getScaleFactor();
+
+            // Don't let the object get too small or too large.
+            scaleFactor = Math.max(minScaleFactor, Math.min(scaleFactor, maxScaleFactor));
+
+            mapWasScaled = true;
+            invalidate();
+            return true;
+        }
+    }
+
+
+    private class GestureListener extends GestureDetector.SimpleOnGestureListener {
+
+        @Override
+        public boolean onDown(MotionEvent e) {
+            return true;
+        }
+
+        @Override
+        public boolean onDoubleTap(MotionEvent e) {
+
+            scaleFactor *= scaleStepWhenDoubleTapping;
+
+            if (scaleFactor >=maxScaleFactor) {
+                scaleFactor = 1.0f;
+            }
+
+            mapWasScaled = true;
+            invalidate();
+            return true;
+        }
     }
 
     /**
@@ -183,8 +245,8 @@ public class AnimationView extends View {
 
     private void drawUserLocation(Canvas canvas) {
         if (MainApplication.showUserLocation()) {
-            Point2D.Double userLocation = MainApplication.getUserLocationInMapPixels();
-            //Point2D.Double userLocation = Municipality.getMunicipality("Helsinki").getPositionInMapPx();
+            //Point2D.Double userLocation = MainApplication.getUserLocationInMapPixels();
+            Point2D.Double userLocation = Municipality.getMunicipality("Helsinki").getPositionInMapPx();
             if (userLocation!=null) {
                 drawPoint(userLocation, Color.BLACK, canvas, true);
             }
@@ -230,7 +292,7 @@ public class AnimationView extends View {
         float yScaled = Double.valueOf(bounds.top + point.y*heightRatio).floatValue();
 
         if (useMarker) {
-            int markerImgSize = 32;
+            int markerImgSize = Float.valueOf(32/(scaleFactor/2)).intValue();
             Bitmap bitmap = getMarkerImage(markerImgSize);
             /*
              * x, y coordinates are image's top left corner,
@@ -238,16 +300,18 @@ public class AnimationView extends View {
              */
             canvas.drawBitmap(bitmap, xScaled-markerImgSize/2, yScaled-markerImgSize, paint);
         } else {
-            canvas.drawCircle(xScaled, yScaled, 5, paint);
+            int radius = Float.valueOf(5/scaleFactor).intValue();
+            canvas.drawCircle(xScaled, yScaled, radius, paint);
         }
 
     }
 
     private Bitmap getMarkerImage (int size) {
-        if (markerImage ==null) {
+        if (markerImage==null || markerImageSize!=size) {
             Bitmap bmp = BitmapFactory.decodeResource( getResources(), R.drawable.marker);
             Bitmap img = Bitmap.createScaledBitmap( bmp, size, size, true );
             bmp.recycle();
+            markerImageSize = size;
             markerImage = img;
         }
         return markerImage;
@@ -255,10 +319,28 @@ public class AnimationView extends View {
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		
-		int action = event.getAction();
-		Rect viewBounds = new Rect(0, 0, getWidth(), getHeight());
-		
+
+        mGestureDetector.onTouchEvent(event);
+        mScaleDetector.onTouchEvent(event);
+
+        int action = event.getAction();
+        int scaledWidth = Float.valueOf(getWidth()/ scaleFactor).intValue();
+        int scaledHeight = Float.valueOf(getHeight()/ scaleFactor).intValue();
+        Rect viewBounds = new Rect(0, 0, scaledWidth, scaledHeight);
+
+        if (mapWasScaled && action==MotionEvent.ACTION_DOWN) {
+            mapWasScaled = false;
+        }
+
+        if (mapWasScaled) {
+
+            if (scaleFactor==1.0) {
+                bounds.offset(0, 0);
+            }
+
+            return true;
+        }
+
 		switch(action)
 		{
 		case MotionEvent.ACTION_CANCEL:
@@ -280,18 +362,16 @@ public class AnimationView extends View {
 			
 			// Convert the dips to pixels
 			final float scale = getContext().getResources().getDisplayMetrics().density;
-			int mGestureThreshold = (int) (GESTURE_THRESHOLD_DIP * scale + 0.5f);
-
+			int mGestureThreshold = (int) (GESTURE_THRESHOLD_DIP * scale / scaleFactor + 0.5f);
 
 			if(!moveMap && (Math.abs(mDistance_y) > mGestureThreshold || Math.abs(mDistance_x) > mGestureThreshold)) {
 				moveMap = true;
 			}
 
-			
 			if(moveMap) {
 				
-				float mDistance_y_dip = mDistance_y * scale + 0.5f;
-				float mDistance_x_dip = mDistance_x * scale + 0.5f;
+				float mDistance_y_dip = mDistance_y * scale / scaleFactor + 0.5f;
+				float mDistance_x_dip = mDistance_x * scale / scaleFactor + 0.5f;
 				
 				bounds.offset((int)mDistance_x_dip, (int)mDistance_y_dip);
 				
@@ -329,7 +409,10 @@ public class AnimationView extends View {
     }
 
 	private void init(Context context) {
-        
+
+        mGestureDetector = new GestureDetector(context, new GestureListener());
+        mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
+
 		// get default frame delay
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 		frameDelay = Integer.parseInt(
@@ -393,6 +476,14 @@ public class AnimationView extends View {
 	public Rect getBounds() {
 		return bounds;
 	}
+
+    public float getScaleFactor() {
+        return scaleFactor;
+    }
+
+    public void setScaleFactor(float scaleFactor) {
+        this.scaleFactor = scaleFactor;
+    }
 
     public void updateBounds(Rect bounds) {
         if (bounds==null) {

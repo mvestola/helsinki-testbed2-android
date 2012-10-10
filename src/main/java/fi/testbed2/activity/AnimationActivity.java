@@ -88,11 +88,12 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
             @Override
             public void run() {
                 final Rect bounds = getSavedMapBounds();
+                final float scale = getSavedScaleFactor();
                 updatePlayingState(true);
                 if (bounds==null) {
-                    animationView.start(timestampView, seekBar);
+                    animationView.start(timestampView, seekBar, scale);
                 } else {
-                    animationView.start(timestampView, seekBar, bounds);
+                    animationView.start(timestampView, seekBar, bounds, scale);
                 }
 
             }
@@ -155,28 +156,36 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        saveMapBounds();
+        saveMapBoundsAndScaleFactor();
         orientation = newConfig.orientation;
         updateBoundsToView();
     }
 
     private String getMapBoundsPreferenceKey() {
-        return MainApplication.PREF_ORIENTATION_PREFERENCE_KEY_PREFIX + orientation;
+        return MainApplication.PREF_BOUNDS_PREFERENCE_KEY_PREFIX + orientation;
+    }
+
+    private String getMapScalePreferenceKey() {
+        return MainApplication.PREF_SCALE_PREFERENCE_KEY_PREFIX + orientation;
     }
 
     /**
      * Saves the bounds of the map user has previously viewed to persistent storage.
      */
-    private void saveMapBounds() {
+    private void saveMapBoundsAndScaleFactor() {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Editor editor = sharedPreferences.edit();
         Rect bounds = animationView.getBounds();
+        float scale = animationView.getScaleFactor();
 
-        // bounds String format is left:top:right:bottom
-        if (editor!=null && bounds!=null) {
-            editor.putString(getMapBoundsPreferenceKey(),
-                    "" + bounds.left + ":" + bounds.top + ":" + bounds.right + ":" + bounds.bottom);
+        if (editor!=null) {
+            if (bounds!=null) {
+                // bounds String format is left:top:right:bottom
+                editor.putString(getMapBoundsPreferenceKey(),
+                        "" + bounds.left + ":" + bounds.top + ":" + bounds.right + ":" + bounds.bottom);
+            }
+            editor.putFloat(getMapScalePreferenceKey(), scale);
             editor.commit();
         }
 
@@ -203,7 +212,13 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
 
     }
 
+    private float getSavedScaleFactor() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        return sharedPreferences.getFloat(getMapScalePreferenceKey(), 1.0f);
+    }
+
     private void updateBoundsToView() {
+        animationView.setScaleFactor(getSavedScaleFactor());
         animationView.updateBounds(getSavedMapBounds());
     }
 
@@ -225,7 +240,7 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
             task.abort();
         }
         this.pauseAnimation();
-        this.saveMapBounds();
+        this.saveMapBoundsAndScaleFactor();
         this.removeLocationListener();
 	}
 
