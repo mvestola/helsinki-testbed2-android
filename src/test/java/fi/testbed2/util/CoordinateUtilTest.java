@@ -3,6 +3,7 @@ package fi.testbed2.util;
 import android.location.Location;
 import com.jhlabs.map.Point2D;
 import com.xtremelabs.robolectric.RobolectricTestRunner;
+import fi.testbed2.AbstractTestCase;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +21,7 @@ import static org.junit.Assert.assertNotNull;
  * with GIMP.
  */
 @RunWith(RobolectricTestRunner.class)
-public class CoordinateUtilTest {
+public class CoordinateUtilTest extends AbstractTestCase {
 
     /**
      * Allow some small variance when converting to (x,y) coordinates.

@@ -1,6 +1,7 @@
 package fi.testbed2.activity;
 
 import com.xtremelabs.robolectric.RobolectricTestRunner;
+import fi.testbed2.AbstractTestCase;
 import fi.testbed2.R;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,7 +10,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
 @RunWith(RobolectricTestRunner.class)
-public class MainActivityTest {
+public class MainActivityTest extends AbstractTestCase {
 
     @Test
     public void shouldReturnCorrectName() throws Exception {

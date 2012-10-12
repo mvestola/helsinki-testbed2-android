@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.jhlabs.map.Point2D;
 import fi.testbed2.R;
 import fi.testbed2.app.MainApplication;
+import fi.testbed2.app.Preference;
 import fi.testbed2.data.Municipality;
 import fi.testbed2.data.TestbedMapImage;
 import fi.testbed2.util.CoordinateUtil;
@@ -245,8 +246,7 @@ public class AnimationView extends View {
 
     private void drawUserLocation(Canvas canvas) {
         if (MainApplication.showUserLocation()) {
-            //Point2D.Double userLocation = MainApplication.getUserLocationInMapPixels();
-            Point2D.Double userLocation = Municipality.getMunicipality("Helsinki").getPositionInMapPx();
+            Point2D.Double userLocation = MainApplication.getUserLocationInMapPixels();
             if (userLocation!=null) {
                 drawPoint(userLocation, Color.BLACK, canvas, true);
             }
@@ -256,10 +256,10 @@ public class AnimationView extends View {
     private void drawMunicipalities(Canvas canvas) {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        String municipalitiesString = sharedPreferences.getString(MainApplication.PREF_LOCATION_SHOW_MUNICIPALITIES, "");
+        String municipalitiesString = sharedPreferences.getString(Preference.PREF_LOCATION_SHOW_MUNICIPALITIES, "");
 
         String[] municipalities = municipalitiesString.split(
-                MainApplication.PREF_LOCATION_SHOW_MUNICIPALITIES_SPLIT);
+                Preference.PREF_LOCATION_SHOW_MUNICIPALITIES_SPLIT);
 
         if (municipalities.length<1 || municipalities[0].length()==0) {
             return;
@@ -292,7 +292,7 @@ public class AnimationView extends View {
         float yScaled = Double.valueOf(bounds.top + point.y*heightRatio).floatValue();
 
         if (useMarker) {
-            int markerImgSize = Float.valueOf(32/(scaleFactor/2)).intValue();
+            int markerImgSize = 32;
             Bitmap bitmap = getMarkerImage(markerImgSize);
             /*
              * x, y coordinates are image's top left corner,
@@ -300,7 +300,7 @@ public class AnimationView extends View {
              */
             canvas.drawBitmap(bitmap, xScaled-markerImgSize/2, yScaled-markerImgSize, paint);
         } else {
-            int radius = Float.valueOf(5/scaleFactor).intValue();
+            int radius = 5;
             canvas.drawCircle(xScaled, yScaled, radius, paint);
         }
 
@@ -416,7 +416,7 @@ public class AnimationView extends View {
 		// get default frame delay
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 		frameDelay = Integer.parseInt(
-                sharedPreferences.getString(MainApplication.PREF_ANIM_FRAME_DELAY, "1000"));
+                sharedPreferences.getString(Preference.PREF_ANIM_FRAME_DELAY, "1000"));
 		
         BitmapDrawable firstMap = new BitmapDrawable(getMapImagesToBeDrawn().get(0).getDownloadedBitmapImage());
 

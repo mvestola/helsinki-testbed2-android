@@ -1,16 +1,19 @@
 package fi.testbed2.util;
 
+import fi.testbed2.AbstractTestCase;
 import fi.testbed2.app.MainApplication;
 import fi.testbed2.data.TestbedParsedPage;
 import fi.testbed2.exception.DownloadTaskException;
 import fi.testbed2.task.Task;
 import org.apache.http.HttpEntity;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+import org.powermock.modules.junit4.rule.PowerMockRule;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -21,16 +24,17 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-@RunWith(PowerMockRunner.class)
 @PrepareForTest( { HTTPUtil.class, MainApplication.class })
-public class HTMLUtilTest {
+public class HTMLUtilTest extends AbstractTestCase {
 
-    public static final String TEST_DATA_PATH = "src/test/data/";
+    @Rule
+    public PowerMockRule rule = new PowerMockRule();
 
     private Task task;
 
     @Before
     public void setUp() throws Exception {
+        super.setUp();
         task = mock(Task.class);
         when(task.isAbort()).thenReturn(false);
     }
@@ -153,6 +157,7 @@ public class HTMLUtilTest {
 
     }
 
+    @Test
     public void testParseTestbedPageTaskAborted() throws Exception {
 
         initHTMLPage("testbed_rain_15.html");

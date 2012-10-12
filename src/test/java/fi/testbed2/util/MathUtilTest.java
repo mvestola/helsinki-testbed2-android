@@ -1,5 +1,6 @@
 package fi.testbed2.util;
 
+import fi.testbed2.AbstractTestCase;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 
-public class MathUtilTest {
+public class MathUtilTest extends AbstractTestCase {
 
     @Test
     public void testGetClosestValue() throws Exception {

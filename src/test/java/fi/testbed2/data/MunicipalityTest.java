@@ -1,12 +1,13 @@
 package fi.testbed2.data;
 
+import fi.testbed2.AbstractTestCase;
 import org.junit.Test;
 
 import java.util.SortedMap;
 
 import static junit.framework.Assert.*;
 
-public class MunicipalityTest {
+public class MunicipalityTest extends AbstractTestCase {
 
     @Test
     public void testGetFinlandMunicipalitiesShownInTestbedMap() throws Exception {

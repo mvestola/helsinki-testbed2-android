@@ -19,12 +19,16 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import fi.testbed2.R;
 import fi.testbed2.app.MainApplication;
+import fi.testbed2.app.Preference;
 import fi.testbed2.data.TestbedParsedPage;
 import fi.testbed2.task.DownloadImagesTask;
 import fi.testbed2.util.CoordinateUtil;
 import fi.testbed2.util.SeekBarUtil;
 import fi.testbed2.view.AnimationView;
 
+/**
+ * TODO: this class has grown quite large. Refactor it to smaller classes
+ */
 public class AnimationActivity extends AbstractActivity implements OnClickListener, SeekBar.OnSeekBarChangeListener {
 
     private static int LOCATION_UPDATE_INTERVAL_MINUTES = 1;
@@ -162,11 +166,11 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
     }
 
     private String getMapBoundsPreferenceKey() {
-        return MainApplication.PREF_BOUNDS_PREFERENCE_KEY_PREFIX + orientation;
+        return Preference.PREF_BOUNDS_PREFERENCE_KEY_PREFIX + orientation;
     }
 
     private String getMapScalePreferenceKey() {
-        return MainApplication.PREF_SCALE_PREFERENCE_KEY_PREFIX + orientation;
+        return Preference.PREF_SCALE_PREFERENCE_KEY_PREFIX + orientation;
     }
 
     /**
@@ -225,12 +229,12 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
     private void updateFrameDelayToView() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         animationView.setFrameDelay(Integer.parseInt(
-                sharedPreferences.getString(MainApplication.PREF_ANIM_FRAME_DELAY, "1000")));
+                sharedPreferences.getString(Preference.PREF_ANIM_FRAME_DELAY, "1000")));
     }
 
     private boolean startAnimationAutomatically() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        return sharedPreferences.getBoolean(MainApplication.PREF_ANIM_AUTOSTART, true);
+        return sharedPreferences.getBoolean(Preference.PREF_ANIM_AUTOSTART, true);
     }
 
     @Override

@@ -1,10 +1,11 @@
 package fi.testbed2.util;
 
+import fi.testbed2.AbstractTestCase;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
 
-public class SeekBarUtilTest {
+public class SeekBarUtilTest extends AbstractTestCase {
 
     @Test
     public void testGetFrameNumberFromSeekBarValue() throws Exception {

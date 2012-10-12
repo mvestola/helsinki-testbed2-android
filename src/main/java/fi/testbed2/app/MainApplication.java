@@ -5,13 +5,17 @@ import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.preference.PreferenceManager;
 import android.support.v4.util.LruCache;
 import com.jhlabs.map.Point2D;
+import fi.testbed2.data.Municipality;
 import fi.testbed2.data.TestbedParsedPage;
 
 public class MainApplication extends Application {
+
+    private static boolean debug = true;
 
     public static final String LOG_IDENTIFIER = "TestbedViewer2";
 
@@ -19,19 +23,7 @@ public class MainApplication extends Application {
     public static final int RESULT_OK = Activity.RESULT_OK;
     public static final int RESULT_REFRESH = 10;
 
-    public static final String PREF_ANIM_FRAME_DELAY = "PREF_ANIM_FRAME_DELAY";
-    public static final String PREF_ANIM_AUTOSTART = "PREF_ANIM_AUTOSTART";
-    public static final String PREF_MAP_TYPE = "PREF_MAP_TYPE";
-    public static final String PREF_MAP_TIME_STEP = "PREF_MAP_TIME_STEP";
-    public static final String PREF_MAP_NUMBER_OF_IMAGES = "PREF_MAP_NUMBER_OF_IMAGES";
-    public static final String PREF_BOUNDS_PREFERENCE_KEY_PREFIX = "PREFERENCE_ANIM_BOUNDS_ORIENTATION_";
-    public static final String PREF_SCALE_PREFERENCE_KEY_PREFIX = "PREFERENCE_ANIM_SCALE_ORIENTATION_";
-    public static final String PREF_WHATS_NEW_DIALOG_SHOWN_FOR_VERSION = "PREF_WHATS_NEW_DIALOG_SHOWN_FOR_VERSION";
-    public static final String PREF_LOCATION_SHOW_USER_LOCATION = "PREF_LOCATION_SHOW_USER_LOCATION";
-    public static final String PREF_LOCATION_SHOW_MUNICIPALITIES = "PREF_LOCATION_MUNICIPALITIES";
-    public static final String PREF_LOCATION_SHOW_MUNICIPALITIES_SPLIT = "===";
-
-    private static Context mContext;
+    private static Context context;
 
     private static LruCache<String, Bitmap> imageCache;
     private static LruCache<String, TestbedParsedPage> pageCache;
@@ -56,13 +48,13 @@ public class MainApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        mContext = this;
+        context = this;
         initImageCache();
         initPageCache();
     }
 
     public static Context getContext(){
-        return mContext;
+        return context;
     }
 
     private void initImageCache() {
@@ -103,7 +95,13 @@ public class MainApplication extends Application {
     }
 
     public static Point2D.Double getUserLocationInMapPixels() {
-        return userLocationInMapPx;
+
+        if (debug) {
+            return Municipality.getMunicipality("Helsinki").getPositionInMapPx();
+        } else {
+            return userLocationInMapPx;
+        }
+
     }
 
     public static void setUserLocationInMapPixels(Point2D.Double pos) {
@@ -146,7 +144,35 @@ public class MainApplication extends Application {
 
     public static boolean showUserLocation() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        return sharedPreferences.getBoolean(PREF_LOCATION_SHOW_USER_LOCATION, true);
+        return sharedPreferences.getBoolean(Preference.PREF_LOCATION_SHOW_USER_LOCATION, true);
+    }
+
+    /**
+     * Returns the version name (number), e.g. 2.0.3
+     * @return
+     */
+    public static String getVersionName() {
+        String versionName;
+        try {
+            versionName = getContext().getPackageManager().
+                    getPackageInfo(getContext().getPackageName(), 0).versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            versionName = "Unknown";
+        }
+        return versionName;
+    }
+
+    public static boolean isDebug() {
+        return debug;
+    }
+
+    /**
+     * Only for testing.
+     *
+     * @param context
+     */
+    public static void setContext(Context context) {
+        MainApplication.context = context;
     }
 
 }
