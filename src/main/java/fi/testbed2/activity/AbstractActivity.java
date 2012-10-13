@@ -1,6 +1,5 @@
 package fi.testbed2.activity;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
@@ -8,22 +7,26 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.*;
+import android.widget.Toast;
+import com.google.inject.Inject;
 import fi.testbed2.R;
 import fi.testbed2.app.MainApplication;
 import fi.testbed2.app.Preference;
-import fi.testbed2.dialog.DefaultDialogBuilder;
 import fi.testbed2.dialog.DialogBuilder;
+import fi.testbed2.dialog.DialogType;
+import roboguice.activity.RoboActivity;
+
 
 /**
  * Base activity class for all activities.
  * Handles options menu, for instance.
  */
-public abstract class AbstractActivity extends Activity {
+public abstract class AbstractActivity extends RoboActivity {
 
-    public static final int ABOUT_DIALOG = 0;
-    public static final int WHATS_NEW_DIALOG = 1;
+    @Inject
+    DialogBuilder dialogBuilder;
 
-    private DialogBuilder dialogBuilder = new DefaultDialogBuilder();
+    private String currentErrorMsg;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,7 +39,7 @@ public abstract class AbstractActivity extends Activity {
         String dialogShownForVersion = sharedPreferences.
                 getString(Preference.PREF_WHATS_NEW_DIALOG_SHOWN_FOR_VERSION, "");
         if (!dialogShownForVersion.equals(MainApplication.getVersionName())) {
-            showDialog(WHATS_NEW_DIALOG);
+            showDialog(DialogType.WHATS_NEW);
         }
     }
 
@@ -60,22 +63,43 @@ public abstract class AbstractActivity extends Activity {
                 startActivity(new Intent(this, MyPreferenceActivity.class));
                 return true;
             case R.id.main_menu_about:
-                showDialog(ABOUT_DIALOG);
+                showDialog(DialogType.ABOUT);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+    protected void showErrorDialog(String errorMsg) {
+        currentErrorMsg = errorMsg;
+        showDialog(DialogType.ERROR);
+    }
+
+    protected void showDialog(DialogType type) {
+        showDialog(type.ordinal());
+    }
+
+    protected void showShortMessage(String msg) {
+        Toast toast = Toast.makeText(getApplicationContext(), msg,
+                Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
     @Override
     protected Dialog onCreateDialog(int id) {
         AlertDialog alertDialog;
-        switch(id) {
-            case ABOUT_DIALOG:
-                alertDialog = dialogBuilder.getAboutAlertDialog(this);
+
+        DialogType dialogType = DialogType.getById(id);
+
+        switch(dialogType) {
+            case ABOUT:
+                alertDialog = dialogBuilder.getAboutAlertDialog();
                 break;
-            case WHATS_NEW_DIALOG:
-                alertDialog = dialogBuilder.getWhatsNewAlertDialog(this);
+            case WHATS_NEW:
+                alertDialog = dialogBuilder.getWhatsNewAlertDialog();
+                break;
+            case ERROR:
+                alertDialog = dialogBuilder.getErrorDialog(currentErrorMsg);
                 break;
             default:
                 alertDialog = null;

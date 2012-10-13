@@ -40,7 +40,6 @@ public class BitmapDownloader {
             return downloadedBitmapImage;
 
         } catch (IOException e) {
-            e.printStackTrace();
             throw new DownloadTaskException(R.string.error_msg_io_exception);
         } finally {
             if (stream!=null) {

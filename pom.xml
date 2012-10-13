@@ -55,6 +55,32 @@
             <scope>compile</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.roboguice</groupId>
+            <artifactId>roboguice</artifactId>
+            <version>2.0</version>
+            <scope>compile</scope>
+        </dependency>
+
+<!--
+
+        DOES NOT work with roboguice 2.0
+
+        <dependency>
+            <groupId>com.googlecode.androidannotations</groupId>
+            <artifactId>androidannotations</artifactId>
+            <version>2.6</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.googlecode.androidannotations</groupId>
+            <artifactId>androidannotations</artifactId>
+            <classifier>api</classifier>
+            <version>2.6</version>
+        </dependency>
+-->
+
         <!-- Make sure this is below the android dependencies -->
         <dependency>
             <groupId>com.pivotallabs</groupId>

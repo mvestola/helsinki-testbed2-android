@@ -1,14 +1,11 @@
 package fi.testbed2.activity;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
-import android.widget.Toast;
 import fi.testbed2.R;
 import fi.testbed2.app.MainApplication;
 import fi.testbed2.result.AbstractTaskResult;
@@ -70,15 +67,12 @@ public class MainActivity extends AbstractActivity implements OnClickListener {
                 startActivityForResult(new Intent(this, AnimationActivity.class), ANIMATION_SUB_ACTIVITY);
                 break;
             case Activity.RESULT_CANCELED:
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        this.getString(R.string.notice_cancelled),
-                        Toast.LENGTH_SHORT);
-                toast.show();
+                showShortMessage(this.getString(R.string.notice_cancelled));
                 break;
             case MainApplication.RESULT_ERROR:
                 String errorMsg = this.getString(R.string.error_message_detailed,
-                        data.getStringExtra(AbstractTaskResult.MSG_CODE));
-                this.showErrorDialog(errorMsg);
+                    data.getStringExtra(AbstractTaskResult.MSG_CODE));
+                showErrorDialog(errorMsg);
                 break;
         }
 
@@ -91,33 +85,17 @@ public class MainActivity extends AbstractActivity implements OnClickListener {
                 startMainParsingActivity();
                 break;
             case Activity.RESULT_CANCELED:
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        this.getString(R.string.notice_cancelled),
-                        Toast.LENGTH_SHORT);
-                toast.show();
+                showShortMessage(this.getString(R.string.notice_cancelled));
                 break;
             case MainApplication.RESULT_ERROR:
                 String errorMsg = this.getString(R.string.error_message_detailed,
                         data.getStringExtra(AbstractTaskResult.MSG_CODE));
-                this.showErrorDialog(errorMsg);
+                showErrorDialog(errorMsg);
                 break;
             default:
                 break;
         }
 
-    }
-
-    private void showErrorDialog(String errorMessage) {
-        AlertDialog ad = new AlertDialog.Builder(this).create();
-        ad.setCancelable(false); // This blocks the 'BACK' button
-        ad.setMessage(errorMessage);
-        ad.setButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        ad.show();
     }
 
     @Override
