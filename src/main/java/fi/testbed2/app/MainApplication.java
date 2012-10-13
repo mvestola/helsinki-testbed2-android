@@ -9,9 +9,10 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.preference.PreferenceManager;
 import android.support.v4.util.LruCache;
+import com.google.inject.Inject;
 import com.jhlabs.map.Point2D;
-import fi.testbed2.data.Municipality;
 import fi.testbed2.data.TestbedParsedPage;
+import fi.testbed2.service.MunicipalityService;
 
 public class MainApplication extends Application {
 
@@ -29,8 +30,6 @@ public class MainApplication extends Application {
     private static LruCache<String, TestbedParsedPage> pageCache;
 
     private static String PAGE_CACHE_KEY = "TESTBED_PAGE";
-
-    private static Point2D.Double userLocationInMapPx;
 
     public static TestbedParsedPage getTestbedParsedPage() {
         return pageCache.get(PAGE_CACHE_KEY);
@@ -92,20 +91,6 @@ public class MainApplication extends Application {
 
         pageCache = new LruCache<String, TestbedParsedPage>(cacheSizeInBytes);
 
-    }
-
-    public static Point2D.Double getUserLocationInMapPixels() {
-
-        if (debug) {
-            return Municipality.getMunicipality("Helsinki").getPositionInMapPx();
-        } else {
-            return userLocationInMapPx;
-        }
-
-    }
-
-    public static void setUserLocationInMapPixels(Point2D.Double pos) {
-        userLocationInMapPx = pos;
     }
 
     public static void clearData() {

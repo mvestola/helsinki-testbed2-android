@@ -18,6 +18,7 @@ import fi.testbed2.app.MainApplication;
 import fi.testbed2.app.Preference;
 import fi.testbed2.data.Municipality;
 import fi.testbed2.data.TestbedMapImage;
+import fi.testbed2.service.UserLocationService;
 import fi.testbed2.util.CoordinateUtil;
 import fi.testbed2.util.SeekBarUtil;
 
@@ -43,6 +44,9 @@ public class AnimationView extends View {
     private float minScaleFactor = 0.5f;
     private float maxScaleFactor = 3.0f;
     private float scaleStepWhenDoubleTapping = 1.3f;
+
+    public List<Municipality> municipalities;
+    public UserLocationService userLocationService;
 
     private boolean mapWasScaled;
 
@@ -246,7 +250,7 @@ public class AnimationView extends View {
 
     private void drawUserLocation(Canvas canvas) {
         if (MainApplication.showUserLocation()) {
-            Point2D.Double userLocation = MainApplication.getUserLocationInMapPixels();
+            Point2D.Double userLocation = userLocationService.getUserLocationInMapPixels();
             if (userLocation!=null) {
                 drawPoint(userLocation, Color.BLACK, canvas, true);
             }
@@ -255,18 +259,7 @@ public class AnimationView extends View {
 
     private void drawMunicipalities(Canvas canvas) {
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        String municipalitiesString = sharedPreferences.getString(Preference.PREF_LOCATION_SHOW_MUNICIPALITIES, "");
-
-        String[] municipalities = municipalitiesString.split(
-                Preference.PREF_LOCATION_SHOW_MUNICIPALITIES_SPLIT);
-
-        if (municipalities.length<1 || municipalities[0].length()==0) {
-            return;
-        }
-
-        for (String municipalityName : municipalities) {
-            Municipality municipality = Municipality.getMunicipality(municipalityName);
+        for (Municipality municipality : municipalities) {
             if (municipality!=null) {
                 drawPoint(municipality.getPositionInMapPx(), Color.BLACK, canvas, false);
             }

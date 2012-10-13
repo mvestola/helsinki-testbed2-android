@@ -2,20 +2,24 @@ package fi.testbed2.activity;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import com.google.inject.Inject;
 import com.threefiftynice.android.preference.ListPreferenceMultiSelect;
 import fi.testbed2.R;
 import fi.testbed2.app.Preference;
-import fi.testbed2.data.Municipality;
+import fi.testbed2.service.MunicipalityService;
 
 public class MyPreferenceActivity extends PreferenceActivity {
 
-	@Override
+    @Inject
+    MunicipalityService municipalityService;
+
+    @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.preferences);
 
-        String[] entries = Municipality.getFinlandMunicipalityNamesShownInTestbedMap();
+        String[] entries = municipalityService.getFinlandMunicipalityNamesShownInTestbedMap();
         String[] entryValues = entries;
         ListPreferenceMultiSelect lp =
                 (ListPreferenceMultiSelect)getPreferenceManager().

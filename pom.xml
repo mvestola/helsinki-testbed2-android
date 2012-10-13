@@ -64,7 +64,7 @@
 
 <!--
 
-        DOES NOT work with roboguice 2.0
+        DOES NOT work with roboguice 2.0 but would be useful
 
         <dependency>
             <groupId>com.googlecode.androidannotations</groupId>

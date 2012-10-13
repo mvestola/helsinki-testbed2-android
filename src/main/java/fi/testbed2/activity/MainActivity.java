@@ -9,12 +9,14 @@ import android.widget.ImageButton;
 import fi.testbed2.R;
 import fi.testbed2.app.MainApplication;
 import fi.testbed2.result.AbstractTaskResult;
+import roboguice.inject.InjectView;
 
 public class MainActivity extends AbstractActivity implements OnClickListener {
 
     public static final int PARSING_SUB_ACTIVITY = 1;
     public static final int ANIMATION_SUB_ACTIVITY = 2;
 
+    @InjectView(R.id.button_refresh)
     private ImageButton refreshButton;
 
 	/** Called when the activity is first created. */
@@ -22,10 +24,7 @@ public class MainActivity extends AbstractActivity implements OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        
-        refreshButton = (ImageButton) findViewById(R.id.button_refresh);
         refreshButton.setOnClickListener(this);
-        
     }
 
 	@Override

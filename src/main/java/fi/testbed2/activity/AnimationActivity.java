@@ -17,14 +17,21 @@ import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import com.google.inject.Inject;
 import fi.testbed2.R;
 import fi.testbed2.app.MainApplication;
 import fi.testbed2.app.Preference;
+import fi.testbed2.data.Municipality;
 import fi.testbed2.data.TestbedParsedPage;
+import fi.testbed2.service.UserLocationService;
+import fi.testbed2.service.MunicipalityService;
 import fi.testbed2.task.DownloadImagesTask;
 import fi.testbed2.util.CoordinateUtil;
 import fi.testbed2.util.SeekBarUtil;
 import fi.testbed2.view.AnimationView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * TODO: this class has grown quite large. Refactor it to smaller classes
@@ -33,6 +40,12 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
 
     private static int LOCATION_UPDATE_INTERVAL_MINUTES = 1;
     private static int LOCATION_UPDATE_ACCURACY_METERS = 1000;
+
+    @Inject
+    MunicipalityService municipalityService;
+
+    @Inject
+    UserLocationService userLocationService;
 
     private AnimationView animationView;
 	private ImageButton playPauseButton;
@@ -64,6 +77,7 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
 
         initButtons();
         initViews();
+        initMunicipalities();
         initAnimation();
 
         orientation = this.getResources().getConfiguration().orientation;
@@ -77,6 +91,32 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
 
         seekBar = (SeekBar)findViewById(R.id.seek);
         seekBar.setOnSeekBarChangeListener(this);
+
+    }
+
+    private void initMunicipalities() {
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String municipalitiesString = sharedPreferences.getString(Preference.PREF_LOCATION_SHOW_MUNICIPALITIES, "");
+
+        String[] municipalities = municipalitiesString.split(
+                Preference.PREF_LOCATION_SHOW_MUNICIPALITIES_SPLIT);
+
+        if (municipalities.length<1 || municipalities[0].length()==0) {
+            return;
+        }
+
+        List<Municipality> municipalitiesList = new ArrayList<Municipality>();
+
+        for (String municipalityName : municipalities) {
+            Municipality municipality = municipalityService.getMunicipality(municipalityName);
+            if (municipality!=null) {
+                municipalitiesList.add(municipality);
+            }
+        }
+
+        animationView.municipalities = municipalitiesList;
+        animationView.userLocationService = userLocationService;
 
     }
 
@@ -114,13 +154,13 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
 
             Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
             if (lastKnownLocation!=null) {
-                MainApplication.setUserLocationInMapPixels(CoordinateUtil.convertLocationToTestbedImageXY(lastKnownLocation));
+                userLocationService.setUserLocationInMapPixels(CoordinateUtil.convertLocationToTestbedImageXY(lastKnownLocation));
             }
 
             locationListener = new LocationListener() {
                 public void onLocationChanged(Location location) {
                     if (location!=null) {
-                        MainApplication.setUserLocationInMapPixels(
+                        userLocationService.setUserLocationInMapPixels(
                                 CoordinateUtil.convertLocationToTestbedImageXY(location));
                     }
                 }
