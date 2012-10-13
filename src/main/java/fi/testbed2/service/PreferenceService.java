@@ -1,6 +1,15 @@
-package fi.testbed2.app;
+package fi.testbed2.service;
 
-public class Preference {
+import android.content.SharedPreferences;
+import android.graphics.Rect;
+import android.preference.PreferenceManager;
+import fi.testbed2.app.MainApplication;
+import fi.testbed2.data.Municipality;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public interface PreferenceService {
 
     public static final String PREF_ANIM_FRAME_DELAY = "PREF_ANIM_FRAME_DELAY";
     public static final String PREF_ANIM_AUTOSTART = "PREF_ANIM_AUTOSTART";
@@ -13,5 +22,24 @@ public class Preference {
     public static final String PREF_LOCATION_SHOW_USER_LOCATION = "PREF_LOCATION_SHOW_USER_LOCATION";
     public static final String PREF_LOCATION_SHOW_MUNICIPALITIES = "PREF_LOCATION_MUNICIPALITIES";
     public static final String PREF_LOCATION_SHOW_MUNICIPALITIES_SPLIT = "===";
+
+    /**
+     * Saves the bounds of the map user has previously viewed to persistent storage.
+     */
+    public void saveMapBoundsAndScaleFactor(Rect bounds, float scale, int orientation);
+
+    public Rect getSavedMapBounds(int orientation);
+
+    public float getSavedScaleFactor(int orientation);
+
+    public List<Municipality> getSavedMunicipalities();
+
+    public int getSavedFrameDelay();
+
+    public boolean isStartAnimationAutomatically();
+
+    public boolean isShowWhatsNewDialog();
+
+    public void saveWhatsNewDialogShownForCurrentVersion();
 
 }

@@ -11,7 +11,7 @@ import android.widget.Toast;
 import com.google.inject.Inject;
 import fi.testbed2.R;
 import fi.testbed2.app.MainApplication;
-import fi.testbed2.app.Preference;
+import fi.testbed2.service.PreferenceService;
 import fi.testbed2.dialog.DialogBuilder;
 import fi.testbed2.dialog.DialogType;
 import roboguice.activity.RoboActivity;
@@ -26,22 +26,19 @@ public abstract class AbstractActivity extends RoboActivity {
     @Inject
     DialogBuilder dialogBuilder;
 
+    @Inject
+    PreferenceService preferenceService;
+
     private String currentErrorMsg;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        showWhatsNewDialogIfNecessary();
-    }
-
-    private void showWhatsNewDialogIfNecessary() {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String dialogShownForVersion = sharedPreferences.
-                getString(Preference.PREF_WHATS_NEW_DIALOG_SHOWN_FOR_VERSION, "");
-        if (!dialogShownForVersion.equals(MainApplication.getVersionName())) {
+        if (preferenceService.isShowWhatsNewDialog()) {
             showDialog(DialogType.WHATS_NEW);
         }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -14,12 +14,15 @@ import android.widget.TextView;
 import com.google.inject.Inject;
 import fi.testbed2.R;
 import fi.testbed2.app.MainApplication;
-import fi.testbed2.app.Preference;
+import fi.testbed2.service.PreferenceService;
 
 public class DefaultDialogBuilder implements DialogBuilder {
 
     @Inject
     protected Context context;
+
+    @Inject
+    PreferenceService preferenceService;
 
     @Override
     public AlertDialog getAboutAlertDialog() {
@@ -52,11 +55,7 @@ public class DefaultDialogBuilder implements DialogBuilder {
         builder.setView(getWhatsNewDialogContents(context))
                 .setPositiveButton(context.getText(R.string.close_button), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString(Preference.PREF_WHATS_NEW_DIALOG_SHOWN_FOR_VERSION,
-                                MainApplication.getVersionName());
-                        editor.commit();
+                        preferenceService.saveWhatsNewDialogShownForCurrentVersion();
                         dialog.cancel();
                     }
                 });

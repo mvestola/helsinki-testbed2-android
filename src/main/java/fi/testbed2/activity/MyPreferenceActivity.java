@@ -1,14 +1,14 @@
 package fi.testbed2.activity;
 
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
 import com.google.inject.Inject;
 import com.threefiftynice.android.preference.ListPreferenceMultiSelect;
 import fi.testbed2.R;
-import fi.testbed2.app.Preference;
+import fi.testbed2.service.PreferenceService;
 import fi.testbed2.service.MunicipalityService;
+import roboguice.activity.RoboPreferenceActivity;
 
-public class MyPreferenceActivity extends PreferenceActivity {
+public class MyPreferenceActivity extends RoboPreferenceActivity {
 
     @Inject
     MunicipalityService municipalityService;
@@ -23,7 +23,7 @@ public class MyPreferenceActivity extends PreferenceActivity {
         String[] entryValues = entries;
         ListPreferenceMultiSelect lp =
                 (ListPreferenceMultiSelect)getPreferenceManager().
-                        findPreference(Preference.PREF_LOCATION_SHOW_MUNICIPALITIES);
+                        findPreference(PreferenceService.PREF_LOCATION_SHOW_MUNICIPALITIES);
         lp.setEntries(entries);
         lp.setEntryValues(entryValues);
 

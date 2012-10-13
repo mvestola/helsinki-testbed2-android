@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import fi.testbed2.R;
 import fi.testbed2.app.MainApplication;
-import fi.testbed2.app.Preference;
+import fi.testbed2.service.PreferenceService;
 import fi.testbed2.data.TestbedMapImage;
 import fi.testbed2.data.TestbedParsedPage;
 import fi.testbed2.exception.DownloadTaskException;
@@ -30,9 +30,9 @@ public class ParseAndInitTask extends AbstractTask<ParseAndInitTaskResult> {
     private void initURL(final Context context) {
         // construct URL where to download content
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        String mapType = sharedPreferences.getString(Preference.PREF_MAP_TYPE, "radar");
-        String mapTimeStep = sharedPreferences.getString(Preference.PREF_MAP_TIME_STEP, "5");
-        String mapNumberOfImages = sharedPreferences.getString(Preference.PREF_MAP_NUMBER_OF_IMAGES, "10");
+        String mapType = sharedPreferences.getString(PreferenceService.PREF_MAP_TYPE, "radar");
+        String mapTimeStep = sharedPreferences.getString(PreferenceService.PREF_MAP_TIME_STEP, "5");
+        String mapNumberOfImages = sharedPreferences.getString(PreferenceService.PREF_MAP_NUMBER_OF_IMAGES, "10");
         url = activity.getString(R.string.testbed_base_url, mapType, mapTimeStep, mapNumberOfImages);
     }
 

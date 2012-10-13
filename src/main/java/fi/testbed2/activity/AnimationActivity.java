@@ -1,14 +1,11 @@
 package fi.testbed2.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.graphics.Rect;
-import android.location.Location;
 import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -20,11 +17,11 @@ import android.widget.TextView;
 import com.google.inject.Inject;
 import fi.testbed2.R;
 import fi.testbed2.app.MainApplication;
-import fi.testbed2.app.Preference;
+import fi.testbed2.service.PreferenceService;
 import fi.testbed2.data.Municipality;
 import fi.testbed2.data.TestbedParsedPage;
 import fi.testbed2.service.CoordinateService;
-import fi.testbed2.service.UserLocationService;
+import fi.testbed2.service.LocationService;
 import fi.testbed2.service.MunicipalityService;
 import fi.testbed2.task.DownloadImagesTask;
 import fi.testbed2.util.SeekBarUtil;
@@ -38,17 +35,17 @@ import java.util.List;
  */
 public class AnimationActivity extends AbstractActivity implements OnClickListener, SeekBar.OnSeekBarChangeListener {
 
-    private static int LOCATION_UPDATE_INTERVAL_MINUTES = 1;
-    private static int LOCATION_UPDATE_ACCURACY_METERS = 1000;
-
     @Inject
     MunicipalityService municipalityService;
 
     @Inject
-    UserLocationService userLocationService;
+    LocationService locationService;
 
     @Inject
     CoordinateService coordinateService;
+
+    @Inject
+    PreferenceService preferenceService;
 
     private AnimationView animationView;
 	private ImageButton playPauseButton;
@@ -61,8 +58,6 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
     private int orientation;
 
     private boolean allImagesDownloaded;
-
-    private LocationListener locationListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -80,7 +75,10 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
 
         initButtons();
         initViews();
-        initMunicipalities();
+
+        animationView.municipalities = preferenceService.getSavedMunicipalities();
+        animationView.userLocationService = locationService;
+
         initAnimation();
 
         orientation = this.getResources().getConfiguration().orientation;
@@ -97,32 +95,6 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
 
     }
 
-    private void initMunicipalities() {
-
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String municipalitiesString = sharedPreferences.getString(Preference.PREF_LOCATION_SHOW_MUNICIPALITIES, "");
-
-        String[] municipalities = municipalitiesString.split(
-                Preference.PREF_LOCATION_SHOW_MUNICIPALITIES_SPLIT);
-
-        if (municipalities.length<1 || municipalities[0].length()==0) {
-            return;
-        }
-
-        List<Municipality> municipalitiesList = new ArrayList<Municipality>();
-
-        for (String municipalityName : municipalities) {
-            Municipality municipality = municipalityService.getMunicipality(municipalityName);
-            if (municipality!=null) {
-                municipalitiesList.add(municipality);
-            }
-        }
-
-        animationView.municipalities = municipalitiesList;
-        animationView.userLocationService = userLocationService;
-
-    }
-
     private void initViews() {
         animationView = (AnimationView) findViewById(R.id.animation_view);
         animationView.setAllImagesDownloaded(false);
@@ -134,8 +106,8 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
         animationView.post(new Runnable() {
             @Override
             public void run() {
-                final Rect bounds = getSavedMapBounds();
-                final float scale = getSavedScaleFactor();
+                final Rect bounds = preferenceService.getSavedMapBounds(orientation);
+                final float scale = preferenceService.getSavedScaleFactor(orientation);
                 updatePlayingState(true);
                 if (bounds==null) {
                     animationView.start(timestampView, seekBar, scale);
@@ -148,44 +120,6 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
 
     }
 
-    private void initLocationListener() {
-
-        if (MainApplication.showUserLocation()) {
-
-            LocationManager locationManager =
-                    (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-
-            Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-            if (lastKnownLocation!=null) {
-                userLocationService.setUserLocationInMapPixels(coordinateService.convertLocationToXyPos(lastKnownLocation));
-            }
-
-            locationListener = new LocationListener() {
-                public void onLocationChanged(Location location) {
-                    if (location!=null) {
-                        userLocationService.setUserLocationInMapPixels(
-                                coordinateService.convertLocationToXyPos(location));
-                    }
-                }
-                public void onStatusChanged(String provider, int status, Bundle extras) {}
-                public void onProviderEnabled(String provider) {}
-                public void onProviderDisabled(String provider) {}
-            };
-
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-                    LOCATION_UPDATE_INTERVAL_MINUTES * 60 * 1000, LOCATION_UPDATE_ACCURACY_METERS, locationListener);
-
-        }
-
-    }
-
-    private void removeLocationListener() {
-        if (locationListener!=null) {
-            LocationManager locationManager =
-                    (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-            locationManager.removeUpdates(locationListener);
-        }
-    }
 
     /**
      * Updates the Downloading text in top left corner
@@ -208,77 +142,19 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
         updateBoundsToView();
     }
 
-    private String getMapBoundsPreferenceKey() {
-        return Preference.PREF_BOUNDS_PREFERENCE_KEY_PREFIX + orientation;
-    }
-
-    private String getMapScalePreferenceKey() {
-        return Preference.PREF_SCALE_PREFERENCE_KEY_PREFIX + orientation;
-    }
-
     /**
      * Saves the bounds of the map user has previously viewed to persistent storage.
      */
     private void saveMapBoundsAndScaleFactor() {
-
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        Editor editor = sharedPreferences.edit();
-        Rect bounds = animationView.getBounds();
-        float scale = animationView.getScaleFactor();
-
-        if (editor!=null) {
-            if (bounds!=null) {
-                // bounds String format is left:top:right:bottom
-                editor.putString(getMapBoundsPreferenceKey(),
-                        "" + bounds.left + ":" + bounds.top + ":" + bounds.right + ":" + bounds.bottom);
-            }
-            editor.putFloat(getMapScalePreferenceKey(), scale);
-            editor.commit();
-        }
-
-    }
-
-    /**
-     * Returns the saved map bounds user has previously used
-     * @return
-     */
-    private Rect getSavedMapBounds() {
-
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        // left:top:right:bottom
-        String frameBoundsPref = sharedPreferences.getString(getMapBoundsPreferenceKey(), null);
-
-        if (frameBoundsPref==null) {
-            return null;
-        }
-
-        String[] parts = frameBoundsPref.split(":");
-        final Rect bounds = new Rect(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2]), Integer.parseInt(parts[3]));
-
-        return bounds;
-
-    }
-
-    private float getSavedScaleFactor() {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        return sharedPreferences.getFloat(getMapScalePreferenceKey(), 1.0f);
+        preferenceService.saveMapBoundsAndScaleFactor(animationView.getBounds(),
+                animationView.getScaleFactor(), orientation);
     }
 
     private void updateBoundsToView() {
-        animationView.setScaleFactor(getSavedScaleFactor());
-        animationView.updateBounds(getSavedMapBounds());
+        animationView.setScaleFactor(preferenceService.getSavedScaleFactor(orientation));
+        animationView.updateBounds(preferenceService.getSavedMapBounds(orientation));
     }
 
-    private void updateFrameDelayToView() {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        animationView.setFrameDelay(Integer.parseInt(
-                sharedPreferences.getString(Preference.PREF_ANIM_FRAME_DELAY, "1000")));
-    }
-
-    private boolean startAnimationAutomatically() {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        return sharedPreferences.getBoolean(Preference.PREF_ANIM_AUTOSTART, true);
-    }
 
     @Override
 	protected void onPause() {
@@ -288,8 +164,8 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
         }
         this.pauseAnimation();
         this.saveMapBoundsAndScaleFactor();
-        this.removeLocationListener();
-	}
+        locationService.stopListeningLocationChanges();
+    }
 
     @Override
     protected void onResume() {
@@ -300,10 +176,13 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
             return;
         }
 
-        this.initLocationListener();
+        if (MainApplication.showUserLocation()) {
+            locationService.startListeningLocationChanges();
+        }
 
         updateBoundsToView();
-        updateFrameDelayToView();
+        animationView.setFrameDelay(preferenceService.getSavedFrameDelay());
+
         if (!allImagesDownloaded) {
             task = new DownloadImagesTask(this);
             task.execute();
@@ -354,7 +233,7 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
         animationView.refresh(getApplicationContext());
         animationView.previous();
         updatePlayingState(false);
-        if (startAnimationAutomatically()) {
+        if (preferenceService.isStartAnimationAutomatically()) {
             playAnimation();
         }
     }

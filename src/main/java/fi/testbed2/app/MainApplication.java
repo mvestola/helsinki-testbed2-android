@@ -9,10 +9,8 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.preference.PreferenceManager;
 import android.support.v4.util.LruCache;
-import com.google.inject.Inject;
-import com.jhlabs.map.Point2D;
 import fi.testbed2.data.TestbedParsedPage;
-import fi.testbed2.service.MunicipalityService;
+import fi.testbed2.service.PreferenceService;
 
 public class MainApplication extends Application {
 
@@ -129,7 +127,7 @@ public class MainApplication extends Application {
 
     public static boolean showUserLocation() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        return sharedPreferences.getBoolean(Preference.PREF_LOCATION_SHOW_USER_LOCATION, true);
+        return sharedPreferences.getBoolean(PreferenceService.PREF_LOCATION_SHOW_USER_LOCATION, true);
     }
 
     /**

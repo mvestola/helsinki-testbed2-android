@@ -15,10 +15,10 @@ import android.widget.TextView;
 import com.jhlabs.map.Point2D;
 import fi.testbed2.R;
 import fi.testbed2.app.MainApplication;
-import fi.testbed2.app.Preference;
+import fi.testbed2.service.PreferenceService;
 import fi.testbed2.data.Municipality;
 import fi.testbed2.data.TestbedMapImage;
-import fi.testbed2.service.UserLocationService;
+import fi.testbed2.service.LocationService;
 import fi.testbed2.util.SeekBarUtil;
 
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ public class AnimationView extends View {
     private float scaleStepWhenDoubleTapping = 1.3f;
 
     public List<Municipality> municipalities;
-    public UserLocationService userLocationService;
+    public LocationService userLocationService;
 
     private boolean mapWasScaled;
 
@@ -238,7 +238,7 @@ public class AnimationView extends View {
 
     private void drawUserLocation(Canvas canvas) {
         if (MainApplication.showUserLocation()) {
-            Point2D.Double userLocation = userLocationService.getUserLocationInMapPixels();
+            Point2D.Double userLocation = userLocationService.getUserLocationXY();
             if (userLocation!=null) {
                 drawPoint(userLocation, Color.BLACK, canvas, true);
             }
@@ -397,7 +397,7 @@ public class AnimationView extends View {
 		// get default frame delay
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 		frameDelay = Integer.parseInt(
-                sharedPreferences.getString(Preference.PREF_ANIM_FRAME_DELAY, "1000"));
+                sharedPreferences.getString(PreferenceService.PREF_ANIM_FRAME_DELAY, "1000"));
 		
         BitmapDrawable firstMap = new BitmapDrawable(getMapImagesToBeDrawn().get(0).getDownloadedBitmapImage());
 
