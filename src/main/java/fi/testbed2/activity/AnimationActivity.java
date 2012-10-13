@@ -181,6 +181,7 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
         }
 
         updateBoundsToView();
+        animationView.municipalities = preferenceService.getSavedMunicipalities();
         animationView.setFrameDelay(preferenceService.getSavedFrameDelay());
 
         if (!allImagesDownloaded) {

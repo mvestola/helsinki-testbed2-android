@@ -18,6 +18,11 @@ public class MyPreferenceActivity extends RoboPreferenceActivity {
 		super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.preferences);
+        initMunicipalityList();
+
+    }
+
+    private void initMunicipalityList() {
 
         String[] entries = municipalityService.getFinlandMunicipalityNamesShownInTestbedMap();
         String[] entryValues = entries;

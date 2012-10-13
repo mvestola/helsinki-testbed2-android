@@ -22,10 +22,10 @@ public class MainModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(DialogBuilder.class).to(DefaultDialogBuilder.class);
-        bind(MunicipalityService.class).to(InlineMunicipalityService.class).in(Singleton.class);
-        bind(LocationService.class).to(NetworkLocationService.class).in(Singleton.class);
-        bind(CoordinateService.class).to(MercatorCoordinateService.class).in(Singleton.class);
-        bind(PreferenceService.class).to(DefaultPreferenceService.class).in(Singleton.class);
+        bind(MunicipalityService.class).to(InlineMunicipalityService.class);
+        bind(LocationService.class).to(NetworkLocationService.class);
+        bind(CoordinateService.class).to(MercatorCoordinateService.class);
+        bind(PreferenceService.class).to(DefaultPreferenceService.class);
     }
 
 }

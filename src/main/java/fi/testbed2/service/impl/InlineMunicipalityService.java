@@ -2,6 +2,7 @@ package fi.testbed2.service.impl;
 
 import android.location.Location;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.jhlabs.map.Point2D;
 import fi.testbed2.data.Municipality;
 import fi.testbed2.service.CoordinateService;
@@ -13,6 +14,7 @@ import java.util.TreeMap;
 /**
  * Municipality service containing the municipalities inline in the Java code.
  */
+@Singleton
 public class InlineMunicipalityService implements MunicipalityService {
 
     private SortedMap<String, Municipality> municipalitiesInTestbedMap;

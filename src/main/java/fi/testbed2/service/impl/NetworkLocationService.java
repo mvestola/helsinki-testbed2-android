@@ -5,11 +5,13 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.jhlabs.map.Point2D;
 import fi.testbed2.service.CoordinateService;
 import fi.testbed2.service.LocationService;
 import fi.testbed2.service.MunicipalityService;
 
+@Singleton
 public class NetworkLocationService implements LocationService, LocationListener {
 
     private static int LOCATION_UPDATE_INTERVAL_MINUTES = 1;

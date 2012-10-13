@@ -5,15 +5,16 @@ import android.os.Bundle;
 import fi.testbed2.R;
 import fi.testbed2.app.MainApplication;
 import fi.testbed2.task.ParseAndInitTask;
+import roboguice.inject.ContentView;
 
-
+@ContentView(R.layout.download)
 public class ParsingActivity extends AbstractActivity {
+
     private ParseAndInitTask task;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.download);
     }
 
 	@Override

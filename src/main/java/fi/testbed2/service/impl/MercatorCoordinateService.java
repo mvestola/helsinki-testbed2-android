@@ -1,6 +1,7 @@
 package fi.testbed2.service.impl;
 
 import android.location.Location;
+import com.google.inject.Singleton;
 import com.jhlabs.map.Point2D;
 import com.jhlabs.map.proj.MercatorProjection;
 import fi.testbed2.service.CoordinateService;
@@ -9,6 +10,7 @@ import fi.testbed2.service.CoordinateService;
  * Coordinate service using the Mercator projection to convert
  * GPS coordinates to x,y coordinates in the testbed map image.
  */
+@Singleton
 public class MercatorCoordinateService implements CoordinateService {
 
     private Location knownPointInHumppila = new Location(STATIC_PROVIDER_NAME);

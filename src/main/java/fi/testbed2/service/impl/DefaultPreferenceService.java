@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.preference.PreferenceManager;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import fi.testbed2.app.MainApplication;
 import fi.testbed2.data.Municipality;
 import fi.testbed2.dialog.DialogType;
@@ -13,6 +14,7 @@ import fi.testbed2.service.PreferenceService;
 import java.util.ArrayList;
 import java.util.List;
 
+@Singleton
 public class DefaultPreferenceService implements PreferenceService {
 
     @Inject

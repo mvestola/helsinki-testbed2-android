@@ -9,8 +9,10 @@ import android.widget.ImageButton;
 import fi.testbed2.R;
 import fi.testbed2.app.MainApplication;
 import fi.testbed2.result.AbstractTaskResult;
+import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
 
+@ContentView(R.layout.main)
 public class MainActivity extends AbstractActivity implements OnClickListener {
 
     public static final int PARSING_SUB_ACTIVITY = 1;
@@ -23,7 +25,6 @@ public class MainActivity extends AbstractActivity implements OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
         refreshButton.setOnClickListener(this);
     }
 
