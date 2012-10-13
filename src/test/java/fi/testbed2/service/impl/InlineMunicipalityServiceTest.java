@@ -1,11 +1,11 @@
-package fi.testbed2.service;
+package fi.testbed2.service.impl;
 
 import fi.testbed2.AbstractRoboGuiceTestCase;
-import fi.testbed2.AbstractTestCase;
 import fi.testbed2.data.Municipality;
+import fi.testbed2.service.MunicipalityService;
+import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import roboguice.test.RobolectricRoboTestRunner;
+import roboguice.RoboGuice;
 
 import java.util.SortedMap;
 
@@ -13,8 +13,12 @@ import static junit.framework.Assert.*;
 
 public class InlineMunicipalityServiceTest extends AbstractRoboGuiceTestCase {
 
-    private static MunicipalityService municipalityService =
-            new InlineMunicipalityService();
+    private static MunicipalityService municipalityService;
+
+    @BeforeClass
+    public static void setUpClass() {
+        municipalityService = RoboGuice.getInjector(context).getInstance(InlineMunicipalityService.class);
+    }
 
     @Test
     public void testGetFinlandMunicipalitiesShownInTestbedMap() throws Exception {

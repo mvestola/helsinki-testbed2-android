@@ -1,7 +1,9 @@
-package fi.testbed2.service;
+package fi.testbed2.service.impl;
 
 import com.google.inject.Inject;
 import com.jhlabs.map.Point2D;
+import fi.testbed2.service.MunicipalityService;
+import fi.testbed2.service.UserLocationService;
 
 public class DefaultUserLocationService implements UserLocationService {
 
@@ -21,7 +23,7 @@ public class DefaultUserLocationService implements UserLocationService {
     public Point2D.Double getUserLocationInMapPixels() {
 
         if (debug) {
-            return municipalityService.getMunicipality("Helsinki").getPositionInMapPx();
+            return municipalityService.getMunicipality("Helsinki").getXyPos();
         } else {
             return userLocationInMapPx;
         }

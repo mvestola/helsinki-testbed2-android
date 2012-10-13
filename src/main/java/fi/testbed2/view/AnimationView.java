@@ -19,7 +19,6 @@ import fi.testbed2.app.Preference;
 import fi.testbed2.data.Municipality;
 import fi.testbed2.data.TestbedMapImage;
 import fi.testbed2.service.UserLocationService;
-import fi.testbed2.util.CoordinateUtil;
 import fi.testbed2.util.SeekBarUtil;
 
 import java.util.ArrayList;
@@ -193,7 +192,6 @@ public class AnimationView extends View {
 
         frame.draw(canvas);
 
-        //drawTestPoint(canvas);
         drawUserLocation(canvas);
         drawMunicipalities(canvas);
 
@@ -238,16 +236,6 @@ public class AnimationView extends View {
         }
     }
 
-    /**
-     * This method is used just for testing. It draws a red dot to the known
-     * point directly at the road intersection near Humppila. This can be used
-     * to check that the x,y coordinates are calculated correctly.
-     */
-    private void drawTestPoint(Canvas canvas) {
-        Point2D.Double point = CoordinateUtil.getKnownPositionForTesting();
-        drawPoint(point, Color.RED, canvas, false);
-    }
-
     private void drawUserLocation(Canvas canvas) {
         if (MainApplication.showUserLocation()) {
             Point2D.Double userLocation = userLocationService.getUserLocationInMapPixels();
@@ -261,7 +249,7 @@ public class AnimationView extends View {
 
         for (Municipality municipality : municipalities) {
             if (municipality!=null) {
-                drawPoint(municipality.getPositionInMapPx(), Color.BLACK, canvas, false);
+                drawPoint(municipality.getXyPos(), Color.BLACK, canvas, false);
             }
         }
 

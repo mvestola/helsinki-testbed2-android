@@ -1,6 +1,11 @@
-package fi.testbed2.service;
+package fi.testbed2.service.impl;
 
+import android.location.Location;
+import com.google.inject.Inject;
+import com.jhlabs.map.Point2D;
 import fi.testbed2.data.Municipality;
+import fi.testbed2.service.CoordinateService;
+import fi.testbed2.service.MunicipalityService;
 
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -11,6 +16,9 @@ import java.util.TreeMap;
 public class InlineMunicipalityService implements MunicipalityService {
 
     private SortedMap<String, Municipality> municipalitiesInTestbedMap;
+
+    @Inject
+    CoordinateService coordinateService;
 
     public InlineMunicipalityService() {
 
@@ -29,7 +37,12 @@ public class InlineMunicipalityService implements MunicipalityService {
          * (cause no Finnish municipalities are below the map bottom boundary).
          */
         if (lat<=61.005 && lon>=22.657 && lon<=26.792) {
-            municipalitiesInTestbedMap.put(name, new Municipality(name, lat, lon));
+
+            Location tempLocation = new Location(CoordinateService.STATIC_PROVIDER_NAME);
+            tempLocation.setLatitude(lat);
+            tempLocation.setLongitude(lon);
+            Point2D.Double xyPos = coordinateService.convertLocationToXyPos(tempLocation);
+            municipalitiesInTestbedMap.put(name, new Municipality(name, lat, lon, xyPos));
         }
 
     }

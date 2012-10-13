@@ -1,27 +1,25 @@
-package fi.testbed2.util;
+package fi.testbed2.service.impl;
 
 import android.location.Location;
 import com.jhlabs.map.Point2D;
 import com.jhlabs.map.proj.MercatorProjection;
-
+import fi.testbed2.service.CoordinateService;
 
 /**
- * Utility class which is used to convert GPS coordinates to
- * x,y positions in the testbed map image.
+ * Coordinate service using the Mercator projection to convert
+ * GPS coordinates to x,y coordinates in the testbed map image.
  */
-public class CoordinateUtil {
+public class MercatorCoordinateService implements CoordinateService {
 
-    public static final String PROVIDER_NAME = "dummy_provider";
+    private Location knownPointInHumppila = new Location(STATIC_PROVIDER_NAME);
+    private Location knownPointInPorvoo = new Location(STATIC_PROVIDER_NAME);
 
-    private static Location knownPointInHumppila = new Location(PROVIDER_NAME);
-    private static Location knownPointInPorvoo = new Location(PROVIDER_NAME);
-
-    private static Point2D.Double knownPointInHumppilaXY;
+    private Point2D.Double knownPointInHumppilaXY;
 
     /**
      * Manually calculated known point in the testbed map image
      */
-    private static Point2D.Double knownPointInHumppilaXYInTestbedMap =
+    private Point2D.Double knownPointInHumppilaXYInTestbedMap =
             new Point2D.Double(99d, 16d);
 
     /*
@@ -29,10 +27,10 @@ public class CoordinateUtil {
     * which are given from Mercator projection to the x,y coordinates
     * of the testbed map still image.
     */
-    private static double xScale = 8314.6379;
-    private static double yScale = -8525.3994;
+    private double xScale = 8314.6379;
+    private double yScale = -8525.3994;
 
-    static {
+    public MercatorCoordinateService() {
 
         knownPointInHumppila.setLatitude(60.95357);
         knownPointInHumppila.setLongitude(23.33907);
@@ -50,7 +48,8 @@ public class CoordinateUtil {
      * The x,y coordinates correspond to the testbed map image x,y coordinates in pixels.
      * @return
      */
-    public static Point2D.Double getKnownPositionForTesting() {
+    @Override
+    public Point2D.Double getKnownPositionForTesting() {
         return knownPointInHumppilaXYInTestbedMap;
     }
 
@@ -59,7 +58,8 @@ public class CoordinateUtil {
      * @param location
      * @return
      */
-    public static Point2D.Double convertLocationToTestbedImageXY(Location location) {
+    @Override
+    public Point2D.Double convertLocationToXyPos(Location location) {
         if (location==null) {
             return null;
         }
@@ -74,7 +74,7 @@ public class CoordinateUtil {
      * @param point
      * @return
      */
-    private static Point2D.Double convertToXYInTestbedMap(Point2D.Double point) {
+    private Point2D.Double convertToXYInTestbedMap(Point2D.Double point) {
 
         double distanceInTestbedImagePxX = (point.x - knownPointInHumppilaXY.x) * xScale;
         double distanceInTestbedImagePxY = (point.y - knownPointInHumppilaXY.y) * yScale;
@@ -94,7 +94,7 @@ public class CoordinateUtil {
      * @param coordinate
      * @return
      */
-    private static Point2D.Double convertLocationToMercatorXY(Location coordinate) {
+    private Point2D.Double convertLocationToMercatorXY(Location coordinate) {
 
         if (coordinate==null) {
             return null;

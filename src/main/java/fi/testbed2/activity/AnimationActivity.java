@@ -23,10 +23,10 @@ import fi.testbed2.app.MainApplication;
 import fi.testbed2.app.Preference;
 import fi.testbed2.data.Municipality;
 import fi.testbed2.data.TestbedParsedPage;
+import fi.testbed2.service.CoordinateService;
 import fi.testbed2.service.UserLocationService;
 import fi.testbed2.service.MunicipalityService;
 import fi.testbed2.task.DownloadImagesTask;
-import fi.testbed2.util.CoordinateUtil;
 import fi.testbed2.util.SeekBarUtil;
 import fi.testbed2.view.AnimationView;
 
@@ -46,6 +46,9 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
 
     @Inject
     UserLocationService userLocationService;
+
+    @Inject
+    CoordinateService coordinateService;
 
     private AnimationView animationView;
 	private ImageButton playPauseButton;
@@ -154,14 +157,14 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
 
             Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
             if (lastKnownLocation!=null) {
-                userLocationService.setUserLocationInMapPixels(CoordinateUtil.convertLocationToTestbedImageXY(lastKnownLocation));
+                userLocationService.setUserLocationInMapPixels(coordinateService.convertLocationToXyPos(lastKnownLocation));
             }
 
             locationListener = new LocationListener() {
                 public void onLocationChanged(Location location) {
                     if (location!=null) {
                         userLocationService.setUserLocationInMapPixels(
-                                CoordinateUtil.convertLocationToTestbedImageXY(location));
+                                coordinateService.convertLocationToXyPos(location));
                     }
                 }
                 public void onStatusChanged(String provider, int status, Bundle extras) {}
