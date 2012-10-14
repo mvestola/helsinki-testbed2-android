@@ -18,35 +18,6 @@ public class TestbedParsedPage {
         return testbedMapImages;
     }
 
-    public int getNotDownloadedCount() {
-
-        if (testbedMapImages==null || testbedMapImages.isEmpty()) {
-            return Integer.MAX_VALUE;
-        }
-
-        int notDownloaded = 0;
-        for (TestbedMapImage mapImage : testbedMapImages) {
-            if (mapImage==null || !mapImage.hasBitmapDataDownloaded()) {
-                notDownloaded++;
-            }
-        }
-
-        return notDownloaded;
-
-    }
-
-    public List<TestbedMapImage> getDownloadedTestbedImages() {
-
-        List<TestbedMapImage> downloaded = new ArrayList<TestbedMapImage>();
-        for (TestbedMapImage mapImage : testbedMapImages) {
-            if (mapImage.hasBitmapDataDownloaded()) {
-                downloaded.add(mapImage);
-            }
-        }
-
-        return downloaded;
-    }
-
     public void addTestbedMapImage(TestbedMapImage image) {
         if (testbedMapImages==null) {
             testbedMapImages = new ArrayList<TestbedMapImage>();

@@ -17,15 +17,15 @@ import android.widget.TextView;
 import com.google.inject.Inject;
 import fi.testbed2.R;
 import fi.testbed2.app.MainApplication;
-import fi.testbed2.service.PreferenceService;
+import fi.testbed2.service.*;
 import fi.testbed2.data.Municipality;
 import fi.testbed2.data.TestbedParsedPage;
-import fi.testbed2.service.CoordinateService;
-import fi.testbed2.service.LocationService;
-import fi.testbed2.service.MunicipalityService;
 import fi.testbed2.task.DownloadImagesTask;
 import fi.testbed2.util.SeekBarUtil;
 import fi.testbed2.view.AnimationView;
+import roboguice.inject.ContentView;
+import roboguice.inject.InjectResource;
+import roboguice.inject.InjectView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +33,7 @@ import java.util.List;
 /**
  * TODO: this class has grown quite large. Refactor it to smaller classes
  */
+@ContentView(R.layout.animation)
 public class AnimationActivity extends AbstractActivity implements OnClickListener, SeekBar.OnSeekBarChangeListener {
 
     @Inject
@@ -47,17 +48,35 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
     @Inject
     PreferenceService preferenceService;
 
-    private AnimationView animationView;
-	private ImageButton playPauseButton;
-	private boolean isPlaying = true;
-	private TextView timestampView;
-    private SeekBar seekBar;
+    @Inject
+    BitmapService bitmapService;
+
+    @Inject
+    PageService pageService;
+
+    @InjectView(R.id.animation_view)
+    AnimationView animationView;
+
+    @InjectView(R.id.playpause_button)
+    ImageButton playPauseButton;
+
+    @InjectView(R.id.timestamp_view)
+    TextView timestampView;
+
+    @InjectView(R.id.seek)
+    SeekBar seekBar;
+
+    boolean isPlaying = true;
 
     private DownloadImagesTask task;
 
     private int orientation;
 
     private boolean allImagesDownloaded;
+
+    public AnimationActivity() {
+
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,38 +87,23 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
             return;
         }
 
-        // we want more space for the animation
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        playPauseButton.setOnClickListener(this);
+        seekBar.setOnSeekBarChangeListener(this);
 
-        setContentView(R.layout.animation);
-
-        initButtons();
-        initViews();
+        animationView.setAllImagesDownloaded(false);
 
         animationView.municipalities = preferenceService.getSavedMunicipalities();
         animationView.userLocationService = locationService;
+        animationView.bitmapService = bitmapService;
+        animationView.pageService = pageService;
 
+        animationView.init(this);
         initAnimation();
 
         orientation = this.getResources().getConfiguration().orientation;
 
     }
 
-    private void initButtons() {
-
-        playPauseButton = (ImageButton) findViewById(R.id.playpause_button);
-        playPauseButton.setOnClickListener(this);
-
-        seekBar = (SeekBar)findViewById(R.id.seek);
-        seekBar.setOnSeekBarChangeListener(this);
-
-    }
-
-    private void initViews() {
-        animationView = (AnimationView) findViewById(R.id.animation_view);
-        animationView.setAllImagesDownloaded(false);
-        timestampView = (TextView) findViewById(R.id.timestamp_view);
-    }
 
     private void initAnimation() {
 
@@ -160,7 +164,7 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
 	protected void onPause() {
         super.onPause();
         if (task!=null) {
-            task.abort();
+            task.kill();
         }
         this.pauseAnimation();
         this.saveMapBoundsAndScaleFactor();
@@ -176,7 +180,7 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
             return;
         }
 
-        if (MainApplication.showUserLocation()) {
+        if (preferenceService.showUserLocation()) {
             locationService.startListeningLocationChanges();
         }
 
@@ -186,6 +190,7 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
 
         if (!allImagesDownloaded) {
             task = new DownloadImagesTask(this);
+            task.setActivity(this);
             task.execute();
         }
     }
@@ -199,7 +204,7 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
      */
     private boolean compulsoryDataIsAvailable() {
 
-        TestbedParsedPage page = MainApplication.getTestbedParsedPage();
+        TestbedParsedPage page = pageService.getTestbedParsedPage();
 
         /*
         * Parsed page should always be non-null.
@@ -209,7 +214,7 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
         }
 
         boolean noImagesExist = page.getAllTestbedImages()==null || page.getAllTestbedImages().isEmpty();
-        boolean allImagesDownloadedButSomeAreMissing = allImagesDownloaded && page.getNotDownloadedCount()>0;
+        boolean allImagesDownloadedButSomeAreMissing = allImagesDownloaded && pageService.getNotDownloadedCount()>0;
 
         if (noImagesExist || allImagesDownloadedButSomeAreMissing) {
             return false;
@@ -221,7 +226,9 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
 
     private void returnToMainActivity() {
         this.allImagesDownloaded = false;
-        MainApplication.clearData();
+        pageService.evictAll();
+        bitmapService.evictAll();
+        System.gc();
         Intent intent = new Intent();
         this.setResult(MainApplication.RESULT_OK, intent);
         this.finish();
@@ -296,7 +303,7 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
         if (fromUser) {
             this.pauseAnimation();
             animationView.goToFrame(SeekBarUtil.getFrameIndexFromSeekBarValue(progress,
-                    MainApplication.getTestbedParsedPage().getAllTestbedImages().size()));
+                    pageService.getTestbedParsedPage().getAllTestbedImages().size()));
         }
     }
 

@@ -42,4 +42,8 @@ public interface PreferenceService {
 
     public void saveWhatsNewDialogShownForCurrentVersion();
 
-}
+    public boolean showUserLocation();
+
+    public String getTestbedPageURL();
+
+    }

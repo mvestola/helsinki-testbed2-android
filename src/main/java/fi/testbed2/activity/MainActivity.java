@@ -8,7 +8,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import fi.testbed2.R;
 import fi.testbed2.app.MainApplication;
-import fi.testbed2.result.AbstractTaskResult;
+import fi.testbed2.result.TaskResult;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
 
@@ -19,7 +19,7 @@ public class MainActivity extends AbstractActivity implements OnClickListener {
     public static final int ANIMATION_SUB_ACTIVITY = 2;
 
     @InjectView(R.id.button_refresh)
-    private ImageButton refreshButton;
+    ImageButton refreshButton;
 
 	/** Called when the activity is first created. */
     @Override
@@ -71,7 +71,7 @@ public class MainActivity extends AbstractActivity implements OnClickListener {
                 break;
             case MainApplication.RESULT_ERROR:
                 String errorMsg = this.getString(R.string.error_message_detailed,
-                    data.getStringExtra(AbstractTaskResult.MSG_CODE));
+                    data.getStringExtra(TaskResult.MSG_CODE));
                 showErrorDialog(errorMsg);
                 break;
         }
@@ -89,7 +89,7 @@ public class MainActivity extends AbstractActivity implements OnClickListener {
                 break;
             case MainApplication.RESULT_ERROR:
                 String errorMsg = this.getString(R.string.error_message_detailed,
-                        data.getStringExtra(AbstractTaskResult.MSG_CODE));
+                        data.getStringExtra(TaskResult.MSG_CODE));
                 showErrorDialog(errorMsg);
                 break;
             default:

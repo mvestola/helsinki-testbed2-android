@@ -1,10 +1,12 @@
 package fi.testbed2.service.impl;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.preference.PreferenceManager;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import fi.testbed2.R;
 import fi.testbed2.app.MainApplication;
 import fi.testbed2.data.Municipality;
 import fi.testbed2.dialog.DialogType;
@@ -22,6 +24,9 @@ public class DefaultPreferenceService implements PreferenceService {
 
     @Inject
     SharedPreferences sharedPreferences;
+
+    @Inject
+    Context context;
 
     /**
      * Saves the bounds of the map user has previously viewed to persistent storage.
@@ -118,6 +123,19 @@ public class DefaultPreferenceService implements PreferenceService {
         }
 
         return false;
+    }
+
+    public boolean showUserLocation() {
+        return sharedPreferences.getBoolean(PreferenceService.PREF_LOCATION_SHOW_USER_LOCATION, true);
+    }
+
+    public String getTestbedPageURL() {
+
+        String mapType = sharedPreferences.getString(PREF_MAP_TYPE, "radar");
+        String mapTimeStep = sharedPreferences.getString(PREF_MAP_TIME_STEP, "5");
+        String mapNumberOfImages = sharedPreferences.getString(PREF_MAP_NUMBER_OF_IMAGES, "10");
+        return context.getString(R.string.testbed_base_url, mapType, mapTimeStep, mapNumberOfImages);
+
     }
 
 

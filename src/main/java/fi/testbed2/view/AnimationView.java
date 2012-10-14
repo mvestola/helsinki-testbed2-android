@@ -15,6 +15,9 @@ import android.widget.TextView;
 import com.jhlabs.map.Point2D;
 import fi.testbed2.R;
 import fi.testbed2.app.MainApplication;
+import fi.testbed2.exception.DownloadTaskException;
+import fi.testbed2.service.BitmapService;
+import fi.testbed2.service.PageService;
 import fi.testbed2.service.PreferenceService;
 import fi.testbed2.data.Municipality;
 import fi.testbed2.data.TestbedMapImage;
@@ -46,6 +49,8 @@ public class AnimationView extends View {
 
     public List<Municipality> municipalities;
     public LocationService userLocationService;
+    public BitmapService bitmapService;
+    public PageService pageService;
 
     private boolean mapWasScaled;
 
@@ -74,19 +79,16 @@ public class AnimationView extends View {
 
 	public AnimationView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		init(context);
 	}
 
 	public AnimationView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		init(context);
 	}
 
 	public AnimationView(Context context) {
 		super(context);
-		init(context);
 	}
-	
+
 	public void start(TextView timestampView, SeekBar seekBar, float scale) {
 		this.play = true;
         this.scaleFactor = scale;
@@ -182,12 +184,12 @@ public class AnimationView extends View {
         }
 
         seekBar.setProgress(SeekBarUtil.getSeekBarValueFromFrameNumber(currentFrame,
-                MainApplication.getTestbedParsedPage().getAllTestbedImages().size()));
+                pageService.getTestbedParsedPage().getAllTestbedImages().size()));
 
 		timestampView.setText(text);
 		timestampView.invalidate();
 
-        BitmapDrawable frame = new BitmapDrawable(currentMap.getDownloadedBitmapImage());
+        BitmapDrawable frame = new BitmapDrawable(getBitmap(currentMap));
         frame.setBounds(bounds);
 
         frame.draw(canvas);
@@ -197,6 +199,10 @@ public class AnimationView extends View {
 
         canvas.restore();
 
+    }
+
+    private Bitmap getBitmap(TestbedMapImage image) {
+        return bitmapService.getBitmap(image);
     }
 
     private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
@@ -237,11 +243,9 @@ public class AnimationView extends View {
     }
 
     private void drawUserLocation(Canvas canvas) {
-        if (MainApplication.showUserLocation()) {
-            Point2D.Double userLocation = userLocationService.getUserLocationXY();
-            if (userLocation!=null) {
-                drawPoint(userLocation, Color.BLACK, canvas, true);
-            }
+        Point2D.Double userLocation = userLocationService.getUserLocationXY();
+        if (userLocation!=null) {
+            drawPoint(userLocation, Color.BLACK, canvas, true);
         }
     }
 
@@ -389,7 +393,7 @@ public class AnimationView extends View {
         this.init(context);
     }
 
-	private void init(Context context) {
+	public void init(Context context) {
 
         mGestureDetector = new GestureDetector(context, new GestureListener());
         mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
@@ -399,7 +403,7 @@ public class AnimationView extends View {
 		frameDelay = Integer.parseInt(
                 sharedPreferences.getString(PreferenceService.PREF_ANIM_FRAME_DELAY, "1000"));
 		
-        BitmapDrawable firstMap = new BitmapDrawable(getMapImagesToBeDrawn().get(0).getDownloadedBitmapImage());
+        BitmapDrawable firstMap = new BitmapDrawable(getBitmap(getMapImagesToBeDrawn().get(0)));
 
     	// Assume all frames have same dimensions
         frameWidth = firstMap.getMinimumWidth();
@@ -481,10 +485,10 @@ public class AnimationView extends View {
     private List<TestbedMapImage> getMapImagesToBeDrawn() {
 
         if (allImagesDownloaded) {
-            return MainApplication.getTestbedParsedPage().getAllTestbedImages();
+            return pageService.getTestbedParsedPage().getAllTestbedImages();
         } else {
             List<TestbedMapImage> list = new ArrayList<TestbedMapImage>();
-            list.add(MainApplication.getTestbedParsedPage().getLatestTestbedImage());
+            list.add(pageService.getTestbedParsedPage().getLatestTestbedImage());
             return list;
         }
 

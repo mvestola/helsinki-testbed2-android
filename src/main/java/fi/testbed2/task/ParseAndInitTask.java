@@ -2,97 +2,105 @@ package fi.testbed2.task;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
+import android.content.Intent;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import com.google.inject.Inject;
 import fi.testbed2.R;
+import fi.testbed2.activity.ParsingActivity;
 import fi.testbed2.app.MainApplication;
+import fi.testbed2.result.TaskResult;
+import fi.testbed2.service.BitmapService;
+import fi.testbed2.service.PageService;
 import fi.testbed2.service.PreferenceService;
-import fi.testbed2.data.TestbedMapImage;
 import fi.testbed2.data.TestbedParsedPage;
 import fi.testbed2.exception.DownloadTaskException;
-import fi.testbed2.result.ParseAndInitTaskResult;
 import fi.testbed2.result.TaskResultType;
 import fi.testbed2.util.HTMLUtil;
+import roboguice.inject.InjectResource;
+import roboguice.inject.InjectView;
 
 /**
  * Task which parses the testbed HTML page and initializes the animation view
  * with the latest map image.
  */
-public class ParseAndInitTask extends AbstractTask<ParseAndInitTaskResult> {
+public class ParseAndInitTask extends AbstractTask<TaskResult> implements Task {
 
-    private String url;
+    ParsingActivity activity;
 
-	public ParseAndInitTask(final Context context, final Activity activity) {
-        super(activity);
-        initURL(context);
-	}
+    @Inject
+    PreferenceService preferenceService;
 
-    private void initURL(final Context context) {
-        // construct URL where to download content
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        String mapType = sharedPreferences.getString(PreferenceService.PREF_MAP_TYPE, "radar");
-        String mapTimeStep = sharedPreferences.getString(PreferenceService.PREF_MAP_TIME_STEP, "5");
-        String mapNumberOfImages = sharedPreferences.getString(PreferenceService.PREF_MAP_NUMBER_OF_IMAGES, "10");
-        url = activity.getString(R.string.testbed_base_url, mapType, mapTimeStep, mapNumberOfImages);
+    @Inject
+    BitmapService bitmapService;
+
+    @Inject
+    PageService pageService;
+
+    @InjectResource(R.string.progress_parsing)
+    String progressParsing;
+
+    @InjectResource(R.string.progress_downloading)
+    String progressDownloading;
+
+    @InjectResource(R.string.progress_done)
+    String progressDone;
+
+
+    public ParseAndInitTask(Context context) {
+        super(context);
+    }
+
+    public void setActivity(ParsingActivity activity) {
+        this.activity = activity;
     }
 
     @Override
-    protected void saveResultToApplication(ParseAndInitTaskResult result) {
-        MainApplication.setTestbedParsedPage(result.getTestbedParsedPage());
-    }
+    protected void onSuccess(TaskResult result) {
 
-    private void clearPreviousOldData(TestbedParsedPage oldPage, TestbedParsedPage newPage) {
+        Intent intent = new Intent();
+        intent.putExtra(TaskResult.MSG_CODE, result.getMessage());
 
-        if (oldPage==null) {
-            return;
+        if (result.isCancelled()) {
+            activity.setResult(Activity.RESULT_CANCELED);
+        } else {
+            activity.setResult(MainApplication.RESULT_OK, intent);
         }
-
-        for (TestbedMapImage mapImg : oldPage.getAllTestbedImages()) {
-
-            if (mapImg!=null && !newPage.getAllTestbedImages().contains(mapImg)) {
-                MainApplication.deleteBitmapCacheEntry(mapImg.getBitmapCacheKey());
-            }
-
-        }
-
-    }
-
-    @Override
-	protected ParseAndInitTaskResult doInBackground(Void... params) {
-
-        try {
-            ParseAndInitTaskResult result = new ParseAndInitTaskResult(TaskResultType.OK, "Parsing and initialization OK");
-
-            publishProgress(new DownloadTaskProgress(0, 0, true, activity.getString(R.string.progress_parsing)));
-            TestbedParsedPage testbedParsedPage = HTMLUtil.parseTestbedPage(url, this);
-            result.setTestbedParsedPage(testbedParsedPage);
-
-            if (testbedParsedPage ==null || isAbort()) {
-                doCancel();
-                return null;
-            }
-
-            clearPreviousOldData(MainApplication.getTestbedParsedPage(), result.getTestbedParsedPage());
-
-            publishProgress(new DownloadTaskProgress(50, 0, false, activity.getString(R.string.progress_downloading)));
-            testbedParsedPage.getLatestTestbedImage().downloadAndCacheImage();
-            publishProgress(new DownloadTaskProgress(100, 0, false, activity.getString(R.string.progress_done)));
-
-            return result;
-        } catch(DownloadTaskException e) {
-            return new ParseAndInitTaskResult(TaskResultType.ERROR, e.getMessage());
-        }
+        activity.finish();
 
     }
 
     @Override
-    protected void onSuccessTaskEnd() {
+    protected void onException(Exception e) {
+
+        e.printStackTrace();
+
+        Intent intent = new Intent();
+        intent.putExtra(TaskResult.MSG_CODE, e.getMessage());
+        activity.setResult(MainApplication.RESULT_ERROR, intent);
         activity.finish();
     }
 
     @Override
-    protected void onErrorTaskEnd() {
-        activity.finish();
+    public TaskResult call() throws DownloadTaskException {
+
+        TaskResult result = new TaskResult(TaskResultType.OK, "Parsing and initialization OK");
+
+        activity.publishProgress(0, progressParsing);
+        TestbedParsedPage testbedParsedPage = HTMLUtil.parseTestbedPage(preferenceService.getTestbedPageURL(), this);
+
+        if (testbedParsedPage == null || isAbort()) {
+            return new TaskResult(TaskResultType.CANCELLED, "Cancelled");
+        }
+
+        pageService.setTestbedParsedPage(testbedParsedPage);
+
+        activity.publishProgress(50, progressDownloading);
+        bitmapService.downloadBitmap(testbedParsedPage.getLatestTestbedImage());
+        activity.publishProgress(100, progressDone);
+
+        return result;
+
     }
 
 }

@@ -1,80 +1,98 @@
 package fi.testbed2.task;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import com.google.inject.Inject;
 import fi.testbed2.R;
 import fi.testbed2.activity.AnimationActivity;
 import fi.testbed2.app.MainApplication;
 import fi.testbed2.data.TestbedMapImage;
 import fi.testbed2.exception.DownloadTaskException;
-import fi.testbed2.result.DownloadImagesTaskResult;
+import fi.testbed2.result.TaskResult;
 import fi.testbed2.result.TaskResultType;
+import fi.testbed2.service.BitmapService;
+import fi.testbed2.service.PageService;
+import roboguice.inject.InjectResource;
 
 import java.util.List;
 
 /**
  * Task which downloads all map images and reloads the animation view.
  */
-public class DownloadImagesTask extends AbstractTask<DownloadImagesTaskResult> {
+public class DownloadImagesTask extends AbstractTask<TaskResult> {
+
+    @InjectResource(R.string.error_msg_parsed_map_image_null)
+    String errorMapImageNull;
+
+    @Inject
+    BitmapService bitmapService;
+
+    @Inject
+    PageService pageService;
 
     AnimationActivity activity;
 
-	public DownloadImagesTask(final AnimationActivity activity) {
-        super(activity);
-        this.activity = activity;
-	}
+    public DownloadImagesTask(Context context) {
+        super(context);
+    }
 
-    @Override
-    protected void onSuccessTaskEnd() {
-        activity.onAllImagesDownloaded();
+    public void setActivity(AnimationActivity activity) {
+        this.activity = activity;
     }
 
     @Override
-    protected void onErrorTaskEnd() {
+    protected void onSuccess(TaskResult result) {
+
+        Intent intent = new Intent();
+        intent.putExtra(TaskResult.MSG_CODE, result.getMessage());
+
+        if (result.isCancelled()) {
+            activity.setResult(Activity.RESULT_CANCELED);
+            activity.finish();
+        } else {
+            activity.setResult(MainApplication.RESULT_OK, intent);
+            activity.onAllImagesDownloaded();
+        }
+    }
+
+    @Override
+    protected void onException(Exception e) {
+        Intent intent = new Intent();
+        intent.putExtra(TaskResult.MSG_CODE, e.getMessage());
+        activity.setResult(MainApplication.RESULT_ERROR, intent);
         activity.finish();
     }
 
     @Override
-	protected DownloadImagesTaskResult doInBackground(Void... params) {
+    public TaskResult call() throws DownloadTaskException {
 
-        try {
-            return processImages();
-        } catch(DownloadTaskException e) {
-            return new DownloadImagesTaskResult(TaskResultType.ERROR, e.getMessage());
-        }
-
-    }
-
-    private DownloadImagesTaskResult processImages() throws DownloadTaskException {
-
-        List<TestbedMapImage> testbedMapImages = MainApplication.getTestbedParsedPage().getAllTestbedImages();
-        int totalImagesNotDownloaded = MainApplication.getTestbedParsedPage().getNotDownloadedCount();
+        List<TestbedMapImage> testbedMapImages = pageService.getTestbedParsedPage().getAllTestbedImages();
+        int totalImagesNotDownloaded = pageService.getNotDownloadedCount();
         int i= 1;
+
         for(TestbedMapImage image : testbedMapImages) {
 
             if (image==null) {
-                throw new DownloadTaskException(activity.getString(R.string.error_msg_parsed_map_image_null));
+                throw new DownloadTaskException(errorMapImageNull);
             }
 
-            if (!image.hasBitmapDataDownloaded()) {
-                String progressText = activity.getString(R.string.progress_anim_downloading,
+            if (!bitmapService.bitmapIsDownloaded(image)) {
+                String progressText = getContext().getString(R.string.progress_anim_downloading,
                         i, totalImagesNotDownloaded);
                 this.activity.updateDownloadProgressInfo(progressText);
                 i++;
             }
 
             if (isAbort()) {
-                doCancel();
-                return null;
+                return new TaskResult(TaskResultType.CANCELLED, "Cancelled");
             }
-            image.downloadAndCacheImage();
+            bitmapService.downloadBitmap(image);
 
         }
 
-        return new DownloadImagesTaskResult(TaskResultType.OK, "All images downloaded");
+        return new TaskResult(TaskResultType.OK, "All images downloaded");
 
     }
 
-    @Override
-    protected void saveResultToApplication(DownloadImagesTaskResult result) {
-        // No need to save result, task just loads the TestbedMapImages already saved to the application
-    }
 }

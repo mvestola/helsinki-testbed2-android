@@ -10,6 +10,7 @@ import com.jhlabs.map.Point2D;
 import fi.testbed2.service.CoordinateService;
 import fi.testbed2.service.LocationService;
 import fi.testbed2.service.MunicipalityService;
+import fi.testbed2.service.PreferenceService;
 
 @Singleton
 public class NetworkLocationService implements LocationService, LocationListener {
@@ -24,6 +25,9 @@ public class NetworkLocationService implements LocationService, LocationListener
     MunicipalityService municipalityService;
 
     @Inject
+    PreferenceService preferenceService;
+
+    @Inject
     CoordinateService coordinateService;
 
     private Point2D.Double userLocationXY;
@@ -36,6 +40,10 @@ public class NetworkLocationService implements LocationService, LocationListener
 
     @Override
     public Point2D.Double getUserLocationXY() {
+
+        if (!preferenceService.showUserLocation()) {
+            return null;
+        }
 
         if (debug) {
             return municipalityService.getMunicipality("Helsinki").getXyPos();

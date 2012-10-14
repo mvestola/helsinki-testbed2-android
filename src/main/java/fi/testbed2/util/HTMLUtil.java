@@ -81,7 +81,7 @@ public class HTMLUtil {
 
             int i = 0;
             for(String imageUrl : imageUrls) {
-                TestbedMapImage image = new TestbedMapImage(imageUrl, timestamps[i], i);
+                TestbedMapImage image = new TestbedMapImage(imageUrl, timestamps[i]);
                 i++;
                 testbedParsedPage.addTestbedMapImage(image);
             }

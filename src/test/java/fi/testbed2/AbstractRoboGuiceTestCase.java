@@ -4,6 +4,7 @@ import android.content.Context;
 import com.google.inject.AbstractModule;
 import com.google.inject.util.Modules;
 import com.xtremelabs.robolectric.Robolectric;
+import fi.testbed2.app.MainModule;
 import fi.testbed2.service.CoordinateService;
 import org.junit.After;
 import org.junit.Before;
@@ -40,10 +41,16 @@ public abstract class AbstractRoboGuiceTestCase extends AbstractTestCase {
         RoboGuice.util.reset();
     }
 
-    private class TestModule extends AbstractModule {
+    private class TestModule extends MainModule {
+
+        /**
+         * Currently uses the same binding as in the main module.
+         * If needed, one can override everything in the configure method.
+         */
+
         @Override
         protected void configure() {
-            bind(CoordinateService.class).toInstance(coordinateServiceMock);
+            super.configure();
         }
     }
 
