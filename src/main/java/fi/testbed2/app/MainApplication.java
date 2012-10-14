@@ -1,19 +1,12 @@
 package fi.testbed2.app;
 
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.preference.PreferenceManager;
-import android.support.v4.util.LruCache;
 import com.google.inject.Inject;
-import fi.testbed2.data.TestbedParsedPage;
 import fi.testbed2.service.BitmapService;
 import fi.testbed2.service.PageService;
-import fi.testbed2.service.PreferenceService;
 
 public class MainApplication extends Application {
 

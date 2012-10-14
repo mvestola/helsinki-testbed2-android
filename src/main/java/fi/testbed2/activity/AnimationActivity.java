@@ -1,37 +1,27 @@
 package fi.testbed2.activity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.graphics.Rect;
-import android.location.LocationListener;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import com.google.inject.Inject;
 import fi.testbed2.R;
 import fi.testbed2.app.MainApplication;
-import fi.testbed2.service.*;
-import fi.testbed2.data.Municipality;
 import fi.testbed2.data.TestbedParsedPage;
+import fi.testbed2.service.*;
 import fi.testbed2.task.DownloadImagesTask;
 import fi.testbed2.util.SeekBarUtil;
 import fi.testbed2.view.AnimationView;
 import roboguice.inject.ContentView;
-import roboguice.inject.InjectResource;
 import roboguice.inject.InjectView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * TODO: this class has grown quite large. Refactor it to smaller classes
+ * Activity handling the main map animation view.
  */
 @ContentView(R.layout.animation)
 public class AnimationActivity extends AbstractActivity implements OnClickListener, SeekBar.OnSeekBarChangeListener {
@@ -67,63 +57,83 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
     SeekBar seekBar;
 
     boolean isPlaying = true;
+    private int orientation;
+    private boolean allImagesDownloaded;
 
     private DownloadImagesTask task;
 
-    private int orientation;
-
-    private boolean allImagesDownloaded;
-
-    public AnimationActivity() {
-
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if (!compulsoryDataIsAvailable()) {
-            returnToMainActivity();
+            reloadAllAndReturnToMainActivity();
             return;
         }
 
-        playPauseButton.setOnClickListener(this);
-        seekBar.setOnSeekBarChangeListener(this);
+        orientation = getResources().getConfiguration().orientation;
 
-        animationView.setAllImagesDownloaded(false);
-
-        animationView.municipalities = preferenceService.getSavedMunicipalities();
-        animationView.userLocationService = locationService;
-        animationView.bitmapService = bitmapService;
-        animationView.pageService = pageService;
-
-        animationView.init(this);
-        initAnimation();
-
-        orientation = this.getResources().getConfiguration().orientation;
+        initListeners();
+        initView();
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
 
-    private void initAnimation() {
+        if (!compulsoryDataIsAvailable()) {
+            reloadAllAndReturnToMainActivity();
+            return;
+        }
 
-        animationView.post(new Runnable() {
-            @Override
-            public void run() {
-                final Rect bounds = preferenceService.getSavedMapBounds(orientation);
-                final float scale = preferenceService.getSavedScaleFactor(orientation);
-                updatePlayingState(true);
-                if (bounds==null) {
-                    animationView.start(timestampView, seekBar, scale);
-                } else {
-                    animationView.start(timestampView, seekBar, bounds, scale);
-                }
+        if (preferenceService.showUserLocation()) {
+            locationService.startListeningLocationChanges();
+        }
 
-            }
-        });
+        updatePreferencesToView();
 
+        if (!allImagesDownloaded) {
+            task = new DownloadImagesTask(this);
+            task.setActivity(this);
+            task.execute();
+        }
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (task!=null) {
+            task.kill();
+        }
+        pauseAnimation();
+        saveMapBoundsAndScaleFactor();
+        locationService.stopListeningLocationChanges();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbindDrawables(findViewById(R.id.AnimationRootView));
+    }
+
+    @Override
+    public void onRefreshButtonSelected() {
+        pauseAnimation();
+        allImagesDownloaded = false;
+        Intent intent = new Intent();
+        setResult(MainApplication.RESULT_REFRESH, intent);
+        finish();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        saveMapBoundsAndScaleFactor();
+        orientation = newConfig.orientation;
+        updatePreferencesToView();
+    }
 
     /**
      * Updates the Downloading text in top left corner
@@ -138,61 +148,56 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
         });
     }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        saveMapBoundsAndScaleFactor();
-        orientation = newConfig.orientation;
-        updateBoundsToView();
+    public void onAllImagesDownloaded() {
+        allImagesDownloaded = true;
+        animationView.setAllImagesDownloaded(true);
+        animationView.setDownloadProgressText(null);
+        animationView.initView(getApplicationContext());
+        animationView.getPlayer().previous();
+        updatePlayingState(false);
+        if (preferenceService.isStartAnimationAutomatically()) {
+            playAnimation();
+        }
     }
 
-    /**
-     * Saves the bounds of the map user has previously viewed to persistent storage.
-     */
+    private void initListeners() {
+        playPauseButton.setOnClickListener(this);
+        seekBar.setOnSeekBarChangeListener(this);
+    }
+
+    private void initView() {
+        animationView.setAllImagesDownloaded(false);
+        animationView.municipalities = preferenceService.getSavedMunicipalities();
+        animationView.userLocationService = locationService;
+        animationView.bitmapService = bitmapService;
+        animationView.pageService = pageService;
+        animationView.preferenceService = preferenceService;
+        animationView.initView(getApplicationContext());
+        initAnimation();
+    }
+
+    private void initAnimation() {
+        animationView.post(new Runnable() {
+            @Override
+            public void run() {
+                final Rect bounds = preferenceService.getSavedMapBounds(orientation);
+                final float scale = preferenceService.getSavedScaleFactor(orientation);
+                updatePlayingState(true);
+                animationView.startAnimation(timestampView, seekBar, bounds, scale);
+            }
+        });
+    }
+
     private void saveMapBoundsAndScaleFactor() {
         preferenceService.saveMapBoundsAndScaleFactor(animationView.getBounds(),
                 animationView.getScaleFactor(), orientation);
     }
 
-    private void updateBoundsToView() {
+    private void updatePreferencesToView() {
         animationView.setScaleFactor(preferenceService.getSavedScaleFactor(orientation));
         animationView.updateBounds(preferenceService.getSavedMapBounds(orientation));
-    }
-
-
-    @Override
-	protected void onPause() {
-        super.onPause();
-        if (task!=null) {
-            task.kill();
-        }
-        this.pauseAnimation();
-        this.saveMapBoundsAndScaleFactor();
-        locationService.stopListeningLocationChanges();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        if (!compulsoryDataIsAvailable()) {
-            returnToMainActivity();
-            return;
-        }
-
-        if (preferenceService.showUserLocation()) {
-            locationService.startListeningLocationChanges();
-        }
-
-        updateBoundsToView();
         animationView.municipalities = preferenceService.getSavedMunicipalities();
-        animationView.setFrameDelay(preferenceService.getSavedFrameDelay());
-
-        if (!allImagesDownloaded) {
-            task = new DownloadImagesTask(this);
-            task.setActivity(this);
-            task.execute();
-        }
+        animationView.getPlayer().setFrameDelay(preferenceService.getSavedFrameDelay());
     }
 
     /**
@@ -224,51 +229,43 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
 
     }
 
-    private void returnToMainActivity() {
-        this.allImagesDownloaded = false;
+    private void reloadAllAndReturnToMainActivity() {
+        allImagesDownloaded = false;
         pageService.evictAll();
         bitmapService.evictAll();
         System.gc();
         Intent intent = new Intent();
-        this.setResult(MainApplication.RESULT_OK, intent);
-        this.finish();
+        setResult(MainApplication.RESULT_OK, intent);
+        finish();
     }
 
-    public void onAllImagesDownloaded() {
-        allImagesDownloaded = true;
-        animationView.setAllImagesDownloaded(true);
-        animationView.setDownloadProgressText(null);
-        animationView.refresh(getApplicationContext());
-        animationView.previous();
-        updatePlayingState(false);
-        if (preferenceService.isStartAnimationAutomatically()) {
-            playAnimation();
-        }
-    }
 
     private void playAnimation() {
         updatePlayingState(true);
-        animationView.play();
+        animationView.getPlayer().play();
     }
 
     private void pauseAnimation() {
         updatePlayingState(false);
-        animationView.pause();
+        animationView.getPlayer().pause();
     }
 
     @Override
 	public void onClick(View v) {
+
         if (!allImagesDownloaded) {
             return;
         }
+
 		switch(v.getId()) {
             case R.id.playpause_button:
-                animationView.playpause();
+                animationView.getPlayer().playOrPause();
                 updatePlayingState(!isPlaying);
                 break;
             default:
                 return;
 		}
+
 	}
 
     private void updatePlayingState(boolean animationIsPlaying) {
@@ -283,37 +280,25 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
 
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unbindDrawables(findViewById(R.id.AnimationRootView));
-    }
-
-    @Override
-    public void onRefreshButtonSelected() {
-        this.pauseAnimation();
-        this.allImagesDownloaded = false;
-        Intent intent = new Intent();
-        this.setResult(MainApplication.RESULT_REFRESH, intent);
-        this.finish();
-    }
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         if (fromUser) {
-            this.pauseAnimation();
-            animationView.goToFrame(SeekBarUtil.getFrameIndexFromSeekBarValue(progress,
-                    pageService.getTestbedParsedPage().getAllTestbedImages().size()));
+            pauseAnimation();
+            int totalFrames = pageService.getTestbedParsedPage().getAllTestbedImages().size();
+            animationView.getPlayer().goToFrame(SeekBarUtil.
+                    getFrameIndexFromSeekBarValue(progress, totalFrames));
         }
     }
 
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
-        this.pauseAnimation();
+        pauseAnimation();
     }
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
         // Don't do anything
     }
+
 }

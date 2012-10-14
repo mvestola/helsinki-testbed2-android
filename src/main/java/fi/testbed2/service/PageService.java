@@ -1,10 +1,8 @@
 package fi.testbed2.service;
 
-import android.support.v4.util.LruCache;
 import fi.testbed2.data.TestbedMapImage;
 import fi.testbed2.data.TestbedParsedPage;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface PageService {

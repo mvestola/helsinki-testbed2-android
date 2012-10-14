@@ -3,13 +3,11 @@ package fi.testbed2.service.impl;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Rect;
-import android.preference.PreferenceManager;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import fi.testbed2.R;
 import fi.testbed2.app.MainApplication;
 import fi.testbed2.data.Municipality;
-import fi.testbed2.dialog.DialogType;
 import fi.testbed2.service.MunicipalityService;
 import fi.testbed2.service.PreferenceService;
 
@@ -137,7 +135,6 @@ public class DefaultPreferenceService implements PreferenceService {
         return context.getString(R.string.testbed_base_url, mapType, mapTimeStep, mapNumberOfImages);
 
     }
-
 
     private static String getMapBoundsPreferenceKey(int orientation) {
         return PREF_BOUNDS_PREFERENCE_KEY_PREFIX + orientation;

@@ -1,7 +1,6 @@
 package fi.testbed2;
 
 import android.content.Context;
-import com.google.inject.AbstractModule;
 import com.google.inject.util.Modules;
 import com.xtremelabs.robolectric.Robolectric;
 import fi.testbed2.app.MainModule;

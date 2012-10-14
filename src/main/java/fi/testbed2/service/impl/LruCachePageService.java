@@ -1,8 +1,6 @@
 package fi.testbed2.service.impl;
 
 import android.app.ActivityManager;
-import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.v4.util.LruCache;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;

@@ -42,6 +42,11 @@ public class DownloadImagesTask extends AbstractTask<TaskResult> {
     }
 
     @Override
+    protected Activity getActivity() {
+        return this.activity;
+    }
+
+    @Override
     protected void onSuccess(TaskResult result) {
 
         Intent intent = new Intent();
@@ -54,14 +59,6 @@ public class DownloadImagesTask extends AbstractTask<TaskResult> {
             activity.setResult(MainApplication.RESULT_OK, intent);
             activity.onAllImagesDownloaded();
         }
-    }
-
-    @Override
-    protected void onException(Exception e) {
-        Intent intent = new Intent();
-        intent.putExtra(TaskResult.MSG_CODE, e.getMessage());
-        activity.setResult(MainApplication.RESULT_ERROR, intent);
-        activity.finish();
     }
 
     @Override

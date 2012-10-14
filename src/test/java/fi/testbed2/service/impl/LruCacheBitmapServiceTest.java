@@ -4,7 +4,6 @@ import com.xtremelabs.robolectric.RobolectricTestRunner;
 import fi.testbed2.AbstractRoboGuiceTestCase;
 import fi.testbed2.data.TestbedMapImage;
 import fi.testbed2.exception.DownloadTaskException;
-import fi.testbed2.service.BitmapService;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;

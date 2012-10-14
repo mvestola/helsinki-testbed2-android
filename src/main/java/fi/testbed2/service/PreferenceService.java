@@ -1,12 +1,8 @@
 package fi.testbed2.service;
 
-import android.content.SharedPreferences;
 import android.graphics.Rect;
-import android.preference.PreferenceManager;
-import fi.testbed2.app.MainApplication;
 import fi.testbed2.data.Municipality;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface PreferenceService {
@@ -46,4 +42,4 @@ public interface PreferenceService {
 
     public String getTestbedPageURL();
 
-    }
+}

@@ -3,22 +3,19 @@ package fi.testbed2.task;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import com.google.inject.Inject;
 import fi.testbed2.R;
 import fi.testbed2.activity.ParsingActivity;
 import fi.testbed2.app.MainApplication;
+import fi.testbed2.data.TestbedParsedPage;
+import fi.testbed2.exception.DownloadTaskException;
 import fi.testbed2.result.TaskResult;
+import fi.testbed2.result.TaskResultType;
 import fi.testbed2.service.BitmapService;
 import fi.testbed2.service.PageService;
 import fi.testbed2.service.PreferenceService;
-import fi.testbed2.data.TestbedParsedPage;
-import fi.testbed2.exception.DownloadTaskException;
-import fi.testbed2.result.TaskResultType;
 import fi.testbed2.util.HTMLUtil;
 import roboguice.inject.InjectResource;
-import roboguice.inject.InjectView;
 
 /**
  * Task which parses the testbed HTML page and initializes the animation view
@@ -56,6 +53,11 @@ public class ParseAndInitTask extends AbstractTask<TaskResult> implements Task {
     }
 
     @Override
+    protected Activity getActivity() {
+        return this.activity;
+    }
+
+    @Override
     protected void onSuccess(TaskResult result) {
 
         Intent intent = new Intent();
@@ -68,17 +70,6 @@ public class ParseAndInitTask extends AbstractTask<TaskResult> implements Task {
         }
         activity.finish();
 
-    }
-
-    @Override
-    protected void onException(Exception e) {
-
-        e.printStackTrace();
-
-        Intent intent = new Intent();
-        intent.putExtra(TaskResult.MSG_CODE, e.getMessage());
-        activity.setResult(MainApplication.RESULT_ERROR, intent);
-        activity.finish();
     }
 
     @Override

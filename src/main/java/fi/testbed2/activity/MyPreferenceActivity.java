@@ -4,8 +4,8 @@ import android.os.Bundle;
 import com.google.inject.Inject;
 import com.threefiftynice.android.preference.ListPreferenceMultiSelect;
 import fi.testbed2.R;
-import fi.testbed2.service.PreferenceService;
 import fi.testbed2.service.MunicipalityService;
+import fi.testbed2.service.PreferenceService;
 import roboguice.activity.RoboPreferenceActivity;
 
 public class MyPreferenceActivity extends RoboPreferenceActivity {

@@ -3,17 +3,14 @@ package fi.testbed2.activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.*;
 import android.widget.Toast;
 import com.google.inject.Inject;
 import fi.testbed2.R;
-import fi.testbed2.app.MainApplication;
-import fi.testbed2.service.PreferenceService;
 import fi.testbed2.dialog.DialogBuilder;
 import fi.testbed2.dialog.DialogType;
+import fi.testbed2.service.PreferenceService;
 import roboguice.activity.RoboActivity;
 
 

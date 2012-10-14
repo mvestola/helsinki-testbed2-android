@@ -1,7 +1,6 @@
 package fi.testbed2.service.impl;
 
 import android.app.ActivityManager;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
