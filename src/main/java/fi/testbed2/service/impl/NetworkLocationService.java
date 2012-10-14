@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.jhlabs.map.Point2D;
+import fi.testbed2.app.MainApplication;
 import fi.testbed2.service.CoordinateService;
 import fi.testbed2.service.LocationService;
 import fi.testbed2.service.MunicipalityService;
@@ -32,8 +33,6 @@ public class NetworkLocationService implements LocationService, LocationListener
 
     private Point2D.Double userLocationXY;
 
-    private boolean debug = true;
-
     public NetworkLocationService() {
 
     }
@@ -45,7 +44,7 @@ public class NetworkLocationService implements LocationService, LocationListener
             return null;
         }
 
-        if (debug) {
+        if (MainApplication.isDebug()) {
             return municipalityService.getMunicipality("Helsinki").getXyPos();
         } else {
             return userLocationXY;

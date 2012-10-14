@@ -15,6 +15,23 @@ You need to have the following software installed:
 Preferred IDE is IntelliJ IDEA.
 
 
+Android frameworks used
+-------
+
+The following Android frameworks are used in this application:
+
+* [RoboGuice 2](https://code.google.com/p/roboguice/) (dependency injection framework for Android based on Google Guice)
+* [Robolectric](http://pivotal.github.com/robolectric/) (advanced unit testing framework for Android)
+
+Some instructions for using RoboGuice:
+* http://code.google.com/p/roboguice/wiki/ProvidedInjections
+* http://code.google.com/p/roboguice/source/browse/astroboy/src/test/java/org/roboguice/astroboy/controller/Astroboy2Test.java
+* http://code.google.com/p/roboguice/wiki/UpgradingTo20
+* http://code.google.com/p/roboguice/wiki/SimpleExample
+* http://www.blog.project13.pl/wp-content/uploads/2011/12/presentation.html#slide35 (injection scopes)
+* http://www.blog.project13.pl/wp-content/uploads/2011/12/presentation.html#slide58 (testing)
+
+
 Project installation and configuration
 -------
 

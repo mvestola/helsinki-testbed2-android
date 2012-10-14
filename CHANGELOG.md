@@ -1,6 +1,13 @@
 Helsinki Testbed Viewer 2.0
 =============
 
+Version 2.0.9 (coming soon...)
+-------
+
+* Added pinch and tap zooming
+* Major code refactorings. Now uses RoboGuice 2 for dependency injection.
+
+
 Version 2.0.8 (2012-10-07)
 -------
 
