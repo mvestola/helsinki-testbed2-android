@@ -3,7 +3,6 @@ package fi.testbed2.app;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import com.google.inject.Inject;
 import fi.testbed2.service.BitmapService;
 import fi.testbed2.service.PageService;

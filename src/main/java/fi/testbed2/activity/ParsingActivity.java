@@ -49,7 +49,9 @@ public class ParsingActivity extends AbstractActivity {
 
     @Override
     public void onRefreshButtonSelected() {
-        task.kill();
+        if (task!=null) {
+            task.kill();
+        }
         Intent intent = new Intent();
         this.setResult(MainApplication.RESULT_REFRESH, intent);
         this.finish();

@@ -3,7 +3,6 @@ package fi.testbed2.activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.view.MenuItem;
-import android.widget.ImageButton;
 import com.xtremelabs.robolectric.Robolectric;
 import com.xtremelabs.robolectric.shadows.ShadowActivity;
 import com.xtremelabs.robolectric.shadows.ShadowAlertDialog;
@@ -18,47 +17,14 @@ import static com.xtremelabs.robolectric.Robolectric.shadowOf;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;
 
-public class MainActivityTest extends AbstractRoboGuiceTestCase {
+public class ParsingActivityTest extends AbstractRoboGuiceTestCase {
 
-    private MainActivity activity;
-    private ImageButton refreshButton;
+    private ParsingActivity activity;
 
     @Before
     public void setUp() throws Exception {
-        activity = new MainActivity();
+        activity = new ParsingActivity();
         activity.onCreate(null);
-        refreshButton = (ImageButton) activity.findViewById(R.id.button_refresh);
-    }
-
-    @Test
-    public void shouldReturnCorrectName() throws Exception {
-        String appName = activity.getResources().getString(R.string.app_name);
-        assertThat(appName, equalTo("Helsinki Testbed Viewer 2.0"));
-    }
-
-    @Test
-    public void shouldOpenParsingActivityWhenLargeRefreshButtonSelected() {
-
-        refreshButton.performClick();
-
-        ShadowActivity shadowActivity = shadowOf(activity);
-        Intent startedIntent = shadowActivity.getNextStartedActivity();
-        ShadowIntent shadowIntent = shadowOf(startedIntent);
-        assertThat(shadowIntent.getComponent().getClassName(), equalTo(ParsingActivity.class.getName()));
-
-    }
-
-    @Test
-    public void shouldOpenParsingActivityWhenRefreshButtonFromMainMenuSelected() {
-
-        MenuItem item = new TestMenuItem(R.id.main_menu_refresh);
-        activity.onOptionsItemSelected(item);
-
-        ShadowActivity shadowActivity = shadowOf(activity);
-        Intent startedIntent = shadowActivity.getNextStartedActivity();
-        ShadowIntent shadowIntent = shadowOf(startedIntent);
-        assertThat(shadowIntent.getComponent().getClassName(), equalTo(ParsingActivity.class.getName()));
-
     }
 
     @Test
@@ -90,5 +56,6 @@ public class MainActivityTest extends AbstractRoboGuiceTestCase {
                 equalTo(TestbedPreferenceActivity.class.getName()));
 
     }
+
 
 }
