@@ -1,11 +1,8 @@
 package fi.testbed2.service;
 
-import fi.testbed2.data.TestbedMapImage;
 import fi.testbed2.data.TestbedParsedPage;
 import fi.testbed2.exception.DownloadTaskException;
 import fi.testbed2.task.Task;
-
-import java.util.List;
 
 public interface PageService {
 

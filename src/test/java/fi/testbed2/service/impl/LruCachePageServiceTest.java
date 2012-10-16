@@ -3,18 +3,11 @@ package fi.testbed2.service.impl;
 import fi.testbed2.AbstractRoboGuiceTestCase;
 import fi.testbed2.data.TestbedParsedPage;
 import fi.testbed2.exception.DownloadTaskException;
-import fi.testbed2.service.HTTPService;
 import fi.testbed2.task.Task;
 import org.apache.http.HttpEntity;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.rule.PowerMockRule;
 import roboguice.RoboGuice;
-import roboguice.test.RobolectricRoboTestRunner;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
