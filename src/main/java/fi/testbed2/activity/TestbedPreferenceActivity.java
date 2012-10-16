@@ -8,7 +8,7 @@ import fi.testbed2.service.MunicipalityService;
 import fi.testbed2.service.PreferenceService;
 import roboguice.activity.RoboPreferenceActivity;
 
-public class MyPreferenceActivity extends RoboPreferenceActivity {
+public class TestbedPreferenceActivity extends RoboPreferenceActivity {
 
     @Inject
     MunicipalityService municipalityService;

@@ -54,7 +54,7 @@ public abstract class AbstractActivity extends RoboActivity {
                 onRefreshButtonSelected();
                 return true;
             case R.id.main_menu_preferences:
-                startActivity(new Intent(this, MyPreferenceActivity.class));
+                startActivity(new Intent(this, TestbedPreferenceActivity.class));
                 return true;
             case R.id.main_menu_about:
                 showDialog(DialogType.ABOUT);

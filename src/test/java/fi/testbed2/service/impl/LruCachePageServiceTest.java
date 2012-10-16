@@ -38,9 +38,7 @@ public class LruCachePageServiceTest extends AbstractRoboGuiceTestCase {
     public void testParseTestbedPageWithRainRadar() throws Exception {
 
         initHTMLPage("testbed_rain_15.html");
-        pageService.downloadAndParseTestbedPage("http://url.is.irrelevant.here", task);
-
-        TestbedParsedPage page = pageService.getTestbedParsedPage();
+        TestbedParsedPage page = pageService.downloadAndParseTestbedPage("http://url.is.irrelevant.here", task);
 
         assertEquals(15, page.getAllTestbedImages().size());
 

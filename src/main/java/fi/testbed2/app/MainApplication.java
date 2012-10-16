@@ -52,7 +52,7 @@ public class MainApplication extends Application {
         try {
             versionName = getContext().getPackageManager().
                     getPackageInfo(getContext().getPackageName(), 0).versionName;
-        } catch (PackageManager.NameNotFoundException e) {
+        } catch (Exception e) {
             versionName = "Unknown";
         }
         return versionName;

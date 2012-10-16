@@ -14,7 +14,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-		<activity android:name=".activity.MyPreferenceActivity"
+		<activity android:name=".activity.TestbedPreferenceActivity"
 				  android:label="@string/activity_label_settings" >
 		</activity>
         <activity android:name=".activity.ParsingActivity"
