@@ -9,7 +9,7 @@ import fi.testbed2.service.PageService;
 
 public class MainApplication extends Application {
 
-    private static boolean debug = true;
+    private static boolean debug = false;
 
     public static final String LOG_IDENTIFIER = "TestbedViewer2";
 

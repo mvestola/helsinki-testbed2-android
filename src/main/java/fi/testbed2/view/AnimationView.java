@@ -305,11 +305,6 @@ public class AnimationView extends View {
         }
 
         if (mapWasScaled) {
-
-            if (scaleFactor==1.0) {
-                bounds.offset(0, 0);
-            }
-
             return true;
         }
 
@@ -410,6 +405,7 @@ public class AnimationView extends View {
 
             if (scaleFactor >=maxScaleFactor) {
                 scaleFactor = 1.0f;
+                initializeBounds();
             }
 
             mapWasScaled = true;
