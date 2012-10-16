@@ -1,7 +1,9 @@
-package fi.testbed2.util;
+package fi.testbed2.service.impl;
 
+import com.google.inject.Singleton;
 import fi.testbed2.R;
 import fi.testbed2.exception.DownloadTaskException;
+import fi.testbed2.service.HTTPService;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -12,13 +14,12 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import java.io.IOException;
 
 /**
- * Utility class for making HTTP requests.
+ * Service class for making HTTP requests.
  */
-public class HTTPUtil {
+@Singleton
+public class DefaultHTTPService implements HTTPService {
 
-    private static final int HTTP_VALID_STATUS_CODE = 200;
-
-    public static HttpEntity getHttpEntityForUrl(final String url) throws DownloadTaskException {
+    public HttpEntity getHttpEntityForUrl(final String url) throws DownloadTaskException {
 
         try
         {

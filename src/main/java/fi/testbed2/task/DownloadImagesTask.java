@@ -65,7 +65,7 @@ public class DownloadImagesTask extends AbstractTask<TaskResult> {
     public TaskResult call() throws DownloadTaskException {
 
         List<TestbedMapImage> testbedMapImages = pageService.getTestbedParsedPage().getAllTestbedImages();
-        int totalImagesNotDownloaded = pageService.getNotDownloadedCount();
+        int totalImagesNotDownloaded = pageService.getNotDownloadedImagesCount();
         int i= 1;
 
         for(TestbedMapImage image : testbedMapImages) {

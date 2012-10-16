@@ -219,7 +219,7 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
         }
 
         boolean noImagesExist = page.getAllTestbedImages()==null || page.getAllTestbedImages().isEmpty();
-        boolean allImagesDownloadedButSomeAreMissing = allImagesDownloaded && pageService.getNotDownloadedCount()>0;
+        boolean allImagesDownloadedButSomeAreMissing = allImagesDownloaded && pageService.getNotDownloadedImagesCount()>0;
 
         if (noImagesExist || allImagesDownloadedButSomeAreMissing) {
             return false;
@@ -231,7 +231,7 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
 
     private void reloadAllAndReturnToMainActivity() {
         allImagesDownloaded = false;
-        pageService.evictAll();
+        pageService.evictPage();
         bitmapService.evictAll();
         System.gc();
         Intent intent = new Intent();

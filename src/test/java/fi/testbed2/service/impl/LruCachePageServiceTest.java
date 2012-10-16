@@ -1,17 +1,20 @@
-package fi.testbed2.util;
+package fi.testbed2.service.impl;
 
-import fi.testbed2.AbstractTestCase;
-import fi.testbed2.app.MainApplication;
+import fi.testbed2.AbstractRoboGuiceTestCase;
 import fi.testbed2.data.TestbedParsedPage;
 import fi.testbed2.exception.DownloadTaskException;
+import fi.testbed2.service.HTTPService;
 import fi.testbed2.task.Task;
 import org.apache.http.HttpEntity;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.rule.PowerMockRule;
+import roboguice.RoboGuice;
+import roboguice.test.RobolectricRoboTestRunner;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -22,26 +25,29 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-@PrepareForTest( { HTTPUtil.class, MainApplication.class })
-public class HTMLUtilTest extends AbstractTestCase {
-
-    @Rule
-    public PowerMockRule rule = new PowerMockRule();
+public class LruCachePageServiceTest extends AbstractRoboGuiceTestCase {
 
     private Task task;
+
+    private static LruCachePageService pageService;
+
 
     @Before
     public void setUp() throws Exception {
         super.setUp();
         task = mock(Task.class);
         when(task.isAbort()).thenReturn(false);
+        pageService = RoboGuice.getInjector(context).getInstance(LruCachePageService.class);
+        pageService.setCacheSizeInBytes(1024 * 1024 * 100);
     }
 
     @Test
     public void testParseTestbedPageWithRainRadar() throws Exception {
 
         initHTMLPage("testbed_rain_15.html");
-        TestbedParsedPage page = HTMLUtil.parseTestbedPage("http://url.is.irrelevant.here", task);
+        pageService.downloadAndParseTestbedPage("http://url.is.irrelevant.here", task);
+
+        TestbedParsedPage page = pageService.getTestbedParsedPage();
 
         assertEquals(15, page.getAllTestbedImages().size());
 
@@ -83,7 +89,7 @@ public class HTMLUtilTest extends AbstractTestCase {
     public void testParseTestbedPageWithWindMapOnlyOneImage() throws Exception {
 
         initHTMLPage("testbed_wind_1.html");
-        TestbedParsedPage page = HTMLUtil.parseTestbedPage("http://url.is.irrelevant.here", task);
+        TestbedParsedPage page = pageService.downloadAndParseTestbedPage("http://url.is.irrelevant.here", task);
 
         assertEquals(1, page.getAllTestbedImages().size());
 
@@ -96,7 +102,7 @@ public class HTMLUtilTest extends AbstractTestCase {
     public void testParseTestbedPageWithAirPressureMapOnlyThreeHoursTimeStep() throws Exception {
 
         initHTMLPage("testbed_pressure_5.html");
-        TestbedParsedPage page = HTMLUtil.parseTestbedPage("http://url.is.irrelevant.here", task);
+        TestbedParsedPage page = pageService.downloadAndParseTestbedPage("http://url.is.irrelevant.here", task);
 
         assertEquals(5, page.getAllTestbedImages().size());
 
@@ -118,7 +124,7 @@ public class HTMLUtilTest extends AbstractTestCase {
     public void testParseTestbedPageWithErrors() throws Exception {
 
         initHTMLPage("testbed_invalid.html");
-        TestbedParsedPage page = HTMLUtil.parseTestbedPage("http://url.is.irrelevant.here", task);
+        TestbedParsedPage page = pageService.downloadAndParseTestbedPage("http://url.is.irrelevant.here", task);
 
     }
 
@@ -126,7 +132,7 @@ public class HTMLUtilTest extends AbstractTestCase {
     public void testParseTestbedPageWithOneTimestampMissing() throws Exception {
 
         initHTMLPage("testbed_timestamps_length_error.html");
-        TestbedParsedPage page = HTMLUtil.parseTestbedPage("http://url.is.irrelevant.here", task);
+        TestbedParsedPage page = pageService.downloadAndParseTestbedPage("http://url.is.irrelevant.here", task);
 
     }
 
@@ -134,7 +140,7 @@ public class HTMLUtilTest extends AbstractTestCase {
     public void testParseTestbedPageWithAddedNewlines() throws Exception {
 
         initHTMLPage("testbed_changed_newlines.html");
-        TestbedParsedPage page = HTMLUtil.parseTestbedPage("http://url.is.irrelevant.here", task);
+        TestbedParsedPage page = pageService.downloadAndParseTestbedPage("http://url.is.irrelevant.here", task);
         assertEquals(5, page.getAllTestbedImages().size());
 
         // These test are not currently executed since there will be exception
@@ -161,7 +167,7 @@ public class HTMLUtilTest extends AbstractTestCase {
         initHTMLPage("testbed_rain_15.html");
         when(task.isAbort()).thenReturn(true);
 
-        TestbedParsedPage page = HTMLUtil.parseTestbedPage("http://url.is.irrelevant.here", task);
+        TestbedParsedPage page = pageService.downloadAndParseTestbedPage("http://url.is.irrelevant.here", task);
         assertNull(page);
 
     }
@@ -175,11 +181,7 @@ public class HTMLUtilTest extends AbstractTestCase {
             HttpEntity httpEntity = mock(HttpEntity.class);
             when(httpEntity.getContent()).thenReturn(in);
 
-            PowerMockito.mockStatic(MainApplication.class);
-            when(MainApplication.getContext()).thenReturn(PowerMockito.mock(MainApplication.class));
-
-            PowerMockito.mockStatic(HTTPUtil.class);
-            when(HTTPUtil.getHttpEntityForUrl(any(String.class))).thenReturn(httpEntity);
+            when(testModule.mockHttpService.getHttpEntityForUrl(any(String.class))).thenReturn(httpEntity);
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -4,12 +4,20 @@ import android.app.ActivityManager;
 import android.support.v4.util.LruCache;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import fi.testbed2.R;
 import fi.testbed2.data.TestbedMapImage;
 import fi.testbed2.data.TestbedParsedPage;
+import fi.testbed2.exception.DownloadTaskException;
 import fi.testbed2.service.BitmapService;
+import fi.testbed2.service.HTTPService;
 import fi.testbed2.service.PageService;
+import fi.testbed2.task.Task;
+import org.apache.http.HttpEntity;
 
-import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 
 @Singleton
@@ -17,11 +25,19 @@ public class LruCachePageService implements PageService {
 
     private static String PAGE_CACHE_KEY = "TESTBED_PAGE";
 
+    private static final String HTML_TIMESTAMP_PREFIX = "var anim_timestamps = new Array(\"";
+    private static final String HTML_TIMESTAMP_SUFFIX = "\");";
+    private static final String HTML_IMAGE_PREFIX = "var anim_images_anim_anim = new Array(\"";
+    private static final String HTML_IMAGE_SUFFIX = "\");";
+
     @Inject
     ActivityManager activityManager;
 
     @Inject
     BitmapService bitmapService;
+
+    @Inject
+    HTTPService httpService;
 
     private int cacheSizeInBytes = -1;
 
@@ -61,7 +77,7 @@ public class LruCachePageService implements PageService {
         return getCache().get(PAGE_CACHE_KEY);
     }
 
-    public void setTestbedParsedPage(TestbedParsedPage newTestbedParsedPage) {
+    private void setTestbedParsedPage(TestbedParsedPage newTestbedParsedPage) {
 
         clearPreviousOldData(getTestbedParsedPage(), newTestbedParsedPage);
 
@@ -74,11 +90,11 @@ public class LruCachePageService implements PageService {
     }
 
     @Override
-    public void evictAll() {
+    public void evictPage() {
         getCache().evictAll();
     }
 
-    public int getNotDownloadedCount() {
+    public int getNotDownloadedImagesCount() {
 
         List<TestbedMapImage> testbedMapImages = getTestbedParsedPage().getAllTestbedImages();
 
@@ -97,18 +113,6 @@ public class LruCachePageService implements PageService {
 
     }
 
-    public List<TestbedMapImage> getDownloadedTestbedImages() {
-
-        List<TestbedMapImage> downloaded = new ArrayList<TestbedMapImage>();
-        for (TestbedMapImage mapImage : getTestbedParsedPage().getAllTestbedImages()) {
-            if (bitmapService.bitmapIsDownloaded(mapImage)) {
-                downloaded.add(mapImage);
-            }
-        }
-
-        return downloaded;
-    }
-
     private void clearPreviousOldData(TestbedParsedPage oldPage, TestbedParsedPage newPage) {
 
         if (oldPage==null) {
@@ -123,6 +127,83 @@ public class LruCachePageService implements PageService {
 
         }
 
+    }
+
+    /**
+     *
+     * @param url HTML page url
+     * @param task
+     * @return
+     * @throws DownloadTaskException
+     */
+    public TestbedParsedPage downloadAndParseTestbedPage(final String url, Task task) throws DownloadTaskException {
+
+        TestbedParsedPage testbedParsedPage = new TestbedParsedPage();
+        HttpEntity entity = httpService.getHttpEntityForUrl(url);
+
+        try {
+
+            InputStream in = entity.getContent();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+
+            String[] timestamps = null;
+            String[] imageUrls = null;
+
+            while(!task.isAbort())
+            {
+                String line = reader.readLine();
+
+                if (line == null)
+                    break;
+
+                if(line.startsWith(HTML_TIMESTAMP_PREFIX) && line.endsWith(HTML_TIMESTAMP_SUFFIX)) {
+                    String tmp = line.substring(HTML_TIMESTAMP_PREFIX.length(), line.length() - HTML_TIMESTAMP_SUFFIX.length());
+                    tmp = tmp.replaceAll("\"", "");
+                    timestamps = tmp.split(",");
+                }
+
+                else if(line.startsWith(HTML_IMAGE_PREFIX) && line.endsWith(HTML_IMAGE_SUFFIX)) {
+                    String tmp = line.substring(HTML_IMAGE_PREFIX.length(), line.length() - HTML_IMAGE_SUFFIX.length());
+                    tmp = tmp.replaceAll("\"", "");
+                    imageUrls = tmp.split(",");
+                    break;
+                }
+            }
+
+            in.close();
+
+            if (task.isAbort()) {
+                return null;
+            }
+
+            // validate timestamps and imageUrls
+            if(timestamps == null) {
+                throw new DownloadTaskException(R.string.error_msg_parsing_timestamp);
+            }
+            if(imageUrls == null) {
+                throw new DownloadTaskException(R.string.error_msg_parsing_urls);
+            }
+            if(timestamps.length != imageUrls.length) {
+                throw new DownloadTaskException(R.string.error_msg_parsing_length);
+            }
+
+            int i = 0;
+            for(String imageUrl : imageUrls) {
+                TestbedMapImage image = new TestbedMapImage(imageUrl, timestamps[i]);
+                i++;
+                testbedParsedPage.addTestbedMapImage(image);
+            }
+
+        } catch (IOException e) {
+            throw new DownloadTaskException(R.string.error_msg_parsing_page);
+        } catch(IndexOutOfBoundsException e) {
+            throw new DownloadTaskException(R.string.error_msg_parsing_page_changed);
+        }
+
+        this.setTestbedParsedPage(testbedParsedPage);
+
+
+        return testbedParsedPage;
     }
 
 }

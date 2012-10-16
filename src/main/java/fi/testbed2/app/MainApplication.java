@@ -39,7 +39,7 @@ public class MainApplication extends Application {
 
     public void onTerminate() {
         super.onTerminate();
-        pageService.evictAll();
+        pageService.evictPage();
         bitmapService.evictAll();
     }
 

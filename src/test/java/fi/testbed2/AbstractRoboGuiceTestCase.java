@@ -4,7 +4,10 @@ import android.content.Context;
 import com.google.inject.util.Modules;
 import com.xtremelabs.robolectric.Robolectric;
 import fi.testbed2.app.MainModule;
-import fi.testbed2.service.CoordinateService;
+import fi.testbed2.dialog.DefaultDialogBuilder;
+import fi.testbed2.dialog.DialogBuilder;
+import fi.testbed2.service.*;
+import fi.testbed2.service.impl.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -20,18 +23,18 @@ import static org.mockito.Mockito.mock;
 @RunWith(RobolectricRoboTestRunner.class)
 public abstract class AbstractRoboGuiceTestCase extends AbstractTestCase {
 
-    protected CoordinateService coordinateServiceMock = mock(CoordinateService.class);
-
     protected static Context context = new RoboActivity();
+    protected TestModule testModule;
 
     @Before
     public void setUp() throws Exception {
 
         super.setUp();
 
+        testModule = new TestModule();
         RoboGuice.setBaseApplicationInjector(Robolectric.application,
                 RoboGuice.DEFAULT_STAGE,
-                Modules.override(RoboGuice.newDefaultRoboModule(Robolectric.application)).with(new TestModule()));
+                Modules.override(RoboGuice.newDefaultRoboModule(Robolectric.application)).with(testModule));
     }
 
     @After
@@ -40,17 +43,5 @@ public abstract class AbstractRoboGuiceTestCase extends AbstractTestCase {
         RoboGuice.util.reset();
     }
 
-    private class TestModule extends MainModule {
-
-        /**
-         * Currently uses the same binding as in the main module.
-         * If needed, one can override everything in the configure method.
-         */
-
-        @Override
-        protected void configure() {
-            super.configure();
-        }
-    }
 
 }

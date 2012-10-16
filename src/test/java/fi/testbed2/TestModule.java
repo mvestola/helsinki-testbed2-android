@@ -1,22 +1,21 @@
-package fi.testbed2.app;
+package fi.testbed2;
 
-import com.google.inject.AbstractModule;
+import fi.testbed2.app.MainModule;
 import fi.testbed2.dialog.DefaultDialogBuilder;
 import fi.testbed2.dialog.DialogBuilder;
 import fi.testbed2.service.*;
 import fi.testbed2.service.impl.*;
 
-/**
- * Module used by the RoboGuice IoC framework.
- */
-public class MainModule extends AbstractModule {
+import static org.mockito.Mockito.mock;
 
-    public MainModule() {
+public class TestModule extends MainModule {
 
-    }
+    public HTTPService mockHttpService = mock(HTTPService.class);
 
     @Override
     protected void configure() {
+
+        // Same as in MainModule
         bind(DialogBuilder.class).to(DefaultDialogBuilder.class);
         bind(MunicipalityService.class).to(InlineMunicipalityService.class);
         bind(LocationService.class).to(NetworkLocationService.class);
@@ -24,7 +23,8 @@ public class MainModule extends AbstractModule {
         bind(PreferenceService.class).to(DefaultPreferenceService.class);
         bind(BitmapService.class).to(LruCacheBitmapService.class);
         bind(PageService.class).to(LruCachePageService.class);
-        bind(HTTPService.class).to(DefaultHTTPService.class);
-    }
 
+        // Mocked services
+        bind(HTTPService.class).toInstance(mockHttpService);
+    }
 }

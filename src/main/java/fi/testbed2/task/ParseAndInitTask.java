@@ -14,7 +14,6 @@ import fi.testbed2.result.TaskResultType;
 import fi.testbed2.service.BitmapService;
 import fi.testbed2.service.PageService;
 import fi.testbed2.service.PreferenceService;
-import fi.testbed2.util.HTMLUtil;
 import roboguice.inject.InjectResource;
 
 /**
@@ -78,13 +77,12 @@ public class ParseAndInitTask extends AbstractTask<TaskResult> implements Task {
         TaskResult result = new TaskResult(TaskResultType.OK, "Parsing and initialization OK");
 
         activity.publishProgress(0, progressParsing);
-        TestbedParsedPage testbedParsedPage = HTMLUtil.parseTestbedPage(preferenceService.getTestbedPageURL(), this);
+        TestbedParsedPage testbedParsedPage =
+                pageService.downloadAndParseTestbedPage(preferenceService.getTestbedPageURL(), this);
 
         if (testbedParsedPage == null || isAbort()) {
             return new TaskResult(TaskResultType.CANCELLED, "Cancelled");
         }
-
-        pageService.setTestbedParsedPage(testbedParsedPage);
 
         activity.publishProgress(50, progressDownloading);
         bitmapService.downloadBitmap(testbedParsedPage.getLatestTestbedImage());
