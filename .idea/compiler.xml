@@ -6,6 +6,7 @@
       <directory url="file://$PROJECT_DIR$/target/generated-sources/r" includeSubdirectories="true" />
       <directory url="file://$PROJECT_DIR$/target/generated-sources/aidl" includeSubdirectories="true" />
       <directory url="file://$PROJECT_DIR$/gen" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/robotium/gen" includeSubdirectories="true" />
     </excludeFromCompile>
     <resourceExtensions />
     <wildcardResourcePatterns>
