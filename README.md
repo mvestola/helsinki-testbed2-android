@@ -49,6 +49,3 @@ Helsinki Testbed Viewer 2.0 is a completely free and open project. The source co
 licensed as GNU GENERAL PUBLIC LICENSE Version 3. See more from the LICENSE file.
 
 All map data is copyrighted to the Helsinki Testbed project.
-
-Location marker icons are from [Icons Land](http://www.icons-land.com) and are licensed
-as a custom license "Free for commercial use (Attribute author)".

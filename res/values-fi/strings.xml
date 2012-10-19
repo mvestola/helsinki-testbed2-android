@@ -12,8 +12,8 @@
         joiden tekijänoikeus kuuluu Helsinki Testbed -projektille.
         Käyttäjän ja kuntien sijaintidata EI TULE Helsinki Testbed projektista.
         Lisätietoa Helsinki Testbed -projektista:
-        testbed.fmi.fi.\n\n</string>
-    <string name="extra_license_text">Sijainti-ikonin tarjoaa www.icons-land.com.</string>
+        testbed.fmi.fi.</string>
+    <string name="extra_license_text"></string>
 
     <string name="about_visit_website">Ohjelman kotisivulle</string>
     <string name="close_button">Sulje</string>
