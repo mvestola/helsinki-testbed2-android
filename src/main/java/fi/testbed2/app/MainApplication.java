@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import com.google.inject.Inject;
-import fi.testbed2.Environment;
 import fi.testbed2.service.BitmapService;
 import fi.testbed2.service.PageService;
 
@@ -29,6 +28,7 @@ public class MainApplication extends Application {
     public void onCreate() {
         super.onCreate();
         context = this;
+        Logging.debug("MainApplication started");
     }
 
     public static Context getContext(){
@@ -54,18 +54,6 @@ public class MainApplication extends Application {
             versionName = "Unknown";
         }
         return versionName;
-    }
-
-    public static boolean isDebug() {
-        return Environment.DEBUG;
-    }
-
-    public static boolean isTestEnvironment() {
-        return Environment.TEST_ENVIRONMENT;
-    }
-
-    public static String getBuildTime() {
-        return Environment.BUILD_TIME;
     }
 
     /**

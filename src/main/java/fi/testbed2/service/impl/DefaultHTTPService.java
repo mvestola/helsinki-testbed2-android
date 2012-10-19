@@ -2,6 +2,7 @@ package fi.testbed2.service.impl;
 
 import com.google.inject.Singleton;
 import fi.testbed2.R;
+import fi.testbed2.app.Logging;
 import fi.testbed2.exception.DownloadTaskException;
 import fi.testbed2.service.HTTPService;
 import org.apache.http.HttpEntity;
@@ -23,6 +24,9 @@ public class DefaultHTTPService implements HTTPService {
 
         try
         {
+
+            Logging.debug("getHttpEntityForUrl: "+url);
+
             DefaultHttpClient client = new DefaultHttpClient();
             HttpGet httpGet = new HttpGet(url);
             HttpResponse response = client.execute(httpGet);

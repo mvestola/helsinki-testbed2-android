@@ -11,6 +11,7 @@ import android.text.util.Linkify;
 import android.widget.TextView;
 import com.google.inject.Inject;
 import fi.testbed2.R;
+import fi.testbed2.app.Logging;
 import fi.testbed2.app.MainApplication;
 import fi.testbed2.service.PreferenceService;
 
@@ -21,6 +22,10 @@ public class DefaultDialogBuilder implements DialogBuilder {
 
     @Inject
     PreferenceService preferenceService;
+
+    public DefaultDialogBuilder() {
+        Logging.debug("DefaultDialogBuilder instantiated");
+    }
 
     @Override
     public AlertDialog getAboutAlertDialog() {

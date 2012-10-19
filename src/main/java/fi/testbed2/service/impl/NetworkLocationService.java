@@ -7,6 +7,8 @@ import android.os.Bundle;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.jhlabs.map.Point2D;
+import fi.testbed2.Environment;
+import fi.testbed2.app.Logging;
 import fi.testbed2.app.MainApplication;
 import fi.testbed2.service.CoordinateService;
 import fi.testbed2.service.LocationService;
@@ -44,7 +46,8 @@ public class NetworkLocationService implements LocationService, LocationListener
             return null;
         }
 
-        if (MainApplication.isDebug()) {
+        if (Environment.TEST_ENVIRONMENT) {
+            Logging.debug("Using Helsinki as user location");
             return municipalityService.getMunicipality("Helsinki").getXyPos();
         } else {
             return userLocationXY;
@@ -54,6 +57,8 @@ public class NetworkLocationService implements LocationService, LocationListener
 
     @Override
     public void startListeningLocationChanges() {
+
+        Logging.debug("Started listening location changes");
 
         Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         if (lastKnownLocation!=null) {
@@ -67,6 +72,7 @@ public class NetworkLocationService implements LocationService, LocationListener
 
     @Override
     public void stopListeningLocationChanges() {
+        Logging.debug("Stopped listening location changes");
         locationManager.removeUpdates(this);
     }
 

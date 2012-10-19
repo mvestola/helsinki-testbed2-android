@@ -9,6 +9,7 @@ import android.util.Log;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import fi.testbed2.R;
+import fi.testbed2.app.Logging;
 import fi.testbed2.app.MainApplication;
 import fi.testbed2.data.TestbedMapImage;
 import fi.testbed2.exception.DownloadTaskException;
@@ -99,9 +100,7 @@ public class LruCacheBitmapService implements BitmapService {
 
         try {
 
-            if (MainApplication.isDebug()) {
-                Log.e(MainApplication.LOG_IDENTIFIER, "downloading image: " + imageURL);
-            }
+            Logging.debug("Downloading bitmap from url: " + imageURL);
 
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inTempStorage =  new byte[16 * 1024];

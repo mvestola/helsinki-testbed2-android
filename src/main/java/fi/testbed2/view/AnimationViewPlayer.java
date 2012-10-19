@@ -1,5 +1,7 @@
 package fi.testbed2.view;
 
+import fi.testbed2.app.Logging;
+
 /**
  * Player which controls the state of the animation in the
  * Animation view class.
@@ -18,6 +20,7 @@ public class AnimationViewPlayer {
     }
 
     public void playOrPause() {
+        Logging.debug("AnimationViewPlayer playOrPause");
         if(play) {
             play = false;
         } else {
@@ -28,16 +31,19 @@ public class AnimationViewPlayer {
     }
 
     public void play() {
+        Logging.debug("AnimationViewPlayer play");
         play = true;
         view.invalidate();
     }
 
     public void pause() {
+        Logging.debug("AnimationViewPlayer pause");
         play = false;
         view.invalidate();
     }
 
     public void previous() {
+        Logging.debug("AnimationViewPlayer previous");
         this.play = false;
         currentFrame--;
         if(currentFrame < 0)

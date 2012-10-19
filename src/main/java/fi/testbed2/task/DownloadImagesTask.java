@@ -6,6 +6,7 @@ import android.content.Intent;
 import com.google.inject.Inject;
 import fi.testbed2.R;
 import fi.testbed2.activity.AnimationActivity;
+import fi.testbed2.app.Logging;
 import fi.testbed2.app.MainApplication;
 import fi.testbed2.data.TestbedMapImage;
 import fi.testbed2.exception.DownloadTaskException;
@@ -52,10 +53,14 @@ public class DownloadImagesTask extends AbstractTask<TaskResult> {
         Intent intent = new Intent();
         intent.putExtra(TaskResult.MSG_CODE, result.getMessage());
 
+        Logging.debug("DownloadImagesTask succeeded");
+
         if (result.isCancelled()) {
+            Logging.debug("DownloadImagesTask cancelled");
             activity.setResult(Activity.RESULT_CANCELED);
             activity.finish();
         } else {
+            Logging.debug("DownloadImagesTask result OK");
             activity.setResult(MainApplication.RESULT_OK, intent);
             activity.onAllImagesDownloaded();
         }
@@ -63,6 +68,8 @@ public class DownloadImagesTask extends AbstractTask<TaskResult> {
 
     @Override
     public TaskResult call() throws DownloadTaskException {
+
+        Logging.debug("DownloadImagesTask call()");
 
         List<TestbedMapImage> testbedMapImages = pageService.getTestbedParsedPage().getAllTestbedImages();
         int totalImagesNotDownloaded = pageService.getNotDownloadedImagesCount();
@@ -75,16 +82,18 @@ public class DownloadImagesTask extends AbstractTask<TaskResult> {
             }
 
             if (!bitmapService.bitmapIsDownloaded(image)) {
+
                 String progressText = getContext().getString(R.string.progress_anim_downloading,
                         i, totalImagesNotDownloaded);
                 this.activity.updateDownloadProgressInfo(progressText);
+
+                if (isAbort()) {
+                    return new TaskResult(TaskResultType.CANCELLED, "Cancelled");
+                }
+                bitmapService.downloadBitmap(image);
+
                 i++;
             }
-
-            if (isAbort()) {
-                return new TaskResult(TaskResultType.CANCELLED, "Cancelled");
-            }
-            bitmapService.downloadBitmap(image);
 
         }
 

@@ -12,6 +12,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import com.jhlabs.map.Point2D;
 import fi.testbed2.R;
+import fi.testbed2.app.Logging;
 import fi.testbed2.data.Municipality;
 import fi.testbed2.data.TestbedMapImage;
 import fi.testbed2.service.BitmapService;
@@ -100,6 +101,8 @@ public class AnimationView extends View {
 
     public void initView(Context context) {
 
+        Logging.debug("Initializing AnimationView");
+
         player = new AnimationViewPlayer(this);
 
         mGestureDetector = new GestureDetector(context, new GestureListener());
@@ -117,7 +120,8 @@ public class AnimationView extends View {
     }
 
     public void startAnimation(TextView timestampView, SeekBar seekBar, Rect bounds, float scale) {
-		player.play();
+        Logging.debug("Start animation");
+        player.play();
         this.scaleFactor = scale;
         this.timestampView = timestampView;
         this.seekBar = seekBar;
@@ -145,6 +149,10 @@ public class AnimationView extends View {
         // scale bounds
         int measuredHeight = getMeasuredHeight();
         int measuredWidth = getMeasuredWidth();
+
+        Logging.debug("Initializing bounds...");
+        Logging.debug("measuredHeight: "+measuredHeight);
+        Logging.debug("measuredWidth: "+measuredWidth);
 
         if(measuredHeight > measuredWidth) {
             int scaleBy = measuredHeight-frameHeight;
@@ -325,6 +333,8 @@ public class AnimationView extends View {
                 boundsDistanceX = -(boundsStartX - event.getX());
 
                 Rect savedBounds = new Rect(bounds);
+
+                Logging.debug("Calculating new bounds...");
 
                 // Convert the dips to pixels
                 final float scale = getContext().getResources().getDisplayMetrics().density;

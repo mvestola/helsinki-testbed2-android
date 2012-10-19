@@ -5,6 +5,7 @@ import android.support.v4.util.LruCache;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import fi.testbed2.R;
+import fi.testbed2.app.Logging;
 import fi.testbed2.data.TestbedMapImage;
 import fi.testbed2.data.TestbedParsedPage;
 import fi.testbed2.exception.DownloadTaskException;
@@ -137,6 +138,8 @@ public class LruCachePageService implements PageService {
      * @throws DownloadTaskException
      */
     public TestbedParsedPage downloadAndParseTestbedPage(final String url, Task task) throws DownloadTaskException {
+
+        Logging.debug("Downloading testbed page from url: " + url);
 
         TestbedParsedPage testbedParsedPage = new TestbedParsedPage();
         HttpEntity entity = httpService.getHttpEntityForUrl(url);

@@ -6,7 +6,9 @@ import android.content.Intent;
 import com.google.inject.Inject;
 import fi.testbed2.R;
 import fi.testbed2.activity.ParsingActivity;
+import fi.testbed2.app.Logging;
 import fi.testbed2.app.MainApplication;
+import fi.testbed2.data.TestbedMapImage;
 import fi.testbed2.data.TestbedParsedPage;
 import fi.testbed2.exception.DownloadTaskException;
 import fi.testbed2.result.TaskResult;
@@ -59,12 +61,16 @@ public class ParseAndInitTask extends AbstractTask<TaskResult> implements Task {
     @Override
     protected void onSuccess(TaskResult result) {
 
+        Logging.debug("ParseAndInitTask succeeded");
+
         Intent intent = new Intent();
         intent.putExtra(TaskResult.MSG_CODE, result.getMessage());
 
         if (result.isCancelled()) {
+            Logging.debug("ParseAndInitTask cancelled");
             activity.setResult(Activity.RESULT_CANCELED);
         } else {
+            Logging.debug("ParseAndInitTask result OK");
             activity.setResult(MainApplication.RESULT_OK, intent);
         }
         activity.finish();
@@ -73,6 +79,8 @@ public class ParseAndInitTask extends AbstractTask<TaskResult> implements Task {
 
     @Override
     public TaskResult call() throws DownloadTaskException {
+
+        Logging.debug("ParseAndInitTask call()");
 
         TaskResult result = new TaskResult(TaskResultType.OK, "Parsing and initialization OK");
 
@@ -85,7 +93,13 @@ public class ParseAndInitTask extends AbstractTask<TaskResult> implements Task {
         }
 
         activity.publishProgress(50, progressDownloading);
-        bitmapService.downloadBitmap(testbedParsedPage.getLatestTestbedImage());
+
+        TestbedMapImage mapImage = testbedParsedPage.getLatestTestbedImage();
+
+        if (!bitmapService.bitmapIsDownloaded(mapImage)) {
+            bitmapService.downloadBitmap(mapImage);
+        }
+
         activity.publishProgress(100, progressDone);
 
         return result;
