@@ -67,6 +67,7 @@
     <PreferenceCategory android:title="@string/preference_category_location">
 
         <CheckBoxPreference
+                android:id="@+id/preference_location_shown_user_location"
                 android:key="PREF_LOCATION_SHOW_USER_LOCATION"
                 android:title="@string/preference_location_user_title"
                 android:summary="@string/preference_location_user_summary"

@@ -189,8 +189,8 @@ public class AnimationView extends View {
         frame.setBounds(bounds);
         frame.draw(canvas);
 
-        drawUserLocation(canvas);
         drawMunicipalities(canvas);
+        drawUserLocation(canvas);
 
         canvas.restore();
 
