@@ -3,6 +3,7 @@ package fi.testbed2.task;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import fi.testbed2.app.Logging;
 import fi.testbed2.app.MainApplication;
 import fi.testbed2.result.TaskResult;
 import roboguice.activity.event.OnDestroyEvent;
@@ -38,11 +39,11 @@ public abstract class AbstractTask<T extends TaskResult> extends RoboAsyncTask<T
 
     @Override
     protected void onInterrupted(Exception e) {
-        Ln.d("Interrupting background task %s", this);
+        Logging.debug("Interrupting background task");
     }
 
     protected void onActivityDestroy(@Observes OnDestroyEvent ignored ) {
-        Ln.d("Killing background task %s", this);
+        Logging.debug("Killing background task");
         kill();
     }
 

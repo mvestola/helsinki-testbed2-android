@@ -10,7 +10,7 @@ public final class Logging {
 
     public static void debug(String s) {
         if (Environment.DEBUG) {
-            Ln.d(s);
+            Ln.e(s);
         }
     }
 

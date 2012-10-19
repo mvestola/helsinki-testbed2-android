@@ -47,7 +47,6 @@ public class NetworkLocationService implements LocationService, LocationListener
         }
 
         if (Environment.TEST_ENVIRONMENT) {
-            Logging.debug("Using Helsinki as user location");
             return municipalityService.getMunicipality("Helsinki").getXyPos();
         } else {
             return userLocationXY;
