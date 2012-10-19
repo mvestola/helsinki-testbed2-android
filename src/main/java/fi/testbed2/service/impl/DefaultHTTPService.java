@@ -20,6 +20,10 @@ import java.io.IOException;
 @Singleton
 public class DefaultHTTPService implements HTTPService {
 
+    public DefaultHTTPService() {
+        Logging.debug("DefaultHTTPService instantiated");
+    }
+
     public HttpEntity getHttpEntityForUrl(final String url) throws DownloadTaskException {
 
         try

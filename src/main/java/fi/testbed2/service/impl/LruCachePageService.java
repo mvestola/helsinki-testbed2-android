@@ -45,6 +45,7 @@ public class LruCachePageService implements PageService {
     private LruCache<String, TestbedParsedPage> pageCache;
 
     public LruCachePageService() {
+        Logging.debug("LruCachePageService instantiated");
     }
 
     private LruCache<String, TestbedParsedPage> getCache() {

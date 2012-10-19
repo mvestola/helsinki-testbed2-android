@@ -30,7 +30,7 @@ public class LruCacheBitmapService implements BitmapService {
     private int cacheSizeInBytes = -1;
 
     public LruCacheBitmapService() {
-
+        Logging.debug("LruCacheBitmapService instantiated");
     }
 
     private LruCache<String, Bitmap> getCache() {

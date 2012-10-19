@@ -4,6 +4,7 @@ import android.location.Location;
 import com.google.inject.Singleton;
 import com.jhlabs.map.Point2D;
 import com.jhlabs.map.proj.MercatorProjection;
+import fi.testbed2.app.Logging;
 import fi.testbed2.service.CoordinateService;
 
 /**
@@ -33,6 +34,8 @@ public class MercatorCoordinateService implements CoordinateService {
     private double yScale = -8525.3994;
 
     public MercatorCoordinateService() {
+
+        Logging.debug("MercatorCoordinateService instantiated");
 
         knownPointInHumppila.setLatitude(60.95357);
         knownPointInHumppila.setLongitude(23.33907);

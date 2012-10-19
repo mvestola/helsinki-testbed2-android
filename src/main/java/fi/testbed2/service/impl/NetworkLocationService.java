@@ -36,7 +36,7 @@ public class NetworkLocationService implements LocationService, LocationListener
     private Point2D.Double userLocationXY;
 
     public NetworkLocationService() {
-
+        Logging.debug("NetworkLocationService instantiated");
     }
 
     @Override

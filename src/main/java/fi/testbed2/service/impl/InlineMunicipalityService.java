@@ -4,6 +4,7 @@ import android.location.Location;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.jhlabs.map.Point2D;
+import fi.testbed2.app.Logging;
 import fi.testbed2.data.Municipality;
 import fi.testbed2.service.CoordinateService;
 import fi.testbed2.service.MunicipalityService;
@@ -23,7 +24,7 @@ public class InlineMunicipalityService implements MunicipalityService {
     CoordinateService coordinateService;
 
     public InlineMunicipalityService() {
-
+        Logging.debug("InlineMunicipalityService instantiated");
     }
 
     @Override

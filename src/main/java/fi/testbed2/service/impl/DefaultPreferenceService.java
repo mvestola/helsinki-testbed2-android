@@ -6,6 +6,7 @@ import android.graphics.Rect;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import fi.testbed2.R;
+import fi.testbed2.app.Logging;
 import fi.testbed2.app.MainApplication;
 import fi.testbed2.data.Municipality;
 import fi.testbed2.service.MunicipalityService;
@@ -25,6 +26,10 @@ public class DefaultPreferenceService implements PreferenceService {
 
     @Inject
     Context context;
+
+    public DefaultPreferenceService() {
+        Logging.debug("DefaultPreferenceService instantiated");
+    }
 
     /**
      * Saves the bounds of the map user has previously viewed to persistent storage.
