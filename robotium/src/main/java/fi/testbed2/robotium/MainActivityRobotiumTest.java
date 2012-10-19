@@ -82,9 +82,10 @@ public class MainActivityRobotiumTest extends ActivityInstrumentationTestCase2<M
 
     public void testDownloadCancelledWhenRefreshFromMainActivity() throws Exception {
 
+        setMapType(4);
+
         solo.sendKey(Solo.MENU);
         solo.clickOnText(solo.getString(R.string.main_menu_refresh));
-        solo.waitForText(solo.getString(R.string.progress_parsing));
         solo.goBack();
 
         solo.waitForText(solo.getString(R.string.notice_cancelled));
@@ -94,12 +95,16 @@ public class MainActivityRobotiumTest extends ActivityInstrumentationTestCase2<M
 
     public void testDownloadCancelledWhenRefreshFromAnimationActivity() throws Exception {
 
+        setMapType(1);
+
         solo.clickOnImageButton(0);
 
         solo.waitForText("@");
         solo.assertCurrentActivity("Should be AnimationActivity", AnimationActivity.class);
         solo.waitForText("/10");
         assertTrue(solo.searchText("/10"));
+
+        setMapType(2);
 
         solo.sendKey(Solo.MENU);
         solo.clickOnText(solo.getString(R.string.main_menu_refresh));
