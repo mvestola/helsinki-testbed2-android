@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import com.jhlabs.map.Point2D;
+import com.larvalabs.svgandroid.SVGParser;
 import fi.testbed2.R;
 import fi.testbed2.app.Logging;
 import fi.testbed2.data.Municipality;
@@ -34,6 +35,11 @@ public class AnimationView extends View {
      */
     public static final double MAP_IMAGE_ORIG_WIDTH = 600d;
     public static final double MAP_IMAGE_ORIG_HEIGHT = 508d;
+
+    /**
+     * Marker image height (for user's location)
+     */
+    public static final int MAP_MARKER_IMG_HEIGHT = 40;
 
     /**
      * Used for bounds calculation
@@ -67,8 +73,7 @@ public class AnimationView extends View {
     private String downloadProgressText;
 
     // Marker image caching
-    private Bitmap markerImage;
-    private int markerImageSize;
+    private Picture markerImage;
 
     // Data
     public List<Municipality> municipalities;
@@ -258,13 +263,26 @@ public class AnimationView extends View {
         float yScaled = Double.valueOf(bounds.top + point.y*heightRatio).floatValue();
 
         if (useMarker) {
-            int markerImgSize = 32;
-            Bitmap bitmap = getMarkerImage(markerImgSize);
+
+            Picture pic = getMarkerImage();
+
+            float ratio = pic.getWidth()/pic.getHeight();
+            int xSize = Float.valueOf(MAP_MARKER_IMG_HEIGHT*ratio).intValue();
+            int ySize = MAP_MARKER_IMG_HEIGHT;
+
             /*
              * x, y coordinates are image's top left corner,
              * so position the marker to the bottom center
              */
-            canvas.drawBitmap(bitmap, xScaled-markerImgSize/2, yScaled-markerImgSize, paint);
+            int x = Float.valueOf(xScaled).intValue();
+            int y = Float.valueOf(yScaled).intValue();
+
+            int left = x-xSize/2;
+            int top = y-ySize;
+            int right = x+xSize/2;
+            int bottom = y;
+
+            canvas.drawPicture(getMarkerImage(), new Rect(left,top,right,bottom));
         } else {
             int radius = 5;
             canvas.drawCircle(xScaled, yScaled, radius, paint);
@@ -272,15 +290,13 @@ public class AnimationView extends View {
 
     }
 
-    private Bitmap getMarkerImage (int size) {
-        if (markerImage==null || markerImageSize!=size) {
-            Bitmap bmp = BitmapFactory.decodeResource( getResources(), R.drawable.marker);
-            Bitmap img = Bitmap.createScaledBitmap( bmp, size, size, true );
-            bmp.recycle();
-            markerImageSize = size;
-            markerImage = img;
+    private Picture getMarkerImage() {
+
+        if (markerImage==null) {
+            markerImage = SVGParser.getSVGFromResource(getResources(), R.drawable.map_marker).getPicture();
         }
         return markerImage;
+
     }
 
 	@Override

@@ -5,7 +5,9 @@ Version 2.0.9 (coming soon...)
 -------
 
 * Added pinch and tap zooming
-* Major code refactorings. Now uses RoboGuice 2 for dependency injection.
+* Use scalable SVG image as a location marker
+* Major code refactorings. Now uses RoboGuice 2 for dependency injection
+and Robotium for automatic automatic black-box testing.
 
 
 Version 2.0.8 (2012-10-07)

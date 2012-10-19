@@ -60,6 +60,7 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.json:json:20080701" level="project" />
     <orderEntry type="library" name="Maven: com.google.android:support-v4:r7" level="project" />
     <orderEntry type="library" name="Maven: com.jhlabs:javaproj-noawt:1.0.6" level="project" />
+    <orderEntry type="library" name="Maven: com.larvalabs:svg-android:1.1" level="project" />
     <orderEntry type="library" name="Maven: org.roboguice:roboguice:2.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.inject:guice:no_aop:3.0" level="project" />
     <orderEntry type="library" name="Maven: javax.inject:javax.inject:1" level="project" />
