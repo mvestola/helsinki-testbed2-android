@@ -69,3 +69,25 @@ For example (all in one line):
 -Dfile=/path/in/your/computer/javaproj-1.0.6-noawt.jar
 -DrepositoryId=testbed2repo
 -Durl=file:///path/in/your/computer/to/the/clonedrepo/helsinki-testbed2-android-repo/repo`
+
+
+Testing guidelines
+-------
+
+Test at least these special cases:
+* Downloading images while changing screen orientation (Ctrl+F11).
+Should not pause download.
+* Only one map image selected.
+* No network connection (disable network from computer running emulator).
+Should show error dialog.
+* Parsing error (change HTML_TIMESTAMP_PREFIX to some invalid value).
+Should show error dialog.
+* Cancelling download in ParsingActivity and AnimationActivity.
+Should show toast.
+* Continuing download when download cancelled.
+Should not download all images again.
+* Try to kill app with DDMS when it is in the background.
+Should not fail when resuming.
+* Use very fast animation (0.1 sec).
+* Play/pause button icon when application goes to background,
+returning from preferences and using the slider.
