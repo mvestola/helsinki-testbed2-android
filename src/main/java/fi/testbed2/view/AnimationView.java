@@ -266,21 +266,22 @@ public class AnimationView extends View {
 
             Picture pic = getMarkerImage();
 
+            // Scale width a bit larger than original width (otherwise looks a bit too thin marker)
             float ratio = pic.getWidth()/pic.getHeight();
-            int xSize = Float.valueOf(MAP_MARKER_IMG_HEIGHT*ratio).intValue();
-            int ySize = MAP_MARKER_IMG_HEIGHT;
+            int width = Float.valueOf(MAP_MARKER_IMG_HEIGHT*ratio+MAP_MARKER_IMG_HEIGHT/5).intValue();
+            int height = MAP_MARKER_IMG_HEIGHT;
 
             /*
              * x, y coordinates are image's top left corner,
              * so position the marker to the bottom center
              */
-            int x = Float.valueOf(xScaled).intValue();
-            int y = Float.valueOf(yScaled).intValue();
+            int xInt = Float.valueOf(xScaled).intValue();
+            int yInt = Float.valueOf(yScaled).intValue();
 
-            int left = x-xSize/2;
-            int top = y-ySize;
-            int right = x+xSize/2;
-            int bottom = y;
+            int left = xInt-width/2;
+            int top = yInt-height;
+            int right = xInt+width/2;
+            int bottom = yInt;
 
             canvas.drawPicture(getMarkerImage(), new Rect(left,top,right,bottom));
         } else {
