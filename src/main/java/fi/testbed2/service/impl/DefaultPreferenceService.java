@@ -144,7 +144,8 @@ public class DefaultPreferenceService implements PreferenceService {
 
     @Override
     public String getMapMarkerColor() {
-        int color = sharedPreferences.getInt(PREF_LOCATION_MAP_MARKER_COLOR, 0);
+        int color = sharedPreferences.getInt(PREF_LOCATION_MAP_MARKER_COLOR,
+                ColorPickerPreference.convertToColorInt(context.getString(R.string.preference_map_marker_color_default)));
         return ColorPickerPreference.convertToARGB(color);
     }
 

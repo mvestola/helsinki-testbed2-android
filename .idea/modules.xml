@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/robotium/robotium.iml" filepath="$PROJECT_DIR$/robotium/robotium.iml" />
       <module fileurl="file://$PROJECT_DIR$/testbed2.iml" filepath="$PROJECT_DIR$/testbed2.iml" />
-      <module fileurl="file://$PROJECT_DIR$/gen-external-apklibs/~apklib-net.margaritov_colorpicker-preference_1.2.iml" filepath="$PROJECT_DIR$/gen-external-apklibs/~apklib-net.margaritov_colorpicker-preference_1.2.iml" />
     </modules>
   </component>
 </project>

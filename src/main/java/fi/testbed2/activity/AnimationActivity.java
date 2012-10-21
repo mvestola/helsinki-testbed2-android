@@ -198,6 +198,7 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
         animationView.updateBounds(preferenceService.getSavedMapBounds(orientation));
         animationView.municipalities = preferenceService.getSavedMunicipalities();
         animationView.getPlayer().setFrameDelay(preferenceService.getSavedFrameDelay());
+        animationView.resetMarkerImageCache();
     }
 
     /**

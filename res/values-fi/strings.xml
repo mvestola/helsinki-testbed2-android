@@ -53,8 +53,8 @@
     <string name="preference_location_user_title">Näytä oma sijaintisi</string>
     <string name="preference_location_user_summary">Rastita, jos haluat nykyisen sijaintisi näkyvän kartalla</string>
 
-    <string name="preference_map_marker_color_title">Map marker color</string>
-    <string name="preference_map_marker_color_summary">Choose the color of the marker showing your current location</string>
+    <string name="preference_map_marker_color_title">Karttamerkin väri</string>
+    <string name="preference_map_marker_color_summary">Valitse nykyisen sijaintisi esittävän karttamerkin väri</string>
 
     <string name="preference_location_municipalities_title">Kunnat kartalla</string>
     <string name="preference_location_municipalities_summary">Valitse kunnat, jotka haluat näyttää pisteenä kartalla</string>
@@ -76,6 +76,10 @@
     <string name="error_msg_parsing_length" formatted="false">Karttakuvien parsinta HTML-sivusta epäonnistui.</string>
     <string name="error_msg_parsing_page" formatted="false">HTML-sivun lukeminen epäonnistui.</string>
     <string name="error_msg_parsing_page_changed" formatted="false">HTML-sivun lukeminen epäonnistui. Sivun rakenne on muuttunut. Raportoithan tämän virheen ohjelman kehittäjälle.</string>
+
+    <!-- Color Picker dialog -->
+    <string name="dialog_color_picker">Valitse väri</string>
+    <string name="press_color_to_apply">TODO</string>
 
 </resources>
 

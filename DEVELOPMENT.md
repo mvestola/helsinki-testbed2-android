@@ -62,14 +62,16 @@ http://blog.marrowboy.co.uk/2011/11/08/how-to-host-a-maven-repo-on-github/
 You can add more jars to the repo by cloning the repo and executing `mvn deploy:deploy-file`
 (http://maven.apache.org/guides/mini/guide-3rd-party-jars-remote.html).
 For example (all in one line):
-```mvn deploy:deploy-file \
+```
+mvn deploy:deploy-file \
 -DgroupId=com.jhlabs \
 -DartifactId=javaproj-noawt \
 -Dversion=1.0.6 \
 -Dpackaging=jar \
 -Dfile=/path/in/your/computer/javaproj-1.0.6-noawt.jar \
 -DrepositoryId=testbed2repo \
--Durl=file:///path/in/your/computer/to/the/clonedrepo/helsinki-testbed2-android-repo/repo```
+-Durl=file:///path/in/your/computer/to/the/clonedrepo/helsinki-testbed2-android-repo/repo
+```
 
 
 Adding Android library projects as Maven dependencies
@@ -80,9 +82,11 @@ Just do the following:
 
 1. Checkout the source of your Android library project. Do not compile the project
 (or make sure that there are no compiled classes by running `ant clean`).
-2. Make a zip file from the project sources.
+2. Make a zip file from the project sources. In addition to the src directory,
+also include the res, gen and other source folders to the zip file.
+Do not include any compiled classes.
 3. Rename the zip file to `something.apklib`.
-4. Install the file something.apklib into the testbed2 maven repository like jar files described above.
+4. Install the file `something.apklib` into the testbed2 maven repository like jar files described above.
 Just change the packaging type to `apklib` (`-Dpackaging=apklib`).
 
 After that, you can use the apklib as a dependency in pom.xml:

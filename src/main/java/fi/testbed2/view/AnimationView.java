@@ -301,6 +301,10 @@ public class AnimationView extends View {
 
     }
 
+    public void resetMarkerImageCache() {
+        markerImage = null;
+    }
+
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 

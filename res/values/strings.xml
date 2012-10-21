@@ -57,6 +57,7 @@
 
     <string name="preference_map_marker_color_title">Map marker color</string>
     <string name="preference_map_marker_color_summary">Choose the color of the marker showing your current location</string>
+    <string name="preference_map_marker_color_default">#C8D94585</string>
 
     <string name="preference_location_municipalities_title">Municipalities on map</string>
     <string name="preference_location_municipalities_summary">Choose which municipalities are shown on the map as dots</string>
@@ -78,5 +79,9 @@
     <string name="error_msg_parsing_length" formatted="false">Could not parse images from HTML page.</string>
     <string name="error_msg_parsing_page" formatted="false">Could not read HTML page.</string>
     <string name="error_msg_parsing_page_changed" formatted="false">Could not parse HTML page. Webpage has changed its syntax. please report this error.</string>
+
+    <!-- Color Picker dialog -->
+    <string name="dialog_color_picker">Pick a color</string>
+    <string name="press_color_to_apply">Press on color to apply</string>
 
 </resources>
