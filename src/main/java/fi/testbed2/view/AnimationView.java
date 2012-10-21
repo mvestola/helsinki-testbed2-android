@@ -4,12 +4,10 @@ import android.content.Context;
 import android.graphics.*;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
-import android.view.ScaleGestureDetector;
-import android.view.View;
+import android.view.*;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.jhlabs.map.Point2D;
 import com.larvalabs.svgandroid.SVGParser;
 import fi.testbed2.app.Logging;
@@ -22,7 +20,9 @@ import fi.testbed2.service.PreferenceService;
 import fi.testbed2.util.SeekBarUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * View which shows the map animation.
@@ -39,6 +39,13 @@ public class AnimationView extends View {
      * Marker image height (for user's location)
      */
     public static final int MAP_MARKER_IMG_HEIGHT = 40;
+
+    /**
+     * Defines how many pixels the user is allowed to click
+     * off the municipality point. If the touch is withing this
+     * threshold, the municipality info is shown.
+     */
+    public static final int MUNICIPALITY_SEARCH_THRESHOLD = 20;
 
     /**
      * Used for bounds calculation
@@ -74,9 +81,11 @@ public class AnimationView extends View {
     // Marker image caching
     private Picture markerImage;
     private Picture pointImage;
+    private Toast municipalityToast;
 
     // Data
-    public List<Municipality> municipalities;
+    private List<Municipality> municipalities;
+    private Map<Municipality, Point2D.Double> municipalitiesOnScreen;
 
     // Services
     public LocationService userLocationService;
@@ -232,7 +241,7 @@ public class AnimationView extends View {
     private void drawUserLocation(Canvas canvas) {
         Point2D.Double userLocation = userLocationService.getUserLocationXY();
         if (userLocation!=null) {
-            drawPoint(userLocation, Color.BLACK, canvas, true);
+            drawPoint(userLocation, Color.BLACK, canvas, null);
         }
     }
 
@@ -240,13 +249,13 @@ public class AnimationView extends View {
 
         for (Municipality municipality : municipalities) {
             if (municipality!=null) {
-                drawPoint(municipality.getXyPos(), Color.BLACK, canvas, false);
+                drawPoint(municipality.getXyPos(), Color.BLACK, canvas, municipality);
             }
         }
 
     }
 
-    private void drawPoint(Point2D.Double point, int color, Canvas canvas, boolean useMarker) {
+    private void drawPoint(Point2D.Double point, int color, Canvas canvas, Municipality municipality) {
 
         Paint paint = new Paint();
         paint.setColor(color);
@@ -265,7 +274,7 @@ public class AnimationView extends View {
         int xInt = Float.valueOf(xScaled).intValue();
         int yInt = Float.valueOf(yScaled).intValue();
 
-        if (useMarker) {
+        if (municipality==null) {
 
             Picture pic = getMarkerImage();
 
@@ -288,6 +297,10 @@ public class AnimationView extends View {
 
         } else {
 
+            // Save coordinates for info toast
+            this.municipalitiesOnScreen.put(municipality,
+                    new Point2D.Double(xInt*scaleFactor, yInt*scaleFactor));
+
             Picture pic = getPointImage();
 
             int size = 10;
@@ -302,7 +315,7 @@ public class AnimationView extends View {
             int right = xInt+size/2;
             int bottom = yInt+size/2;
 
-            canvas.drawPicture(pic, new Rect(left,top,right,bottom));
+            canvas.drawPicture(pic, new Rect(left, top, right, bottom));
         }
 
 
@@ -397,6 +410,8 @@ public class AnimationView extends View {
 
                 if(boundsMoveMap) {
 
+                    hideMunicipalityToast();
+
                     float mDistance_y_dip = boundsDistanceY * scale / scaleFactor + 0.5f;
                     float mDistance_x_dip = boundsDistanceX * scale / scaleFactor + 0.5f;
 
@@ -446,6 +461,7 @@ public class AnimationView extends View {
             // Don't let the object get too small or too large.
             scaleFactor = Math.max(minScaleFactor, Math.min(scaleFactor, maxScaleFactor));
 
+            hideMunicipalityToast();
             mapWasScaled = true;
             invalidate();
             return true;
@@ -469,9 +485,70 @@ public class AnimationView extends View {
                 initializeBounds();
             }
 
+            hideMunicipalityToast();
             mapWasScaled = true;
             invalidate();
             return true;
+        }
+
+        @Override
+        public void onLongPress(MotionEvent e) {
+            Logging.debug("Long pressed x: "+e.getX());
+            Logging.debug("Long pressed y: "+e.getY());
+            hideMunicipalityToast(); // always hide previous toast
+            showInfoForMunicipality(e.getX(), e.getY());
+        }
+
+    }
+
+    /**
+     * Shows info toast about selected municipality if there is
+     * a municipality close to the given x, y coordinates.
+     *
+     * @param x x coordinate
+     * @param y y coordinate
+     * @return True if the toast was shown, false if not shown.
+     */
+    private boolean showInfoForMunicipality(float x, float y) {
+
+        for (Municipality municipality : municipalities) {
+
+            if (municipality!=null) {
+
+                Point2D.Double pos = municipalitiesOnScreen.get(municipality);
+
+                if (pos!=null) {
+
+                    Logging.debug("Pos: "+pos+", for: "+municipality.getName());
+
+                    if (Math.abs(pos.x-x)<=MUNICIPALITY_SEARCH_THRESHOLD &&
+                            Math.abs(pos.y-y)<=MUNICIPALITY_SEARCH_THRESHOLD) {
+
+                        Logging.debug("Show info for municipality: "+municipality.getName());
+
+                        municipalityToast = Toast.makeText(getContext(),
+                                municipality.getName(), Toast.LENGTH_SHORT);
+                        municipalityToast.setGravity(Gravity.TOP| Gravity.LEFT,
+                                Double.valueOf(pos.x).intValue(),
+                                Double.valueOf(pos.y).intValue());
+                        municipalityToast.show();
+                        return true;
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        return false;
+
+    }
+
+    private void hideMunicipalityToast() {
+        if (municipalityToast!=null) {
+            municipalityToast.cancel();
         }
     }
 
@@ -513,4 +590,8 @@ public class AnimationView extends View {
         return player;
     }
 
+    public void setMunicipalities(List<Municipality> municipalities) {
+        this.municipalities = municipalities;
+        this.municipalitiesOnScreen = new HashMap<Municipality, Point2D.Double>();
+    }
 }

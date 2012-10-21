@@ -167,7 +167,7 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
 
     private void initView() {
         animationView.setAllImagesDownloaded(false);
-        animationView.municipalities = preferenceService.getSavedMunicipalities();
+        animationView.setMunicipalities(preferenceService.getSavedMunicipalities());
         animationView.userLocationService = locationService;
         animationView.bitmapService = bitmapService;
         animationView.pageService = pageService;
@@ -196,7 +196,7 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
     private void updatePreferencesToView() {
         animationView.setScaleFactor(preferenceService.getSavedScaleFactor(orientation));
         animationView.updateBounds(preferenceService.getSavedMapBounds(orientation));
-        animationView.municipalities = preferenceService.getSavedMunicipalities();
+        animationView.setMunicipalities(preferenceService.getSavedMunicipalities());
         animationView.getPlayer().setFrameDelay(preferenceService.getSavedFrameDelay());
         animationView.resetMarkerAndPointImageCache();
     }

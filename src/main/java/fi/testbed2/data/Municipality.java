@@ -23,4 +23,36 @@ public class Municipality {
         return xyPos;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Municipality that = (Municipality) o;
+
+        if (Double.compare(that.lat, lat) != 0) return false;
+        if (Double.compare(that.lon, lon) != 0) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (xyPos != null ? !xyPos.equals(that.xyPos) : that.xyPos != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = name != null ? name.hashCode() : 0;
+        temp = lat != +0.0d ? Double.doubleToLongBits(lat) : 0L;
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = lon != +0.0d ? Double.doubleToLongBits(lon) : 0L;
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (xyPos != null ? xyPos.hashCode() : 0);
+        return result;
+    }
+
+    public String getName() {
+        return name;
+    }
+
 }
