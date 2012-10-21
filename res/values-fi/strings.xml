@@ -35,7 +35,9 @@
     <string name="activity_label_downloading">Ladataan karttoja...</string>
     <string name="activity_label_anim">Kartat</string>
 
-    <string name="preference_category_maps">Karttakuvien latauksen asetukset</string>
+    <string name="preference_category_basic">Perusasetukset</string>
+    <string name="preference_category_advanced">Lisäasetukset</string>
+
     <string name="preference_category_animation">Animaation asetukset</string>
     <string name="preference_category_location">Sijainnit kartalla</string>
     <string name="preference_category_user_location">Oma sijaintisi kartalla</string>

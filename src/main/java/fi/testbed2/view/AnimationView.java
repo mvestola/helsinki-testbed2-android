@@ -528,7 +528,7 @@ public class AnimationView extends View {
                                 municipality.getName(), Toast.LENGTH_SHORT);
                         municipalityToast.setGravity(Gravity.TOP| Gravity.LEFT,
                                 Double.valueOf(pos.x).intValue(),
-                                Double.valueOf(pos.y).intValue());
+                                Double.valueOf(pos.y-40).intValue());
                         municipalityToast.show();
                         return true;
 

@@ -48,7 +48,7 @@ public class MainActivityRobotiumTest extends ActivityInstrumentationTestCase2<M
         solo.sendKey(Solo.MENU);
         solo.clickOnText(solo.getString(R.string.main_menu_preferences));
 
-        solo.waitForText(solo.getString(R.string.preference_category_maps));
+        solo.waitForText(solo.getString(R.string.preference_category_basic));
         solo.assertCurrentActivity("Should be TestbedPreferenceActivity", TestbedPreferenceActivity.class);
 
         solo.scrollDown();
@@ -144,7 +144,7 @@ public class MainActivityRobotiumTest extends ActivityInstrumentationTestCase2<M
 
         solo.sendKey(Solo.MENU);
         solo.clickOnText(solo.getString(R.string.main_menu_preferences));
-        solo.waitForText(solo.getString(R.string.preference_category_maps));
+        solo.waitForText(solo.getString(R.string.preference_category_basic));
         solo.assertCurrentActivity("Should be TestbedPreferenceActivity", TestbedPreferenceActivity.class);
         solo.clickOnText(solo.getString(R.string.preference_map_type_title));
         solo.clickInList(index);

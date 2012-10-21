@@ -37,7 +37,9 @@
     <string name="activity_label_downloading">Downloading maps...</string>
     <string name="activity_label_anim">Maps</string>
 
-    <string name="preference_category_maps">Map image downloading settings</string>
+    <string name="preference_category_basic">Basic settings</string>
+    <string name="preference_category_advanced">Advanced settings</string>
+
     <string name="preference_category_animation">Animation settings</string>
     <string name="preference_category_location">Locations on map</string>
     <string name="preference_category_user_location">User\'s current location</string>
