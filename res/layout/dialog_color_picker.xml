@@ -29,20 +29,10 @@
 		android:layout_centerHorizontal="true"
 		android:tag="portrait"
 	/>
-	
-	<TextView
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"	
-		android:text="@string/press_color_to_apply"
-		android:gravity="left"
-		android:layout_marginLeft="6dp"
-		android:layout_marginRight="6dp"
-		android:layout_marginBottom="5dp"
-		android:textAppearance="?android:attr/textAppearanceSmall"
-	/>
-	
+
 	<LinearLayout
-		android:layout_width="wrap_content"
+        android:id="@+id/color_picker_view_panel"
+        android:layout_width="wrap_content"
 		android:layout_height="40dp"
 		android:orientation="horizontal"
 		android:layout_below="@id/color_picker_view"
@@ -71,7 +61,28 @@
 			android:layout_height="wrap_content"
 			android:layout_weight="0.5"
 		/>
-	
+
 	</LinearLayout>
-	
+
+    <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="horizontal"
+            android:layout_below="@id/color_picker_view_panel"
+            android:layout_marginBottom="10dp">
+
+        <Button android:id="@+id/color_picker_save"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.5"
+                android:text="@string/button_save" />
+
+        <Button android:id="@+id/color_picker_cancel"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.5"
+                android:layout_toRightOf="@id/color_picker_save"
+                android:text="@string/button_cancel" />
+    </LinearLayout>
+
 </LinearLayout>

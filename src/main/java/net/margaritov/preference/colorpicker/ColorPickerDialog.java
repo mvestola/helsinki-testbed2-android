@@ -22,6 +22,7 @@ import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import fi.testbed2.R;
 
@@ -70,16 +71,19 @@ public class ColorPickerDialog
 		mColorPicker = (ColorPickerView) layout.findViewById(R.id.color_picker_view);
 		mOldColor = (ColorPickerPanelView) layout.findViewById(R.id.old_color_panel);
 		mNewColor = (ColorPickerPanelView) layout.findViewById(R.id.new_color_panel);
-		
-		((LinearLayout) mOldColor.getParent()).setPadding(
+
+        Button saveButton = (Button)layout.findViewById(R.id.color_picker_save);
+        Button cancelButton = (Button)layout.findViewById(R.id.color_picker_cancel);
+
+        ((LinearLayout) mOldColor.getParent()).setPadding(
 			Math.round(mColorPicker.getDrawingOffset()), 
 			0, 
 			Math.round(mColorPicker.getDrawingOffset()), 
 			0
-		);	
-		
-		mOldColor.setOnClickListener(this);
-		mNewColor.setOnClickListener(this);
+		);
+
+        saveButton.setOnClickListener(this);
+        cancelButton.setOnClickListener(this);
 		mColorPicker.setOnColorChangedListener(this);
 		mOldColor.setColor(color);
 		mColorPicker.setColor(color, true);
@@ -118,7 +122,7 @@ public class ColorPickerDialog
 
 	@Override
 	public void onClick(View v) {
-		if (v.getId() == R.id.new_color_panel) {
+		if (v.getId() == R.id.color_picker_save) {
 			if (mListener != null) {
 				mListener.onColorChanged(mNewColor.getColor());
 			}

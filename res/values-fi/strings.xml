@@ -16,7 +16,11 @@
     <string name="extra_license_text"></string>
 
     <string name="about_visit_website">Ohjelman kotisivulle</string>
+
     <string name="close_button">Sulje</string>
+    <string name="button_save">Tallenna</string>
+    <string name="button_ok">OK</string>
+    <string name="button_cancel">Peruuta</string>
 
     <string name="whats_new_title">Uutta versiossa %s</string>
     <string name="whats_new_text">
@@ -79,7 +83,6 @@
 
     <!-- Color Picker dialog -->
     <string name="dialog_color_picker">Valitse väri</string>
-    <string name="press_color_to_apply">TODO</string>
 
 </resources>
 
