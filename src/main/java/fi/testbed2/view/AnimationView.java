@@ -414,16 +414,10 @@ public class AnimationView extends View {
 
                     bounds.offset((int)mDistance_x_dip, (int)mDistance_y_dip);
 
-                    if(!bounds.contains(viewBounds)) {
-                        // overflow was on top or bottom y-axis, invalidate y
-                        if(bounds.top > viewBounds.top || bounds.bottom < viewBounds.bottom)
-                            boundsDistanceY = 0.0f;
-                        // if overflow was on left or right x-axis, invalidate x
-                        if(bounds.left > viewBounds.left || bounds.right < viewBounds.right)
-                            boundsDistanceX = 0.0f;
-                        savedBounds.offset((int) boundsDistanceX, (int) boundsDistanceY);
-                        bounds = savedBounds;
-                    }
+                    Logging.debug("New bounds left: "+bounds.left);
+                    Logging.debug("New bounds top: "+bounds.top);
+                    Logging.debug("New bounds right: "+bounds.right);
+                    Logging.debug("New bounds bottom: "+bounds.bottom);
 
                     // restart measuring distances
                     boundsStartY = event.getY();
@@ -479,7 +473,6 @@ public class AnimationView extends View {
 
             if (scaleFactor >=maxScaleFactor) {
                 scaleFactor = 1.0f;
-                initializeBounds();
             }
 
             hideMunicipalityToast();
