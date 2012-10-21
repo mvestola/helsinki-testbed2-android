@@ -66,6 +66,10 @@
     <string name="preference_location_municipalities_title">Kunnat kartalla</string>
     <string name="preference_location_municipalities_summary">Valitse kunnat, jotka haluat näyttää pisteenä kartalla</string>
 
+    <string name="preference_screen_animation_summary">Muuta karttakuvien animaation asetuksia</string>
+    <string name="preference_screen_location_summary">Muuta käyttäjän ja valittujen kuntien
+        sijaintien esitykseen liittyviä asetuksia</string>
+
     <string name="progress_parsing">Luetaan sivua osoitteesta testbed.fmi.fi...</string>
     <string name="progress_downloading" formatted="false">Ladataan viimeisin sääkartta...</string>
     <string name="progress_done">Valmis</string>
