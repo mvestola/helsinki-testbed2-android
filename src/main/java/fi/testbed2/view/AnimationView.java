@@ -300,17 +300,17 @@ public class AnimationView extends View {
 
             Picture pic = getPointImage();
 
-            int size = preferenceService.getMapPointSize();
+            int circleDiameter = preferenceService.getMapPointSize();
 
             /*
             * x, y coordinates are image's top left corner,
             * so position the marker to the center
             */
 
-            int left = xInt-size/2;
-            int top = yInt-size/2;
-            int right = xInt+size/2;
-            int bottom = yInt+size/2;
+            int left = xInt-circleDiameter/2;
+            int top = yInt-circleDiameter/2;
+            int right = xInt+circleDiameter/2;
+            int bottom = yInt+circleDiameter/2;
 
             canvas.drawPicture(pic, new Rect(left, top, right, bottom));
         }
@@ -518,7 +518,7 @@ public class AnimationView extends View {
 
                     Logging.debug("Pos: "+pos+", for: "+municipality.getName());
 
-                    int threshold = MUNICIPALITY_SEARCH_THRESHOLD + preferenceService.getMapPointSize();
+                    int threshold = preferenceService.getMapPointSize()/2 + MUNICIPALITY_SEARCH_THRESHOLD;
 
                     if (Math.abs(pos.x-x)<=threshold && Math.abs(pos.y-y)<=threshold) {
 

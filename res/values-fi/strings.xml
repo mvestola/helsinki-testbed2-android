@@ -67,7 +67,7 @@
     <string name="preference_map_point_color_title">Kunnan väri</string>
     <string name="preference_map_point_color_summary">Valitse taustaväri ympyrälle, joka näyttää kunnan kartalla</string>
     <string name="preference_map_point_size_title">Kunnan koko</string>
-    <string name="preference_map_point_size_summary">Aseta säde ympyrälle, joka näyttää kunnan kartalla</string>
+    <string name="preference_map_point_size_summary">Aseta halkaisija ympyrälle, joka näyttää kunnan kartalla</string>
 
     <string name="preference_location_municipalities_title">Näytettävät kunnat</string>
     <string name="preference_location_municipalities_summary">Valitse kunnat, jotka haluat näyttää ympyröinä kartalla</string>

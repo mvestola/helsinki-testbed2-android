@@ -71,7 +71,7 @@
     <string name="preference_map_point_color_summary">Choose the background color of the point showing a municipality</string>
     <string name="preference_map_point_color_default">#C8FF8000</string>
     <string name="preference_map_point_size_title">Municipality point size</string>
-    <string name="preference_map_point_size_summary">Specify the radius of the point showing a municipality</string>
+    <string name="preference_map_point_size_summary">Specify the diameter of the point showing a municipality</string>
 
     <string name="preference_location_municipalities_title">Shown municipalities</string>
     <string name="preference_location_municipalities_summary">Choose which municipalities are shown on the map as dots</string>
