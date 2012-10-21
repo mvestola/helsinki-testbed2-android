@@ -838,6 +838,13 @@ public class SVGParser {
                     return true;
                 } else if (atts.getString("fill") == null && atts.getString("stroke") == null) {
                     // Default is black fill
+
+                    Float opacity = atts.getFloat("opacity");
+                    if (opacity == null) {
+                        paint.setAlpha(255);
+                    } else {
+                        paint.setAlpha((int) (255 * opacity));
+                    }
                     paint.setStyle(Paint.Style.FILL);
                     paint.setColor(0xFF000000);
                     return true;
