@@ -96,6 +96,7 @@
                     android:summary="@string/preference_map_marker_size_summary"
                     android:defaultValue="40"
                     android:max="100"
+                    android:dependency="PREF_LOCATION_SHOW_USER_LOCATION"
                     robobunny:min="10"
                     robobunny:unitsLeft=""
                     robobunny:unitsRight=" px"
