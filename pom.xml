@@ -26,7 +26,7 @@
             </snapshots>
         </repository>
 
-        <!-- Used for javaproj-noawt and svg-android -->
+        <!-- Used for javaproj-noawt, svg-android and color picker -->
         <repository>
             <id>testbed2repo</id>
             <name>testbed2repo</name>
@@ -50,6 +50,7 @@
             <scope>compile</scope>
         </dependency>
 
+        <!-- See http://augusttown.blogspot.fi/2010/03/using-java-map-projection-library-in.html -->
         <dependency>
             <groupId>com.jhlabs</groupId>
             <artifactId>javaproj-noawt</artifactId>
@@ -57,8 +58,17 @@
             <scope>compile</scope>
         </dependency>
 
+        <!-- See https://github.com/attenzione/android-ColorPickerPreference -->
+        <dependency>
+            <groupId>net.margaritov</groupId>
+            <artifactId>colorpicker-preference</artifactId>
+            <version>1.2</version>
+            <scope>compile</scope>
+            <type>apklib</type>
+        </dependency>
+
         <!-- See: http://code.google.com/p/svg-android/
-         Note that there are some drawing issues with some SVG images. -->
+        Note that there are some drawing issues with some SVG images. -->
         <dependency>
             <groupId>com.larvalabs</groupId>
             <artifactId>svg-android</artifactId>

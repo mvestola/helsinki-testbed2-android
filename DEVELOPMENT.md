@@ -12,7 +12,7 @@ You need to have the following software installed:
 * Android SDK (API level 8)
 * Git
 
-Preferred IDE is IntelliJ IDEA.
+Preferred IDE is IntelliJ IDEA and preferred operating system is Linux.
 
 
 Android frameworks used
@@ -22,6 +22,7 @@ The following Android frameworks are used in this application:
 
 * [RoboGuice 2](https://code.google.com/p/roboguice/) (dependency injection framework for Android based on Google Guice)
 * [Robolectric](http://pivotal.github.com/robolectric/) (advanced unit testing framework for Android)
+* [Robotium](http://code.google.com/p/robotium/) (automatic black-box testing framework for Android, like Selenium on Android)
 
 Some instructions for using RoboGuice:
 * http://code.google.com/p/roboguice/wiki/ProvidedInjections
@@ -61,14 +62,44 @@ http://blog.marrowboy.co.uk/2011/11/08/how-to-host-a-maven-repo-on-github/
 You can add more jars to the repo by cloning the repo and executing `mvn deploy:deploy-file`
 (http://maven.apache.org/guides/mini/guide-3rd-party-jars-remote.html).
 For example (all in one line):
-`mvn deploy:deploy-file
--DgroupId=com.jhlabs
--DartifactId=javaproj-noawt
--Dversion=1.0.6
--Dpackaging=jar
--Dfile=/path/in/your/computer/javaproj-1.0.6-noawt.jar
--DrepositoryId=testbed2repo
--Durl=file:///path/in/your/computer/to/the/clonedrepo/helsinki-testbed2-android-repo/repo`
+```mvn deploy:deploy-file \
+-DgroupId=com.jhlabs \
+-DartifactId=javaproj-noawt \
+-Dversion=1.0.6 \
+-Dpackaging=jar \
+-Dfile=/path/in/your/computer/javaproj-1.0.6-noawt.jar \
+-DrepositoryId=testbed2repo \
+-Durl=file:///path/in/your/computer/to/the/clonedrepo/helsinki-testbed2-android-repo/repo```
+
+
+Adding Android library projects as Maven dependencies
+-------
+
+In addition to adding jar dependencies, you can also easily add Android library projects as project dependencies.
+Just do the following:
+
+1. Checkout the source of your Android library project. Do not compile the project
+(or make sure that there are no compiled classes by running `ant clean`).
+2. Make a zip file from the project sources.
+3. Rename the zip file to `something.apklib`.
+4. Install the file something.apklib into the testbed2 maven repository like jar files described above.
+Just change the packaging type to `apklib` (`-Dpackaging=apklib`).
+
+After that, you can use the apklib as a dependency in pom.xml:
+
+```
+<dependency>
+  <groupId>something</groupId>
+  <artifactId>something</artifactId>
+  <version>1.0</version>
+  <type>apklib</type>
+</dependency>
+```
+
+More information about maven and Android library projects:
+
+* http://stackoverflow.com/questions/9931039/adding-an-eclipse-android-library-project-and-building-via-maven
+* http://code.google.com/p/maven-android-plugin/wiki/ApkLib
 
 
 Testing guidelines

@@ -11,6 +11,7 @@ import fi.testbed2.app.MainApplication;
 import fi.testbed2.data.Municipality;
 import fi.testbed2.service.MunicipalityService;
 import fi.testbed2.service.PreferenceService;
+import net.margaritov.preference.colorpicker.ColorPickerPreference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -139,6 +140,12 @@ public class DefaultPreferenceService implements PreferenceService {
         String mapNumberOfImages = sharedPreferences.getString(PREF_MAP_NUMBER_OF_IMAGES, "10");
         return context.getString(R.string.testbed_base_url, mapType, mapTimeStep, mapNumberOfImages);
 
+    }
+
+    @Override
+    public String getMapMarkerColor() {
+        int color = sharedPreferences.getInt(PREF_LOCATION_MAP_MARKER_COLOR, 0);
+        return ColorPickerPreference.convertToARGB(color);
     }
 
     private static String getMapBoundsPreferenceKey(int orientation) {

@@ -16,6 +16,9 @@
     <RunnerSettings RunnerId="Run" />
     <ConfigurationWrapper RunnerId="AndroidDebugRunner" />
     <ConfigurationWrapper RunnerId="Run" />
-    <method />
+    <method>
+      <option name="Make" enabled="false" />
+      <option name="Maven.BeforeRunTask" enabled="true" file="$PROJECT_DIR$/pom.xml" goal="package" />
+    </method>
   </configuration>
 </component>

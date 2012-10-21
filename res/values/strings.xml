@@ -55,6 +55,9 @@
     <string name="preference_location_user_title">Show your location</string>
     <string name="preference_location_user_summary">Check to show your current location on the map</string>
 
+    <string name="preference_map_marker_color_title">Map marker color</string>
+    <string name="preference_map_marker_color_summary">Choose the color of the marker showing your current location</string>
+
     <string name="preference_location_municipalities_title">Municipalities on map</string>
     <string name="preference_location_municipalities_summary">Choose which municipalities are shown on the map as dots</string>
 

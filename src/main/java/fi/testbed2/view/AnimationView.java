@@ -294,7 +294,8 @@ public class AnimationView extends View {
     private Picture getMarkerImage() {
 
         if (markerImage==null) {
-            markerImage = SVGParser.getSVGFromResource(getResources(), R.drawable.map_marker).getPicture();
+            String color = preferenceService.getMapMarkerColor();
+            markerImage = SVGParser.getSVGFromString(new MapMarkerSVG(color).getXmlContent()).getPicture();
         }
         return markerImage;
 

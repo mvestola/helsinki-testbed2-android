@@ -5,9 +5,9 @@ Version 2.0.9 (coming soon...)
 -------
 
 * Added pinch and tap zooming
-* Use scalable SVG image as a location marker
+* Use scalable SVG image as a location marker. User can change the color of the marker from preferences.
 * Major code refactorings. Now uses RoboGuice 2 for dependency injection
-and Robotium for automatic automatic black-box testing.
+and Robotium for automatic black-box testing.
 
 
 Version 2.0.8 (2012-10-07)
