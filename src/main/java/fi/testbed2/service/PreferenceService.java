@@ -16,8 +16,10 @@ public interface PreferenceService {
     public static final String PREF_SCALE_PREFERENCE_KEY_PREFIX = "PREFERENCE_ANIM_SCALE_ORIENTATION_";
     public static final String PREF_WHATS_NEW_DIALOG_SHOWN_FOR_VERSION = "PREF_WHATS_NEW_DIALOG_SHOWN_FOR_VERSION";
     public static final String PREF_LOCATION_SHOW_USER_LOCATION = "PREF_LOCATION_SHOW_USER_LOCATION";
+    public static final String PREF_LOCATION_MAP_MARKER_SIZE = "PREF_LOCATION_MAP_MARKER_SIZE";
     public static final String PREF_LOCATION_MAP_MARKER_COLOR = "PREF_LOCATION_MAP_MARKER_COLOR";
     public static final String PREF_LOCATION_MAP_POINT_COLOR = "PREF_LOCATION_MAP_POINT_COLOR";
+    public static final String PREF_LOCATION_MAP_POINT_SIZE = "PREF_LOCATION_MAP_POINT_SIZE";
     public static final String PREF_LOCATION_SHOW_MUNICIPALITIES = "PREF_LOCATION_MUNICIPALITIES";
     public static final String PREF_LOCATION_SHOW_MUNICIPALITIES_SPLIT = "===";
 
@@ -45,7 +47,9 @@ public interface PreferenceService {
     public String getTestbedPageURL();
 
     public String getMapMarkerColor();
-
     public String getMapPointColor();
+
+    public int getMapMarkerSize();
+    public int getMapPointSize();
 
 }

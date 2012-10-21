@@ -164,4 +164,15 @@ public class DefaultPreferenceService implements PreferenceService {
         return PREF_SCALE_PREFERENCE_KEY_PREFIX + orientation;
     }
 
+    @Override
+    public int getMapMarkerSize() {
+        return Integer.valueOf(sharedPreferences.getString(PREF_LOCATION_MAP_MARKER_SIZE, "40"));
+    }
+
+    @Override
+    public int getMapPointSize() {
+        return Integer.valueOf(sharedPreferences.getString(PREF_LOCATION_MAP_POINT_SIZE, "10"));
+    }
+
+
 }

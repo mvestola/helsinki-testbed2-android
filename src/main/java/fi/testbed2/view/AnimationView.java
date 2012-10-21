@@ -36,16 +36,11 @@ public class AnimationView extends View {
     public static final double MAP_IMAGE_ORIG_HEIGHT = 508d;
 
     /**
-     * Marker image height (for user's location)
-     */
-    public static final int MAP_MARKER_IMG_HEIGHT = 40;
-
-    /**
      * Defines how many pixels the user is allowed to click
      * off the municipality point. If the touch is withing this
      * threshold, the municipality info is shown.
      */
-    public static final int MUNICIPALITY_SEARCH_THRESHOLD = 20;
+    public static final int MUNICIPALITY_SEARCH_THRESHOLD = 10;
 
     /**
      * Used for bounds calculation
@@ -278,10 +273,12 @@ public class AnimationView extends View {
 
             Picture pic = getMarkerImage();
 
+            int markerImageHeight = preferenceService.getMapMarkerSize();
+
             // Scale width a bit larger than original width (otherwise looks a bit too thin marker)
             float ratio = pic.getWidth()/pic.getHeight();
-            int width = Float.valueOf(MAP_MARKER_IMG_HEIGHT*ratio+MAP_MARKER_IMG_HEIGHT/5).intValue();
-            int height = MAP_MARKER_IMG_HEIGHT;
+            int width = Float.valueOf(markerImageHeight*ratio+markerImageHeight/5).intValue();
+            int height = markerImageHeight;
 
             /*
             * x, y coordinates are image's top left corner,
@@ -303,7 +300,7 @@ public class AnimationView extends View {
 
             Picture pic = getPointImage();
 
-            int size = 10;
+            int size = preferenceService.getMapPointSize();
 
             /*
             * x, y coordinates are image's top left corner,
@@ -521,8 +518,9 @@ public class AnimationView extends View {
 
                     Logging.debug("Pos: "+pos+", for: "+municipality.getName());
 
-                    if (Math.abs(pos.x-x)<=MUNICIPALITY_SEARCH_THRESHOLD &&
-                            Math.abs(pos.y-y)<=MUNICIPALITY_SEARCH_THRESHOLD) {
+                    int threshold = MUNICIPALITY_SEARCH_THRESHOLD + preferenceService.getMapPointSize();
+
+                    if (Math.abs(pos.x-x)<=threshold && Math.abs(pos.y-y)<=threshold) {
 
                         Logging.debug("Show info for municipality: "+municipality.getName());
 

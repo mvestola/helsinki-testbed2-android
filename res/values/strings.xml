@@ -40,6 +40,8 @@
     <string name="preference_category_maps">Map image downloading settings</string>
     <string name="preference_category_animation">Animation settings</string>
     <string name="preference_category_location">Locations on map</string>
+    <string name="preference_category_user_location">User\'s current location</string>
+    <string name="preference_category_municipality_location">Municipalities on map</string>
 
     <string name="preference_map_type_title">Map type</string>
     <string name="preference_map_type_summary">Which type of weather map to show</string>
@@ -60,14 +62,18 @@
     <string name="preference_location_user_summary">Check to show your current location on the map</string>
 
     <string name="preference_map_marker_color_title">Map marker color</string>
-    <string name="preference_map_marker_color_summary">Choose the color of the marker showing your current location</string>
+    <string name="preference_map_marker_color_summary">Choose the background color of the marker showing your current location</string>
     <string name="preference_map_marker_color_default">#C8D94585</string>
+    <string name="preference_map_marker_size_title">Map marker size</string>
+    <string name="preference_map_marker_size_summary">Specify the height of the marker showing your current location</string>
 
     <string name="preference_map_point_color_title">Municipality color</string>
-    <string name="preference_map_point_color_summary">Choose the color of the marker showing your current location</string>
+    <string name="preference_map_point_color_summary">Choose the background color of the point showing a municipality</string>
     <string name="preference_map_point_color_default">#C8FF8000</string>
+    <string name="preference_map_point_size_title">Municipality point size</string>
+    <string name="preference_map_point_size_summary">Specify the radius of the point showing a municipality</string>
 
-    <string name="preference_location_municipalities_title">Municipalities on map</string>
+    <string name="preference_location_municipalities_title">Shown municipalities</string>
     <string name="preference_location_municipalities_summary">Choose which municipalities are shown on the map as dots</string>
 
     <string name="preference_screen_animation_summary">Change animation settings.</string>

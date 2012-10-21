@@ -38,6 +38,8 @@
     <string name="preference_category_maps">Karttakuvien latauksen asetukset</string>
     <string name="preference_category_animation">Animaation asetukset</string>
     <string name="preference_category_location">Sijainnit kartalla</string>
+    <string name="preference_category_user_location">Oma sijaintisi kartalla</string>
+    <string name="preference_category_municipality_location">Kunnat kartalla</string>
 
     <string name="preference_map_type_title">Karttatyyppi</string>
     <string name="preference_map_type_summary">Näytettävä karttatyyppi</string>
@@ -59,12 +61,16 @@
 
     <string name="preference_map_marker_color_title">Karttamerkin väri</string>
     <string name="preference_map_marker_color_summary">Valitse nykyisen sijaintisi esittävän karttamerkin taustaväri</string>
+    <string name="preference_map_marker_size_title">Karttamerkin koko</string>
+    <string name="preference_map_marker_size_summary">Aseta nykyisen sijaintisi esittävän karttamerkin korkeus pikseleissä</string>
 
     <string name="preference_map_point_color_title">Kunnan väri</string>
-    <string name="preference_map_point_color_summary">Valitse taustaväri pisteelle, joka näyttää kunnan kartalla</string>
+    <string name="preference_map_point_color_summary">Valitse taustaväri ympyrälle, joka näyttää kunnan kartalla</string>
+    <string name="preference_map_point_size_title">Kunnan koko</string>
+    <string name="preference_map_point_size_summary">Aseta säde ympyrälle, joka näyttää kunnan kartalla</string>
 
-    <string name="preference_location_municipalities_title">Kunnat kartalla</string>
-    <string name="preference_location_municipalities_summary">Valitse kunnat, jotka haluat näyttää pisteenä kartalla</string>
+    <string name="preference_location_municipalities_title">Näytettävät kunnat</string>
+    <string name="preference_location_municipalities_summary">Valitse kunnat, jotka haluat näyttää ympyröinä kartalla</string>
 
     <string name="preference_screen_animation_summary">Muuta karttakuvien animaation asetuksia</string>
     <string name="preference_screen_location_summary">Muuta käyttäjän ja valittujen kuntien
