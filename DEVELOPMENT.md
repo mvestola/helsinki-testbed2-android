@@ -126,3 +126,6 @@ Should not fail when resuming.
 * Use very fast animation (0.1 sec).
 * Play/pause button icon when application goes to background,
 returning from preferences and using the slider.
+* Both English and Finnish languages (change language
+from the Emulator's "Custom locale")
+* Default settings (remove the app and reset all saved settings)

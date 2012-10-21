@@ -149,6 +149,13 @@ public class DefaultPreferenceService implements PreferenceService {
         return ColorPickerPreference.convertToARGB(color);
     }
 
+    @Override
+    public String getMapPointColor() {
+        int color = sharedPreferences.getInt(PREF_LOCATION_MAP_POINT_COLOR,
+                ColorPickerPreference.convertToColorInt(context.getString(R.string.preference_map_point_color_default)));
+        return ColorPickerPreference.convertToARGB(color);
+    }
+
     private static String getMapBoundsPreferenceKey(int orientation) {
         return PREF_BOUNDS_PREFERENCE_KEY_PREFIX + orientation;
     }

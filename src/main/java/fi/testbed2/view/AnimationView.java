@@ -12,7 +12,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import com.jhlabs.map.Point2D;
 import com.larvalabs.svgandroid.SVGParser;
-import fi.testbed2.R;
 import fi.testbed2.app.Logging;
 import fi.testbed2.data.Municipality;
 import fi.testbed2.data.TestbedMapImage;
@@ -74,6 +73,7 @@ public class AnimationView extends View {
 
     // Marker image caching
     private Picture markerImage;
+    private Picture pointImage;
 
     // Data
     public List<Municipality> municipalities;
@@ -262,6 +262,9 @@ public class AnimationView extends View {
         float xScaled = Double.valueOf(bounds.left + point.x*widthRatio).floatValue();
         float yScaled = Double.valueOf(bounds.top + point.y*heightRatio).floatValue();
 
+        int xInt = Float.valueOf(xScaled).intValue();
+        int yInt = Float.valueOf(yScaled).intValue();
+
         if (useMarker) {
 
             Picture pic = getMarkerImage();
@@ -272,22 +275,37 @@ public class AnimationView extends View {
             int height = MAP_MARKER_IMG_HEIGHT;
 
             /*
-             * x, y coordinates are image's top left corner,
-             * so position the marker to the bottom center
-             */
-            int xInt = Float.valueOf(xScaled).intValue();
-            int yInt = Float.valueOf(yScaled).intValue();
-
+            * x, y coordinates are image's top left corner,
+            * so position the marker to the bottom center
+            */
             int left = xInt-width/2;
             int top = yInt-height;
             int right = xInt+width/2;
             int bottom = yInt;
 
-            canvas.drawPicture(getMarkerImage(), new Rect(left,top,right,bottom));
+            canvas.drawPicture(pic, new Rect(left,top,right,bottom));
+
+
         } else {
-            int radius = 5;
-            canvas.drawCircle(xScaled, yScaled, radius, paint);
+
+            Picture pic = getPointImage();
+
+            int size = 10;
+
+            /*
+            * x, y coordinates are image's top left corner,
+            * so position the marker to the center
+            */
+
+            int left = xInt-size/2;
+            int top = yInt-size/2;
+            int right = xInt+size/2;
+            int bottom = yInt+size/2;
+
+            canvas.drawPicture(pic, new Rect(left,top,right,bottom));
         }
+
+
 
     }
 
@@ -301,8 +319,19 @@ public class AnimationView extends View {
 
     }
 
-    public void resetMarkerImageCache() {
+    private Picture getPointImage() {
+
+        if (pointImage==null) {
+            String color = preferenceService.getMapPointColor();
+            pointImage = SVGParser.getSVGFromString(new MapPointSVG(color).getXmlContent()).getPicture();
+        }
+        return pointImage;
+
+    }
+
+    public void resetMarkerAndPointImageCache() {
         markerImage = null;
+        pointImage = null;
     }
 
 	@Override

@@ -74,7 +74,7 @@ public class ColorPickerPreference
 		mDensity = getContext().getResources().getDisplayMetrics().density;
 		setOnPreferenceClickListener(this);
 		if (attrs != null) {
-			String defaultValue = attrs.getAttributeValue(androidns, "defaultValue");
+			String defaultValue = attrs.getAttributeValue(androidns, "defaultValue").trim();
 			if (defaultValue.startsWith("#")) {
 				try {
 					mDefaultValue = convertToColorInt(defaultValue);
@@ -85,7 +85,7 @@ public class ColorPickerPreference
 			} else {
 				int resourceId = attrs.getAttributeResourceValue(androidns, "defaultValue", 0);
 				if (resourceId != 0) {
-					mDefaultValue = context.getResources().getInteger(resourceId);
+					mDefaultValue = convertToColorInt(context.getResources().getString(resourceId));
 				}
 			}
 			mAlphaSliderEnabled = attrs.getAttributeBooleanValue(null, "alphaSlider", false);

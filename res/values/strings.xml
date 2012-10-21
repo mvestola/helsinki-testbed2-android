@@ -63,6 +63,10 @@
     <string name="preference_map_marker_color_summary">Choose the color of the marker showing your current location</string>
     <string name="preference_map_marker_color_default">#C8D94585</string>
 
+    <string name="preference_map_point_color_title">Municipality color</string>
+    <string name="preference_map_point_color_summary">Choose the color of the marker showing your current location</string>
+    <string name="preference_map_point_color_default">#C8FF8000</string>
+
     <string name="preference_location_municipalities_title">Municipalities on map</string>
     <string name="preference_location_municipalities_summary">Choose which municipalities are shown on the map as dots</string>
 

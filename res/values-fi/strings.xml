@@ -58,7 +58,10 @@
     <string name="preference_location_user_summary">Rastita, jos haluat nykyisen sijaintisi näkyvän kartalla</string>
 
     <string name="preference_map_marker_color_title">Karttamerkin väri</string>
-    <string name="preference_map_marker_color_summary">Valitse nykyisen sijaintisi esittävän karttamerkin väri</string>
+    <string name="preference_map_marker_color_summary">Valitse nykyisen sijaintisi esittävän karttamerkin taustaväri</string>
+
+    <string name="preference_map_point_color_title">Kunnan väri</string>
+    <string name="preference_map_point_color_summary">Valitse taustaväri pisteelle, joka näyttää kunnan kartalla</string>
 
     <string name="preference_location_municipalities_title">Kunnat kartalla</string>
     <string name="preference_location_municipalities_summary">Valitse kunnat, jotka haluat näyttää pisteenä kartalla</string>
