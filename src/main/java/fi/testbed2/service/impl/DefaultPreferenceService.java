@@ -101,6 +101,7 @@ public class DefaultPreferenceService implements PreferenceService {
 
     @Override
     public void saveWhatsNewDialogShownForCurrentVersion() {
+        Logging.debug("Saving that what's new dialog is shown for version: "+MainApplication.getVersionName());
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(PreferenceService.PREF_WHATS_NEW_DIALOG_SHOWN_FOR_VERSION,
                 MainApplication.getVersionName());
@@ -122,6 +123,9 @@ public class DefaultPreferenceService implements PreferenceService {
 
         String dialogShownForVersion = sharedPreferences.
                 getString(PreferenceService.PREF_WHATS_NEW_DIALOG_SHOWN_FOR_VERSION, "");
+
+        Logging.debug("What's new dialog is shown for version: "+dialogShownForVersion);
+
         if (!dialogShownForVersion.equals(MainApplication.getVersionName())) {
             return true;
         }
