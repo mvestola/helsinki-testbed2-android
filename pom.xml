@@ -166,6 +166,11 @@
                         <path>${sdk.dir}</path>
                         <platform>${android.target.api.version}</platform>
                     </sdk>
+                    <emulator>
+                        <avd>Phone</avd>
+                        <wait>20000</wait>
+                        <executable>emulator-arm</executable>
+                    </emulator>
                 </configuration>
                 <extensions>true</extensions>
             </plugin>
@@ -176,6 +181,9 @@
     <profiles>
         <profile>
             <id>production</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
             <build>
                 <plugins>
 
@@ -258,6 +266,9 @@
 
         <profile>
             <id>development</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <build>
                 <plugins>
                     <plugin>

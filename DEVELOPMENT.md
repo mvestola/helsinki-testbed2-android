@@ -49,6 +49,15 @@ the file default.properties and change the field to match your configuration.
 You should also set the Android SDK to environmental variable "ANDROID_HOME"
 
 
+Maven instructions
+-------
+
+Run the application in emulator:
+```
+mvn -Dmaven.test.skip=true clean package android:redeploy android:run
+```
+
+
 Adding new custom jars to the project's Maven repository
 -------
 
@@ -129,3 +138,14 @@ returning from preferences and using the slider.
 * Both English and Finnish languages (change language
 from the Emulator's "Custom locale")
 * Default settings (remove the app and reset all saved settings)
+
+Checklist for publishing a new release
+-------
+
+1. Change the version code and version name from `AndroidManifest.xml`
+2. Update `CHANGELOG.md`
+3. Update `whats_new_text` from `res/values/strings.xml` (both English and Finnish)
+4. Tag the code: `git tag -a 2.0.x -m 'Tagged 2.0.x'; git push --tags`
+5. Sign the app with Maven
+6. Upload the file `target/testbedViewer.apk` to Google Play and activate it
+7. Update "Recent Changes" in Google Play (both English and Finnish)

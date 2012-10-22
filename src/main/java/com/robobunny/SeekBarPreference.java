@@ -30,8 +30,8 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 
     private final String TAG = getClass().getName();
 
-    private static final String ANDROIDNS="http://schemas.android.com/apk/res/android";
-    private static final String ROBOBUNNYNS="http://robobunny.com";
+    private static final String ANDROID_NS ="http://schemas.android.com/apk/res/android";
+    private static final String ROBOBUNNY_NS ="http://robobunny.com";
     private static final int DEFAULT_VALUE = 50;
 
     private int mMaxValue      = 100;
@@ -143,11 +143,11 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
     }
 
     private void setValuesFromXml(AttributeSet attrs) {
-        mMaxValue = attrs.getAttributeIntValue(ANDROIDNS, "max", 100);
-        mMinValue = attrs.getAttributeIntValue(ROBOBUNNYNS, "min", 0);
+        mMaxValue = attrs.getAttributeIntValue(ANDROID_NS, "max", 100);
+        mMinValue = attrs.getAttributeIntValue(ROBOBUNNY_NS, "min", 0);
 
-        int allowedEntryValuesResId = attrs.getAttributeResourceValue(ROBOBUNNYNS, "allowedEntryValues", -1);
-        int allowedEntriesResId = attrs.getAttributeResourceValue(ROBOBUNNYNS, "allowedEntries", -1);
+        int allowedEntryValuesResId = attrs.getAttributeResourceValue(ROBOBUNNY_NS, "allowedEntryValues", -1);
+        int allowedEntriesResId = attrs.getAttributeResourceValue(ROBOBUNNY_NS, "allowedEntries", -1);
 
         if (allowedEntryValuesResId!=-1) {
             allowedEntryValues = getAllowedEntryValues(
@@ -159,12 +159,12 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
                     getContext().getResources().getStringArray(allowedEntriesResId), allowedEntryValues);
         }
 
-        mUnitsLeft = getAttributeStringValue(attrs, ROBOBUNNYNS, "unitsLeft", "");
-        String units = getAttributeStringValue(attrs, ROBOBUNNYNS, "units", "");
-        mUnitsRight = getAttributeStringValue(attrs, ROBOBUNNYNS, "unitsRight", units);
+        mUnitsLeft = getAttributeStringValue(attrs, ROBOBUNNY_NS, "unitsLeft", "");
+        String units = getAttributeStringValue(attrs, ROBOBUNNY_NS, "units", "");
+        mUnitsRight = getAttributeStringValue(attrs, ROBOBUNNY_NS, "unitsRight", units);
 
         try {
-            String newInterval = attrs.getAttributeValue(ROBOBUNNYNS, "interval");
+            String newInterval = attrs.getAttributeValue(ROBOBUNNY_NS, "interval");
             if(newInterval != null)
                 mInterval = Integer.parseInt(newInterval);
         }
@@ -253,6 +253,17 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
         }
         catch(Exception e) {
             Log.e(TAG, "Error updating seek bar preference", e);
+        }
+
+    }
+
+    @Override
+    public void onDependencyChanged(Preference dependency, boolean disableDependent) {
+        super.onDependencyChanged(dependency, disableDependent);
+
+        if (mStatusText!=null && mSeekBar!=null) {
+            mSeekBar.setEnabled(!disableDependent);
+            mStatusText.setEnabled(!disableDependent);
         }
 
     }
