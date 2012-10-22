@@ -26,9 +26,11 @@
 
     <string name="whats_new_title">New in version %s</string>
     <string name="whats_new_text">
-        - Shows user\'s current location on the map (see settings)\n
-        - Shows selected municipalities/cities on the map (see settings)\n
-        - Added \'What\'s new\' dialog for informing about new features
+        - Added pinch and double-tap zooming.\n
+        - Map markers are now scalable SVG images which color and size can be
+        changed from the preferences.\n
+        - Shows the name of the municipality when long pressing the circle
+        representing a municipality.
     </string>
 
     <string name="notice_cancelled" formatted="false">Download cancelled</string>

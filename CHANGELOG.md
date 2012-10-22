@@ -4,11 +4,10 @@ Helsinki Testbed Viewer 2.0
 Version 2.0.9 (coming soon...)
 -------
 
-* Added pinch and tap zooming
-* Now uses scalable SVG image as a location marker.
-* User can change the color and the size of the map marker and
-municipality points from preferences.
-* Shows the name of the municipality when long pressing on a municipality point
+* Added pinch and double-tap zooming
+* Now uses scalable SVG images as map markers. User can change the color and
+the size of the markers from preferences.
+* Shows the name of the municipality when long pressing the circle representing a municipality.
 * Major code refactorings. Now uses RoboGuice 2 for dependency injection
 and Robotium for automatic black-box testing.
 

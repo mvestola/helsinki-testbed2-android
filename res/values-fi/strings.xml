@@ -24,9 +24,10 @@
 
     <string name="whats_new_title">Uutta versiossa %s</string>
     <string name="whats_new_text">
-        - Näyttää käyttäjän nykyisen sijainnin kartalla (katso asetukset)\n
-        - Näyttää valitut kunnat kartalla (katso asetukset)\n
-        - Lisätty \'Uutta versiossa\' dialogi informoimaan uudistuksista ohjelmassa
+        - Lisätty zoomaus nipistämällä ja tuplakoskettamalla.\n
+        - Karttamerkit käyttävät skaalautuvaa SVG-kuvaa, jonka kokoa ja väriä
+        voi säätää asetuksista.\n
+        - Kunnan nimi näkyy ruudulla kun sen päällä pitää sormea.
     </string>
 
     <string name="notice_cancelled" formatted="false">Lataus keskeytetty</string>
