@@ -52,7 +52,8 @@ You should also set the Android SDK to environmental variable "ANDROID_HOME"
 Maven instructions
 -------
 
-Run the application in emulator:
+Run the application in emulator
+(does not seem to save preferences so can be used for initial installation testing):
 ```
 mvn -Dmaven.test.skip=true clean package android:redeploy android:run
 ```
