@@ -147,6 +147,6 @@ Checklist for publishing a new release
 2. Update `CHANGELOG.md`
 3. Update `whats_new_text` from `res/values/strings.xml` (both English and Finnish)
 4. Tag the code: `git tag -a 2.0.x -m 'Tagged 2.0.x'; git push --tags`
-5. Sign the app with Maven
+5. Sign the app with Maven using the production profile
 6. Upload the file `target/testbedViewer.apk` to Google Play and activate it
 7. Update "Recent Changes" in Google Play (both English and Finnish)
