@@ -1,7 +1,7 @@
 Helsinki Testbed Viewer 2.0
 =============
 
-Version 2.0.9 (coming soon...)
+Version 2.0.9 (2012-10-23)
 -------
 
 * Added pinch and double-tap zooming

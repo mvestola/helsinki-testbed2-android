@@ -180,7 +180,7 @@
 
     <profiles>
         <profile>
-            <id>production</id>
+            <id>release</id>
             <activation>
                 <activeByDefault>false</activeByDefault>
             </activation>
@@ -258,6 +258,15 @@
                                 <debug>false</debug>
                             </sign>
                         </configuration>
+                        <executions>
+                            <execution>
+                                <id>alignApk</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>zipalign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                     </plugin>
 
                 </plugins>
