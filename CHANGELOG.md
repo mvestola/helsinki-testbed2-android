@@ -1,6 +1,15 @@
 Helsinki Testbed Viewer 2.0
 =============
 
+Version 2.0.10 (coming soon...)
+-------
+
+* Added GPS as an alternate location provider
+* User can save his/her location as a fixed position
+* Improved layout to support Android tablets (TODO)
+* Added advertisements which can be disabled from the preferences (TODO)
+
+
 Version 2.0.9 (2012-10-23)
 -------
 

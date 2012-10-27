@@ -19,7 +19,7 @@ public class MainModule extends AbstractModule {
     protected void configure() {
         bind(DialogBuilder.class).to(DefaultDialogBuilder.class);
         bind(MunicipalityService.class).to(InlineMunicipalityService.class);
-        bind(LocationService.class).to(NetworkLocationService.class);
+        bind(LocationService.class).to(PreferenceBasedLocationService.class);
         bind(CoordinateService.class).to(MercatorCoordinateService.class);
         bind(PreferenceService.class).to(DefaultPreferenceService.class);
         bind(BitmapService.class).to(LruCacheBitmapService.class);

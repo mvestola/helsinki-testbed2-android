@@ -9,14 +9,17 @@ import com.google.inject.Singleton;
 import com.jhlabs.map.Point2D;
 import fi.testbed2.Environment;
 import fi.testbed2.app.Logging;
-import fi.testbed2.app.MainApplication;
 import fi.testbed2.service.CoordinateService;
 import fi.testbed2.service.LocationService;
 import fi.testbed2.service.MunicipalityService;
 import fi.testbed2.service.PreferenceService;
 
+/**
+ * Service class used to provide user location based on the user's settings. The location can be
+ * one of the followings: fixed location, coarse network location or fine GPS location
+ */
 @Singleton
-public class NetworkLocationService implements LocationService, LocationListener {
+public class PreferenceBasedLocationService implements LocationService, LocationListener {
 
     private static int LOCATION_UPDATE_INTERVAL_MINUTES = 1;
     private static int LOCATION_UPDATE_ACCURACY_METERS = 1000;
@@ -35,8 +38,8 @@ public class NetworkLocationService implements LocationService, LocationListener
 
     private Point2D.Double userLocationXY;
 
-    public NetworkLocationService() {
-        Logging.debug("NetworkLocationService instantiated");
+    public PreferenceBasedLocationService() {
+        Logging.debug("PreferenceBasedLocationService instantiated");
     }
 
     @Override
@@ -46,7 +49,7 @@ public class NetworkLocationService implements LocationService, LocationListener
             return null;
         }
 
-        if (Environment.TEST_ENVIRONMENT) {
+        if (Environment.TEST_ENVIRONMENT && !getProvider().equals(LOCATION_PROVIDER_FIXED)) {
             return municipalityService.getMunicipality("Helsinki").getXyPos();
         } else {
             return userLocationXY;
@@ -54,17 +57,33 @@ public class NetworkLocationService implements LocationService, LocationListener
 
     }
 
+    public Location getUserLastKnownLocation() {
+        if (Environment.TEST_ENVIRONMENT) {
+            return municipalityService.getMunicipality("Kouvola").getLocation();
+        } else {
+            return locationManager.getLastKnownLocation(getProvider());
+        }
+    }
+
     @Override
     public void startListeningLocationChanges() {
 
         Logging.debug("Started listening location changes");
 
-        Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        String provider = getProvider();
+
+        if (provider.equals(LOCATION_PROVIDER_FIXED)) {
+            Location fixedLoc = preferenceService.getSavedFixedLocation();
+            userLocationXY = coordinateService.convertLocationToXyPos(fixedLoc);
+            return;
+        }
+
+        Location lastKnownLocation = locationManager.getLastKnownLocation(provider);
         if (lastKnownLocation!=null) {
             userLocationXY = coordinateService.convertLocationToXyPos(lastKnownLocation);
         }
 
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
+        locationManager.requestLocationUpdates(provider,
                 LOCATION_UPDATE_INTERVAL_MINUTES * 60 * 1000, LOCATION_UPDATE_ACCURACY_METERS, this);
 
     }
@@ -90,5 +109,9 @@ public class NetworkLocationService implements LocationService, LocationListener
 
     @Override
     public void onProviderDisabled(String provider) {}
+
+    private String getProvider() {
+        return preferenceService.getLocationProvider();
+    }
 
 }

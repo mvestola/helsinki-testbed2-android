@@ -26,7 +26,7 @@
             </snapshots>
         </repository>
 
-        <!-- Used for javaproj-noawt -->
+        <!-- Used for javaproj-noawt and google ads -->
         <repository>
             <id>testbed2repo</id>
             <name>testbed2repo</name>
@@ -47,6 +47,13 @@
             <groupId>com.google.android</groupId>
             <artifactId>support-v4</artifactId>
             <version>r7</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google</groupId>
+            <artifactId>admob-ads-sdk</artifactId>
+            <version>6.2.1</version>
             <scope>compile</scope>
         </dependency>
 

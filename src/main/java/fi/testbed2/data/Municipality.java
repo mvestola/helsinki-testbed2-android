@@ -1,6 +1,8 @@
 package fi.testbed2.data;
 
+import android.location.Location;
 import com.jhlabs.map.Point2D;
+import fi.testbed2.service.LocationService;
 
 /**
  * Represents a municipality ("Kunta" in Finnish)
@@ -11,6 +13,7 @@ public class Municipality {
     private double lat;
     private double lon;
     private Point2D.Double xyPos; // Position (x,y) in testbed map image
+    private Location loc;
 
     public Municipality(String name, double lat, double lon, Point2D.Double xyPos) {
         this.name = name;
@@ -21,6 +24,16 @@ public class Municipality {
 
     public Point2D.Double getXyPos() {
         return xyPos;
+    }
+
+    public Location getLocation() {
+        if (this.loc==null) {
+            Location location = new Location(LocationService.LOCATION_PROVIDER_FIXED);
+            location.setLatitude(lat);
+            location.setLongitude(lon);
+            this.loc = location;
+        }
+        return this.loc;
     }
 
     @Override

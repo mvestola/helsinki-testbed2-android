@@ -84,7 +84,17 @@
                         android:summary="@string/preference_location_user_summary"
                         android:defaultValue="true"
                         />
-                <net.margaritov.preference.colorpicker.ColorPickerPreference
+                <ListPreference
+                        android:id="@+id/preference_location_provider"
+                        android:key="PREF_LOCATION_PROVIDER"
+                        android:title="@string/preference_location_provider_title"
+                        android:summary="@string/preference_location_provider_summary"
+                        android:entries="@array/location_provider_options"
+                        android:entryValues="@array/location_provider_values"
+                        android:defaultValue="network"
+                        android:dependency="PREF_LOCATION_SHOW_USER_LOCATION"
+                        />
+            <net.margaritov.preference.colorpicker.ColorPickerPreference
                         android:key="PREF_LOCATION_MAP_MARKER_COLOR"
                         android:title="@string/preference_map_marker_color_title"
                         android:summary="@string/preference_map_marker_color_summary"
@@ -140,5 +150,13 @@
         </PreferenceScreen>
 
     </PreferenceCategory>
+
+    <CheckBoxPreference
+            android:key="PREF_SHOW_ADS"
+            android:title="@string/preference_show_ads_title"
+            android:summary="@string/preference_show_ads_summary"
+            android:defaultValue="true"
+            android:editable="false"
+            />
 
 </PreferenceScreen>

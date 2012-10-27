@@ -40,7 +40,7 @@ public class AnimationView extends View {
      * off the municipality point. If the touch is withing this
      * threshold, the municipality info is shown.
      */
-    public static final int MUNICIPALITY_SEARCH_THRESHOLD = 10;
+    public static final float MUNICIPALITY_SEARCH_THRESHOLD = 15.0f;
 
     /**
      * Used for bounds calculation
@@ -511,7 +511,9 @@ public class AnimationView extends View {
 
                     Logging.debug("Pos: "+pos+", for: "+municipality.getName());
 
-                    int threshold = preferenceService.getMapPointSize()/2 + MUNICIPALITY_SEARCH_THRESHOLD;
+                    final float scale = getContext().getResources().getDisplayMetrics().density;
+                    int threshold = (int) ((preferenceService.getMapPointSize()/2)*scale +
+                                            (MUNICIPALITY_SEARCH_THRESHOLD/scaleFactor)*scale);
 
                     if (Math.abs(pos.x-x)<=threshold && Math.abs(pos.y-y)<=threshold) {
 
@@ -520,8 +522,8 @@ public class AnimationView extends View {
                         municipalityToast = Toast.makeText(getContext(),
                                 municipality.getName(), Toast.LENGTH_SHORT);
                         municipalityToast.setGravity(Gravity.TOP| Gravity.LEFT,
-                                Double.valueOf(pos.x).intValue(),
-                                Double.valueOf(pos.y-40).intValue());
+                                Double.valueOf(pos.x+20*scale).intValue(),
+                                Double.valueOf(pos.y-40*scale).intValue());
                         municipalityToast.show();
                         return true;
 

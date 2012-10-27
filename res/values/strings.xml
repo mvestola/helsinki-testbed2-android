@@ -65,6 +65,17 @@
     <string name="preference_location_user_title">Show your location</string>
     <string name="preference_location_user_summary">Check to show your current location on the map</string>
 
+    <string name="preference_location_provider_title">Location provider</string>
+    <string name="preference_location_provider_summary" formatted="false">Select your location provider.
+        Currently selected: %s</string>
+    <string name="preference_location_provider_gps">GPS</string>
+    <string name="preference_location_provider_network">Cellular network</string>
+    <string name="preference_location_provider_fixed" formatted="false">Fixed location (%s)</string>
+    <string name="preference_location_provider_fixed_error">Fixed location (no location)</string>
+    <string name="preference_location_provider_fixed_error_dialog">No location is available.
+        Reverted to the network provider. Please wait until the location is available and then choose the
+        fixed option.</string>
+
     <string name="preference_map_marker_color_title">Map marker color</string>
     <string name="preference_map_marker_color_summary">Choose the background color of the marker showing your current location</string>
     <string name="preference_map_marker_color_default">#C8D94585</string>
@@ -83,6 +94,10 @@
     <string name="preference_screen_animation_summary">Change animation settings.</string>
     <string name="preference_screen_location_summary">Change settings related to showing the
         user\'s location and displaying municipalities on the map</string>
+
+    <string name="preference_show_ads_title">Show ads</string>
+    <string name="preference_show_ads_summary">Select to view advertisements. Ads are shown
+    to support the development of this application.</string>
 
     <string name="progress_parsing">Reading page from testbed.fmi.fi...</string>
     <string name="progress_downloading" formatted="false">Downloading latest weather map...</string>

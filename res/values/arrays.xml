@@ -93,4 +93,16 @@
         <item>3000</item>
     </string-array>
 
+    <string-array name="location_provider_options">
+        <item>Cellular network (real-time updating)</item>
+        <item>GPS (real-time updating)</item>
+        <item>Fixed (saves current location)</item>
+    </string-array>
+
+    <string-array name="location_provider_values">
+        <item>network</item>
+        <item>gps</item>
+        <item>fixed</item>
+    </string-array>
+
 </resources>

@@ -3,12 +3,16 @@ package fi.testbed2.service.impl;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Rect;
+import android.location.Location;
+import android.location.LocationManager;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import fi.testbed2.R;
 import fi.testbed2.app.Logging;
 import fi.testbed2.app.MainApplication;
 import fi.testbed2.data.Municipality;
+import fi.testbed2.service.CoordinateService;
+import fi.testbed2.service.LocationService;
 import fi.testbed2.service.MunicipalityService;
 import fi.testbed2.service.PreferenceService;
 import net.margaritov.preference.colorpicker.ColorPickerPreference;
@@ -21,6 +25,9 @@ public class DefaultPreferenceService implements PreferenceService {
 
     @Inject
     MunicipalityService municipalityService;
+
+    @Inject
+    LocationService locationService;
 
     @Inject
     SharedPreferences sharedPreferences;
@@ -178,5 +185,54 @@ public class DefaultPreferenceService implements PreferenceService {
         return Integer.valueOf(sharedPreferences.getString(PREF_LOCATION_MAP_POINT_SIZE, "10"));
     }
 
+    @Override
+    public String getLocationProvider() {
+        return sharedPreferences.getString(PREF_LOCATION_PROVIDER, LocationManager.NETWORK_PROVIDER);
+    }
+
+    public void setLocationProvider(String provider) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(PreferenceService.PREF_LOCATION_PROVIDER, provider);
+        editor.commit();
+    }
+
+    public Location getSavedFixedLocation() {
+
+        double lat = Double.parseDouble(sharedPreferences.getString(PREF_LOCATION_FIXED_LAT, "-1"));
+        double lon = Double.parseDouble(sharedPreferences.getString(PREF_LOCATION_FIXED_LON, "-1"));
+
+        if (lat<0 || lon<0) {
+            return null;
+        }
+
+        Location loc = new Location(CoordinateService.STATIC_PROVIDER_NAME);
+        loc.setLatitude(lat);
+        loc.setLongitude(lon);
+
+        return loc;
+
+    }
+
+    /**
+     * Saves the last known location as fixed location to the preferences.
+     * If the location is not available, does not save it to the preferences.
+     *
+     * @return Returns the last known location or null if no location was available
+     */
+    public Location saveCurrentLocationAsFixedLocation() {
+
+        Location lastKnownLocation = locationService.getUserLastKnownLocation();
+
+        if (lastKnownLocation!=null) {
+            Logging.debug("Saving last known location to preferences: "+lastKnownLocation);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(PreferenceService.PREF_LOCATION_FIXED_LAT,""+lastKnownLocation.getLatitude());
+            editor.putString(PreferenceService.PREF_LOCATION_FIXED_LON,""+lastKnownLocation.getLongitude());
+            editor.commit();
+        }
+
+        return lastKnownLocation;
+
+    }
 
 }
