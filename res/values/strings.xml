@@ -71,9 +71,8 @@
     <string name="preference_location_provider_gps">GPS</string>
     <string name="preference_location_provider_network">Cellular network</string>
     <string name="preference_location_provider_fixed" formatted="false">Fixed location (%s)</string>
-    <string name="preference_location_provider_fixed_error">Fixed location (no location)</string>
-    <string name="preference_location_provider_fixed_error_dialog">No location is available.
-        Reverted to the network provider. Please wait until the location is available and then choose the
+    <string name="preference_location_provider_fixed_error_dialog">No current location is available.
+        Reverted to the GPS provider. Please wait until the current location is available and then choose the
         fixed option.</string>
 
     <string name="preference_map_marker_color_title">Map marker color</string>
@@ -99,7 +98,8 @@
     <string name="preference_show_ads_summary">Select to view advertisements. Ads are shown
     to support the development of this application.</string>
 
-    <string name="progress_parsing">Reading page from testbed.fmi.fi...</string>
+    <string name="progress_initializing">Initializing...</string>
+    <string name="progress_parsing">Reading page from Testbed...</string>
     <string name="progress_downloading" formatted="false">Downloading latest weather map...</string>
     <string name="progress_done">Done</string>
     <string name="progress_anim_downloading" formatted="false">(Downloading: %d/%d)</string>

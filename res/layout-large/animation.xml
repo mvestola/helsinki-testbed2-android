@@ -30,10 +30,11 @@
 
 
     <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="500dip"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:paddingRight="5dip"
+            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
             >
 
         <ImageButton android:id="@+id/playpause_button"
