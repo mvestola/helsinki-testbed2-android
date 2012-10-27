@@ -10,7 +10,6 @@
     android:id="@+id/animation_view"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:theme="@style/CustomLightTheme"
   />
 
   <TextView android:id="@+id/timestamp_view"
@@ -30,7 +29,7 @@
 
 
     <RelativeLayout
-            android:layout_width="500dip"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_centerInParent="true"
@@ -52,7 +51,7 @@
                  android:max="100"
                  android:progress="0"
                  android:layout_height="wrap_content"
-                 android:layout_width="fill_parent"
+                 android:layout_width="450dip"
                  android:paddingBottom="5dip"
                  android:paddingRight="5dip"
                  android:layout_alignParentBottom="true"

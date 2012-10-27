@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.jhlabs.map.Point2D;
 import com.larvalabs.svgandroid.SVGParser;
+import fi.testbed2.R;
 import fi.testbed2.app.Logging;
 import fi.testbed2.data.Municipality;
 import fi.testbed2.data.TestbedMapImage;
@@ -519,13 +520,27 @@ public class AnimationView extends View {
 
                         Logging.debug("Show info for municipality: "+municipality.getName());
 
-                        municipalityToast = Toast.makeText(getContext(),
-                                municipality.getName(), Toast.LENGTH_SHORT);
+                        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+                        View layout = inflater.inflate(R.layout.toast_municipality,
+                                (ViewGroup) findViewById(R.id.toast_layout_root));
+
+                        TextView text = (TextView) layout.findViewById(R.id.text);
+                        text.setText(municipality.getName());
+
+                        municipalityToast = new Toast(getContext());
                         municipalityToast.setGravity(Gravity.TOP| Gravity.LEFT,
                                 Double.valueOf(pos.x+20*scale).intValue(),
                                 Double.valueOf(pos.y-40*scale).intValue());
+                        municipalityToast.setDuration(Toast.LENGTH_SHORT);
+                        municipalityToast.setView(layout);
                         municipalityToast.show();
                         return true;
+
+
+
+
+
 
                     }
 
