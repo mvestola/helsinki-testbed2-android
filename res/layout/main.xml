@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-<ImageButton
-    android:id="@+id/button_refresh"
-    android:layout_width="250dip"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:layout_centerInParent="true"
-    android:layout_centerHorizontal="true"
-    android:src="@drawable/ic_refresh"
-    />
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+    <ImageButton
+            android:id="@+id/button_refresh"
+            android:layout_width="250dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_refresh"
+            />
+    <com.google.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            ads:adUnitId="a1508d0e513ab8a"
+            ads:adSize="SMART_BANNER"
+            ads:testDevices="TEST_EMULATOR, TEST_DEVICE_ID"
+            ads:loadAdOnCreate="true"/>
 </RelativeLayout>

@@ -67,7 +67,7 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.google.inject:guice:no_aop:3.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.inject:javax.inject:1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: aopalliance:aopalliance:1.0" level="project" />
-    <orderEntry type="jdk" jdkName="Android 2.2 Platform" jdkType="Android SDK" />
+    <orderEntry type="jdk" jdkName="Android 3.2 Platform" jdkType="Android SDK" />
   </component>
 </module>
 

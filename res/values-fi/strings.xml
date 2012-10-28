@@ -90,6 +90,10 @@
     <string name="preference_screen_location_summary">Muuta käyttäjän sijainnin ja valittujen kuntien
         esitykseen liittyviä asetuksia</string>
 
+    <string name="preference_show_ads_title">Näytä mainoksia</string>
+    <string name="preference_show_ads_summary">Valitse, jos haluat nähdä mainoksia.
+        Mainoksia näytetään tukemaan ohjelman kehitystä.</string>
+
     <string name="progress_initializing">Alustetaan...</string>
     <string name="progress_parsing">Luetaan sivua Testbedistä...</string>
     <string name="progress_downloading" formatted="false">Ladataan viimeisin sääkartta...</string>

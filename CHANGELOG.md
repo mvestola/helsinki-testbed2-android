@@ -9,7 +9,8 @@ Version 2.0.10 (coming soon...)
 * Automatically starts loading pictures when the application is opened
 * Added reset zoom to context menu
 * Improved layout to support Android tablets
-* Added advertisements which can be disabled from the preferences (TODO)
+* Added advertisements to support the development of this application.
+Ads can be disabled from the preferences.
 
 
 Version 2.0.9 (2012-10-23)
