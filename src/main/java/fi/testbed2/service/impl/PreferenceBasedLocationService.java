@@ -37,6 +37,7 @@ public class PreferenceBasedLocationService implements LocationService, Location
     CoordinateService coordinateService;
 
     private Point2D.Double userLocationXY;
+    private Location userLocation;
 
     public PreferenceBasedLocationService() {
         Logging.debug("PreferenceBasedLocationService instantiated");
@@ -57,11 +58,16 @@ public class PreferenceBasedLocationService implements LocationService, Location
 
     }
 
-    public Location getUserLastKnownLocation() {
+    public Location getUserLastLocation() {
+
+        if (!preferenceService.showUserLocation()) {
+            return null;
+        }
+
         if (Environment.TEST_ENVIRONMENT) {
             return municipalityService.getMunicipality("Kouvola").getLocation();
         } else {
-            return locationManager.getLastKnownLocation(getProvider());
+            return userLocation;
         }
     }
 
@@ -73,13 +79,14 @@ public class PreferenceBasedLocationService implements LocationService, Location
         String provider = getProvider();
 
         if (provider.equals(LOCATION_PROVIDER_FIXED)) {
-            Location fixedLoc = preferenceService.getSavedFixedLocation();
-            userLocationXY = coordinateService.convertLocationToXyPos(fixedLoc);
+            userLocation = preferenceService.getSavedFixedLocation();
+            userLocationXY = coordinateService.convertLocationToXyPos(userLocation);
             return;
         }
 
         Location lastKnownLocation = locationManager.getLastKnownLocation(provider);
         if (lastKnownLocation!=null) {
+            userLocation = lastKnownLocation;
             userLocationXY = coordinateService.convertLocationToXyPos(lastKnownLocation);
         }
 
@@ -97,6 +104,7 @@ public class PreferenceBasedLocationService implements LocationService, Location
     @Override
     public void onLocationChanged(Location location) {
         if (location!=null) {
+            userLocation = location;
             userLocationXY = coordinateService.convertLocationToXyPos(location);
         }
     }

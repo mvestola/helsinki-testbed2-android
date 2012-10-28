@@ -221,7 +221,7 @@ public class DefaultPreferenceService implements PreferenceService {
      */
     public Location saveCurrentLocationAsFixedLocation() {
 
-        Location lastKnownLocation = locationService.getUserLastKnownLocation();
+        Location lastKnownLocation = locationService.getUserLastLocation();
 
         if (lastKnownLocation!=null) {
             Logging.debug("Saving last known location to preferences: "+lastKnownLocation);

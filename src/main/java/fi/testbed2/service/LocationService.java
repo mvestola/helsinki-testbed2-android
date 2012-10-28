@@ -7,9 +7,10 @@ public interface LocationService {
 
     public static final String LOCATION_PROVIDER_FIXED = "fixed";
 
+    public Location getUserLastLocation();
     public Point2D.Double getUserLocationXY();
+
     public void startListeningLocationChanges();
     public void stopListeningLocationChanges();
-    public Location getUserLastKnownLocation();
 
 }
