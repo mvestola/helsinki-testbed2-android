@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import fi.testbed2.R;
+import fi.testbed2.app.Logging;
 import fi.testbed2.app.MainApplication;
 import fi.testbed2.result.TaskResult;
 import roboguice.inject.ContentView;
@@ -26,9 +27,16 @@ public class MainActivity extends AbstractActivity implements OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         refreshButton.setOnClickListener(this);
+        startMainParsingActivity();
     }
 
-	@Override
+    /** Called when resuming, BUT after onActivityResult! */
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
 	public void onClick(View v) {
 		if(v.getId() == R.id.button_refresh) {
             startMainParsingActivity();
@@ -36,6 +44,7 @@ public class MainActivity extends AbstractActivity implements OnClickListener {
 	}
 
     private void startMainParsingActivity() {
+        Logging.debug("startMainParsingActivity");
         Intent intent = new Intent(this, ParsingActivity.class);
         startActivityForResult(intent, PARSING_SUB_ACTIVITY);
     }

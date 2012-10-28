@@ -6,6 +6,7 @@
     <string name="testbed_base_url" formatted="false">http://testbed.fmi.fi/history_browser.php?imgtype=%s&amp;t=%s&amp;n=%s</string>
 
     <string name="main_menu_refresh">Refresh</string>
+    <string name="main_menu_reset_zoom">Reset zoom</string>
     <string name="main_menu_preferences">Settings</string>
     <string name="main_menu_about">About</string>
 
