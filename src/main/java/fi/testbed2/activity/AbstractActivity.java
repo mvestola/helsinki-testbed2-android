@@ -56,10 +56,22 @@ public abstract class AbstractActivity extends RoboActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
+        onSuperCreateOptionsMenu(menu);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
         return true;
+    }
+
+    /**
+     * Used for sub-classes for overriding the onCreateOptionsMenu
+     * which needs to call the super's method (can't call just
+     * super.onCreateOptionsMenu() because it will create duplicate
+     * menu items).
+     * @param menu
+     * @return
+     */
+    protected boolean onSuperCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
     }
 
     public abstract void onRefreshButtonSelected();

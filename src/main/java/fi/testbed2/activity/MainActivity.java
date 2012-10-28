@@ -27,7 +27,7 @@ public class MainActivity extends AbstractActivity implements OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         refreshButton.setOnClickListener(this);
-        startMainParsingActivity();
+        //startMainParsingActivity();
     }
 
     /** Called when resuming, BUT after onActivityResult! */

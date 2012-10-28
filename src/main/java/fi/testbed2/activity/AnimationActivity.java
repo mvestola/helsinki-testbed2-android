@@ -287,6 +287,7 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        super.onSuperCreateOptionsMenu(menu);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.animation_menu, menu);
         return true;
@@ -299,6 +300,7 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
             case R.id.main_menu_reset_zoom:
                 animationView.setScaleFactor(1.0f);
                 animationView.updateBounds(null);
+                animationView.invalidate();
                 return true;
         }
 

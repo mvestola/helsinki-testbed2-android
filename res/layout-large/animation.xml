@@ -61,7 +61,7 @@
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:text="timestamp"
-                      android:textColor="#000000"
+                      android:textColor="#FFFFFF"
                       android:textStyle="bold"
                       android:textSize="16dip"
                       android:paddingBottom="9dip"

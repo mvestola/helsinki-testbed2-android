@@ -86,6 +86,7 @@ public class DefaultDialogBuilder implements DialogBuilder {
 
         TextView messageBoxText = new TextView(context);
         messageBoxText.setTextSize(16);
+        messageBoxText.setTextColor(0xffffffff);
         messageBoxText.setPadding(10,5,5,5);
         final SpannableString s1 = new SpannableString(context.getText(R.string.about_text));
         final SpannableString s2 = new SpannableString(context.getText(R.string.extra_license_text));
@@ -103,6 +104,7 @@ public class DefaultDialogBuilder implements DialogBuilder {
 
         TextView messageBoxText = new TextView(context);
         messageBoxText.setTextSize(18);
+        messageBoxText.setTextColor(0xffffffff);
         messageBoxText.setPadding(10,5,5,5);
         final SpannableString s = new SpannableString(" "+context.getText(R.string.whats_new_text));
         messageBoxText.setText(s);
