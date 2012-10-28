@@ -4,6 +4,7 @@ Helsinki Testbed Viewer 2.0
 Version 2.0.10 (coming soon...)
 -------
 
+* Fixed changing from summer time to normal time
 * Added GPS as an alternate location provider (for tablets)
 * User can save his/her current location as a fixed position
 * Added reset zoom to context menu
