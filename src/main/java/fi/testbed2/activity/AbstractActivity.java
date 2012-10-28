@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.Toast;
+import com.google.ads.AdView;
 import com.google.inject.Inject;
 import fi.testbed2.R;
 import fi.testbed2.dialog.DialogBuilder;
@@ -36,6 +37,22 @@ public abstract class AbstractActivity extends RoboActivity {
         }
     }
 
+    /** Called when resuming, BUT after onActivityResult! */
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        AdView adView = (AdView)this.findViewById(R.id.adView);
+
+        if (adView!=null) {
+            if (preferenceService.showAds()) {
+                adView.setVisibility(AdView.VISIBLE);
+            } else {
+                adView.setVisibility(AdView.GONE);
+            }
+        }
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

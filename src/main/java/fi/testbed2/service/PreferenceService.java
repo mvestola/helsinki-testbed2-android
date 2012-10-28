@@ -34,6 +34,9 @@ public interface PreferenceService {
     public static final String PREF_LOCATION_SHOW_MUNICIPALITIES = "PREF_LOCATION_MUNICIPALITIES";
     public static final String PREF_LOCATION_SHOW_MUNICIPALITIES_SPLIT = "===";
 
+    public static final String PREF_SHOW_ADS = "PREF_SHOW_ADS";
+
+
     /**
      * Saves the bounds of the map user has previously viewed to persistent storage.
      */
@@ -68,5 +71,7 @@ public interface PreferenceService {
 
     public Location getSavedFixedLocation();
     public Location saveCurrentLocationAsFixedLocation();
+
+    public boolean showAds();
 
 }

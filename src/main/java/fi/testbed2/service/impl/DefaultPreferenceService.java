@@ -235,4 +235,8 @@ public class DefaultPreferenceService implements PreferenceService {
 
     }
 
+    public boolean showAds() {
+        return sharedPreferences.getBoolean(PreferenceService.PREF_SHOW_ADS, true);
+    }
+
 }
