@@ -1,62 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <AbsoluteLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="fill_parent"
-  android:layout_height="fill_parent"
-  android:keepScreenOn="true"
-  android:id="@+id/AnimationRootView">
-  
-  <fi.testbed2.view.AnimationView
-    android:id="@+id/animation_view"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-  />
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:keepScreenOn="true"
+        android:id="@+id/AnimationRootView">
 
-  <TextView android:id="@+id/timestamp_view"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="timestamp"
-      android:textColor="#000000"
-      android:textSize="20.0dip"
-      android:layout_y="5dip"
-      android:layout_x="10dip"
-      android:paddingLeft="4dip"
-      android:paddingRight="4dip"
-      android:paddingTop="1dip"
-      android:paddingBottom="1dip"
-      android:background="#80bdbdbd">
-  </TextView>
+    <fi.testbed2.view.AnimationView
+            android:id="@+id/animation_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            />
+
+    <TextView android:id="@+id/timestamp_view"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="timestamp"
+              android:textColor="#000000"
+              android:textSize="20.0dip"
+              android:layout_y="5dip"
+              android:layout_x="10dip"
+              android:paddingLeft="4dip"
+              android:paddingRight="4dip"
+              android:paddingTop="1dip"
+              android:paddingBottom="1dip"
+              android:background="#80bdbdbd">
+    </TextView>
 
 
     <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:layout_centerInParent="true"
-            android:layout_centerHorizontal="true"
             >
 
-        <ImageButton android:id="@+id/playpause_button"
-                     android:src="@drawable/ic_media_play"
-                     android:layout_alignParentLeft="true"
-                     android:layout_width="wrap_content"
+        <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
+                >
+
+            <ImageButton android:id="@+id/playpause_button"
+                         android:src="@drawable/ic_media_play"
+                         android:layout_alignParentLeft="true"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:layout_alignParentBottom="true"
+                         android:paddingBottom="5dip"
+                         android:paddingRight="5dip"
+                         android:background="@android:color/transparent">
+            </ImageButton>
+
+            <SeekBar android:id="@+id/seek"
+                     android:max="100"
+                     android:progress="0"
                      android:layout_height="wrap_content"
-                     android:layout_alignParentBottom="true"
+                     android:layout_width="450dip"
                      android:paddingBottom="5dip"
                      android:paddingRight="5dip"
-                     android:background="@android:color/transparent">
-        </ImageButton>
+                     android:layout_alignParentBottom="true"
+                     android:layout_toRightOf="@id/playpause_button"
+                    />
 
-        <SeekBar android:id="@+id/seek"
-                 android:max="100"
-                 android:progress="0"
-                 android:layout_height="wrap_content"
-                 android:layout_width="450dip"
-                 android:paddingBottom="5dip"
-                 android:paddingRight="5dip"
-                 android:layout_alignParentBottom="true"
-                 android:layout_toRightOf="@id/playpause_button"
-                />
+        </RelativeLayout>
 
     </RelativeLayout>
 
