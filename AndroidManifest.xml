@@ -32,8 +32,8 @@
                   android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
     </application>
 
-    <!-- Although Google ads require API level 13,
-        target SDK should be 8 to enable context menu -->
+    <!-- Although Google ads require API level 13 (Android 3.2),
+        target SDK should be 8 (Android 2.2) to enable context menu -->
     <uses-sdk
     	android:minSdkVersion="4"
     	android:targetSdkVersion="8"
