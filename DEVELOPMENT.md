@@ -150,7 +150,7 @@ Checklist for publishing a new release
 1. Change the version code and version name from `AndroidManifest.xml`
 2. Update `CHANGELOG.md`
 3. Update `whats_new_text` from `res/values/strings.xml` (both English and Finnish)
-4. Sign the app bu running `mvn clean install` using the release profile
+4. Sign the app by running `mvn clean install` using the release profile
 5. Tag the code: `git tag -a 2.0.x -m 'Tagged 2.0.x'; git push --tags`
-6. Upload the file `target/testbedViewer-aligned.apk` to Google Play and activate it
+6. Upload the file `target/testbedViewer-aligned.apk` to [Google Play](https://play.google.com/apps/publish/v2) and activate it
 7. Update "Recent Changes" in Google Play (both English and Finnish)
