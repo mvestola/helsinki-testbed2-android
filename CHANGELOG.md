@@ -1,13 +1,13 @@
 Helsinki Testbed Viewer 2.0
 =============
 
-Version 2.0.10 (coming soon...)
+Version 2.0.10 (2012-10-29)
 -------
 
 * Fixed changing from summer time to normal time
-* Added GPS as an alternate location provider (for tablets)
+* Added GPS as an alternate location provider (mainly for tablets)
 * User can save his/her current location as a fixed position
-* Added reset zoom to context menu
+* Added reset zoom to the context menu
 * Improved layout to support Android tablets
 * Added advertisements to support the development of this application.
 Ads can be disabled from the preferences.

@@ -25,10 +25,13 @@
 
     <string name="whats_new_title">Uutta versiossa %s</string>
     <string name="whats_new_text">
-        - Lisätty zoomaus nipistämällä ja tuplakoskettamalla.\n
-        - Karttamerkit käyttävät skaalautuvaa SVG-kuvaa, jonka kokoa ja väriä
-        voi säätää asetuksista.\n
-        - Kunnan nimi näkyy ruudulla kun sen päällä pitää sormea.
+        - Korjattu kesäajasta normaaliaikaan siirtyminen.\n
+        - Lisätty GPS vaihtoehtoiseksi sijaintipalveluksi.\n
+        - Käyttäjä voi tallentaa nykyisen sijaintinsa kiinteäksi sijainniksi.\n
+        - Lisätty zoomin nollaus valikkoon.\n
+        - Paranneltu ulkoasua Android-tableteilla.\n
+        - Lisätty mainoksia tukemaan ohjelman kehitystä.
+        Mainokset voi halutessaan poistaa käytöstä asetuksista.
     </string>
 
     <string name="notice_cancelled" formatted="false">Lataus keskeytetty</string>
