@@ -79,7 +79,7 @@
     <string name="preference_location_provider_summary" formatted="false">Valitse mistä sijaintisi luetaan.
         Valittuna nyt: %s</string>
     <string name="preference_location_provider_gps">GPS</string>
-    <string name="preference_location_provider_network">GSM-verkko</string>
+    <string name="preference_location_provider_network">Verkkopohjainen</string>
     <string name="preference_location_provider_fixed" formatted="false">Kiinteä sijainti (%s)</string>
     <string name="preference_location_provider_fixed_error_dialog">Nykyinen sijaintisi ei ole saatavilla.
         Palautettu asetus GPS:ään. Odota kunnes nykyinen sijaintisi on saatavilla ja valitse vasta sitten

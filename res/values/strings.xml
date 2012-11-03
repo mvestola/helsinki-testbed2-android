@@ -81,7 +81,7 @@
     <string name="preference_location_provider_summary" formatted="false">Select your location provider.
         Currently selected: %s</string>
     <string name="preference_location_provider_gps">GPS</string>
-    <string name="preference_location_provider_network">Cellular network</string>
+    <string name="preference_location_provider_network">Network</string>
     <string name="preference_location_provider_fixed" formatted="false">Fixed location (%s)</string>
     <string name="preference_location_provider_fixed_error_dialog">No current location is available.
         Reverted to the GPS provider. Please wait until the current location is available and then choose the

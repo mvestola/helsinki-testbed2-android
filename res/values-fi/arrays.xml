@@ -22,7 +22,7 @@
     </string-array>
 
     <string-array name="location_provider_options">
-        <item>GSM-verkko (sijainti reaaliaikainen)</item>
+        <item>Verkkopohjainen (sijainti reaaliaikainen)</item>
         <item>GPS (sijainti reaaliaikainen)</item>
         <item>Kiinteä (jäädyttää nykyisen sijainnin)</item>
     </string-array>

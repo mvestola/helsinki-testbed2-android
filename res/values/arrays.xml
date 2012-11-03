@@ -94,7 +94,7 @@
     </string-array>
 
     <string-array name="location_provider_options">
-        <item>Cellular network (real-time updating)</item>
+        <item>Network (real-time updating)</item>
         <item>GPS (real-time updating)</item>
         <item>Fixed (freezes the current location)</item>
     </string-array>
