@@ -6,6 +6,7 @@ public interface DialogBuilder {
 
     public AlertDialog getAboutAlertDialog();
     public AlertDialog getWhatsNewAlertDialog();
+    public AlertDialog getHardwareAccelerationAlertDialog();
     public AlertDialog getErrorDialog(String errorMessage);
 
 }

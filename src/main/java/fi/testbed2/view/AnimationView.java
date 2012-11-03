@@ -290,8 +290,7 @@ public class AnimationView extends View {
             int right = xInt+width/2;
             int bottom = yInt;
 
-            canvas.drawPicture(pic, new Rect(left,top,right,bottom));
-
+            drawPicture(pic, canvas, new Rect(left,top,right,bottom));
 
         } else {
 
@@ -313,11 +312,23 @@ public class AnimationView extends View {
             int right = xInt+circleDiameter/2;
             int bottom = yInt+circleDiameter/2;
 
-            canvas.drawPicture(pic, new Rect(left, top, right, bottom));
+            drawPicture(pic, canvas, new Rect(left, top, right, bottom));
         }
 
+    }
 
+    private void drawPicture(Picture pic, Canvas canvas, Rect rect) {
 
+        try {
+            canvas.drawPicture(pic, rect);
+        } catch (Throwable e) {
+            /*
+             * Some user's seem to use Force GPU setting which does not support
+             * the drawPicture method (throws java.lang.UnsupportedOperationException).
+             * Do not show anything to those users but an alert dialog
+             * that they should disabled Force GPU settings.
+             */
+        }
     }
 
     private Picture getMarkerImage() {

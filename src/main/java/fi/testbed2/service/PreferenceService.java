@@ -19,6 +19,7 @@ public interface PreferenceService {
     public static final String PREF_SCALE_PREFERENCE_KEY_PREFIX = "PREFERENCE_ANIM_SCALE_ORIENTATION_";
 
     public static final String PREF_WHATS_NEW_DIALOG_SHOWN_FOR_VERSION = "PREF_WHATS_NEW_DIALOG_SHOWN_FOR_VERSION";
+    public static final String PREF_HW_ACCEL_DIALOG_SHOWN = "PREF_HW_ACCEL_DIALOG_SHOWN";
 
     public static final String PREF_LOCATION_SHOW_USER_LOCATION = "PREF_LOCATION_SHOW_USER_LOCATION";
     public static final String PREF_LOCATION_PROVIDER = "PREF_LOCATION_PROVIDER";
@@ -53,8 +54,10 @@ public interface PreferenceService {
     public boolean isStartAnimationAutomatically();
 
     public boolean isShowWhatsNewDialog();
+    public boolean isShowHardwareAccelerationDialog();
 
     public void saveWhatsNewDialogShownForCurrentVersion();
+    public void saveHardwareAccelerationDialogShown();
 
     public boolean showUserLocation();
 

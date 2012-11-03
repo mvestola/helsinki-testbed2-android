@@ -22,6 +22,7 @@
     <string name="button_save">Tallenna</string>
     <string name="button_ok">OK</string>
     <string name="button_cancel">Peruuta</string>
+    <string name="do_not_show_again">Älä näytä jatkossa</string>
 
     <string name="whats_new_title">Uutta versiossa %s</string>
     <string name="whats_new_text">
@@ -32,6 +33,14 @@
         - Paranneltu ulkoasua Android-tableteilla.\n
         - Lisätty mainoksia tukemaan ohjelman kehitystä.
         Mainokset voi halutessaan poistaa käytöstä asetuksista.
+    </string>
+
+    <string name="hardware_accel_dialog_title">Ota GPU-pakotus pois käytöstä</string>
+    <string name="hardware_accel_dialog_text">
+        Laitteessasi on päällä GPU-hahmonnuksen pakotus, joka ei toimi tässä
+        ohjelmassa. Ota tämä asetus pois päältä laitteesi asetuksista
+        (Asetukset...Kehittäjävaihtoehdot...Pakota GPU-hahmonnus).
+        Muutoin et näe nykyistä sijaintiasi tai valitsemiasi kuntia kartalla.
     </string>
 
     <string name="notice_cancelled" formatted="false">Lataus keskeytetty</string>

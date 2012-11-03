@@ -69,6 +69,27 @@ public class DefaultDialogBuilder implements DialogBuilder {
     }
 
     @Override
+    public AlertDialog getHardwareAccelerationAlertDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setView(getHardwareAccelerationDialogContents(context))
+                .setNegativeButton(context.getText(R.string.do_not_show_again), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        preferenceService.saveHardwareAccelerationDialogShown();
+                        dialog.cancel();
+                    }
+                })
+                .setPositiveButton(context.getText(R.string.close_button), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setTitle(context.getString(R.string.hardware_accel_dialog_title));
+        return  alertDialog;
+    }
+
+    @Override
     public AlertDialog getErrorDialog(String errorMessage) {
         AlertDialog ad = new AlertDialog.Builder(context).create();
         ad.setCancelable(false); // This blocks the 'BACK' button
@@ -94,6 +115,20 @@ public class DefaultDialogBuilder implements DialogBuilder {
         Linkify.addLinks(s2, Linkify.WEB_URLS);
         messageBoxText.append(s1);
         messageBoxText.append(s2);
+        messageBoxText.setMovementMethod(LinkMovementMethod.getInstance());
+
+        return messageBoxText;
+
+    }
+
+    private TextView getHardwareAccelerationDialogContents(final Context context) {
+
+        TextView messageBoxText = new TextView(context);
+        messageBoxText.setTextSize(18);
+        messageBoxText.setTextColor(0xffffffff);
+        messageBoxText.setPadding(10,5,5,5);
+        final SpannableString s = new SpannableString(" "+context.getText(R.string.hardware_accel_dialog_text));
+        messageBoxText.setText(s);
         messageBoxText.setMovementMethod(LinkMovementMethod.getInstance());
 
         return messageBoxText;

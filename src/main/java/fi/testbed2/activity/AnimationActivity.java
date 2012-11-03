@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.google.ads.AdView;
 import com.google.inject.Inject;
 import fi.testbed2.R;
+import fi.testbed2.app.Logging;
 import fi.testbed2.app.MainApplication;
 import fi.testbed2.data.TestbedParsedPage;
 import fi.testbed2.service.*;
@@ -23,6 +24,8 @@ import fi.testbed2.util.SeekBarUtil;
 import fi.testbed2.view.AnimationView;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
+
+import java.lang.reflect.Method;
 
 /**
  * Activity handling the main map animation view.
@@ -162,6 +165,7 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
         if (preferenceService.isStartAnimationAutomatically()) {
             playAnimation();
         }
+        showHardwareAccelerationWarningIfNeeded();
     }
 
     private void initListeners() {
@@ -244,6 +248,26 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
         finish();
     }
 
+    private void showHardwareAccelerationWarningIfNeeded() {
+
+        try {
+            // isHardwareAccelerated exists in API level >=11
+            Method m = View.class.getMethod("isHardwareAccelerated");
+            boolean isHardwareAccelerated = (Boolean)m.invoke(this.findViewById(android.R.id.content));
+
+            Logging.debug("Hardware acceleration status: "+isHardwareAccelerated);
+
+            if(preferenceService.isShowHardwareAccelerationDialog() &&
+                    isHardwareAccelerated) {
+                dialogBuilder.getHardwareAccelerationAlertDialog().show();
+            }
+
+        } catch (Exception e) {
+            // Ignore
+            Logging.debug("OK. No hardware acceleration because API level < 11");
+        }
+
+    }
 
     private void playAnimation() {
         updatePlayingState(true);

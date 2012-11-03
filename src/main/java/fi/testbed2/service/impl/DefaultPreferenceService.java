@@ -116,6 +116,14 @@ public class DefaultPreferenceService implements PreferenceService {
     }
 
     @Override
+    public void saveHardwareAccelerationDialogShown() {
+        Logging.debug("Saving hardware acceleration dialog is shown");
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(PreferenceService.PREF_HW_ACCEL_DIALOG_SHOWN, true);
+        editor.commit();
+    }
+
+    @Override
     public int getSavedFrameDelay() {
         return Integer.parseInt(sharedPreferences.getString(PreferenceService.PREF_ANIM_FRAME_DELAY, "1000"));
     }
@@ -138,6 +146,12 @@ public class DefaultPreferenceService implements PreferenceService {
         }
 
         return false;
+    }
+
+    @Override
+    public boolean isShowHardwareAccelerationDialog() {
+        return !sharedPreferences.getBoolean(
+                PreferenceService.PREF_HW_ACCEL_DIALOG_SHOWN, false);
     }
 
     public boolean showUserLocation() {

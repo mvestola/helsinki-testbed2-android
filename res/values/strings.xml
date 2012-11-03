@@ -24,6 +24,7 @@
     <string name="button_save">Save</string>
     <string name="button_ok">OK</string>
     <string name="button_cancel">Cancel</string>
+    <string name="do_not_show_again">Do not show again</string>
 
     <string name="whats_new_title">New in version %s</string>
     <string name="whats_new_text">
@@ -34,6 +35,14 @@
         - Improved layout to support Android tablets.\n
         - Added ads to support the development of this application.
         Ads can be disabled from the preferences.
+    </string>
+
+    <string name="hardware_accel_dialog_title">Please disable force GPU setting</string>
+    <string name="hardware_accel_dialog_text">
+        You seem to have the setting "Force GPU rendering" on, which causes problems
+        with this application. Please disable this setting from your device settings
+        (Settings...Developer options...Force GPU rendering).
+        Otherwise the current location and municipalities are not shown in the map.
     </string>
 
     <string name="notice_cancelled" formatted="false">Download cancelled</string>

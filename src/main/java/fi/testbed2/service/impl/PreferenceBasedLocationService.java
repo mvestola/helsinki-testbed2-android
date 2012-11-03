@@ -90,8 +90,17 @@ public class PreferenceBasedLocationService implements LocationService, Location
             userLocationXY = coordinateService.convertLocationToXyPos(lastKnownLocation);
         }
 
-        locationManager.requestLocationUpdates(provider,
-                LOCATION_UPDATE_INTERVAL_MINUTES * 60 * 1000, LOCATION_UPDATE_ACCURACY_METERS, this);
+        try {
+            locationManager.requestLocationUpdates(provider,
+                    LOCATION_UPDATE_INTERVAL_MINUTES * 60 * 1000, LOCATION_UPDATE_ACCURACY_METERS, this);
+        } catch (Exception e) {
+            /*
+             * Might throw exception if location provider not found.
+             * Seems to only occur in Android emulator, see bug description:
+             * http://code.google.com/p/android/issues/detail?id=19857
+             */
+            Logging.debug("RequestLocationUpdates failed: "+e.getMessage());
+        }
 
     }
 
