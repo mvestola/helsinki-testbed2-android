@@ -69,11 +69,11 @@ public class ParseAndInitTask extends AbstractTask<TaskResult> implements Task {
         if (result.isCancelled()) {
             Logging.debug("ParseAndInitTask cancelled");
             activity.setResult(Activity.RESULT_CANCELED);
+            activity.finish();
         } else {
             Logging.debug("ParseAndInitTask result OK");
-            activity.setResult(MainApplication.RESULT_OK, intent);
+            activity.onParsingFinished();
         }
-        activity.finish();
 
     }
 
