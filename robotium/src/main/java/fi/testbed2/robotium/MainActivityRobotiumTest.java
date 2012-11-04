@@ -13,6 +13,12 @@ import fi.testbed2.activity.TestbedPreferenceActivity;
  * Prerequisite for the test are:
  *  - Number of map images to be shown: 10
  *
+ * Note that these tests should be run on an emulator which has
+ * fairly slow network speed (EDGE preferred) because the tests
+ * try to cancel downloads and with too fast download speeds
+ * the tests might not be able to cancel downloads before they have
+ * downloaded.
+ *
  */
 public class MainActivityRobotiumTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
@@ -59,11 +65,14 @@ public class MainActivityRobotiumTest extends ActivityInstrumentationTestCase2<M
          * Therefore, the checkboxes is not tested here so thoroughly
          */
 
+        solo.clickOnText(getActivity().getResources().getString(R.string.preference_category_location));
+        solo.waitForText(solo.getString(R.string.preference_location_municipalities_title));
         solo.clickOnText(getActivity().getResources().getString(R.string.preference_location_municipalities_title));
         solo.clickOnText("Askola");
         solo.clickOnText("Espoo");
         solo.clickOnText("OK");
 
+        solo.goBack();
         solo.goBack();
         solo.assertCurrentActivity("Should be MainActivity", MainActivity.class);
 
@@ -86,29 +95,6 @@ public class MainActivityRobotiumTest extends ActivityInstrumentationTestCase2<M
 
         solo.sendKey(Solo.MENU);
         solo.clickOnText(solo.getString(R.string.main_menu_refresh));
-        solo.goBack();
-
-        solo.waitForText(solo.getString(R.string.notice_cancelled));
-        solo.assertCurrentActivity("Should be MainActivity", MainActivity.class);
-
-    }
-
-    public void testDownloadCancelledWhenRefreshFromAnimationActivity() throws Exception {
-
-        setMapType(1);
-
-        solo.clickOnImageButton(0);
-
-        solo.waitForText("@");
-        solo.assertCurrentActivity("Should be AnimationActivity", AnimationActivity.class);
-        solo.waitForText("/10");
-        assertTrue(solo.searchText("/10"));
-
-        setMapType(2);
-
-        solo.sendKey(Solo.MENU);
-        solo.clickOnText(solo.getString(R.string.main_menu_refresh));
-        solo.waitForText(solo.getString(R.string.progress_parsing));
         solo.goBack();
 
         solo.waitForText(solo.getString(R.string.notice_cancelled));
