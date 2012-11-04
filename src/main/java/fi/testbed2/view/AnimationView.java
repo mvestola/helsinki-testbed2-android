@@ -52,6 +52,8 @@ public class AnimationView extends View {
     private ScaleGestureDetector mScaleDetector;
     private GestureDetector mGestureDetector;
     private float scaleFactor = 1.0f;
+    private float scalePivotX = 0.0f;
+    private float scalePivotY = 0.0f;
     private float minScaleFactor = 0.5f;
     private float maxScaleFactor = 3.0f;
     private float scaleStepWhenDoubleTapping = 1.3f;
@@ -196,7 +198,7 @@ public class AnimationView extends View {
 		super.onDraw(canvas);
 
         canvas.save();
-        canvas.scale(scaleFactor, scaleFactor);
+        canvas.scale(scaleFactor, scaleFactor, scalePivotX, scalePivotY);
 
         TestbedMapImage currentMap = getMapImagesToBeDrawn().get(player.getCurrentFrame());
 
@@ -459,6 +461,9 @@ public class AnimationView extends View {
     private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
+
+            scalePivotX = detector.getFocusX();
+            scalePivotY = detector.getFocusY();
             scaleFactor *= detector.getScaleFactor();
 
             // Don't let the object get too small or too large.
@@ -481,6 +486,8 @@ public class AnimationView extends View {
         @Override
         public boolean onDoubleTap(MotionEvent e) {
 
+            scalePivotX = e.getX();
+            scalePivotY = e.getY();
             scaleFactor *= scaleStepWhenDoubleTapping;
 
             if (scaleFactor >=maxScaleFactor) {
