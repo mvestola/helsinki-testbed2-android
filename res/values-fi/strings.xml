@@ -26,13 +26,9 @@
 
     <string name="whats_new_title">Uutta versiossa %s</string>
     <string name="whats_new_text">
-        - Korjattu kesäajasta normaaliaikaan siirtyminen.\n
-        - Lisätty GPS vaihtoehtoiseksi sijaintipalveluksi.\n
-        - Käyttäjä voi tallentaa nykyisen sijaintinsa kiinteäksi sijainniksi.\n
-        - Lisätty zoomin nollaus valikkoon.\n
-        - Paranneltu ulkoasua Android-tableteilla.\n
-        - Lisätty mainoksia tukemaan ohjelman kehitystä.
-        Mainokset voi halutessaan poistaa käytöstä asetuksista.
+        - Korjattu ohjelman kaatuminen, jos GPU-hahmonnuksen pakotus on päällä.\n
+        - Kartan zoomaaminen keskittää kartan käyttäjän valitsemaan pisteeseen.\n
+        - Korjattu satunnainen ulkoasun välkkyminen päivitä-painiketta painettaessa.
     </string>
 
     <string name="hardware_accel_dialog_title">Ota GPU-pakotus pois käytöstä</string>

@@ -5,8 +5,8 @@ Version 2.0.11 (2012-11-04)
 -------
 
 * Fixed application crash if hardware acceleration was forced to be used
-* Fixed occasional layout flashing when refreshing the view
 * Pinch and double-tap zooming now zooms to the point user selected instead of point (0,0)
+* Fixed occasional layout flashing when refreshing the view
 
 
 Version 2.0.10 (2012-10-29)

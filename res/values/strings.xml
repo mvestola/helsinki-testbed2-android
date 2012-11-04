@@ -28,13 +28,9 @@
 
     <string name="whats_new_title">New in version %s</string>
     <string name="whats_new_text">
-        - Fixed changing from summer time to normal time.\n
-        - Added GPS as an alternate location provider.\n
-        - User can save the current location as a fixed position.\n
-        - Added reset zoom to the context menu.\n
-        - Improved layout to support Android tablets.\n
-        - Added ads to support the development of this application.
-        Ads can be disabled from the preferences.
+        - Fixed application crash if hardware acceleration was forced to be used.\n
+        - Pinch and double-tap zooming now zooms to the point user selected.\n
+        - Fixed occasional layout flashing when refreshing the view.
     </string>
 
     <string name="hardware_accel_dialog_title">Please disable force GPU setting</string>
