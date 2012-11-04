@@ -15,6 +15,7 @@ import fi.testbed2.service.CoordinateService;
 import fi.testbed2.service.LocationService;
 import fi.testbed2.service.MunicipalityService;
 import fi.testbed2.service.PreferenceService;
+import fi.testbed2.view.MapScaleInfo;
 import net.margaritov.preference.colorpicker.ColorPickerPreference;
 
 import java.util.ArrayList;
@@ -43,7 +44,7 @@ public class DefaultPreferenceService implements PreferenceService {
      * Saves the bounds of the map user has previously viewed to persistent storage.
      */
     @Override
-    public void saveMapBoundsAndScaleFactor(Rect bounds, float scale, int orientation) {
+    public void saveMapBoundsAndScaleFactor(Rect bounds, MapScaleInfo scaleInfo, int orientation) {
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -53,7 +54,9 @@ public class DefaultPreferenceService implements PreferenceService {
                 editor.putString(getMapBoundsPreferenceKey(orientation),
                         "" + bounds.left + ":" + bounds.top + ":" + bounds.right + ":" + bounds.bottom);
             }
-            editor.putFloat(getMapScalePreferenceKey(orientation), scale);
+            editor.putFloat(getMapScalePreferenceKey(orientation), scaleInfo.getScaleFactor());
+            editor.putFloat(getMapScalePivotXPreferenceKey(orientation), scaleInfo.getPivotX());
+            editor.putFloat(getMapScalePivotYPreferenceKey(orientation), scaleInfo.getPivotY());
             editor.commit();
         }
 
@@ -76,9 +79,15 @@ public class DefaultPreferenceService implements PreferenceService {
 
     }
 
+
     @Override
-    public float getSavedScaleFactor(int orientation) {
-        return sharedPreferences.getFloat(getMapScalePreferenceKey(orientation), 1.0f);
+    public MapScaleInfo getSavedScaleInfo(int orientation) {
+
+        float scaleFactor = sharedPreferences.getFloat(getMapScalePreferenceKey(orientation), 1.0f);
+        float pivotX = sharedPreferences.getFloat(getMapScalePivotXPreferenceKey(orientation), 0.0f);
+        float pivotY = sharedPreferences.getFloat(getMapScalePivotYPreferenceKey(orientation), 0.0f);
+
+        return new MapScaleInfo(scaleFactor, pivotX, pivotY);
     }
 
     @Override
@@ -187,6 +196,14 @@ public class DefaultPreferenceService implements PreferenceService {
 
     private static String getMapScalePreferenceKey(int orientation) {
         return PREF_SCALE_PREFERENCE_KEY_PREFIX + orientation;
+    }
+
+    private static String getMapScalePivotXPreferenceKey(int orientation) {
+        return PREF_SCALE_PIVOT_X_PREFERENCE_KEY_PREFIX + orientation;
+    }
+
+    private static String getMapScalePivotYPreferenceKey(int orientation) {
+        return PREF_SCALE_PIVOT_Y_PREFERENCE_KEY_PREFIX + orientation;
     }
 
     @Override

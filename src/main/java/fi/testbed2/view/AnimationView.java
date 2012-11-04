@@ -51,13 +51,7 @@ public class AnimationView extends View {
     // Scaling related
     private ScaleGestureDetector mScaleDetector;
     private GestureDetector mGestureDetector;
-    private float scaleFactor = 1.0f;
-    private float scalePivotX = 0.0f;
-    private float scalePivotY = 0.0f;
-    private float minScaleFactor = 0.5f;
-    private float maxScaleFactor = 3.0f;
-    private float scaleStepWhenDoubleTapping = 1.3f;
-    private boolean mapWasScaled;
+    private MapScaleInfo scaleInfo = new MapScaleInfo();
 
     // Animation frame related
     private int frameWidth;
@@ -131,10 +125,10 @@ public class AnimationView extends View {
 
     }
 
-    public void startAnimation(TextView timestampView, SeekBar seekBar, Rect bounds, float scale) {
+    public void startAnimation(TextView timestampView, SeekBar seekBar, Rect bounds, MapScaleInfo scaleInfo) {
         Logging.debug("Start animation");
         player.play();
-        this.scaleFactor = scale;
+        this.scaleInfo = scaleInfo;
         this.timestampView = timestampView;
         this.seekBar = seekBar;
         if (bounds==null) {
@@ -198,7 +192,8 @@ public class AnimationView extends View {
 		super.onDraw(canvas);
 
         canvas.save();
-        canvas.scale(scaleFactor, scaleFactor, scalePivotX, scalePivotY);
+        canvas.scale(scaleInfo.getScaleFactor(), scaleInfo.getScaleFactor(),
+                scaleInfo.getPivotX(), scaleInfo.getPivotY());
 
         TestbedMapImage currentMap = getMapImagesToBeDrawn().get(player.getCurrentFrame());
 
@@ -298,7 +293,8 @@ public class AnimationView extends View {
 
             // Save coordinates for info toast
             this.municipalitiesOnScreen.put(municipality,
-                    new Point2D.Double(xInt*scaleFactor, yInt*scaleFactor));
+                    new Point2D.Double(xInt*scaleInfo.getScaleFactor(),
+                            yInt*scaleInfo.getScaleFactor()));
 
             Picture pic = getPointImage();
 
@@ -378,20 +374,12 @@ public class AnimationView extends View {
      */
     private boolean calculateNewBounds(MotionEvent event) {
 
-        int action = event.getAction();
-        int scaledWidth = Float.valueOf(getWidth()/ scaleFactor).intValue();
-        int scaledHeight = Float.valueOf(getHeight()/ scaleFactor).intValue();
-        Rect viewBounds = new Rect(0, 0, scaledWidth, scaledHeight);
-
-        if (mapWasScaled && action==MotionEvent.ACTION_DOWN) {
-            mapWasScaled = false;
-        }
-
-        if (mapWasScaled) {
+        // Do not move the map in multi-touch
+        if (event.getPointerCount()>1) {
             return true;
         }
 
-        switch(action) {
+        switch(event.getAction()) {
             case MotionEvent.ACTION_CANCEL:
                 break;
             case MotionEvent.ACTION_UP:
@@ -413,7 +401,7 @@ public class AnimationView extends View {
 
                 // Convert the dips to pixels
                 final float scale = getContext().getResources().getDisplayMetrics().density;
-                int mGestureThreshold = (int) (GESTURE_THRESHOLD_DIP * scale / scaleFactor + 0.5f);
+                int mGestureThreshold = (int) (GESTURE_THRESHOLD_DIP * scale / scaleInfo.getScaleFactor() + 0.5f);
 
                 if(!boundsMoveMap && (Math.abs(boundsDistanceY) > mGestureThreshold || Math.abs(boundsDistanceX) > mGestureThreshold)) {
                     boundsMoveMap = true;
@@ -423,8 +411,8 @@ public class AnimationView extends View {
 
                     hideMunicipalityToast();
 
-                    float mDistance_y_dip = boundsDistanceY * scale / scaleFactor + 0.5f;
-                    float mDistance_x_dip = boundsDistanceX * scale / scaleFactor + 0.5f;
+                    float mDistance_y_dip = boundsDistanceY * scale / scaleInfo.getScaleFactor() + 0.5f;
+                    float mDistance_x_dip = boundsDistanceX * scale / scaleInfo.getScaleFactor() + 0.5f;
 
                     bounds.offset((int)mDistance_x_dip, (int)mDistance_y_dip);
 
@@ -462,15 +450,16 @@ public class AnimationView extends View {
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
 
-            scalePivotX = detector.getFocusX();
-            scalePivotY = detector.getFocusY();
-            scaleFactor *= detector.getScaleFactor();
+            scaleInfo.setPivotX(detector.getFocusX());
+            scaleInfo.setPivotY(detector.getFocusY());
+            float newScaleFactor = scaleInfo.getScaleFactor() * detector.getScaleFactor();
 
-            // Don't let the object get too small or too large.
-            scaleFactor = Math.max(minScaleFactor, Math.min(scaleFactor, maxScaleFactor));
+            // Don't let the map to get too small or too large.
+            newScaleFactor = Math.max(MapScaleInfo.MIN_SCALE_FACTOR,
+                    Math.min(newScaleFactor, MapScaleInfo.MAX_SCALE_FACTOR));
+            scaleInfo.setScaleFactor(newScaleFactor);
 
             hideMunicipalityToast();
-            mapWasScaled = true;
             invalidate();
             return true;
         }
@@ -486,16 +475,18 @@ public class AnimationView extends View {
         @Override
         public boolean onDoubleTap(MotionEvent e) {
 
-            scalePivotX = e.getX();
-            scalePivotY = e.getY();
-            scaleFactor *= scaleStepWhenDoubleTapping;
+            scaleInfo.setPivotX(e.getX());
+            scaleInfo.setPivotY(e.getY());
+            float newScaleFactor = scaleInfo.getScaleFactor() *
+                    MapScaleInfo.SCALE_STEP_WHEN_DOUBLE_TAPPING;
 
-            if (scaleFactor >=maxScaleFactor) {
-                scaleFactor = 1.0f;
+            if (newScaleFactor >= MapScaleInfo.MAX_SCALE_FACTOR) {
+                newScaleFactor = MapScaleInfo.DEFAULT_SCALE_FACTOR;
             }
 
+            scaleInfo.setScaleFactor(newScaleFactor);
+
             hideMunicipalityToast();
-            mapWasScaled = true;
             invalidate();
             return true;
         }
@@ -532,7 +523,7 @@ public class AnimationView extends View {
 
                     final float scale = getContext().getResources().getDisplayMetrics().density;
                     int threshold = (int) ((preferenceService.getMapPointSize()/2)*scale +
-                                            (MUNICIPALITY_SEARCH_THRESHOLD/scaleFactor)*scale);
+                                            (MUNICIPALITY_SEARCH_THRESHOLD/scaleInfo.getScaleFactor())*scale);
 
                     if (Math.abs(pos.x-x)<=threshold && Math.abs(pos.y-y)<=threshold) {
 
@@ -588,12 +579,12 @@ public class AnimationView extends View {
 		return bounds;
 	}
 
-    public float getScaleFactor() {
-        return scaleFactor;
+    public MapScaleInfo getScaleInfo() {
+        return this.scaleInfo;
     }
 
-    public void setScaleFactor(float scaleFactor) {
-        this.scaleFactor = scaleFactor;
+    public void setScaleInfo(MapScaleInfo scaleInfo) {
+        this.scaleInfo = scaleInfo;
     }
 
     public void updateBounds(Rect bounds) {

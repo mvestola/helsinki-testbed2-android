@@ -22,6 +22,7 @@ import fi.testbed2.service.*;
 import fi.testbed2.task.DownloadImagesTask;
 import fi.testbed2.util.SeekBarUtil;
 import fi.testbed2.view.AnimationView;
+import fi.testbed2.view.MapScaleInfo;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
 
@@ -189,20 +190,20 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
             @Override
             public void run() {
                 final Rect bounds = preferenceService.getSavedMapBounds(orientation);
-                final float scale = preferenceService.getSavedScaleFactor(orientation);
+                final MapScaleInfo scaleInfo = preferenceService.getSavedScaleInfo(orientation);
                 updatePlayingState(true);
-                animationView.startAnimation(timestampView, seekBar, bounds, scale);
+                animationView.startAnimation(timestampView, seekBar, bounds, scaleInfo);
             }
         });
     }
 
     private void saveMapBoundsAndScaleFactor() {
         preferenceService.saveMapBoundsAndScaleFactor(animationView.getBounds(),
-                animationView.getScaleFactor(), orientation);
+                animationView.getScaleInfo(), orientation);
     }
 
     private void updatePreferencesToView() {
-        animationView.setScaleFactor(preferenceService.getSavedScaleFactor(orientation));
+        animationView.setScaleInfo(preferenceService.getSavedScaleInfo(orientation));
         animationView.updateBounds(preferenceService.getSavedMapBounds(orientation));
         animationView.setMunicipalities(preferenceService.getSavedMunicipalities());
         animationView.getPlayer().setFrameDelay(preferenceService.getSavedFrameDelay());
@@ -322,7 +323,7 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
 
         switch (item.getItemId()) {
             case R.id.main_menu_reset_zoom:
-                animationView.setScaleFactor(1.0f);
+                animationView.setScaleInfo(new MapScaleInfo());
                 animationView.updateBounds(null);
                 animationView.invalidate();
                 return true;

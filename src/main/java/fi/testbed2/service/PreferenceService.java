@@ -3,6 +3,7 @@ package fi.testbed2.service;
 import android.graphics.Rect;
 import android.location.Location;
 import fi.testbed2.data.Municipality;
+import fi.testbed2.view.MapScaleInfo;
 
 import java.util.List;
 
@@ -17,6 +18,8 @@ public interface PreferenceService {
 
     public static final String PREF_BOUNDS_PREFERENCE_KEY_PREFIX = "PREFERENCE_ANIM_BOUNDS_ORIENTATION_";
     public static final String PREF_SCALE_PREFERENCE_KEY_PREFIX = "PREFERENCE_ANIM_SCALE_ORIENTATION_";
+    public static final String PREF_SCALE_PIVOT_X_PREFERENCE_KEY_PREFIX = "PREFERENCE_ANIM_SCALE_PIVOT_X_ORIENTATION_";
+    public static final String PREF_SCALE_PIVOT_Y_PREFERENCE_KEY_PREFIX = "PREFERENCE_ANIM_SCALE_PIVOT_Y_ORIENTATION_";
 
     public static final String PREF_WHATS_NEW_DIALOG_SHOWN_FOR_VERSION = "PREF_WHATS_NEW_DIALOG_SHOWN_FOR_VERSION";
     public static final String PREF_HW_ACCEL_DIALOG_SHOWN = "PREF_HW_ACCEL_DIALOG_SHOWN";
@@ -41,11 +44,11 @@ public interface PreferenceService {
     /**
      * Saves the bounds of the map user has previously viewed to persistent storage.
      */
-    public void saveMapBoundsAndScaleFactor(Rect bounds, float scale, int orientation);
+    public void saveMapBoundsAndScaleFactor(Rect bounds, MapScaleInfo scaleInfo, int orientation);
 
     public Rect getSavedMapBounds(int orientation);
 
-    public float getSavedScaleFactor(int orientation);
+    public MapScaleInfo getSavedScaleInfo(int orientation);
 
     public List<Municipality> getSavedMunicipalities();
 
