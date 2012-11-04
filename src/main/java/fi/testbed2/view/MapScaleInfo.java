@@ -9,6 +9,7 @@ public class MapScaleInfo {
     public static final float MIN_SCALE_FACTOR = 0.5f;
     public static final float MAX_SCALE_FACTOR = 3.0f;
     public static final float SCALE_STEP_WHEN_DOUBLE_TAPPING = 1.3f;
+    public static final float MIN_SCALE_STEP_WHEN_PINCHING = 0.07f;
 
     private float scaleFactor = DEFAULT_SCALE_FACTOR;
     private float pivotX = 0.0f;

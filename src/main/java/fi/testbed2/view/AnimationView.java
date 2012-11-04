@@ -52,6 +52,7 @@ public class AnimationView extends View {
     private ScaleGestureDetector mScaleDetector;
     private GestureDetector mGestureDetector;
     private MapScaleInfo scaleInfo = new MapScaleInfo();
+    private boolean doNotMoveMap;
 
     // Animation frame related
     private int frameWidth;
@@ -253,7 +254,7 @@ public class AnimationView extends View {
         Paint paint = new Paint();
         paint.setColor(color);
         paint.setAntiAlias(true);
-        paint.setAlpha(200); // 0...255, 255 = no transparency
+        paint.setAlpha(200); // 0...255, 255 = no transparency, does not affect SVG transparency!
 
         double imgScaledWidth = bounds.width();
         double imgScaledHeight = bounds.height();
@@ -291,10 +292,9 @@ public class AnimationView extends View {
 
         } else {
 
-            // Save coordinates for info toast
+            // Save canvas coordinates for info toast
             this.municipalitiesOnScreen.put(municipality,
-                    new Point2D.Double(xInt*scaleInfo.getScaleFactor(),
-                            yInt*scaleInfo.getScaleFactor()));
+                    new Point2D.Double(xInt,yInt));
 
             Picture pic = getPointImage();
 
@@ -361,7 +361,7 @@ public class AnimationView extends View {
         mScaleDetector.onTouchEvent(event);
         calculateNewBounds(event);
 
-		return true;
+        return true;
 	}
 
 
@@ -374,12 +374,24 @@ public class AnimationView extends View {
      */
     private boolean calculateNewBounds(MotionEvent event) {
 
+        int action = event.getAction();
+        boolean isMultiTouchEvent = event.getPointerCount()>1;
+
         // Do not move the map in multi-touch
-        if (event.getPointerCount()>1) {
+        if (isMultiTouchEvent) {
+            doNotMoveMap = true;
+        }
+
+        // Allow map movement again when new non-multi-touch down event occurs
+        if (!isMultiTouchEvent && action==MotionEvent.ACTION_DOWN) {
+            doNotMoveMap = false;
+        }
+
+        if (doNotMoveMap) {
             return true;
         }
 
-        switch(event.getAction()) {
+        switch(action) {
             case MotionEvent.ACTION_CANCEL:
                 break;
             case MotionEvent.ACTION_UP:
@@ -450,18 +462,25 @@ public class AnimationView extends View {
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
 
-            scaleInfo.setPivotX(detector.getFocusX());
-            scaleInfo.setPivotY(detector.getFocusY());
-            float newScaleFactor = scaleInfo.getScaleFactor() * detector.getScaleFactor();
+            if (detector.getScaleFactor()>1.0+MapScaleInfo.MIN_SCALE_STEP_WHEN_PINCHING ||
+                    detector.getScaleFactor()<1.0-MapScaleInfo.MIN_SCALE_STEP_WHEN_PINCHING) {
 
-            // Don't let the map to get too small or too large.
-            newScaleFactor = Math.max(MapScaleInfo.MIN_SCALE_FACTOR,
-                    Math.min(newScaleFactor, MapScaleInfo.MAX_SCALE_FACTOR));
-            scaleInfo.setScaleFactor(newScaleFactor);
+                float newScaleFactor = scaleInfo.getScaleFactor() * detector.getScaleFactor();
 
-            hideMunicipalityToast();
-            invalidate();
-            return true;
+                // Don't let the map to get too small or too large.
+                newScaleFactor = Math.max(MapScaleInfo.MIN_SCALE_FACTOR,
+                        Math.min(newScaleFactor, MapScaleInfo.MAX_SCALE_FACTOR));
+                scaleInfo.setScaleFactor(newScaleFactor);
+                scaleInfo.setPivotX(getMeasuredWidth()/2);
+                scaleInfo.setPivotY(getMeasuredHeight()/2);
+
+                hideMunicipalityToast();
+                invalidate();
+                return true;
+
+            }
+
+            return false;
         }
     }
 
@@ -493,23 +512,43 @@ public class AnimationView extends View {
 
         @Override
         public void onLongPress(MotionEvent e) {
+
+            float xCanvas = convertRawXCoordinateToScaledCanvasCoordinate(e.getX());
+            float yCanvas = convertRawYCoordinateToScaledCanvasCoordinate(e.getY());
+
             Logging.debug("Long pressed x: "+e.getX());
             Logging.debug("Long pressed y: "+e.getY());
+            Logging.debug("Long pressed x (canvas): "+xCanvas);
+            Logging.debug("Long pressed y (canvas): "+yCanvas);
+            Logging.debug("Scale factor: "+scaleInfo.getScaleFactor());
+            Logging.debug("Scale pivotX: "+scaleInfo.getPivotX());
+            Logging.debug("Scale pivotY: "+scaleInfo.getPivotY());
+
             hideMunicipalityToast(); // always hide previous toast
-            showInfoForMunicipality(e.getX(), e.getY());
+            showInfoForMunicipality(xCanvas, yCanvas, e.getX(), e.getY());
         }
 
     }
 
+    private float convertRawXCoordinateToScaledCanvasCoordinate(float rawX) {
+        return (rawX-scaleInfo.getPivotX())/scaleInfo.getScaleFactor()+scaleInfo.getPivotX();
+    }
+
+    private float convertRawYCoordinateToScaledCanvasCoordinate(float rawY) {
+        return (rawY-scaleInfo.getPivotY())/scaleInfo.getScaleFactor()+scaleInfo.getPivotY();
+    }
+
     /**
      * Shows info toast about selected municipality if there is
-     * a municipality close to the given x, y coordinates.
+     * a municipality close to the given x,y coordinates.
      *
-     * @param x x coordinate
-     * @param y y coordinate
+     * @param canvasX X coordinate in canvas coordinate
+     * @param canvasY Y coordinate in canvas coordinate
+     * @param rawX Raw X coordinate from the touch event
+     * @param rawY Raw Y coordinate from the touch event
      * @return True if the toast was shown, false if not shown.
      */
-    private boolean showInfoForMunicipality(float x, float y) {
+    private boolean showInfoForMunicipality(float canvasX, float canvasY, float rawX, float rawY) {
 
         for (Municipality municipality : municipalities) {
 
@@ -525,7 +564,7 @@ public class AnimationView extends View {
                     int threshold = (int) ((preferenceService.getMapPointSize()/2)*scale +
                                             (MUNICIPALITY_SEARCH_THRESHOLD/scaleInfo.getScaleFactor())*scale);
 
-                    if (Math.abs(pos.x-x)<=threshold && Math.abs(pos.y-y)<=threshold) {
+                    if (Math.abs(pos.x-canvasX)<=threshold && Math.abs(pos.y-canvasY)<=threshold) {
 
                         Logging.debug("Show info for municipality: "+municipality.getName());
 
@@ -539,8 +578,8 @@ public class AnimationView extends View {
 
                         municipalityToast = new Toast(getContext());
                         municipalityToast.setGravity(Gravity.TOP| Gravity.LEFT,
-                                Double.valueOf(pos.x+20*scale).intValue(),
-                                Double.valueOf(pos.y-40*scale).intValue());
+                                Double.valueOf(rawX+20*scale).intValue(),
+                                Double.valueOf(rawY-40*scale).intValue());
                         municipalityToast.setDuration(Toast.LENGTH_LONG);
                         municipalityToast.setView(layout);
                         municipalityToast.show();

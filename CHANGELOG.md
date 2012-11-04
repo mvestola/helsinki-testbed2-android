@@ -5,8 +5,10 @@ Version 2.0.11 (2012-11-04)
 -------
 
 * Fixed application crash if hardware acceleration was forced to be used
-* Pinch and double-tap zooming now zooms to the point user selected instead of point (0,0)
+* Pinch and double-tap zooming now zooms to the center of the map instead of point (0,0)
 * Fixed occasional layout flashing when refreshing the view
+* Dropped support for Android versions equal or lower than 2.1 (API level <= 7),
+probably has never even worked with Android 2.1
 
 
 Version 2.0.10 (2012-10-29)
