@@ -10,7 +10,7 @@ import roboguice.application.RoboApplication;
 import roboguice.inject.ContextScope;
 
 /**
- * Use this test runner to for activity testing. This injects the
+ * Use this test runner to for activity testing. This automatically injects the
  * beans in the activities defined in the TestModule class.
  */
 public class InjectedTestRunner extends RobolectricTestRunner {

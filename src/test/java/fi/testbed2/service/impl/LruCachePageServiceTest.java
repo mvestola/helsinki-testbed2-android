@@ -1,6 +1,5 @@
 package fi.testbed2.service.impl;
 
-import com.google.inject.Inject;
 import fi.testbed2.AbstractTestCase;
 import fi.testbed2.InjectedTestRunner;
 import fi.testbed2.data.TestbedParsedPage;
@@ -32,13 +31,12 @@ public class LruCachePageServiceTest extends AbstractTestCase {
     public void setUp() throws Exception {
         super.setUp();
 
+        lruCachePageService = new LruCachePageService();
+        initClassForMocks(lruCachePageService);
+        lruCachePageService.setCacheSizeInBytes(1024 * 1024 * 100);
+
         task = mock(Task.class);
         when(task.isAbort()).thenReturn(false);
-
-        lruCachePageService = new LruCachePageService();
-        lruCachePageService.httpService = mockHttpService;
-        lruCachePageService.bitmapService = mockBitmapService;
-        lruCachePageService.setCacheSizeInBytes(1024 * 1024 * 100);
     }
 
     @Test
@@ -179,7 +177,8 @@ public class LruCachePageServiceTest extends AbstractTestCase {
             HttpEntity httpEntity = mock(HttpEntity.class);
             when(httpEntity.getContent()).thenReturn(in);
 
-            when(mockHttpService.getHttpEntityForUrl(any(String.class))).thenReturn(httpEntity);
+            HTTPService httpService = getInjectedMock(HTTPService.class);
+            when(httpService.getHttpEntityForUrl(any(String.class))).thenReturn(httpEntity);
 
         } catch (Exception e) {
             e.printStackTrace();

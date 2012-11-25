@@ -21,7 +21,7 @@ public class InlineMunicipalityServiceTest extends AbstractTestCase {
     public void setUp() throws Exception {
         super.setUp();
         inlineMunicipalityService = new InlineMunicipalityService();
-        inlineMunicipalityService.coordinateService = mockCoordinateService;
+        initClassForMocks(inlineMunicipalityService);
     }
 
     @Test

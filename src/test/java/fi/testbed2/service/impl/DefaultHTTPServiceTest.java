@@ -26,6 +26,7 @@ public class DefaultHTTPServiceTest extends AbstractTestCase {
     public void setUp() throws Exception {
         super.setUp();
         httpService = new DefaultHTTPService();
+        initClassForMocks(httpService);
     }
 
     @Test

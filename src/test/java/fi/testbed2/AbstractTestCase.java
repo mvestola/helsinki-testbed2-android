@@ -14,40 +14,20 @@ import org.mockito.MockitoAnnotations;
  */
 public abstract class AbstractTestCase  {
 
-    protected static final String TEST_DATA_PATH = "src/test/data/";
-
-    @Mock
-    protected DialogBuilder mockDialogBuilder;
-
-    @Mock
-    protected MunicipalityService mockMunicipalityService;
-
-    @Mock
-    protected LocationService mockLocationService;
-
-    @Mock
-    protected CoordinateService mockCoordinateService;
-
-    @Mock
-    protected PreferenceService mockPreferenceService;
-
-    @Mock
-    protected BitmapService mockBitmapService;
-
-    @Mock
-    protected PageService mockPageService;
-
-    @Mock
-    protected HTTPService mockHttpService;
-
-    @Mock
-    protected ActivityManager mockActivityManager;
-
+    protected static final String TEST_DATA_PATH = "src/test/resources/";
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         MainApplication.setContext(Robolectric.application);
+    }
+
+    protected void initClassForMocks(Object obj) {
+        ((MainApplication) Robolectric.application).getInjector().injectMembers(obj);
+    }
+
+    protected <T> T getInjectedMock(Class<T> clazz) {
+        return ((MainApplication) Robolectric.application).getInjector().getInstance(clazz);
     }
 
 }

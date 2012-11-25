@@ -4,6 +4,7 @@ import android.location.Location;
 import com.jhlabs.map.Point2D;
 import com.xtremelabs.robolectric.RobolectricTestRunner;
 import fi.testbed2.AbstractTestCase;
+import fi.testbed2.InjectedTestRunner;
 import fi.testbed2.service.CoordinateService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +21,7 @@ import static org.junit.Assert.assertNotNull;
  * and the corresponding x,y coordinates are manually calculated from the testbed map image
  * with GIMP.
  */
-@RunWith(RobolectricTestRunner.class)
+@RunWith(InjectedTestRunner.class)
 public class MercatorCoordinateServiceTest extends AbstractTestCase {
 
     /**

@@ -5,7 +5,6 @@ import fi.testbed2.InjectedTestRunner;
 import fi.testbed2.data.TestbedMapImage;
 import fi.testbed2.exception.DownloadTaskException;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -29,6 +28,7 @@ public class LruCacheBitmapServiceTest extends AbstractTestCase {
     public void setUp() throws Exception {
         super.setUp();
         lruCacheBitmapService = new LruCacheBitmapService();
+        initClassForMocks(lruCacheBitmapService);
         lruCacheBitmapService.setCacheSizeInBytes(1024 * 1024 * 100);
     }
 
