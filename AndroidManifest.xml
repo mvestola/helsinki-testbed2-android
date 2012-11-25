@@ -9,7 +9,7 @@
         android:hardwareAccelerated="false"
         android:name=".app.MainApplication"
         android:background="#C8C0CDB9">
-        <activity android:name=".activity.MainActivity"
+        <activity android:name=".activity.MainActivity_"
                   android:label="@string/app_name"
                   android:theme="@style/CustomLightTheme">
             <intent-filter>
@@ -20,12 +20,12 @@
 		<activity android:name=".activity.TestbedPreferenceActivity"
 				  android:label="@string/activity_label_settings" >
 		</activity>
-        <activity android:name=".activity.ParsingActivity"
+        <activity android:name=".activity.ParsingActivity_"
                   android:label="@string/activity_label_downloading"
                   android:configChanges="orientation"
                   android:theme="@style/CustomLightTheme">
         </activity>
-        <activity android:name=".activity.AnimationActivity"
+        <activity android:name=".activity.AnimationActivity_"
 				  android:label="@string/activity_label_anim"
                   android:theme="@style/AnimationCustomLightTheme"
                   android:configChanges="orientation">

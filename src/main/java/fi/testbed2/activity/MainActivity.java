@@ -10,22 +10,23 @@ import fi.testbed2.R;
 import fi.testbed2.app.Logging;
 import fi.testbed2.app.MainApplication;
 import fi.testbed2.result.TaskResult;
-import roboguice.inject.ContentView;
+import org.androidannotations.annotations.*;
 import roboguice.inject.InjectView;
 
-@ContentView(R.layout.main)
-public class MainActivity extends AbstractActivity implements OnClickListener {
+@EActivity(R.layout.main)
+@OptionsMenu(R.menu.main_menu)
+@RoboGuice
+public class MainActivity extends AbstractActivity {
 
     public static final int PARSING_SUB_ACTIVITY = 1;
 
-    @InjectView(R.id.button_refresh)
+    @ViewById(R.id.button_refresh)
     ImageButton refreshButton;
 
 	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        refreshButton.setOnClickListener(this);
     }
 
     /** Called when resuming, BUT after onActivityResult! */
@@ -34,17 +35,14 @@ public class MainActivity extends AbstractActivity implements OnClickListener {
         super.onResume();
     }
 
-    @Override
-	public void onClick(View v) {
-		if(v.getId() == R.id.button_refresh) {
-            startMainParsingActivity();
-		}
+    @Click(R.id.button_refresh)
+    public void refreshButtonClicked() {
+        startMainParsingActivity();
 	}
 
     private void startMainParsingActivity() {
         Logging.debug("startMainParsingActivity");
-        Intent intent = new Intent(this, ParsingActivity.class);
-        startActivityForResult(intent, PARSING_SUB_ACTIVITY);
+        ParsingActivity_.intent(this).startForResult(PARSING_SUB_ACTIVITY);
     }
 
     @Override

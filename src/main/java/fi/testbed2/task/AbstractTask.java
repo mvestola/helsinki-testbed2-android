@@ -8,15 +8,19 @@ import fi.testbed2.app.MainApplication;
 import fi.testbed2.result.TaskResult;
 import roboguice.activity.event.OnDestroyEvent;
 import roboguice.event.Observes;
+import roboguice.inject.InjectorProvider;
 import roboguice.util.Ln;
 import roboguice.util.RoboAsyncTask;
 
 public abstract class AbstractTask<T extends TaskResult> extends RoboAsyncTask<T> implements Task {
 
     private boolean abort;
+    private Context context;
 
     protected AbstractTask(Context context) {
-        super(context);
+        super();
+        this.context = context;
+        ((InjectorProvider)context).getInjector().injectMembers(this);
     }
 
     public void abort() {
@@ -31,6 +35,7 @@ public abstract class AbstractTask<T extends TaskResult> extends RoboAsyncTask<T
 
     @Override
     protected void onException(Exception e) {
+        e.printStackTrace();
         Intent intent = new Intent();
         intent.putExtra(TaskResult.MSG_CODE, e.getMessage());
         getActivity().setResult(MainApplication.RESULT_ERROR, intent);
@@ -45,6 +50,10 @@ public abstract class AbstractTask<T extends TaskResult> extends RoboAsyncTask<T
     protected void onActivityDestroy(@Observes OnDestroyEvent ignored ) {
         Logging.debug("Killing background task");
         kill();
+    }
+
+    protected Context getContext() {
+        return context;
     }
 
     public void kill() {

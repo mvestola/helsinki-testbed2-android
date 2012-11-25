@@ -8,22 +8,26 @@ import com.xtremelabs.robolectric.shadows.ShadowActivity;
 import com.xtremelabs.robolectric.shadows.ShadowAlertDialog;
 import com.xtremelabs.robolectric.shadows.ShadowIntent;
 import com.xtremelabs.robolectric.tester.android.view.TestMenuItem;
-import fi.testbed2.AbstractRoboGuiceTestCase;
+import fi.testbed2.AbstractTestCase;
+import fi.testbed2.InjectedTestRunner;
 import fi.testbed2.R;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import static com.xtremelabs.robolectric.Robolectric.shadowOf;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;
 
-public class ParsingActivityTest extends AbstractRoboGuiceTestCase {
+@RunWith(InjectedTestRunner.class)
+public class ParsingActivityTest extends AbstractTestCase {
 
-    private ParsingActivity activity;
+    private ParsingActivity_ activity;
 
     @Before
     public void setUp() throws Exception {
-        activity = new ParsingActivity();
+        activity = new ParsingActivity_();
         activity.onCreate(null);
     }
 

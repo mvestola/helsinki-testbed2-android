@@ -1,5 +1,6 @@
 package fi.testbed2.activity;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
@@ -12,6 +13,8 @@ import fi.testbed2.R;
 import fi.testbed2.dialog.DialogBuilder;
 import fi.testbed2.dialog.DialogType;
 import fi.testbed2.service.PreferenceService;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.OptionsItem;
 import roboguice.activity.RoboActivity;
 
 
@@ -19,7 +22,8 @@ import roboguice.activity.RoboActivity;
  * Base activity class for all activities.
  * Handles options menu, for instance.
  */
-public abstract class AbstractActivity extends RoboActivity {
+@EActivity
+public abstract class AbstractActivity extends Activity {
 
     @Inject
     DialogBuilder dialogBuilder;
@@ -54,43 +58,21 @@ public abstract class AbstractActivity extends RoboActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        onSuperCreateOptionsMenu(menu);
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu, menu);
-        return true;
-    }
-
-    /**
-     * Used for sub-classes for overriding the onCreateOptionsMenu
-     * which needs to call the super's method (can't call just
-     * super.onCreateOptionsMenu() because it will create duplicate
-     * menu items).
-     * @param menu
-     * @return
-     */
-    protected boolean onSuperCreateOptionsMenu(Menu menu) {
-        return super.onCreateOptionsMenu(menu);
-    }
-
     public abstract void onRefreshButtonSelected();
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.main_menu_refresh:
-                onRefreshButtonSelected();
-                return true;
-            case R.id.main_menu_preferences:
-                startActivity(new Intent(this, TestbedPreferenceActivity.class));
-                return true;
-            case R.id.main_menu_about:
-                showDialog(DialogType.ABOUT);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+    @OptionsItem(R.id.main_menu_refresh)
+    public void onRefreshMenuItemSelected() {
+        onRefreshButtonSelected();
+    }
+
+    @OptionsItem(R.id.main_menu_preferences)
+    public void onPreferencesMenuItemSelected() {
+        startActivity(new Intent(this, TestbedPreferenceActivity.class));
+    }
+
+    @OptionsItem(R.id.main_menu_about)
+    public void onAboutMenuItemSelected() {
+        showDialog(DialogType.ABOUT);
     }
 
     protected void showErrorDialog(String errorMsg) {
@@ -98,21 +80,9 @@ public abstract class AbstractActivity extends RoboActivity {
         showDialog(DialogType.ERROR);
     }
 
-    protected void showDialog(DialogType type) {
-        showDialog(type.ordinal());
-    }
+    protected void showDialog(DialogType dialogType) {
 
-    protected void showShortMessage(String msg) {
-        Toast toast = Toast.makeText(getApplicationContext(), msg,
-                Toast.LENGTH_SHORT);
-        toast.show();
-    }
-
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        AlertDialog alertDialog;
-
-        DialogType dialogType = DialogType.getById(id);
+        AlertDialog alertDialog = null;
 
         switch(dialogType) {
             case ABOUT:
@@ -124,11 +94,16 @@ public abstract class AbstractActivity extends RoboActivity {
             case ERROR:
                 alertDialog = dialogBuilder.getErrorDialog(currentErrorMsg);
                 break;
-            default:
-                alertDialog = null;
         }
 
-        return alertDialog;
+        alertDialog.show();
+
+    }
+
+    protected void showShortMessage(String msg) {
+        Toast toast = Toast.makeText(getApplicationContext(), msg,
+                Toast.LENGTH_SHORT);
+        toast.show();
     }
 
     /**

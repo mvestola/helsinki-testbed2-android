@@ -1,13 +1,16 @@
 package fi.testbed2.service.impl;
 
-import fi.testbed2.AbstractRoboGuiceTestCase;
+import com.google.inject.Inject;
+import fi.testbed2.AbstractTestCase;
+import fi.testbed2.InjectedTestRunner;
 import fi.testbed2.data.TestbedParsedPage;
 import fi.testbed2.exception.DownloadTaskException;
+import fi.testbed2.service.HTTPService;
 import fi.testbed2.task.Task;
 import org.apache.http.HttpEntity;
 import org.junit.Before;
 import org.junit.Test;
-import roboguice.RoboGuice;
+import org.junit.runner.RunWith;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -18,27 +21,31 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class LruCachePageServiceTest extends AbstractRoboGuiceTestCase {
+@RunWith(InjectedTestRunner.class)
+public class LruCachePageServiceTest extends AbstractTestCase {
 
     private Task task;
 
-    private static LruCachePageService pageService;
-
+    private static LruCachePageService lruCachePageService;
 
     @Before
     public void setUp() throws Exception {
         super.setUp();
+
         task = mock(Task.class);
         when(task.isAbort()).thenReturn(false);
-        pageService = RoboGuice.getInjector(context).getInstance(LruCachePageService.class);
-        pageService.setCacheSizeInBytes(1024 * 1024 * 100);
+
+        lruCachePageService = new LruCachePageService();
+        lruCachePageService.httpService = mockHttpService;
+        lruCachePageService.bitmapService = mockBitmapService;
+        lruCachePageService.setCacheSizeInBytes(1024 * 1024 * 100);
     }
 
     @Test
     public void testParseTestbedPageWithRainRadar() throws Exception {
 
         initHTMLPage("testbed_rain_15.html");
-        TestbedParsedPage page = pageService.downloadAndParseTestbedPage("http://url.is.irrelevant.here", task);
+        TestbedParsedPage page = lruCachePageService.downloadAndParseTestbedPage("http://url.is.irrelevant.here", task);
 
         assertEquals(15, page.getAllTestbedImages().size());
 
@@ -80,7 +87,7 @@ public class LruCachePageServiceTest extends AbstractRoboGuiceTestCase {
     public void testParseTestbedPageWithWindMapOnlyOneImage() throws Exception {
 
         initHTMLPage("testbed_wind_1.html");
-        TestbedParsedPage page = pageService.downloadAndParseTestbedPage("http://url.is.irrelevant.here", task);
+        TestbedParsedPage page = lruCachePageService.downloadAndParseTestbedPage("http://url.is.irrelevant.here", task);
 
         assertEquals(1, page.getAllTestbedImages().size());
 
@@ -93,7 +100,7 @@ public class LruCachePageServiceTest extends AbstractRoboGuiceTestCase {
     public void testParseTestbedPageWithAirPressureMapOnlyThreeHoursTimeStep() throws Exception {
 
         initHTMLPage("testbed_pressure_5.html");
-        TestbedParsedPage page = pageService.downloadAndParseTestbedPage("http://url.is.irrelevant.here", task);
+        TestbedParsedPage page = lruCachePageService.downloadAndParseTestbedPage("http://url.is.irrelevant.here", task);
 
         assertEquals(5, page.getAllTestbedImages().size());
 
@@ -115,7 +122,7 @@ public class LruCachePageServiceTest extends AbstractRoboGuiceTestCase {
     public void testParseTestbedPageWithErrors() throws Exception {
 
         initHTMLPage("testbed_invalid.html");
-        TestbedParsedPage page = pageService.downloadAndParseTestbedPage("http://url.is.irrelevant.here", task);
+        TestbedParsedPage page = lruCachePageService.downloadAndParseTestbedPage("http://url.is.irrelevant.here", task);
 
     }
 
@@ -123,7 +130,7 @@ public class LruCachePageServiceTest extends AbstractRoboGuiceTestCase {
     public void testParseTestbedPageWithOneTimestampMissing() throws Exception {
 
         initHTMLPage("testbed_timestamps_length_error.html");
-        TestbedParsedPage page = pageService.downloadAndParseTestbedPage("http://url.is.irrelevant.here", task);
+        TestbedParsedPage page = lruCachePageService.downloadAndParseTestbedPage("http://url.is.irrelevant.here", task);
 
     }
 
@@ -131,7 +138,7 @@ public class LruCachePageServiceTest extends AbstractRoboGuiceTestCase {
     public void testParseTestbedPageWithAddedNewlines() throws Exception {
 
         initHTMLPage("testbed_changed_newlines.html");
-        TestbedParsedPage page = pageService.downloadAndParseTestbedPage("http://url.is.irrelevant.here", task);
+        TestbedParsedPage page = lruCachePageService.downloadAndParseTestbedPage("http://url.is.irrelevant.here", task);
         assertEquals(5, page.getAllTestbedImages().size());
 
         // These test are not currently executed since there will be exception
@@ -158,7 +165,7 @@ public class LruCachePageServiceTest extends AbstractRoboGuiceTestCase {
         initHTMLPage("testbed_rain_15.html");
         when(task.isAbort()).thenReturn(true);
 
-        TestbedParsedPage page = pageService.downloadAndParseTestbedPage("http://url.is.irrelevant.here", task);
+        TestbedParsedPage page = lruCachePageService.downloadAndParseTestbedPage("http://url.is.irrelevant.here", task);
         assertNull(page);
 
     }
@@ -172,7 +179,7 @@ public class LruCachePageServiceTest extends AbstractRoboGuiceTestCase {
             HttpEntity httpEntity = mock(HttpEntity.class);
             when(httpEntity.getContent()).thenReturn(in);
 
-            when(testModule.mockHttpService.getHttpEntityForUrl(any(String.class))).thenReturn(httpEntity);
+            when(mockHttpService.getHttpEntityForUrl(any(String.class))).thenReturn(httpEntity);
 
         } catch (Exception e) {
             e.printStackTrace();

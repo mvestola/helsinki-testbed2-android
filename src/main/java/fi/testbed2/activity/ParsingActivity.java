@@ -8,20 +8,25 @@ import android.widget.TextView;
 import fi.testbed2.R;
 import fi.testbed2.app.MainApplication;
 import fi.testbed2.task.ParseAndInitTask;
-import roboguice.inject.ContentView;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.OptionsMenu;
+import org.androidannotations.annotations.RoboGuice;
+import org.androidannotations.annotations.ViewById;
 import roboguice.inject.InjectView;
 
-@ContentView(R.layout.download)
+@EActivity(R.layout.download)
+@OptionsMenu(R.menu.main_menu)
+@RoboGuice
 public class ParsingActivity extends AbstractActivity {
 
     public static final int ANIMATION_SUB_ACTIVITY = 2;
 
     private ParseAndInitTask task;
 
-    @InjectView(R.id.progressbar)
+    @ViewById(R.id.progressbar)
     ProgressBar progressBar;
 
-    @InjectView(R.id.progresstext)
+    @ViewById(R.id.progresstext)
     TextView progressTextView;
 
     private boolean parsingFinished;
@@ -68,7 +73,7 @@ public class ParsingActivity extends AbstractActivity {
 
     public void onParsingFinished() {
         parsingFinished = true;
-        startActivityForResult(new Intent(this, AnimationActivity.class), ANIMATION_SUB_ACTIVITY);
+        AnimationActivity_.intent(this).startForResult(ANIMATION_SUB_ACTIVITY);
     }
 
     @Override

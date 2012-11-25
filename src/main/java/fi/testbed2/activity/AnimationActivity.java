@@ -23,7 +23,7 @@ import fi.testbed2.task.DownloadImagesTask;
 import fi.testbed2.util.SeekBarUtil;
 import fi.testbed2.view.AnimationView;
 import fi.testbed2.view.MapScaleInfo;
-import roboguice.inject.ContentView;
+import org.androidannotations.annotations.*;
 import roboguice.inject.InjectView;
 
 import java.lang.reflect.Method;
@@ -31,8 +31,10 @@ import java.lang.reflect.Method;
 /**
  * Activity handling the main map animation view.
  */
-@ContentView(R.layout.animation)
-public class AnimationActivity extends AbstractActivity implements OnClickListener, SeekBar.OnSeekBarChangeListener {
+@EActivity(R.layout.animation)
+@OptionsMenu(R.menu.animation_menu)
+@RoboGuice
+public class AnimationActivity extends AbstractActivity {
 
     @Inject
     MunicipalityService municipalityService;
@@ -52,16 +54,16 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
     @Inject
     PageService pageService;
 
-    @InjectView(R.id.animation_view)
+    @ViewById(R.id.animation_view)
     AnimationView animationView;
 
-    @InjectView(R.id.playpause_button)
+    @ViewById(R.id.playpause_button)
     ImageButton playPauseButton;
 
-    @InjectView(R.id.timestamp_view)
+    @ViewById(R.id.timestamp_view)
     TextView timestampView;
 
-    @InjectView(R.id.seek)
+    @ViewById(R.id.seek)
     SeekBar seekBar;
 
     boolean isPlaying = true;
@@ -81,9 +83,6 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
         }
 
         orientation = getResources().getConfiguration().orientation;
-
-        initListeners();
-        initView();
 
     }
 
@@ -169,12 +168,8 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
         showHardwareAccelerationWarningIfNeeded();
     }
 
-    private void initListeners() {
-        playPauseButton.setOnClickListener(this);
-        seekBar.setOnSeekBarChangeListener(this);
-    }
-
-    private void initView() {
+    @AfterViews
+    protected void initView() {
         animationView.setAllImagesDownloaded(false);
         animationView.setMunicipalities(preferenceService.getSavedMunicipalities());
         animationView.userLocationService = locationService;
@@ -280,21 +275,16 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
         animationView.getPlayer().pause();
     }
 
-    @Override
-	public void onClick(View v) {
+
+    @Click(R.id.playpause_button)
+	public void onPlayPauseButtonClick() {
 
         if (!allImagesDownloaded) {
             return;
         }
 
-		switch(v.getId()) {
-            case R.id.playpause_button:
-                animationView.getPlayer().playOrPause();
-                updatePlayingState(!isPlaying);
-                break;
-            default:
-                return;
-		}
+        animationView.getPlayer().playOrPause();
+        updatePlayingState(!isPlaying);
 
 	}
 
@@ -310,30 +300,14 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onSuperCreateOptionsMenu(menu);
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.animation_menu, menu);
-        return true;
+    @OptionsItem(R.id.main_menu_reset_zoom)
+    public void onResetZoomSelected() {
+        animationView.setScaleInfo(new MapScaleInfo());
+        animationView.updateBounds(null);
+        animationView.invalidate();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.main_menu_reset_zoom:
-                animationView.setScaleInfo(new MapScaleInfo());
-                animationView.updateBounds(null);
-                animationView.invalidate();
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    @Override
+    @SeekBarProgressChange(R.id.seek)
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         if (fromUser) {
             pauseAnimation();
@@ -343,12 +317,12 @@ public class AnimationActivity extends AbstractActivity implements OnClickListen
         }
     }
 
-    @Override
+    @SeekBarTouchStart(R.id.seek)
     public void onStartTrackingTouch(SeekBar seekBar) {
         pauseAnimation();
     }
 
-    @Override
+    @SeekBarTouchStop(R.id.seek)
     public void onStopTrackingTouch(SeekBar seekBar) {
         // Don't do anything
     }

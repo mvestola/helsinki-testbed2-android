@@ -4,28 +4,37 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.view.MenuItem;
 import android.widget.ImageButton;
+import com.google.inject.Inject;
+import com.google.inject.internal.Nullable;
 import com.xtremelabs.robolectric.Robolectric;
 import com.xtremelabs.robolectric.shadows.ShadowActivity;
 import com.xtremelabs.robolectric.shadows.ShadowAlertDialog;
 import com.xtremelabs.robolectric.shadows.ShadowIntent;
 import com.xtremelabs.robolectric.tester.android.view.TestMenuItem;
-import fi.testbed2.AbstractRoboGuiceTestCase;
+import fi.testbed2.AbstractTestCase;
+import fi.testbed2.InjectedTestRunner;
 import fi.testbed2.R;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import roboguice.inject.InjectResource;
+import roboguice.inject.InjectView;
 
 import static com.xtremelabs.robolectric.Robolectric.shadowOf;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;
 
-public class MainActivityTest extends AbstractRoboGuiceTestCase {
+@RunWith(InjectedTestRunner.class)
+public class MainActivityTest extends AbstractTestCase {
 
-    private MainActivity activity;
+    private MainActivity_ activity;
+
     private ImageButton refreshButton;
 
     @Before
     public void setUp() throws Exception {
-        activity = new MainActivity();
+        activity = new MainActivity_();
         activity.onCreate(null);
         refreshButton = (ImageButton) activity.findViewById(R.id.button_refresh);
     }
@@ -44,7 +53,7 @@ public class MainActivityTest extends AbstractRoboGuiceTestCase {
         ShadowActivity shadowActivity = shadowOf(activity);
         Intent startedIntent = shadowActivity.getNextStartedActivity();
         ShadowIntent shadowIntent = shadowOf(startedIntent);
-        assertThat(shadowIntent.getComponent().getClassName(), equalTo(ParsingActivity.class.getName()));
+        assertThat(shadowIntent.getComponent().getClassName(), equalTo(ParsingActivity_.class.getName()));
 
     }
 
@@ -57,7 +66,7 @@ public class MainActivityTest extends AbstractRoboGuiceTestCase {
         ShadowActivity shadowActivity = shadowOf(activity);
         Intent startedIntent = shadowActivity.getNextStartedActivity();
         ShadowIntent shadowIntent = shadowOf(startedIntent);
-        assertThat(shadowIntent.getComponent().getClassName(), equalTo(ParsingActivity.class.getName()));
+        assertThat(shadowIntent.getComponent().getClassName(), equalTo(ParsingActivity_.class.getName()));
 
     }
 
