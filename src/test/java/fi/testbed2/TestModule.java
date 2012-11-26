@@ -1,8 +1,7 @@
 package fi.testbed2;
 
-import fi.testbed2.app.MainModule;
-import fi.testbed2.dialog.DefaultDialogBuilder;
-import fi.testbed2.dialog.DialogBuilder;
+import fi.testbed2.android.ui.dialog.AlertDialogBuilder;
+import fi.testbed2.android.ui.dialog.DialogBuilder;
 import fi.testbed2.service.*;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -36,7 +35,7 @@ public class TestModule extends MainModule {
         MockitoAnnotations.initMocks(this);
 
         // Same as in MainModule
-        bind(DialogBuilder.class).to(DefaultDialogBuilder.class);
+        bind(DialogBuilder.class).to(AlertDialogBuilder.class);
 
         // Mocked
         bind(MunicipalityService.class).toInstance(mockMunicipalityService);

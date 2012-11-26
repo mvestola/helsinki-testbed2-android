@@ -4,7 +4,7 @@ import android.app.Application;
 import com.google.inject.Injector;
 import com.xtremelabs.robolectric.Robolectric;
 import com.xtremelabs.robolectric.RobolectricTestRunner;
-import fi.testbed2.app.MainApplication;
+import fi.testbed2.android.app.MainApplication;
 import org.junit.runners.model.InitializationError;
 import roboguice.application.RoboApplication;
 import roboguice.inject.ContextScope;

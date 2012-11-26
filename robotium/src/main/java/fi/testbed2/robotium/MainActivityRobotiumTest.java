@@ -3,9 +3,9 @@ package fi.testbed2.robotium;
 import android.test.ActivityInstrumentationTestCase2;
 import com.jayway.android.robotium.solo.Solo;
 import fi.testbed2.R;
-import fi.testbed2.activity.AnimationActivity;
-import fi.testbed2.activity.MainActivity;
-import fi.testbed2.activity.TestbedPreferenceActivity;
+import fi.testbed2.android.activity.AnimationActivity;
+import fi.testbed2.android.activity.MainActivity;
+import fi.testbed2.android.activity.TestbedPreferenceActivity;
 
 /**
  * Robotium test for the main activity.

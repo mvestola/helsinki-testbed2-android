@@ -2,8 +2,8 @@ package fi.testbed2.service.impl;
 
 import fi.testbed2.AbstractTestCase;
 import fi.testbed2.InjectedTestRunner;
-import fi.testbed2.data.MapLocationGPS;
-import fi.testbed2.data.MapLocationXY;
+import fi.testbed2.domain.MapLocationGPS;
+import fi.testbed2.domain.MapLocationXY;
 import fi.testbed2.service.CoordinateService;
 import org.junit.Test;
 import org.junit.runner.RunWith;

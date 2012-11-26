@@ -2,8 +2,8 @@ package fi.testbed2.service.impl;
 
 import fi.testbed2.AbstractTestCase;
 import fi.testbed2.InjectedTestRunner;
-import fi.testbed2.data.TestbedMapImage;
-import fi.testbed2.exception.DownloadTaskException;
+import fi.testbed2.android.task.exception.DownloadTaskException;
+import fi.testbed2.domain.TestbedMapImage;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

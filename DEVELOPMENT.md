@@ -43,9 +43,9 @@ Project installation and configuration
 `git clone git@github.com:mvestola/helsinki-testbed2-android.git`
 2. To the root directory (where the pom.xml is), add file local.properties
 and specify where you have installed your Android SDK to "sdk.dir" property
-(see file conf/default.properties for example). This file is required by the
-Robolectric framework.
-3. Also add local.properties file to conf/local.properties. Just make a copy of
+(see file src/main/config/default.properties for example).
+This file is required by the Robolectric framework.
+3. Also add local.properties file to src/main/config/local.properties. Just make a copy of
 the file default.properties and change the field to match your configuration.
 3. Build the project with maven: `mvn clean install`
 

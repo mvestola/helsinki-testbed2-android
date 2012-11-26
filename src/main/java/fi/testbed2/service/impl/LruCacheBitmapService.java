@@ -8,9 +8,9 @@ import android.support.v4.util.LruCache;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import fi.testbed2.R;
-import fi.testbed2.app.Logging;
-import fi.testbed2.data.TestbedMapImage;
-import fi.testbed2.exception.DownloadTaskException;
+import fi.testbed2.android.app.Logging;
+import fi.testbed2.android.task.exception.DownloadTaskException;
+import fi.testbed2.domain.TestbedMapImage;
 import fi.testbed2.service.BitmapService;
 
 import java.io.IOException;

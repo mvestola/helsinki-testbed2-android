@@ -3,7 +3,7 @@ package fi.testbed2.service.impl;
 import com.xtremelabs.robolectric.Robolectric;
 import fi.testbed2.AbstractTestCase;
 import fi.testbed2.InjectedTestRunner;
-import fi.testbed2.exception.DownloadTaskException;
+import fi.testbed2.android.task.exception.DownloadTaskException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

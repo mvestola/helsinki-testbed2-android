@@ -8,6 +8,7 @@ testbed.iws
 
 local.properties
 conf/local.properties
+src/main/config/local.properties
 
 tmp/
 target/

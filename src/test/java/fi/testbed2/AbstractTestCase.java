@@ -1,7 +1,7 @@
 package fi.testbed2;
 
 import com.xtremelabs.robolectric.Robolectric;
-import fi.testbed2.app.MainApplication;
+import fi.testbed2.android.app.MainApplication;
 import org.junit.Before;
 import org.mockito.MockitoAnnotations;
 

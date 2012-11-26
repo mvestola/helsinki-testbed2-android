@@ -2,13 +2,14 @@ package fi.testbed2.service.impl;
 
 import fi.testbed2.AbstractTestCase;
 import fi.testbed2.InjectedTestRunner;
-import fi.testbed2.data.TestbedParsedPage;
-import fi.testbed2.exception.DownloadTaskException;
+import fi.testbed2.android.task.Task;
+import fi.testbed2.android.task.exception.DownloadTaskException;
+import fi.testbed2.domain.TestbedParsedPage;
 import fi.testbed2.service.HttpUrlService;
-import fi.testbed2.task.Task;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -16,12 +17,12 @@ import java.io.InputStream;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(InjectedTestRunner.class)
 public class LruCachePageServiceTest extends AbstractTestCase {
 
+    @Mock
     private Task task;
 
     private static LruCachePageService lruCachePageService;
@@ -34,7 +35,6 @@ public class LruCachePageServiceTest extends AbstractTestCase {
         initClassForMocks(lruCachePageService);
         lruCachePageService.setCacheSizeInBytes(1024 * 1024 * 100);
 
-        task = mock(Task.class);
         when(task.isAbort()).thenReturn(false);
     }
 
@@ -46,7 +46,7 @@ public class LruCachePageServiceTest extends AbstractTestCase {
 
         assertEquals(15, page.getAllTestbedImages().size());
 
-        assertEquals("12:40",page.getAllTestbedImages().get(0).getLocalTimestamp());
+        assertEquals("12:40", page.getAllTestbedImages().get(0).getLocalTimestamp());
         assertEquals("12:45",page.getAllTestbedImages().get(1).getLocalTimestamp());
         assertEquals("12:50",page.getAllTestbedImages().get(2).getLocalTimestamp());
         assertEquals("12:55",page.getAllTestbedImages().get(3).getLocalTimestamp());

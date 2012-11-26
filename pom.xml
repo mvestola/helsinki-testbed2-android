@@ -11,7 +11,7 @@
 
     <properties>
         <powermock.version>1.4.12</powermock.version>
-        <app.environment.file.template>conf/Environment.java.template</app.environment.file.template>
+        <app.environment.file.template>src/main/config/Environment.java.template</app.environment.file.template>
         <app.environment.file>target/generated-sources/r/fi/testbed2/Environment.java</app.environment.file>
     </properties>
 
@@ -163,9 +163,9 @@
                         </goals>
                         <configuration>
                             <files>
-                                <file>conf/default.properties</file>
-                                <file>conf/local.properties</file>
-                                <file>local.properties</file>
+                                <file>src/main/config/default.properties</file>
+                                <file>src/main/config/local.properties</file>
+                                <file>src/main/config/local.properties</file>
                             </files>
                         </configuration>
                     </execution>

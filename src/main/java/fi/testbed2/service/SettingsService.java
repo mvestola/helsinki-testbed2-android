@@ -1,9 +1,9 @@
 package fi.testbed2.service;
 
 import android.graphics.Rect;
-import fi.testbed2.data.MapLocationGPS;
-import fi.testbed2.data.Municipality;
-import fi.testbed2.view.MapScaleInfo;
+import fi.testbed2.android.ui.view.MapScaleInfo;
+import fi.testbed2.domain.MapLocationGPS;
+import fi.testbed2.domain.Municipality;
 
 import java.util.List;
 

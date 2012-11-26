@@ -3,9 +3,9 @@ package fi.testbed2.service.impl;
 import com.google.inject.Singleton;
 import com.jhlabs.map.Point2D;
 import com.jhlabs.map.proj.MercatorProjection;
-import fi.testbed2.app.Logging;
-import fi.testbed2.data.MapLocationGPS;
-import fi.testbed2.data.MapLocationXY;
+import fi.testbed2.android.app.Logging;
+import fi.testbed2.domain.MapLocationGPS;
+import fi.testbed2.domain.MapLocationXY;
 import fi.testbed2.service.CoordinateService;
 
 /**

@@ -2,8 +2,8 @@ package fi.testbed2.service.impl;
 
 import com.google.inject.Singleton;
 import fi.testbed2.R;
-import fi.testbed2.app.Logging;
-import fi.testbed2.exception.DownloadTaskException;
+import fi.testbed2.android.app.Logging;
+import fi.testbed2.android.task.exception.DownloadTaskException;
 import fi.testbed2.service.HttpUrlService;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;

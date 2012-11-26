@@ -1,6 +1,6 @@
 package fi.testbed2.service;
 
-import fi.testbed2.exception.DownloadTaskException;
+import fi.testbed2.android.task.exception.DownloadTaskException;
 
 import java.io.InputStream;
 

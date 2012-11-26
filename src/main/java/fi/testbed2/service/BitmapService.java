@@ -1,8 +1,8 @@
 package fi.testbed2.service;
 
 import android.graphics.Bitmap;
-import fi.testbed2.data.TestbedMapImage;
-import fi.testbed2.exception.DownloadTaskException;
+import fi.testbed2.android.task.exception.DownloadTaskException;
+import fi.testbed2.domain.TestbedMapImage;
 
 /**
  * Service which provides downloaded Bitmap images

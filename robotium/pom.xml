@@ -87,9 +87,9 @@
                         </goals>
                         <configuration>
                             <files>
-                                <file>../conf/default.properties</file>
-                                <file>../conf/local.properties</file>
-                                <file>../local.properties</file>
+                                <file>../src/main/config/default.properties</file>
+                                <file>../src/main/config/local.properties</file>
+                                <file>../src/main/config/local.properties</file>
                             </files>
                         </configuration>
                     </execution>

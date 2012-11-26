@@ -1,8 +1,8 @@
 package fi.testbed2.service;
 
-import fi.testbed2.data.TestbedParsedPage;
-import fi.testbed2.exception.DownloadTaskException;
-import fi.testbed2.task.Task;
+import fi.testbed2.android.task.Task;
+import fi.testbed2.android.task.exception.DownloadTaskException;
+import fi.testbed2.domain.TestbedParsedPage;
 
 public interface PageService {
 

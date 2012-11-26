@@ -1,7 +1,7 @@
 package fi.testbed2.service;
 
-import fi.testbed2.data.MapLocationGPS;
-import fi.testbed2.data.MapLocationXY;
+import fi.testbed2.domain.MapLocationGPS;
+import fi.testbed2.domain.MapLocationXY;
 
 public interface LocationService {
 

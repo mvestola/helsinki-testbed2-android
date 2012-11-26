@@ -1,6 +1,6 @@
 package fi.testbed2.service;
 
-import fi.testbed2.data.Municipality;
+import fi.testbed2.domain.Municipality;
 
 import java.util.SortedMap;
 
