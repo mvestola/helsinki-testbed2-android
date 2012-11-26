@@ -4,6 +4,10 @@ import android.graphics.Bitmap;
 import fi.testbed2.data.TestbedMapImage;
 import fi.testbed2.exception.DownloadTaskException;
 
+/**
+ * Service which provides downloaded Bitmap images
+ * for testbed images.
+ */
 public interface BitmapService {
 
     public boolean bitmapIsDownloaded(TestbedMapImage image);

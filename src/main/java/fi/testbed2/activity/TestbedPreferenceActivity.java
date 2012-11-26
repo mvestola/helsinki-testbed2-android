@@ -9,6 +9,7 @@ import com.google.inject.Inject;
 import com.threefiftynice.android.preference.ListPreferenceMultiSelect;
 import fi.testbed2.R;
 import fi.testbed2.app.Logging;
+import fi.testbed2.data.MapLocationGPS;
 import fi.testbed2.dialog.DialogBuilder;
 import fi.testbed2.service.LocationService;
 import fi.testbed2.service.MunicipalityService;
@@ -76,7 +77,7 @@ public class TestbedPreferenceActivity extends RoboPreferenceActivity
 
             if (newProvider.equals(LocationService.LOCATION_PROVIDER_FIXED)) {
 
-                Location loc = settingsService.saveCurrentLocationAsFixedLocation();
+                MapLocationGPS loc = settingsService.saveCurrentLocationAsFixedLocation();
                 Logging.debug("Using fixed provider: "+loc);
 
                 /**
@@ -102,7 +103,7 @@ public class TestbedPreferenceActivity extends RoboPreferenceActivity
         String currentValue = "";
 
         if (newProvider.equals(LocationService.LOCATION_PROVIDER_FIXED)) {
-            Location loc = settingsService.getSavedFixedLocation();
+            MapLocationGPS loc = settingsService.getSavedFixedLocation();
             String coordinates = "lat: "+loc.getLatitude()+", lon: "+loc.getLongitude();
             currentValue = this.getString(R.string.preference_location_provider_fixed, coordinates);
         } else if (newProvider.equals(LocationManager.NETWORK_PROVIDER)) {

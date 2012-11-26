@@ -5,6 +5,8 @@ import com.jhlabs.map.Point2D;
 import com.xtremelabs.robolectric.RobolectricTestRunner;
 import fi.testbed2.AbstractTestCase;
 import fi.testbed2.InjectedTestRunner;
+import fi.testbed2.data.MapLocationGPS;
+import fi.testbed2.data.MapLocationXY;
 import fi.testbed2.service.CoordinateService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,207 +48,165 @@ public class MercatorCoordinateServiceTest extends AbstractTestCase {
     @Test
     public void testGetRoadIntersectionNearHumppila() throws Exception {
 
-        Location point = new Location(CoordinateService.STATIC_PROVIDER_NAME);
-        point.setLatitude(60.95357);
-        point.setLongitude(23.33907);
+        MapLocationGPS point = new MapLocationGPS(60.95357, 23.33907);
+        MapLocationXY pos = coordinateService.convertLocationToXyPos(point);
 
-        Point2D.Double pos = coordinateService.convertLocationToXyPos(point);
-
-        assertEquals(99.0, pos.x, PRECISION_STRICT);
-        assertEquals(16.0, pos.y, PRECISION_STRICT);
+        assertEquals(99.0, pos.getX(), PRECISION_STRICT);
+        assertEquals(16.0, pos.getY(), PRECISION_STRICT);
 
     }
 
     @Test
     public void testGetRoadIntersectionNearPorvoo() throws Exception {
 
-        Location point = new Location(CoordinateService.STATIC_PROVIDER_NAME);
-        point.setLatitude(60.39069);
-        point.setLongitude(25.61653);
+        MapLocationGPS point = new MapLocationGPS(60.39069, 25.61653);
+        MapLocationXY pos = coordinateService.convertLocationToXyPos(point);
 
-        Point2D.Double pos = coordinateService.convertLocationToXyPos(point);
-
-        assertEquals(429.5, pos.x, PRECISION_STRICT);
-        assertEquals(187.0, pos.y, PRECISION_STRICT);
+        assertEquals(429.5, pos.getX(), PRECISION_STRICT);
+        assertEquals(187.0, pos.getY(), PRECISION_STRICT);
 
     }
 
     @Test
     public void testGetRoadIntersectionNearTammela() throws Exception {
 
-        Location point = new Location(CoordinateService.STATIC_PROVIDER_NAME);
-        point.setLatitude(60.82826);
-        point.setLongitude(24.01678);
+        MapLocationGPS point = new MapLocationGPS(60.82826, 24.01678);
+        MapLocationXY pos = coordinateService.convertLocationToXyPos(point);
 
-        Point2D.Double pos = coordinateService.convertLocationToXyPos(point);
-
-        assertEquals(197.5, pos.x, PRECISION_STRICT);
-        assertEquals(55.0, pos.y, PRECISION_STRICT);
+        assertEquals(197.5, pos.getX(), PRECISION_STRICT);
+        assertEquals(55.0, pos.getY(), PRECISION_STRICT);
 
     }
 
     @Test
     public void getRoadIntersectionNearTammela() {
 
-        Location point = new Location(CoordinateService.STATIC_PROVIDER_NAME);
-        point.setLatitude(60.82826);
-        point.setLongitude(24.01678);
+        MapLocationGPS point = new MapLocationGPS(60.82826, 24.01678);
+        MapLocationXY pos = coordinateService.convertLocationToXyPos(point);
 
-        Point2D.Double pos = coordinateService.convertLocationToXyPos(point);
-
-        assertEquals(197.5, pos.x, PRECISION_STRICT);
-        assertEquals(55.0, pos.y, PRECISION_STRICT);
+        assertEquals(197.5, pos.getX(), PRECISION_STRICT);
+        assertEquals(55.0, pos.getY(), PRECISION_STRICT);
 
     }
 
     @Test
     public void testGetRoadIntersectionOfKeha3AndLansivayla() throws Exception {
 
-        Location point = new Location(CoordinateService.STATIC_PROVIDER_NAME);
-        point.setLatitude(60.13773);
-        point.setLongitude(24.53475);
+        MapLocationGPS point = new MapLocationGPS(60.13773, 24.53475);
+        MapLocationXY pos = coordinateService.convertLocationToXyPos(point);
 
-        Point2D.Double pos = coordinateService.convertLocationToXyPos(point);
-
-        assertEquals(273.8, pos.x, PRECISION_STRICT);
-        assertEquals(262.6, pos.y, PRECISION_STRICT);
+        assertEquals(273.8, pos.getX(), PRECISION_STRICT);
+        assertEquals(262.6, pos.getY(), PRECISION_STRICT);
 
     }
 
     @Test
     public void testGetPointInVihdintieKeha3Intersection() throws Exception {
 
-        Location point = new Location(CoordinateService.STATIC_PROVIDER_NAME);
-        point.setLatitude(60.27414);
-        point.setLongitude(24.80443);
+        MapLocationGPS point = new MapLocationGPS(60.27414, 24.80443);
+        MapLocationXY pos = coordinateService.convertLocationToXyPos(point);
 
-        Point2D.Double pos = coordinateService.convertLocationToXyPos(point);
-
-        assertEquals(311.0, pos.x, PRECISION_STRICT);
-        assertEquals(222.4, pos.y, PRECISION_STRICT);
+        assertEquals(311.0, pos.getX(), PRECISION_STRICT);
+        assertEquals(222.4, pos.getY(), PRECISION_STRICT);
 
     }
 
     @Test
     public void testGetRoadIntersectionNearKouvola() throws Exception {
 
-        Location point = new Location(CoordinateService.STATIC_PROVIDER_NAME);
-        point.setLatitude(60.88512);
-        point.setLongitude(26.76588);
+        MapLocationGPS point = new MapLocationGPS(60.88512, 26.76588);
+        MapLocationXY pos = coordinateService.convertLocationToXyPos(point);
 
-        Point2D.Double pos = coordinateService.convertLocationToXyPos(point);
-
-        assertEquals(596.9, pos.x, PRECISION_STRICT);
-        assertEquals(35.5, pos.y, PRECISION_STRICT);
+        assertEquals(596.9, pos.getX(), PRECISION_STRICT);
+        assertEquals(35.5, pos.getY(), PRECISION_STRICT);
 
     }
 
     @Test
     public void testGetPointNearLoviisa() throws Exception {
 
-        Location point = new Location(CoordinateService.STATIC_PROVIDER_NAME);
-        point.setLatitude(60.49151);
-        point.setLongitude(25.95929);
+        MapLocationGPS point = new MapLocationGPS(60.49151, 25.95929);
+        MapLocationXY pos = coordinateService.convertLocationToXyPos(point);
 
-        Point2D.Double pos = coordinateService.convertLocationToXyPos(point);
-
-        assertEquals(480.5, pos.x, PRECISION_STRICT);
-        assertEquals(155.4, pos.y, PRECISION_STRICT);
+        assertEquals(480.5, pos.getX(), PRECISION_STRICT);
+        assertEquals(155.4, pos.getY(), PRECISION_STRICT);
 
     }
 
     @Test
     public void testGetPointNearVahvala() throws Exception {
 
-        Location point = new Location(CoordinateService.STATIC_PROVIDER_NAME);
-        point.setLatitude(60.95451);
-        point.setLongitude(22.86604);
+        MapLocationGPS point = new MapLocationGPS(60.95451, 22.86604);
+        MapLocationXY pos = coordinateService.convertLocationToXyPos(point);
 
-        Point2D.Double pos = coordinateService.convertLocationToXyPos(point);
-
-        assertEquals(29.6, pos.x, PRECISION_STRICT);
-        assertEquals(13.5, pos.y, PRECISION_STRICT);
+        assertEquals(29.6, pos.getX(), PRECISION_STRICT);
+        assertEquals(13.5, pos.getY(), PRECISION_STRICT);
 
     }
 
     @Test
     public void testGetPointNearRaasepori() throws Exception {
 
-        Location point = new Location(CoordinateService.STATIC_PROVIDER_NAME);
-        point.setLatitude(60.39320);
-        point.setLongitude(23.13106);
+        MapLocationGPS point = new MapLocationGPS(60.39320, 23.13106);
+        MapLocationXY pos = coordinateService.convertLocationToXyPos(point);
 
-        Point2D.Double pos = coordinateService.convertLocationToXyPos(point);
-
-        assertEquals(62.2, pos.x, PRECISION_LOOSE);
-        assertEquals(185, pos.y, PRECISION_STRICT);
+        assertEquals(62.2, pos.getX(), PRECISION_LOOSE);
+        assertEquals(185, pos.getY(), PRECISION_STRICT);
 
     }
 
     @Test
     public void testGetPointNearKarjalohja() throws Exception {
 
-        Location point = new Location(CoordinateService.STATIC_PROVIDER_NAME);
-        point.setLatitude(60.21003);
-        point.setLongitude(23.66773);
+        MapLocationGPS point = new MapLocationGPS(60.21003, 23.66773);
+        MapLocationXY pos = coordinateService.convertLocationToXyPos(point);
 
-        Point2D.Double pos = coordinateService.convertLocationToXyPos(point);
-
-        assertEquals(141.0, pos.x, PRECISION_LOOSE);
-        assertEquals(241.0, pos.y, PRECISION_STRICT);
+        assertEquals(141.0, pos.getX(), PRECISION_LOOSE);
+        assertEquals(241.0, pos.getY(), PRECISION_STRICT);
 
     }
 
     @Test
     public void testGetPointInRussaro() throws Exception {
 
-        Location point = new Location(CoordinateService.STATIC_PROVIDER_NAME);
-        point.setLatitude(59.77339);
-        point.setLongitude(22.94221);
+        MapLocationGPS point = new MapLocationGPS(59.77339, 22.94221);
+        MapLocationXY pos = coordinateService.convertLocationToXyPos(point);
 
-        Point2D.Double pos = coordinateService.convertLocationToXyPos(point);
-
-        assertEquals(28.5, pos.x, PRECISION_VERY_LOOSE);
-        assertEquals(366.2, pos.y, PRECISION_LOOSE);
+        assertEquals(28.5, pos.getX(), PRECISION_VERY_LOOSE);
+        assertEquals(366.2, pos.getY(), PRECISION_LOOSE);
 
     }
 
     @Test
     public void testTopLeftPointOfTestbedImage() throws Exception {
 
-        Location point = new Location(CoordinateService.STATIC_PROVIDER_NAME);
-        point.setLatitude(61.005);  // y
-        point.setLongitude(22.657);   // x
+        MapLocationGPS point = new MapLocationGPS(61.005, 22.657);
+        MapLocationXY pos = coordinateService.convertLocationToXyPos(point);
 
-        Point2D.Double pos = coordinateService.convertLocationToXyPos(point);
-
-        assertEquals(0.0, pos.x, PRECISION_STRICT);
-        assertEquals(0.0, pos.y, PRECISION_STRICT);
+        assertEquals(0.0, pos.getX(), PRECISION_STRICT);
+        assertEquals(0.0, pos.getY(), PRECISION_STRICT);
 
     }
 
     @Test
     public void testTopRightPointOfTestbedImage() throws Exception {
 
-        Location point = new Location(CoordinateService.STATIC_PROVIDER_NAME);
-        point.setLatitude(61.005);  // y
-        point.setLongitude(26.792);   // x
+        MapLocationGPS point = new MapLocationGPS(61.005, 26.792);
+        MapLocationXY pos = coordinateService.convertLocationToXyPos(point);
 
-        Point2D.Double pos = coordinateService.convertLocationToXyPos(point);
-
-        assertEquals(600.0, pos.x, PRECISION_STRICT);
-        assertEquals(0.0, pos.y, PRECISION_STRICT);
+        assertEquals(600.0, pos.getX(), PRECISION_STRICT);
+        assertEquals(0.0, pos.getY(), PRECISION_STRICT);
 
     }
 
     @Test
     public void testErrorValues() throws Exception {
 
-        Point2D.Double nullPos = coordinateService.convertLocationToXyPos(null);
+        MapLocationXY nullPos = coordinateService.convertLocationToXyPos(null);
         assertNull(nullPos);
 
-        Location point = new Location(CoordinateService.STATIC_PROVIDER_NAME);
-        Point2D.Double emptyPos = coordinateService.convertLocationToXyPos(point);
+        MapLocationGPS point = new MapLocationGPS(0,0);
+        MapLocationXY emptyPos = coordinateService.convertLocationToXyPos(point);
         assertNotNull(emptyPos);
 
     }

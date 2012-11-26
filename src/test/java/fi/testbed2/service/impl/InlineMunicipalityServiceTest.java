@@ -2,7 +2,10 @@ package fi.testbed2.service.impl;
 
 import fi.testbed2.AbstractTestCase;
 import fi.testbed2.InjectedTestRunner;
+import fi.testbed2.data.MapLocationGPS;
+import fi.testbed2.data.MapLocationXY;
 import fi.testbed2.data.Municipality;
+import fi.testbed2.service.CoordinateService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +13,8 @@ import org.junit.runner.RunWith;
 import java.util.SortedMap;
 
 import static junit.framework.Assert.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.when;
 
 @RunWith(InjectedTestRunner.class)
 public class InlineMunicipalityServiceTest extends AbstractTestCase {
@@ -22,6 +27,7 @@ public class InlineMunicipalityServiceTest extends AbstractTestCase {
         super.setUp();
         inlineMunicipalityService = new InlineMunicipalityService();
         initClassForMocks(inlineMunicipalityService);
+        when(getInjectedMock(CoordinateService.class).convertLocationToXyPos(any(MapLocationGPS.class))).thenReturn(new MapLocationXY(0,0));
     }
 
     @Test

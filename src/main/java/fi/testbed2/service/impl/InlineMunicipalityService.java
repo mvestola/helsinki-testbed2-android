@@ -5,6 +5,8 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.jhlabs.map.Point2D;
 import fi.testbed2.app.Logging;
+import fi.testbed2.data.MapLocationGPS;
+import fi.testbed2.data.MapLocationXY;
 import fi.testbed2.data.Municipality;
 import fi.testbed2.service.CoordinateService;
 import fi.testbed2.service.MunicipalityService;
@@ -41,11 +43,9 @@ public class InlineMunicipalityService implements MunicipalityService {
          */
         if (lat<=61.005 && lon>=22.657 && lon<=26.792) {
 
-            Location tempLocation = new Location(CoordinateService.STATIC_PROVIDER_NAME);
-            tempLocation.setLatitude(lat);
-            tempLocation.setLongitude(lon);
-            Point2D.Double xyPos = coordinateService.convertLocationToXyPos(tempLocation);
-            municipalitiesInTestbedMap.put(name, new Municipality(name, lat, lon, xyPos));
+            MapLocationGPS mapLocationGPS = new MapLocationGPS(lat, lon);
+            MapLocationXY mapLocationXY = coordinateService.convertLocationToXyPos(mapLocationGPS);
+            municipalitiesInTestbedMap.put(name, new Municipality(name, mapLocationGPS, mapLocationXY));
         }
 
     }

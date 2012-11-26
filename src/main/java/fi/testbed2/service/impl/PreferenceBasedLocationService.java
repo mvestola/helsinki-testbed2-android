@@ -9,6 +9,8 @@ import com.google.inject.Singleton;
 import com.jhlabs.map.Point2D;
 import fi.testbed2.Environment;
 import fi.testbed2.app.Logging;
+import fi.testbed2.data.MapLocationGPS;
+import fi.testbed2.data.MapLocationXY;
 import fi.testbed2.service.CoordinateService;
 import fi.testbed2.service.LocationService;
 import fi.testbed2.service.MunicipalityService;
@@ -36,15 +38,15 @@ public class PreferenceBasedLocationService implements LocationService, Location
     @Inject
     CoordinateService coordinateService;
 
-    private Point2D.Double userLocationXY;
-    private Location userLocation;
+    private MapLocationXY userLocationXY;
+    private MapLocationGPS userLocation;
 
     public PreferenceBasedLocationService() {
         Logging.debug("PreferenceBasedLocationService instantiated");
     }
 
     @Override
-    public Point2D.Double getUserLocationXY() {
+    public MapLocationXY getUserLocationXY() {
 
         if (!settingsService.showUserLocation()) {
             return null;
@@ -58,14 +60,14 @@ public class PreferenceBasedLocationService implements LocationService, Location
 
     }
 
-    public Location getUserLastLocation() {
+    public MapLocationGPS getUserLastLocation() {
 
         if (!settingsService.showUserLocation()) {
             return null;
         }
 
         if (Environment.TEST_ENVIRONMENT) {
-            return municipalityService.getMunicipality("Kouvola").getLocation();
+            return municipalityService.getMunicipality("Kouvola").getGpsPos();
         } else {
             return userLocation;
         }
@@ -86,8 +88,8 @@ public class PreferenceBasedLocationService implements LocationService, Location
 
         Location lastKnownLocation = locationManager.getLastKnownLocation(provider);
         if (lastKnownLocation!=null) {
-            userLocation = lastKnownLocation;
-            userLocationXY = coordinateService.convertLocationToXyPos(lastKnownLocation);
+            userLocation = new MapLocationGPS(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
+            userLocationXY = coordinateService.convertLocationToXyPos(userLocation);
         }
 
         try {
@@ -113,8 +115,8 @@ public class PreferenceBasedLocationService implements LocationService, Location
     @Override
     public void onLocationChanged(Location location) {
         if (location!=null) {
-            userLocation = location;
-            userLocationXY = coordinateService.convertLocationToXyPos(location);
+            userLocation = new MapLocationGPS(location.getLatitude(), location.getLongitude());;
+            userLocationXY = coordinateService.convertLocationToXyPos(userLocation);
         }
     }
 

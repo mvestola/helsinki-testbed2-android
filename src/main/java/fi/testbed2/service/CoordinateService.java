@@ -2,6 +2,8 @@ package fi.testbed2.service;
 
 import android.location.Location;
 import com.jhlabs.map.Point2D;
+import fi.testbed2.data.MapLocationGPS;
+import fi.testbed2.data.MapLocationXY;
 
 /**
  * Service which is used to convert GPS coordinates to
@@ -9,10 +11,7 @@ import com.jhlabs.map.Point2D;
  */
 public interface CoordinateService {
 
-    public static final String STATIC_PROVIDER_NAME = "dummy_provider";
-
-    public Point2D.Double getKnownPositionForTesting();
-
-    public Point2D.Double convertLocationToXyPos(Location location);
+    public MapLocationXY getKnownPositionForTesting();
+    public MapLocationXY convertLocationToXyPos(MapLocationGPS location);
 
 }

@@ -12,6 +12,7 @@ import com.jhlabs.map.Point2D;
 import com.larvalabs.svgandroid.SVGParser;
 import fi.testbed2.R;
 import fi.testbed2.app.Logging;
+import fi.testbed2.data.MapLocationXY;
 import fi.testbed2.data.Municipality;
 import fi.testbed2.data.TestbedMapImage;
 import fi.testbed2.service.BitmapService;
@@ -214,7 +215,7 @@ public class AnimationView extends View {
 
     private void updateTimestampView(TestbedMapImage currentMap) {
 
-        String timestamp = currentMap.getTimestamp();
+        String timestamp = currentMap.getLocalTimestamp();
         String text = String.format("%1$02d/%2$02d @ ",
                 player.getCurrentFrame() + 1 , player.getFrames() + 1) + timestamp;
 
@@ -233,7 +234,7 @@ public class AnimationView extends View {
     }
 
     private void drawUserLocation(Canvas canvas) {
-        Point2D.Double userLocation = userLocationService.getUserLocationXY();
+        MapLocationXY userLocation = userLocationService.getUserLocationXY();
         if (userLocation!=null) {
             drawPoint(userLocation, Color.BLACK, canvas, null);
         }
@@ -249,7 +250,7 @@ public class AnimationView extends View {
 
     }
 
-    private void drawPoint(Point2D.Double point, int color, Canvas canvas, Municipality municipality) {
+    private void drawPoint(MapLocationXY point, int color, Canvas canvas, Municipality municipality) {
 
         Paint paint = new Paint();
         paint.setColor(color);
@@ -262,8 +263,8 @@ public class AnimationView extends View {
         double widthRatio = imgScaledWidth / MAP_IMAGE_ORIG_WIDTH;
         double heightRatio = imgScaledHeight / MAP_IMAGE_ORIG_HEIGHT;
 
-        float xScaled = Double.valueOf(bounds.left + point.x*widthRatio).floatValue();
-        float yScaled = Double.valueOf(bounds.top + point.y*heightRatio).floatValue();
+        float xScaled = Double.valueOf(bounds.left + point.getX()*widthRatio).floatValue();
+        float yScaled = Double.valueOf(bounds.top + point.getY()*heightRatio).floatValue();
 
         int xInt = Float.valueOf(xScaled).intValue();
         int yInt = Float.valueOf(yScaled).intValue();

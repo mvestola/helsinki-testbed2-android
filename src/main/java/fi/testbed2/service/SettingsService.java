@@ -2,6 +2,7 @@ package fi.testbed2.service;
 
 import android.graphics.Rect;
 import android.location.Location;
+import fi.testbed2.data.MapLocationGPS;
 import fi.testbed2.data.Municipality;
 import fi.testbed2.view.MapScaleInfo;
 
@@ -75,8 +76,8 @@ public interface SettingsService {
     public String getLocationProvider();
     public void setLocationProvider(String provider);
 
-    public Location getSavedFixedLocation();
-    public Location saveCurrentLocationAsFixedLocation();
+    public MapLocationGPS getSavedFixedLocation();
+    public MapLocationGPS saveCurrentLocationAsFixedLocation();
 
     public boolean showAds();
 

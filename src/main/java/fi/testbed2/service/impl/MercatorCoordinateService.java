@@ -1,10 +1,11 @@
 package fi.testbed2.service.impl;
 
-import android.location.Location;
 import com.google.inject.Singleton;
 import com.jhlabs.map.Point2D;
 import com.jhlabs.map.proj.MercatorProjection;
 import fi.testbed2.app.Logging;
+import fi.testbed2.data.MapLocationGPS;
+import fi.testbed2.data.MapLocationXY;
 import fi.testbed2.service.CoordinateService;
 
 /**
@@ -14,16 +15,17 @@ import fi.testbed2.service.CoordinateService;
 @Singleton
 public class MercatorCoordinateService implements CoordinateService {
 
-    private Location knownPointInHumppila = new Location(STATIC_PROVIDER_NAME);
-    private Location knownPointInPorvoo = new Location(STATIC_PROVIDER_NAME);
+    public static final String STATIC_PROVIDER_NAME = "dummy_provider";
 
-    private Point2D.Double knownPointInHumppilaXY;
+    private MapLocationGPS humppila = new MapLocationGPS(60.95357, 23.33907);
+    private MapLocationGPS porvoo = new MapLocationGPS(60.39069, 25.61653);
+
+    private Point2D.Double humppilaMercatorXY;
 
     /**
      * Manually calculated known point in the testbed map image
      */
-    private Point2D.Double knownPointInHumppilaXYInTestbedMap =
-            new Point2D.Double(99d, 16d);
+    private MapLocationXY humppilaTestbedXY = new MapLocationXY(99d, 16d);
 
     /*
     * These are calculated manually and scale the x,y coordinates
@@ -34,17 +36,8 @@ public class MercatorCoordinateService implements CoordinateService {
     private double yScale = -8525.3994;
 
     public MercatorCoordinateService() {
-
         Logging.debug("MercatorCoordinateService instantiated");
-
-        knownPointInHumppila.setLatitude(60.95357);
-        knownPointInHumppila.setLongitude(23.33907);
-
-        knownPointInPorvoo.setLatitude(60.39069);
-        knownPointInPorvoo.setLongitude(25.61653);
-
-        knownPointInHumppilaXY = convertLocationToMercatorXY(knownPointInHumppila);
-
+        humppilaMercatorXY = convertLocationToMercatorXY(humppila);
     }
 
     /**
@@ -54,8 +47,8 @@ public class MercatorCoordinateService implements CoordinateService {
      * @return
      */
     @Override
-    public Point2D.Double getKnownPositionForTesting() {
-        return knownPointInHumppilaXYInTestbedMap;
+    public MapLocationXY getKnownPositionForTesting() {
+        return humppilaTestbedXY;
     }
 
     /**
@@ -64,12 +57,15 @@ public class MercatorCoordinateService implements CoordinateService {
      * @return
      */
     @Override
-    public Point2D.Double convertLocationToXyPos(Location location) {
+    public MapLocationXY convertLocationToXyPos(MapLocationGPS location) {
         if (location==null) {
             return null;
         }
         Point2D.Double mercatorPoint = convertLocationToMercatorXY(location);
-        return convertToXYInTestbedMap(mercatorPoint);
+        Point2D.Double converted = convertToXYInTestbedMap(mercatorPoint);
+
+        return new MapLocationXY(converted.x, converted.y);
+
     }
 
     /**
@@ -81,11 +77,11 @@ public class MercatorCoordinateService implements CoordinateService {
      */
     private Point2D.Double convertToXYInTestbedMap(Point2D.Double point) {
 
-        double distanceInTestbedImagePxX = (point.x - knownPointInHumppilaXY.x) * xScale;
-        double distanceInTestbedImagePxY = (point.y - knownPointInHumppilaXY.y) * yScale;
+        double distanceInTestbedImagePxX = (point.x - humppilaMercatorXY.x) * xScale;
+        double distanceInTestbedImagePxY = (point.y - humppilaMercatorXY.y) * yScale;
 
-        double distanceInMercatorPxX = knownPointInHumppilaXYInTestbedMap.x+distanceInTestbedImagePxX;
-        double finalYPos = knownPointInHumppilaXYInTestbedMap.y+distanceInTestbedImagePxY;
+        double distanceInMercatorPxX = humppilaTestbedXY.getX()+distanceInTestbedImagePxX;
+        double finalYPos = humppilaTestbedXY.getY()+distanceInTestbedImagePxY;
 
         return new Point2D.Double(distanceInMercatorPxX, finalYPos);
     }
@@ -99,7 +95,7 @@ public class MercatorCoordinateService implements CoordinateService {
      * @param coordinate
      * @return
      */
-    private Point2D.Double convertLocationToMercatorXY(Location coordinate) {
+    private Point2D.Double convertLocationToMercatorXY(MapLocationGPS coordinate) {
 
         if (coordinate==null) {
             return null;

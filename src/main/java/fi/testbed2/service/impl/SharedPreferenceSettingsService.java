@@ -10,6 +10,7 @@ import com.google.inject.Singleton;
 import fi.testbed2.R;
 import fi.testbed2.app.Logging;
 import fi.testbed2.app.MainApplication;
+import fi.testbed2.data.MapLocationGPS;
 import fi.testbed2.data.Municipality;
 import fi.testbed2.service.CoordinateService;
 import fi.testbed2.service.LocationService;
@@ -227,7 +228,7 @@ public class SharedPreferenceSettingsService implements SettingsService {
         editor.commit();
     }
 
-    public Location getSavedFixedLocation() {
+    public MapLocationGPS getSavedFixedLocation() {
 
         double lat = Double.parseDouble(sharedPreferences.getString(PREF_LOCATION_FIXED_LAT, "-1"));
         double lon = Double.parseDouble(sharedPreferences.getString(PREF_LOCATION_FIXED_LON, "-1"));
@@ -236,11 +237,7 @@ public class SharedPreferenceSettingsService implements SettingsService {
             return null;
         }
 
-        Location loc = new Location(CoordinateService.STATIC_PROVIDER_NAME);
-        loc.setLatitude(lat);
-        loc.setLongitude(lon);
-
-        return loc;
+        return new MapLocationGPS(lat, lon);
 
     }
 
@@ -250,9 +247,9 @@ public class SharedPreferenceSettingsService implements SettingsService {
      *
      * @return Returns the last known location or null if no location was available
      */
-    public Location saveCurrentLocationAsFixedLocation() {
+    public MapLocationGPS saveCurrentLocationAsFixedLocation() {
 
-        Location lastKnownLocation = locationService.getUserLastLocation();
+        MapLocationGPS lastKnownLocation = locationService.getUserLastLocation();
 
         if (lastKnownLocation!=null) {
             Logging.debug("Saving last known location to preferences: "+lastKnownLocation);
