@@ -12,7 +12,6 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.RoboGuice;
 import org.androidannotations.annotations.ViewById;
-import roboguice.inject.InjectView;
 
 @EActivity(R.layout.download)
 @OptionsMenu(R.menu.main_menu)

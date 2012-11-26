@@ -6,7 +6,6 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.jhlabs.map.Point2D;
 import fi.testbed2.Environment;
 import fi.testbed2.app.Logging;
 import fi.testbed2.data.MapLocationGPS;

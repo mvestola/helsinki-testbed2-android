@@ -1,7 +1,6 @@
 package fi.testbed2.service;
 
 import android.graphics.Rect;
-import android.location.Location;
 import fi.testbed2.data.MapLocationGPS;
 import fi.testbed2.data.Municipality;
 import fi.testbed2.view.MapScaleInfo;

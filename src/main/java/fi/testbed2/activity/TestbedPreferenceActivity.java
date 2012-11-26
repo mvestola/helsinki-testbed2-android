@@ -1,7 +1,6 @@
 package fi.testbed2.activity;
 
 import android.content.SharedPreferences;
-import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.preference.ListPreference;

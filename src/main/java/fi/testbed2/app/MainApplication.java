@@ -1,7 +1,6 @@
 package fi.testbed2.app;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import com.google.inject.Inject;
 import com.google.inject.Module;

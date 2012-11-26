@@ -3,15 +3,12 @@ package fi.testbed2.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import fi.testbed2.R;
 import fi.testbed2.app.Logging;
 import fi.testbed2.app.MainApplication;
 import fi.testbed2.result.TaskResult;
 import org.androidannotations.annotations.*;
-import roboguice.inject.InjectView;
 
 @EActivity(R.layout.main)
 @OptionsMenu(R.menu.main_menu)

@@ -1,7 +1,5 @@
 package fi.testbed2.service;
 
-import android.location.Location;
-import com.jhlabs.map.Point2D;
 import fi.testbed2.data.MapLocationGPS;
 import fi.testbed2.data.MapLocationXY;
 

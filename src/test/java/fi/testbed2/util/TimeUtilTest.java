@@ -3,10 +3,6 @@ package fi.testbed2.util;
 import fi.testbed2.AbstractTestCase;
 import org.junit.Test;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.TimeZone;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 

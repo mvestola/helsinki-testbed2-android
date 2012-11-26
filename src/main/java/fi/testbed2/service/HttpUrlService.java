@@ -1,7 +1,6 @@
 package fi.testbed2.service;
 
 import fi.testbed2.exception.DownloadTaskException;
-import org.apache.http.HttpEntity;
 
 import java.io.InputStream;
 

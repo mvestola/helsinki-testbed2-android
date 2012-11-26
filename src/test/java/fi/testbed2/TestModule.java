@@ -7,8 +7,6 @@ import fi.testbed2.service.*;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.mockito.Mockito.mock;
-
 public class TestModule extends MainModule {
 
     @Mock

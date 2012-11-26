@@ -1,12 +1,8 @@
 package fi.testbed2;
 
-import android.app.ActivityManager;
 import com.xtremelabs.robolectric.Robolectric;
 import fi.testbed2.app.MainApplication;
-import fi.testbed2.dialog.DialogBuilder;
-import fi.testbed2.service.*;
 import org.junit.Before;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 /**

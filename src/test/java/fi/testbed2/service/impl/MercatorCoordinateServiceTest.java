@@ -1,8 +1,5 @@
 package fi.testbed2.service.impl;
 
-import android.location.Location;
-import com.jhlabs.map.Point2D;
-import com.xtremelabs.robolectric.RobolectricTestRunner;
 import fi.testbed2.AbstractTestCase;
 import fi.testbed2.InjectedTestRunner;
 import fi.testbed2.data.MapLocationGPS;

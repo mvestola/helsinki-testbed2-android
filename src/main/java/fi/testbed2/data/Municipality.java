@@ -1,8 +1,5 @@
 package fi.testbed2.data;
 
-import android.location.Location;
-import com.jhlabs.map.Point2D;
-import fi.testbed2.service.LocationService;
 import lombok.Data;
 import lombok.NonNull;
 

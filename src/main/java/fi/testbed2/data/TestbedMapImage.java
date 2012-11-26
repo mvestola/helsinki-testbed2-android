@@ -1,7 +1,9 @@
 package fi.testbed2.data;
 
 import fi.testbed2.util.TimeUtil;
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NonNull;
 
 /**
  * Represents the image object read from the testbed website.

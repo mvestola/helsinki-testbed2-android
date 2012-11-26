@@ -9,7 +9,6 @@ import fi.testbed2.result.TaskResult;
 import roboguice.activity.event.OnDestroyEvent;
 import roboguice.event.Observes;
 import roboguice.inject.InjectorProvider;
-import roboguice.util.Ln;
 import roboguice.util.RoboAsyncTask;
 
 public abstract class AbstractTask<T extends TaskResult> extends RoboAsyncTask<T> implements Task {

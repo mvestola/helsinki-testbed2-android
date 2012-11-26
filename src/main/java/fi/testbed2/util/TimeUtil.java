@@ -2,7 +2,8 @@ package fi.testbed2.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.TimeZone;
 
 public class TimeUtil {
 

@@ -1,9 +1,7 @@
 package fi.testbed2.service.impl;
 
-import android.location.Location;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.jhlabs.map.Point2D;
 import fi.testbed2.app.Logging;
 import fi.testbed2.data.MapLocationGPS;
 import fi.testbed2.data.MapLocationXY;
