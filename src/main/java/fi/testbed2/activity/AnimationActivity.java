@@ -4,15 +4,10 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import com.google.ads.AdView;
 import com.google.inject.Inject;
 import fi.testbed2.R;
 import fi.testbed2.app.Logging;
@@ -24,7 +19,6 @@ import fi.testbed2.util.SeekBarUtil;
 import fi.testbed2.view.AnimationView;
 import fi.testbed2.view.MapScaleInfo;
 import org.androidannotations.annotations.*;
-import roboguice.inject.InjectView;
 
 import java.lang.reflect.Method;
 
@@ -46,7 +40,7 @@ public class AnimationActivity extends AbstractActivity {
     CoordinateService coordinateService;
 
     @Inject
-    PreferenceService preferenceService;
+    SettingsService settingsService;
 
     @Inject
     BitmapService bitmapService;
@@ -95,7 +89,7 @@ public class AnimationActivity extends AbstractActivity {
             return;
         }
 
-        if (preferenceService.showUserLocation()) {
+        if (settingsService.showUserLocation()) {
             locationService.startListeningLocationChanges();
         }
 
@@ -162,7 +156,7 @@ public class AnimationActivity extends AbstractActivity {
         animationView.initView(getApplicationContext());
         animationView.getPlayer().previous();
         updatePlayingState(false);
-        if (preferenceService.isStartAnimationAutomatically()) {
+        if (settingsService.isStartAnimationAutomatically()) {
             playAnimation();
         }
         showHardwareAccelerationWarningIfNeeded();
@@ -171,11 +165,11 @@ public class AnimationActivity extends AbstractActivity {
     @AfterViews
     protected void initView() {
         animationView.setAllImagesDownloaded(false);
-        animationView.setMunicipalities(preferenceService.getSavedMunicipalities());
+        animationView.setMunicipalities(settingsService.getSavedMunicipalities());
         animationView.userLocationService = locationService;
         animationView.bitmapService = bitmapService;
         animationView.pageService = pageService;
-        animationView.preferenceService = preferenceService;
+        animationView.settingsService = settingsService;
         animationView.initView(getApplicationContext());
         initAnimation();
     }
@@ -184,8 +178,8 @@ public class AnimationActivity extends AbstractActivity {
         animationView.post(new Runnable() {
             @Override
             public void run() {
-                final Rect bounds = preferenceService.getSavedMapBounds(orientation);
-                final MapScaleInfo scaleInfo = preferenceService.getSavedScaleInfo(orientation);
+                final Rect bounds = settingsService.getSavedMapBounds(orientation);
+                final MapScaleInfo scaleInfo = settingsService.getSavedScaleInfo(orientation);
                 updatePlayingState(true);
                 animationView.startAnimation(timestampView, seekBar, bounds, scaleInfo);
             }
@@ -193,15 +187,15 @@ public class AnimationActivity extends AbstractActivity {
     }
 
     private void saveMapBoundsAndScaleFactor() {
-        preferenceService.saveMapBoundsAndScaleFactor(animationView.getBounds(),
+        settingsService.saveMapBoundsAndScaleFactor(animationView.getBounds(),
                 animationView.getScaleInfo(), orientation);
     }
 
     private void updatePreferencesToView() {
-        animationView.setScaleInfo(preferenceService.getSavedScaleInfo(orientation));
-        animationView.updateBounds(preferenceService.getSavedMapBounds(orientation));
-        animationView.setMunicipalities(preferenceService.getSavedMunicipalities());
-        animationView.getPlayer().setFrameDelay(preferenceService.getSavedFrameDelay());
+        animationView.setScaleInfo(settingsService.getSavedScaleInfo(orientation));
+        animationView.updateBounds(settingsService.getSavedMapBounds(orientation));
+        animationView.setMunicipalities(settingsService.getSavedMunicipalities());
+        animationView.getPlayer().setFrameDelay(settingsService.getSavedFrameDelay());
         animationView.resetMarkerAndPointImageCache();
     }
 
@@ -253,7 +247,7 @@ public class AnimationActivity extends AbstractActivity {
 
             Logging.debug("Hardware acceleration status: "+isHardwareAccelerated);
 
-            if(preferenceService.isShowHardwareAccelerationDialog() &&
+            if(settingsService.isShowHardwareAccelerationDialog() &&
                     isHardwareAccelerated) {
                 dialogBuilder.getHardwareAccelerationAlertDialog().show();
             }

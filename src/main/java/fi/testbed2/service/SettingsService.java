@@ -7,7 +7,7 @@ import fi.testbed2.view.MapScaleInfo;
 
 import java.util.List;
 
-public interface PreferenceService {
+public interface SettingsService {
 
     public static final String PREF_ANIM_FRAME_DELAY = "PREF_ANIM_FRAME_DELAY";
     public static final String PREF_ANIM_AUTOSTART = "PREF_ANIM_AUTOSTART";

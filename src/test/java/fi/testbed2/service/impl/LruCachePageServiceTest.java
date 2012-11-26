@@ -4,9 +4,8 @@ import fi.testbed2.AbstractTestCase;
 import fi.testbed2.InjectedTestRunner;
 import fi.testbed2.data.TestbedParsedPage;
 import fi.testbed2.exception.DownloadTaskException;
-import fi.testbed2.service.HTTPService;
+import fi.testbed2.service.HttpUrlService;
 import fi.testbed2.task.Task;
-import org.apache.http.HttpEntity;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -173,12 +172,8 @@ public class LruCachePageServiceTest extends AbstractTestCase {
         try {
 
             InputStream in = new FileInputStream(TEST_DATA_PATH+pageName);
-
-            HttpEntity httpEntity = mock(HttpEntity.class);
-            when(httpEntity.getContent()).thenReturn(in);
-
-            HTTPService httpService = getInjectedMock(HTTPService.class);
-            when(httpService.getHttpEntityForUrl(any(String.class))).thenReturn(httpEntity);
+            when(getInjectedMock(HttpUrlService.class).
+                    getInputStreamForHttpUrl(any(String.class))).thenReturn(in);
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -2,7 +2,6 @@ package fi.testbed2.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.*;
@@ -12,10 +11,9 @@ import com.google.inject.Inject;
 import fi.testbed2.R;
 import fi.testbed2.dialog.DialogBuilder;
 import fi.testbed2.dialog.DialogType;
-import fi.testbed2.service.PreferenceService;
+import fi.testbed2.service.SettingsService;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.OptionsItem;
-import roboguice.activity.RoboActivity;
 
 
 /**
@@ -29,14 +27,14 @@ public abstract class AbstractActivity extends Activity {
     DialogBuilder dialogBuilder;
 
     @Inject
-    PreferenceService preferenceService;
+    SettingsService settingsService;
 
     private String currentErrorMsg;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (preferenceService.isShowWhatsNewDialog()) {
+        if (settingsService.isShowWhatsNewDialog()) {
             showDialog(DialogType.WHATS_NEW);
         }
     }
@@ -49,7 +47,7 @@ public abstract class AbstractActivity extends Activity {
         AdView adView = (AdView)this.findViewById(R.id.adView);
 
         if (adView!=null) {
-            if (preferenceService.showAds()) {
+            if (settingsService.showAds()) {
                 adView.setVisibility(AdView.VISIBLE);
             } else {
                 adView.setVisibility(AdView.GONE);

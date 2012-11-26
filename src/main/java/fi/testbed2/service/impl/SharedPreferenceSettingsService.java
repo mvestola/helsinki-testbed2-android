@@ -14,7 +14,7 @@ import fi.testbed2.data.Municipality;
 import fi.testbed2.service.CoordinateService;
 import fi.testbed2.service.LocationService;
 import fi.testbed2.service.MunicipalityService;
-import fi.testbed2.service.PreferenceService;
+import fi.testbed2.service.SettingsService;
 import fi.testbed2.view.MapScaleInfo;
 import net.margaritov.preference.colorpicker.ColorPickerPreference;
 
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Singleton
-public class DefaultPreferenceService implements PreferenceService {
+public class SharedPreferenceSettingsService implements SettingsService {
 
     @Inject
     MunicipalityService municipalityService;
@@ -36,8 +36,8 @@ public class DefaultPreferenceService implements PreferenceService {
     @Inject
     Context context;
 
-    public DefaultPreferenceService() {
-        Logging.debug("DefaultPreferenceService instantiated");
+    public SharedPreferenceSettingsService() {
+        Logging.debug("SharedPreferenceSettingsService instantiated");
     }
 
     /**
@@ -98,7 +98,7 @@ public class DefaultPreferenceService implements PreferenceService {
         String municipalitiesString = sharedPreferences.getString(PREF_LOCATION_SHOW_MUNICIPALITIES, "");
 
         String[] municipalityArray = municipalitiesString.split(
-                PreferenceService.PREF_LOCATION_SHOW_MUNICIPALITIES_SPLIT);
+                SettingsService.PREF_LOCATION_SHOW_MUNICIPALITIES_SPLIT);
 
         if (municipalityArray.length<1 || municipalityArray[0].length()==0) {
             return municipalities;
@@ -119,7 +119,7 @@ public class DefaultPreferenceService implements PreferenceService {
     public void saveWhatsNewDialogShownForCurrentVersion() {
         Logging.debug("Saving that what's new dialog is shown for version: "+MainApplication.getVersionName());
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(PreferenceService.PREF_WHATS_NEW_DIALOG_SHOWN_FOR_VERSION,
+        editor.putString(SettingsService.PREF_WHATS_NEW_DIALOG_SHOWN_FOR_VERSION,
                 MainApplication.getVersionName());
         editor.commit();
     }
@@ -128,25 +128,25 @@ public class DefaultPreferenceService implements PreferenceService {
     public void saveHardwareAccelerationDialogShown() {
         Logging.debug("Saving hardware acceleration dialog is shown");
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(PreferenceService.PREF_HW_ACCEL_DIALOG_SHOWN, true);
+        editor.putBoolean(SettingsService.PREF_HW_ACCEL_DIALOG_SHOWN, true);
         editor.commit();
     }
 
     @Override
     public int getSavedFrameDelay() {
-        return Integer.parseInt(sharedPreferences.getString(PreferenceService.PREF_ANIM_FRAME_DELAY, "1000"));
+        return Integer.parseInt(sharedPreferences.getString(SettingsService.PREF_ANIM_FRAME_DELAY, "1000"));
     }
 
     @Override
     public boolean isStartAnimationAutomatically() {
-        return sharedPreferences.getBoolean(PreferenceService.PREF_ANIM_AUTOSTART, true);
+        return sharedPreferences.getBoolean(SettingsService.PREF_ANIM_AUTOSTART, true);
     }
 
     @Override
     public boolean isShowWhatsNewDialog() {
 
         String dialogShownForVersion = sharedPreferences.
-                getString(PreferenceService.PREF_WHATS_NEW_DIALOG_SHOWN_FOR_VERSION, "");
+                getString(SettingsService.PREF_WHATS_NEW_DIALOG_SHOWN_FOR_VERSION, "");
 
         Logging.debug("What's new dialog is shown for version: "+dialogShownForVersion);
 
@@ -160,11 +160,11 @@ public class DefaultPreferenceService implements PreferenceService {
     @Override
     public boolean isShowHardwareAccelerationDialog() {
         return !sharedPreferences.getBoolean(
-                PreferenceService.PREF_HW_ACCEL_DIALOG_SHOWN, false);
+                SettingsService.PREF_HW_ACCEL_DIALOG_SHOWN, false);
     }
 
     public boolean showUserLocation() {
-        return sharedPreferences.getBoolean(PreferenceService.PREF_LOCATION_SHOW_USER_LOCATION, true);
+        return sharedPreferences.getBoolean(SettingsService.PREF_LOCATION_SHOW_USER_LOCATION, true);
     }
 
     public String getTestbedPageURL() {
@@ -223,7 +223,7 @@ public class DefaultPreferenceService implements PreferenceService {
 
     public void setLocationProvider(String provider) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(PreferenceService.PREF_LOCATION_PROVIDER, provider);
+        editor.putString(SettingsService.PREF_LOCATION_PROVIDER, provider);
         editor.commit();
     }
 
@@ -257,8 +257,8 @@ public class DefaultPreferenceService implements PreferenceService {
         if (lastKnownLocation!=null) {
             Logging.debug("Saving last known location to preferences: "+lastKnownLocation);
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString(PreferenceService.PREF_LOCATION_FIXED_LAT,""+lastKnownLocation.getLatitude());
-            editor.putString(PreferenceService.PREF_LOCATION_FIXED_LON,""+lastKnownLocation.getLongitude());
+            editor.putString(SettingsService.PREF_LOCATION_FIXED_LAT,""+lastKnownLocation.getLatitude());
+            editor.putString(SettingsService.PREF_LOCATION_FIXED_LON,""+lastKnownLocation.getLongitude());
             editor.commit();
         }
 
@@ -267,7 +267,7 @@ public class DefaultPreferenceService implements PreferenceService {
     }
 
     public boolean showAds() {
-        return sharedPreferences.getBoolean(PreferenceService.PREF_SHOW_ADS, true);
+        return sharedPreferences.getBoolean(SettingsService.PREF_SHOW_ADS, true);
     }
 
 }

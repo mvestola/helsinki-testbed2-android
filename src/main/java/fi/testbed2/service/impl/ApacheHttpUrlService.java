@@ -4,7 +4,7 @@ import com.google.inject.Singleton;
 import fi.testbed2.R;
 import fi.testbed2.app.Logging;
 import fi.testbed2.exception.DownloadTaskException;
-import fi.testbed2.service.HTTPService;
+import fi.testbed2.service.HttpUrlService;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -13,23 +13,24 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Service class for making HTTP requests.
  */
 @Singleton
-public class DefaultHTTPService implements HTTPService {
+public class ApacheHttpUrlService implements HttpUrlService {
 
-    public DefaultHTTPService() {
-        Logging.debug("DefaultHTTPService instantiated");
+    public ApacheHttpUrlService() {
+        Logging.debug("ApacheHttpUrlService instantiated");
     }
 
-    public HttpEntity getHttpEntityForUrl(final String url) throws DownloadTaskException {
+    public InputStream getInputStreamForHttpUrl(final String url) throws DownloadTaskException {
 
         try
         {
 
-            Logging.debug("getHttpEntityForUrl: "+url);
+            Logging.debug("getInputStreamForHttpUrl: "+url);
 
             DefaultHttpClient client = new DefaultHttpClient();
             HttpGet httpGet = new HttpGet(url);
@@ -52,7 +53,7 @@ public class DefaultHTTPService implements HTTPService {
                 throw new DownloadTaskException(R.string.error_msg_http_error);
             }
 
-            return entity;
+            return entity.getContent();
         } catch(IllegalStateException e) {
             e.printStackTrace();
             throw new DownloadTaskException(R.string.error_msg_invalid_url, url);

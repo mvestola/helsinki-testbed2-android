@@ -13,7 +13,7 @@ import com.google.inject.Inject;
 import fi.testbed2.R;
 import fi.testbed2.app.Logging;
 import fi.testbed2.app.MainApplication;
-import fi.testbed2.service.PreferenceService;
+import fi.testbed2.service.SettingsService;
 
 public class DefaultDialogBuilder implements DialogBuilder {
 
@@ -21,7 +21,7 @@ public class DefaultDialogBuilder implements DialogBuilder {
     protected Context context;
 
     @Inject
-    PreferenceService preferenceService;
+    SettingsService settingsService;
 
     public DefaultDialogBuilder() {
         Logging.debug("DefaultDialogBuilder instantiated");
@@ -58,7 +58,7 @@ public class DefaultDialogBuilder implements DialogBuilder {
         builder.setView(getWhatsNewDialogContents(context))
                 .setPositiveButton(context.getText(R.string.close_button), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        preferenceService.saveWhatsNewDialogShownForCurrentVersion();
+                        settingsService.saveWhatsNewDialogShownForCurrentVersion();
                         dialog.cancel();
                     }
                 });
@@ -75,7 +75,7 @@ public class DefaultDialogBuilder implements DialogBuilder {
         builder.setView(getHardwareAccelerationDialogContents(context))
                 .setNegativeButton(context.getText(R.string.do_not_show_again), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        preferenceService.saveHardwareAccelerationDialogShown();
+                        settingsService.saveHardwareAccelerationDialogShown();
                         dialog.cancel();
                     }
                 })

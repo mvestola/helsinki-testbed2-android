@@ -12,7 +12,7 @@ import fi.testbed2.app.Logging;
 import fi.testbed2.dialog.DialogBuilder;
 import fi.testbed2.service.LocationService;
 import fi.testbed2.service.MunicipalityService;
-import fi.testbed2.service.PreferenceService;
+import fi.testbed2.service.SettingsService;
 import roboguice.activity.RoboPreferenceActivity;
 
 public class TestbedPreferenceActivity extends RoboPreferenceActivity
@@ -22,7 +22,7 @@ public class TestbedPreferenceActivity extends RoboPreferenceActivity
     MunicipalityService municipalityService;
 
     @Inject
-    PreferenceService preferenceService;
+    SettingsService settingsService;
 
     @Inject
     DialogBuilder dialogBuilder;
@@ -36,7 +36,7 @@ public class TestbedPreferenceActivity extends RoboPreferenceActivity
         addPreferencesFromResource(R.xml.preferences);
         initMunicipalityList();
 
-        locationProviderList = (ListPreference)getPreferenceScreen().findPreference(PreferenceService.PREF_LOCATION_PROVIDER);
+        locationProviderList = (ListPreference)getPreferenceScreen().findPreference(SettingsService.PREF_LOCATION_PROVIDER);
 
     }
 
@@ -44,7 +44,7 @@ public class TestbedPreferenceActivity extends RoboPreferenceActivity
     protected void onResume() {
         super.onResume();
 
-        String provider = preferenceService.getLocationProvider();
+        String provider = settingsService.getLocationProvider();
         locationProviderList.setSummary(getStringForCurrentlySelectedLocationProvider(provider));
 
         // Set up a listener whenever a key changes
@@ -57,7 +57,7 @@ public class TestbedPreferenceActivity extends RoboPreferenceActivity
         String[] entryValues = entries;
         ListPreferenceMultiSelect lp =
                 (ListPreferenceMultiSelect)getPreferenceManager().
-                        findPreference(PreferenceService.PREF_LOCATION_SHOW_MUNICIPALITIES);
+                        findPreference(SettingsService.PREF_LOCATION_SHOW_MUNICIPALITIES);
         lp.setEntries(entries);
         lp.setEntryValues(entryValues);
 
@@ -68,7 +68,7 @@ public class TestbedPreferenceActivity extends RoboPreferenceActivity
 
         Logging.debug("PreferenceActivity.onSharedPreferenceChanged: "+key);
 
-        if (key.equals(PreferenceService.PREF_LOCATION_PROVIDER)) {
+        if (key.equals(SettingsService.PREF_LOCATION_PROVIDER)) {
 
             Logging.debug("Updating location provider...");
 
@@ -76,7 +76,7 @@ public class TestbedPreferenceActivity extends RoboPreferenceActivity
 
             if (newProvider.equals(LocationService.LOCATION_PROVIDER_FIXED)) {
 
-                Location loc = preferenceService.saveCurrentLocationAsFixedLocation();
+                Location loc = settingsService.saveCurrentLocationAsFixedLocation();
                 Logging.debug("Using fixed provider: "+loc);
 
                 /**
@@ -84,7 +84,7 @@ public class TestbedPreferenceActivity extends RoboPreferenceActivity
                  */
                 if (loc==null) {
                     newProvider = LocationManager.GPS_PROVIDER;
-                    preferenceService.setLocationProvider(newProvider);
+                    settingsService.setLocationProvider(newProvider);
                     dialogBuilder.getErrorDialog(
                             this.getString(R.string.preference_location_provider_fixed_error_dialog)).show();
                 }
@@ -102,7 +102,7 @@ public class TestbedPreferenceActivity extends RoboPreferenceActivity
         String currentValue = "";
 
         if (newProvider.equals(LocationService.LOCATION_PROVIDER_FIXED)) {
-            Location loc = preferenceService.getSavedFixedLocation();
+            Location loc = settingsService.getSavedFixedLocation();
             String coordinates = "lat: "+loc.getLatitude()+", lon: "+loc.getLongitude();
             currentValue = this.getString(R.string.preference_location_provider_fixed, coordinates);
         } else if (newProvider.equals(LocationManager.NETWORK_PROVIDER)) {

@@ -21,10 +21,10 @@ public class MainModule extends AbstractModule {
         bind(MunicipalityService.class).to(InlineMunicipalityService.class);
         bind(LocationService.class).to(PreferenceBasedLocationService.class);
         bind(CoordinateService.class).to(MercatorCoordinateService.class);
-        bind(PreferenceService.class).to(DefaultPreferenceService.class);
+        bind(SettingsService.class).to(SharedPreferenceSettingsService.class);
         bind(BitmapService.class).to(LruCacheBitmapService.class);
         bind(PageService.class).to(LruCachePageService.class);
-        bind(HTTPService.class).to(DefaultHTTPService.class);
+        bind(HttpUrlService.class).to(ApacheHttpUrlService.class);
     }
 
 }

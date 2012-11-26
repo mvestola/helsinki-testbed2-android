@@ -17,7 +17,7 @@ import fi.testbed2.data.TestbedMapImage;
 import fi.testbed2.service.BitmapService;
 import fi.testbed2.service.LocationService;
 import fi.testbed2.service.PageService;
-import fi.testbed2.service.PreferenceService;
+import fi.testbed2.service.SettingsService;
 import fi.testbed2.util.SeekBarUtil;
 
 import java.util.ArrayList;
@@ -84,7 +84,7 @@ public class AnimationView extends View {
     public LocationService userLocationService;
     public BitmapService bitmapService;
     public PageService pageService;
-    public PreferenceService preferenceService;
+    public SettingsService settingsService;
 
     private boolean allImagesDownloaded;
 
@@ -120,7 +120,7 @@ public class AnimationView extends View {
         frameWidth = firstMap.getMinimumWidth();
         frameHeight = firstMap.getMinimumHeight();
 
-        player.setFrameDelay(preferenceService.getSavedFrameDelay());
+        player.setFrameDelay(settingsService.getSavedFrameDelay());
         player.setCurrentFrame(0);
         player.setFrames(getMapImagesToBeDrawn().size() - 1);
 
@@ -272,7 +272,7 @@ public class AnimationView extends View {
 
             Picture pic = getMarkerImage();
 
-            int markerImageHeight = preferenceService.getMapMarkerSize();
+            int markerImageHeight = settingsService.getMapMarkerSize();
 
             // Scale width a bit larger than original width (otherwise looks a bit too thin marker)
             float ratio = pic.getWidth()/pic.getHeight();
@@ -298,7 +298,7 @@ public class AnimationView extends View {
 
             Picture pic = getPointImage();
 
-            int circleDiameter = preferenceService.getMapPointSize();
+            int circleDiameter = settingsService.getMapPointSize();
 
             /*
             * x, y coordinates are image's top left corner,
@@ -332,7 +332,7 @@ public class AnimationView extends View {
     private Picture getMarkerImage() {
 
         if (markerImage==null) {
-            String color = preferenceService.getMapMarkerColor();
+            String color = settingsService.getMapMarkerColor();
             markerImage = SVGParser.getSVGFromString(new MapMarkerSVG(color).getXmlContent()).getPicture();
         }
         return markerImage;
@@ -342,7 +342,7 @@ public class AnimationView extends View {
     private Picture getPointImage() {
 
         if (pointImage==null) {
-            String color = preferenceService.getMapPointColor();
+            String color = settingsService.getMapPointColor();
             pointImage = SVGParser.getSVGFromString(new MapPointSVG(color).getXmlContent()).getPicture();
         }
         return pointImage;
@@ -561,7 +561,7 @@ public class AnimationView extends View {
                     Logging.debug("Pos: "+pos+", for: "+municipality.getName());
 
                     final float scale = getContext().getResources().getDisplayMetrics().density;
-                    int threshold = (int) ((preferenceService.getMapPointSize()/2)*scale +
+                    int threshold = (int) ((settingsService.getMapPointSize()/2)*scale +
                                             (MUNICIPALITY_SEARCH_THRESHOLD/scaleInfo.getScaleFactor())*scale);
 
                     if (Math.abs(pos.x-canvasX)<=threshold && Math.abs(pos.y-canvasY)<=threshold) {

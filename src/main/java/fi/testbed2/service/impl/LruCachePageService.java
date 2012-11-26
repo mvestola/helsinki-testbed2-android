@@ -10,10 +10,9 @@ import fi.testbed2.data.TestbedMapImage;
 import fi.testbed2.data.TestbedParsedPage;
 import fi.testbed2.exception.DownloadTaskException;
 import fi.testbed2.service.BitmapService;
-import fi.testbed2.service.HTTPService;
+import fi.testbed2.service.HttpUrlService;
 import fi.testbed2.service.PageService;
 import fi.testbed2.task.Task;
-import org.apache.http.HttpEntity;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -38,7 +37,7 @@ public class LruCachePageService implements PageService {
     BitmapService bitmapService;
 
     @Inject
-    HTTPService httpService;
+    HttpUrlService httpUrlService;
 
     private int cacheSizeInBytes = -1;
 
@@ -143,11 +142,10 @@ public class LruCachePageService implements PageService {
         Logging.debug("Downloading testbed page from url: " + url);
 
         TestbedParsedPage testbedParsedPage = new TestbedParsedPage();
-        HttpEntity entity = httpService.getHttpEntityForUrl(url);
 
         try {
 
-            InputStream in = entity.getContent();
+            InputStream in = httpUrlService.getInputStreamForHttpUrl(url);
             BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 
             String[] timestamps = null;

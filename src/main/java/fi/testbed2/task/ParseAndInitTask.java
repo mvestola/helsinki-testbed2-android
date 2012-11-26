@@ -7,7 +7,6 @@ import com.google.inject.Inject;
 import fi.testbed2.R;
 import fi.testbed2.activity.ParsingActivity;
 import fi.testbed2.app.Logging;
-import fi.testbed2.app.MainApplication;
 import fi.testbed2.data.TestbedMapImage;
 import fi.testbed2.data.TestbedParsedPage;
 import fi.testbed2.exception.DownloadTaskException;
@@ -15,7 +14,7 @@ import fi.testbed2.result.TaskResult;
 import fi.testbed2.result.TaskResultType;
 import fi.testbed2.service.BitmapService;
 import fi.testbed2.service.PageService;
-import fi.testbed2.service.PreferenceService;
+import fi.testbed2.service.SettingsService;
 import roboguice.inject.InjectResource;
 
 /**
@@ -27,7 +26,7 @@ public class ParseAndInitTask extends AbstractTask<TaskResult> implements Task {
     ParsingActivity activity;
 
     @Inject
-    PreferenceService preferenceService;
+    SettingsService settingsService;
 
     @Inject
     BitmapService bitmapService;
@@ -86,7 +85,7 @@ public class ParseAndInitTask extends AbstractTask<TaskResult> implements Task {
 
         activity.publishProgress(0, progressParsing);
         TestbedParsedPage testbedParsedPage =
-                pageService.downloadAndParseTestbedPage(preferenceService.getTestbedPageURL(), this);
+                pageService.downloadAndParseTestbedPage(settingsService.getTestbedPageURL(), this);
 
         if (testbedParsedPage == null || isAbort()) {
             return new TaskResult(TaskResultType.CANCELLED, "Cancelled");

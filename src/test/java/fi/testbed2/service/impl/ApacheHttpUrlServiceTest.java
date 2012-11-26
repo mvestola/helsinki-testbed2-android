@@ -4,19 +4,20 @@ import com.xtremelabs.robolectric.Robolectric;
 import fi.testbed2.AbstractTestCase;
 import fi.testbed2.InjectedTestRunner;
 import fi.testbed2.exception.DownloadTaskException;
-import org.apache.http.HttpEntity;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 
+import java.io.InputStream;
+
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(InjectedTestRunner.class)
-public class DefaultHTTPServiceTest extends AbstractTestCase {
+public class ApacheHttpUrlServiceTest extends AbstractTestCase {
 
-    private DefaultHTTPService httpService;
+    private ApacheHttpUrlService httpUrlService;
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -25,17 +26,16 @@ public class DefaultHTTPServiceTest extends AbstractTestCase {
     @Before
     public void setUp() throws Exception {
         super.setUp();
-        httpService = new DefaultHTTPService();
-        initClassForMocks(httpService);
+        httpUrlService = new ApacheHttpUrlService();
+        initClassForMocks(httpUrlService);
     }
 
     @Test
     public void testResponse200() throws Exception {
 
         Robolectric.addPendingHttpResponse(200, "OK");
-        HttpEntity httpEntity = httpService.getHttpEntityForUrl("fi.testbed2/test");
-
-        assertNotNull(httpEntity);
+        InputStream stream = httpUrlService.getInputStreamForHttpUrl("fi.testbed2/test");
+        assertNotNull(stream);
 
     }
 
@@ -46,7 +46,7 @@ public class DefaultHTTPServiceTest extends AbstractTestCase {
 
         thrown.expect(DownloadTaskException.class);
         thrown.expectMessage("Could not connect to the server (HTTP 404). Please try again later.");
-        httpService.getHttpEntityForUrl("fi.testbed2/test");
+        httpUrlService.getInputStreamForHttpUrl("fi.testbed2/test");
 
     }
 
@@ -57,7 +57,7 @@ public class DefaultHTTPServiceTest extends AbstractTestCase {
 
         thrown.expect(DownloadTaskException.class);
         thrown.expectMessage("Could not connect to the server (HTTP 500). Please try again later.");
-        httpService.getHttpEntityForUrl("fi.testbed2/test");
+        httpUrlService.getInputStreamForHttpUrl("fi.testbed2/test");
 
     }
 

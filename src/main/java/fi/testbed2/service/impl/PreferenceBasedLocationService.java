@@ -12,7 +12,7 @@ import fi.testbed2.app.Logging;
 import fi.testbed2.service.CoordinateService;
 import fi.testbed2.service.LocationService;
 import fi.testbed2.service.MunicipalityService;
-import fi.testbed2.service.PreferenceService;
+import fi.testbed2.service.SettingsService;
 
 /**
  * Service class used to provide user location based on the user's settings. The location can be
@@ -31,7 +31,7 @@ public class PreferenceBasedLocationService implements LocationService, Location
     MunicipalityService municipalityService;
 
     @Inject
-    PreferenceService preferenceService;
+    SettingsService settingsService;
 
     @Inject
     CoordinateService coordinateService;
@@ -46,7 +46,7 @@ public class PreferenceBasedLocationService implements LocationService, Location
     @Override
     public Point2D.Double getUserLocationXY() {
 
-        if (!preferenceService.showUserLocation()) {
+        if (!settingsService.showUserLocation()) {
             return null;
         }
 
@@ -60,7 +60,7 @@ public class PreferenceBasedLocationService implements LocationService, Location
 
     public Location getUserLastLocation() {
 
-        if (!preferenceService.showUserLocation()) {
+        if (!settingsService.showUserLocation()) {
             return null;
         }
 
@@ -79,7 +79,7 @@ public class PreferenceBasedLocationService implements LocationService, Location
         String provider = getProvider();
 
         if (provider.equals(LOCATION_PROVIDER_FIXED)) {
-            userLocation = preferenceService.getSavedFixedLocation();
+            userLocation = settingsService.getSavedFixedLocation();
             userLocationXY = coordinateService.convertLocationToXyPos(userLocation);
             return;
         }
@@ -128,7 +128,7 @@ public class PreferenceBasedLocationService implements LocationService, Location
     public void onProviderDisabled(String provider) {}
 
     private String getProvider() {
-        return preferenceService.getLocationProvider();
+        return settingsService.getLocationProvider();
     }
 
 }
