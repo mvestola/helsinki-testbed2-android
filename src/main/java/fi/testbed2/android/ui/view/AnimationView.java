@@ -15,6 +15,7 @@ import fi.testbed2.R;
 import fi.testbed2.android.app.Logger;
 import fi.testbed2.android.ui.svg.LocationMarkerSVG;
 import fi.testbed2.android.ui.svg.MunicipalityMarkerSVG;
+import fi.testbed2.android.ui.util.CanvasUtil;
 import fi.testbed2.domain.MapLocationXY;
 import fi.testbed2.domain.Municipality;
 import fi.testbed2.domain.TestbedMapImage;
@@ -23,6 +24,8 @@ import fi.testbed2.service.LocationService;
 import fi.testbed2.service.PageService;
 import fi.testbed2.service.SettingsService;
 import fi.testbed2.util.SeekBarUtil;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,8 +57,9 @@ public class AnimationView extends View {
     private static final float GESTURE_THRESHOLD_DIP = 16.0f;
 
     // Scaling related
-    private ScaleGestureDetector mScaleDetector;
-    private GestureDetector mGestureDetector;
+    private ScaleGestureDetector scaleDetector;
+    private GestureDetector gestureDetector;
+    @Getter @Setter
     private MapScaleInfo scaleInfo = new MapScaleInfo();
     private boolean doNotMoveMap;
 
@@ -64,6 +68,7 @@ public class AnimationView extends View {
     private int frameHeight;
 
     // Bounds calculation related
+    @Getter
     private Rect bounds;
     private float boundsStartY;
     private float boundsStartX;
@@ -74,11 +79,12 @@ public class AnimationView extends View {
     // Views and texts
 	private TextView timestampView;
     private SeekBar seekBar;
+    @Setter
     private String downloadProgressText;
 
     // Marker image caching
-    private Picture markerImage;
-    private Picture pointImage;
+    private Picture locationMarkerImage;
+    private Picture municipalityMarkerImage;
     private Toast municipalityToast;
 
     // Data
@@ -91,8 +97,10 @@ public class AnimationView extends View {
     public PageService pageService;
     public SettingsService settingsService;
 
+    @Setter
     private boolean allImagesDownloaded;
 
+    @Getter
     private AnimationViewPlayer player;
 
     /**
@@ -117,8 +125,8 @@ public class AnimationView extends View {
 
         player = new AnimationViewPlayer(this);
 
-        mGestureDetector = new GestureDetector(context, new GestureListener());
-        mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
+        gestureDetector = new GestureDetector(context, new GestureListener());
+        scaleDetector = new ScaleGestureDetector(context, new ScaleListener());
 
         BitmapDrawable firstMap = new BitmapDrawable(bitmapService.getBitmap(getMapImagesToBeDrawn().get(0)));
 
@@ -275,7 +283,7 @@ public class AnimationView extends View {
 
         if (municipality==null) {
 
-            Picture pic = getMarkerImage();
+            Picture pic = getLocationMarkerImage();
 
             int markerImageHeight = settingsService.getMapMarkerSize();
 
@@ -301,7 +309,7 @@ public class AnimationView extends View {
             this.municipalitiesOnScreen.put(municipality,
                     new Point2D.Double(xInt,yInt));
 
-            Picture pic = getPointImage();
+            Picture pic = getMunicipalityMarkerImage();
 
             int circleDiameter = settingsService.getMapPointSize();
 
@@ -334,36 +342,36 @@ public class AnimationView extends View {
         }
     }
 
-    private Picture getMarkerImage() {
+    private Picture getLocationMarkerImage() {
 
-        if (markerImage==null) {
+        if (locationMarkerImage ==null) {
             String color = settingsService.getMapMarkerColor();
-            markerImage = SVGParser.getSVGFromString(new LocationMarkerSVG(color).getXmlContent()).getPicture();
+            locationMarkerImage = SVGParser.getSVGFromString(new LocationMarkerSVG(color).getXmlContent()).getPicture();
         }
-        return markerImage;
+        return locationMarkerImage;
 
     }
 
-    private Picture getPointImage() {
+    private Picture getMunicipalityMarkerImage() {
 
-        if (pointImage==null) {
+        if (municipalityMarkerImage ==null) {
             String color = settingsService.getMapPointColor();
-            pointImage = SVGParser.getSVGFromString(new MunicipalityMarkerSVG(color).getXmlContent()).getPicture();
+            municipalityMarkerImage = SVGParser.getSVGFromString(new MunicipalityMarkerSVG(color).getXmlContent()).getPicture();
         }
-        return pointImage;
+        return municipalityMarkerImage;
 
     }
 
     public void resetMarkerAndPointImageCache() {
-        markerImage = null;
-        pointImage = null;
+        locationMarkerImage = null;
+        municipalityMarkerImage = null;
     }
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 
-        mGestureDetector.onTouchEvent(event);
-        mScaleDetector.onTouchEvent(event);
+        gestureDetector.onTouchEvent(event);
+        scaleDetector.onTouchEvent(event);
         calculateNewBounds(event);
 
         return true;
@@ -518,8 +526,8 @@ public class AnimationView extends View {
         @Override
         public void onLongPress(MotionEvent e) {
 
-            float xCanvas = convertRawXCoordinateToScaledCanvasCoordinate(e.getX());
-            float yCanvas = convertRawYCoordinateToScaledCanvasCoordinate(e.getY());
+            float xCanvas = CanvasUtil.convertRawXCoordinateToScaledCanvasCoordinate(e.getX(), scaleInfo);
+            float yCanvas = CanvasUtil.convertRawYCoordinateToScaledCanvasCoordinate(e.getY(), scaleInfo);
 
             Logger.debug("Long pressed x: " + e.getX());
             Logger.debug("Long pressed y: " + e.getY());
@@ -533,14 +541,6 @@ public class AnimationView extends View {
             showInfoForMunicipality(xCanvas, yCanvas, e.getX(), e.getY());
         }
 
-    }
-
-    private float convertRawXCoordinateToScaledCanvasCoordinate(float rawX) {
-        return (rawX-scaleInfo.getPivotX())/scaleInfo.getScaleFactor()+scaleInfo.getPivotX();
-    }
-
-    private float convertRawYCoordinateToScaledCanvasCoordinate(float rawY) {
-        return (rawY-scaleInfo.getPivotY())/scaleInfo.getScaleFactor()+scaleInfo.getPivotY();
     }
 
     /**
@@ -590,11 +590,6 @@ public class AnimationView extends View {
                         municipalityToast.show();
                         return true;
 
-
-
-
-
-
                     }
 
                 }
@@ -619,36 +614,12 @@ public class AnimationView extends View {
     * ============
     */
 
-	public Rect getBounds() {
-		return bounds;
-	}
-
-    public MapScaleInfo getScaleInfo() {
-        return this.scaleInfo;
-    }
-
-    public void setScaleInfo(MapScaleInfo scaleInfo) {
-        this.scaleInfo = scaleInfo;
-    }
-
     public void updateBounds(Rect bounds) {
         if (bounds==null) {
             initializeBounds();
         } else {
             this.bounds = bounds;
         }
-    }
-
-    public void setAllImagesDownloaded(boolean allImagesDownloaded) {
-        this.allImagesDownloaded = allImagesDownloaded;
-    }
-
-    public void setDownloadProgressText(String text) {
-        downloadProgressText = text;
-    }
-
-    public AnimationViewPlayer getPlayer() {
-        return player;
     }
 
     public void setMunicipalities(List<Municipality> municipalities) {
