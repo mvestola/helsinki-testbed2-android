@@ -8,15 +8,11 @@ import android.view.*;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.googlecode.androidannotations.annotations.Bean;
 import com.googlecode.androidannotations.annotations.EView;
 import com.jhlabs.map.Point2D;
-import com.larvalabs.svgandroid.SVGParser;
 import fi.testbed2.R;
 import fi.testbed2.android.app.Logger;
-import fi.testbed2.android.ui.svg.LocationMarkerSVG;
-import fi.testbed2.android.ui.svg.MunicipalityMarkerSVG;
-import fi.testbed2.android.ui.util.CanvasUtil;
-import fi.testbed2.domain.MapLocationXY;
 import fi.testbed2.domain.Municipality;
 import fi.testbed2.domain.TestbedMapImage;
 import fi.testbed2.service.BitmapService;
@@ -30,19 +26,12 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * View which shows the map animation.
  */
 @EView
 public class AnimationView extends View {
-
-    /**
-     * Original map image dimensions.
-     */
-    public static final double MAP_IMAGE_ORIG_WIDTH = 600d;
-    public static final double MAP_IMAGE_ORIG_HEIGHT = 508d;
 
     /**
      * Defines how many pixels the user is allowed to click
@@ -55,6 +44,9 @@ public class AnimationView extends View {
      * Used for bounds calculation
      */
     private static final float GESTURE_THRESHOLD_DIP = 16.0f;
+
+    @Bean @Getter
+    AnimationViewCanvasUtil canvasUtil;
 
     // Scaling related
     private ScaleGestureDetector scaleDetector;
@@ -83,13 +75,10 @@ public class AnimationView extends View {
     private String downloadProgressText;
 
     // Marker image caching
-    private Picture locationMarkerImage;
-    private Picture municipalityMarkerImage;
     private Toast municipalityToast;
 
     // Data
     private List<Municipality> municipalities;
-    private Map<Municipality, Point2D.Double> municipalitiesOnScreen;
 
     // Services
     public LocationService userLocationService;
@@ -218,8 +207,8 @@ public class AnimationView extends View {
         frame.setBounds(bounds);
         frame.draw(canvas);
 
-        drawMunicipalities(canvas);
-        drawUserLocation(canvas);
+        canvasUtil.drawMunicipalities(canvas, bounds, municipalities);
+        canvasUtil.drawUserLocation(canvas, bounds);
 
         canvas.restore();
 
@@ -245,127 +234,6 @@ public class AnimationView extends View {
                 pageService.getTestbedParsedPage().getAllTestbedImages().size()));
     }
 
-    private void drawUserLocation(Canvas canvas) {
-        MapLocationXY userLocation = userLocationService.getUserLocationXY();
-        if (userLocation!=null) {
-            drawPoint(userLocation, Color.BLACK, canvas, null);
-        }
-    }
-
-    private void drawMunicipalities(Canvas canvas) {
-
-        for (Municipality municipality : municipalities) {
-            if (municipality!=null) {
-                drawPoint(municipality.getXyPos(), Color.BLACK, canvas, municipality);
-            }
-        }
-
-    }
-
-    private void drawPoint(MapLocationXY point, int color, Canvas canvas, Municipality municipality) {
-
-        Paint paint = new Paint();
-        paint.setColor(color);
-        paint.setAntiAlias(true);
-        paint.setAlpha(200); // 0...255, 255 = no transparency, does not affect SVG transparency!
-
-        double imgScaledWidth = bounds.width();
-        double imgScaledHeight = bounds.height();
-
-        double widthRatio = imgScaledWidth / MAP_IMAGE_ORIG_WIDTH;
-        double heightRatio = imgScaledHeight / MAP_IMAGE_ORIG_HEIGHT;
-
-        float xScaled = Double.valueOf(bounds.left + point.getX()*widthRatio).floatValue();
-        float yScaled = Double.valueOf(bounds.top + point.getY()*heightRatio).floatValue();
-
-        int xInt = Float.valueOf(xScaled).intValue();
-        int yInt = Float.valueOf(yScaled).intValue();
-
-        if (municipality==null) {
-
-            Picture pic = getLocationMarkerImage();
-
-            int markerImageHeight = settingsService.getMapMarkerSize();
-
-            // Scale width a bit larger than original width (otherwise looks a bit too thin marker)
-            float ratio = pic.getWidth()/pic.getHeight();
-            int width = Float.valueOf(markerImageHeight*ratio+markerImageHeight/5).intValue();
-            int height = markerImageHeight;
-
-            /*
-            * x, y coordinates are image's top left corner,
-            * so position the marker to the bottom center
-            */
-            int left = xInt-width/2;
-            int top = yInt-height;
-            int right = xInt+width/2;
-            int bottom = yInt;
-
-            drawPicture(pic, canvas, new Rect(left,top,right,bottom));
-
-        } else {
-
-            // Save canvas coordinates for info toast
-            this.municipalitiesOnScreen.put(municipality,
-                    new Point2D.Double(xInt,yInt));
-
-            Picture pic = getMunicipalityMarkerImage();
-
-            int circleDiameter = settingsService.getMapPointSize();
-
-            /*
-            * x, y coordinates are image's top left corner,
-            * so position the marker to the center
-            */
-
-            int left = xInt-circleDiameter/2;
-            int top = yInt-circleDiameter/2;
-            int right = xInt+circleDiameter/2;
-            int bottom = yInt+circleDiameter/2;
-
-            drawPicture(pic, canvas, new Rect(left, top, right, bottom));
-        }
-
-    }
-
-    private void drawPicture(Picture pic, Canvas canvas, Rect rect) {
-
-        try {
-            canvas.drawPicture(pic, rect);
-        } catch (Throwable e) {
-            /*
-             * Some user's seem to use Force GPU setting which does not support
-             * the drawPicture method (throws java.lang.UnsupportedOperationException).
-             * Do not show anything to those users but an alert dialog
-             * that they should disabled Force GPU settings.
-             */
-        }
-    }
-
-    private Picture getLocationMarkerImage() {
-
-        if (locationMarkerImage ==null) {
-            String color = settingsService.getMapMarkerColor();
-            locationMarkerImage = SVGParser.getSVGFromString(new LocationMarkerSVG(color).getXmlContent()).getPicture();
-        }
-        return locationMarkerImage;
-
-    }
-
-    private Picture getMunicipalityMarkerImage() {
-
-        if (municipalityMarkerImage ==null) {
-            String color = settingsService.getMapPointColor();
-            municipalityMarkerImage = SVGParser.getSVGFromString(new MunicipalityMarkerSVG(color).getXmlContent()).getPicture();
-        }
-        return municipalityMarkerImage;
-
-    }
-
-    public void resetMarkerAndPointImageCache() {
-        locationMarkerImage = null;
-        municipalityMarkerImage = null;
-    }
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
@@ -526,8 +394,8 @@ public class AnimationView extends View {
         @Override
         public void onLongPress(MotionEvent e) {
 
-            float xCanvas = CanvasUtil.convertRawXCoordinateToScaledCanvasCoordinate(e.getX(), scaleInfo);
-            float yCanvas = CanvasUtil.convertRawYCoordinateToScaledCanvasCoordinate(e.getY(), scaleInfo);
+            float xCanvas = canvasUtil.convertRawXCoordinateToScaledCanvasCoordinate(e.getX(), scaleInfo);
+            float yCanvas = canvasUtil.convertRawYCoordinateToScaledCanvasCoordinate(e.getY(), scaleInfo);
 
             Logger.debug("Long pressed x: " + e.getX());
             Logger.debug("Long pressed y: " + e.getY());
@@ -559,7 +427,7 @@ public class AnimationView extends View {
 
             if (municipality!=null) {
 
-                Point2D.Double pos = municipalitiesOnScreen.get(municipality);
+                Point2D.Double pos = canvasUtil.getMunicipalitiesOnScreen().get(municipality);
 
                 if (pos!=null) {
 
@@ -624,6 +492,6 @@ public class AnimationView extends View {
 
     public void setMunicipalities(List<Municipality> municipalities) {
         this.municipalities = municipalities;
-        this.municipalitiesOnScreen = new HashMap<Municipality, Point2D.Double>();
+        canvasUtil.setMunicipalitiesOnScreen(new HashMap<Municipality, Point2D.Double>());
     }
 }

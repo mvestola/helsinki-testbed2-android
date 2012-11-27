@@ -22,6 +22,7 @@ public class MainApplication extends RoboApplication {
     private Module module = new MainModule();
 
     private static Context context;
+    private static MainApplication app;
 
     @Inject
     PageService pageService;
@@ -34,11 +35,16 @@ public class MainApplication extends RoboApplication {
     public void onCreate() {
         super.onCreate();
         context = this;
+        app = this;
         Logger.debug("MainApplication started");
     }
 
     public static Context getContext(){
         return context;
+    }
+
+    public static MainApplication getApplication(){
+        return app;
     }
 
     public void onTerminate() {

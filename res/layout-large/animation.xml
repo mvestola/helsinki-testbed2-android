@@ -7,7 +7,7 @@
         android:keepScreenOn="true"
         android:id="@+id/AnimationRootView">
 
-    <fi.testbed2.android.ui.view.AnimationView
+    <fi.testbed2.android.ui.view.AnimationView_
             android:id="@+id/animation_view"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"

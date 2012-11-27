@@ -196,7 +196,7 @@ public class AnimationActivity extends AbstractActivity {
         animationView.updateBounds(settingsService.getSavedMapBounds(orientation));
         animationView.setMunicipalities(settingsService.getSavedMunicipalities());
         animationView.getPlayer().setFrameDelay(settingsService.getSavedFrameDelay());
-        animationView.resetMarkerAndPointImageCache();
+        animationView.getCanvasUtil().resetMarkerAndPointImageCache();
     }
 
     /**
