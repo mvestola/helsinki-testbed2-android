@@ -18,7 +18,7 @@ import fi.testbed2.android.ui.view.MapScaleInfo;
 import fi.testbed2.domain.TestbedParsedPage;
 import fi.testbed2.service.*;
 import fi.testbed2.util.SeekBarUtil;
-import org.androidannotations.annotations.*;
+import com.googlecode.androidannotations.annotations.*;
 
 import java.lang.reflect.Method;
 

@@ -39,10 +39,10 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/resources" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/target/generated-test-sources/test-annotations" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/r" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/aidl" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/gen" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/target/generated-test-sources/test-annotations" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/annotations" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target/classes" />
       <excludeFolder url="file://$MODULE_DIR$/target/generated-sources/combined-assets" />
@@ -67,8 +67,8 @@
     <orderEntry type="library" name="Maven: com.jhlabs:javaproj-noawt:1.0.6" level="project" />
     <orderEntry type="library" name="Maven: org.roboguice:roboguice:1.1.3" level="project" />
     <orderEntry type="library" name="Maven: com.google.inject:guice:2.0-no_aop" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.androidannotations:androidannotations:3.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: org.androidannotations:androidannotations-api:3.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.googlecode.androidannotations:androidannotations:2.7" level="project" />
+    <orderEntry type="library" name="Maven: com.googlecode.androidannotations:androidannotations-api:2.7" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.sun.codemodel:codemodel:2.4.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.projectlombok:lombok:0.11.6" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: com.pivotallabs:robolectric:1.1" level="project" />

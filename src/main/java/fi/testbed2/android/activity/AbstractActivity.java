@@ -13,8 +13,8 @@ import fi.testbed2.R;
 import fi.testbed2.android.ui.dialog.DialogBuilder;
 import fi.testbed2.android.ui.dialog.DialogType;
 import fi.testbed2.service.SettingsService;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.OptionsItem;
+import com.googlecode.androidannotations.annotations.EActivity;
+import com.googlecode.androidannotations.annotations.OptionsItem;
 
 
 /**

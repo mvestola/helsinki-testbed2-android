@@ -8,10 +8,7 @@ import android.widget.TextView;
 import fi.testbed2.R;
 import fi.testbed2.android.app.MainApplication;
 import fi.testbed2.android.task.ParseAndInitTask;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.OptionsMenu;
-import org.androidannotations.annotations.RoboGuice;
-import org.androidannotations.annotations.ViewById;
+import com.googlecode.androidannotations.annotations.*;
 
 @EActivity(R.layout.download)
 @OptionsMenu(R.menu.main_menu)

@@ -8,6 +8,7 @@ import android.view.*;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.googlecode.androidannotations.annotations.EView;
 import com.jhlabs.map.Point2D;
 import com.larvalabs.svgandroid.SVGParser;
 import fi.testbed2.R;
@@ -31,6 +32,7 @@ import java.util.Map;
 /**
  * View which shows the map animation.
  */
+@EView
 public class AnimationView extends View {
 
     /**

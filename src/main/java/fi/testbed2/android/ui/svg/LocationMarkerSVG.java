@@ -2,6 +2,7 @@ package fi.testbed2.android.ui.svg;
 
 import fi.testbed2.android.app.Logging;
 import fi.testbed2.util.ColorUtil;
+import lombok.Getter;
 
 /**
  * Map marker image as SVG for user location.
@@ -9,6 +10,7 @@ import fi.testbed2.util.ColorUtil;
  */
 public class LocationMarkerSVG {
 
+    @Getter
     private String xmlContent;
 
     public LocationMarkerSVG(String colorHex) {
@@ -30,10 +32,6 @@ public class LocationMarkerSVG {
                 "  </g>\n" +
                 " </g>\n" +
                 "</svg>";
-    }
-
-    public String getXmlContent() {
-        return xmlContent;
     }
 
 }

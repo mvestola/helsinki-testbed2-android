@@ -1,6 +1,8 @@
 package fi.testbed2.android.ui.view;
 
 import fi.testbed2.android.app.Logging;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Player which controls the state of the animation in the
@@ -10,9 +12,16 @@ public class AnimationViewPlayer {
 
     private AnimationView view;
 
-    private boolean play;
+    @Getter
+    private boolean isPlaying;
+
+    @Getter @Setter
     private int currentFrame;
+
+    @Getter @Setter
     private int frames;
+
+    @Getter @Setter
     private int frameDelay;
 
     public AnimationViewPlayer(AnimationView view) {
@@ -21,30 +30,30 @@ public class AnimationViewPlayer {
 
     public void playOrPause() {
         Logging.debug("AnimationViewPlayer playOrPause");
-        if(play) {
-            play = false;
+        if(isPlaying) {
+            isPlaying = false;
         } else {
-            play = true;
+            isPlaying = true;
             view.next();
         }
         view.invalidate();
     }
 
     public void play() {
-        Logging.debug("AnimationViewPlayer play");
-        play = true;
+        Logging.debug("AnimationViewPlayer isPlaying");
+        isPlaying = true;
         view.invalidate();
     }
 
     public void pause() {
         Logging.debug("AnimationViewPlayer pause");
-        play = false;
+        isPlaying = false;
         view.invalidate();
     }
 
     public void previous() {
         Logging.debug("AnimationViewPlayer previous");
-        this.play = false;
+        this.isPlaying = false;
         currentFrame--;
         if(currentFrame < 0)
             currentFrame = Math.abs((frames - 1) - currentFrame);
@@ -64,7 +73,7 @@ public class AnimationViewPlayer {
     }
 
     public void goToFrame(int frameNumber) {
-        this.play = false;
+        this.isPlaying = false;
         currentFrame=frameNumber;
 
         if(currentFrame > frames)
@@ -73,35 +82,4 @@ public class AnimationViewPlayer {
         view.invalidate();
     }
 
-    /**
-     * Getters / setters
-     */
-
-    public int getCurrentFrame() {
-        return currentFrame;
-    }
-
-    public int getFrames() {
-        return frames;
-    }
-
-    public void setCurrentFrame(int frame) {
-        this.currentFrame = frame;
-    }
-
-    public void setFrames(int frames) {
-        this.frames = frames;
-    }
-
-    public boolean isPlaying() {
-        return play;
-    }
-
-    public int getFrameDelay() {
-        return frameDelay;
-    }
-
-    public void setFrameDelay(int frameDelay) {
-        this.frameDelay = frameDelay;
-    }
 }

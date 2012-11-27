@@ -2,12 +2,14 @@ package fi.testbed2.android.ui.svg;
 
 import fi.testbed2.android.app.Logging;
 import fi.testbed2.util.ColorUtil;
+import lombok.Getter;
 
 /**
  * Map marker image as SVG for municipalities.
  */
 public class MunicipalityMarkerSVG {
 
+    @Getter
     private String xmlContent;
 
     public MunicipalityMarkerSVG(String colorHex) {
@@ -28,10 +30,6 @@ public class MunicipalityMarkerSVG {
                 "  </g>\n" +
                 " </g>\n" +
                 "</svg>";
-    }
-
-    public String getXmlContent() {
-        return xmlContent;
     }
 
 }

@@ -8,7 +8,7 @@ import fi.testbed2.R;
 import fi.testbed2.android.app.Logging;
 import fi.testbed2.android.app.MainApplication;
 import fi.testbed2.android.task.result.TaskResult;
-import org.androidannotations.annotations.*;
+import com.googlecode.androidannotations.annotations.*;
 
 @EActivity(R.layout.main)
 @OptionsMenu(R.menu.main_menu)
