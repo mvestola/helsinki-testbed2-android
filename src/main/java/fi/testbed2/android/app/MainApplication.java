@@ -34,7 +34,7 @@ public class MainApplication extends RoboApplication {
     public void onCreate() {
         super.onCreate();
         context = this;
-        Logging.debug("MainApplication started");
+        Logger.debug("MainApplication started");
     }
 
     public static Context getContext(){

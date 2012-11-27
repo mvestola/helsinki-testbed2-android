@@ -1,6 +1,6 @@
 package fi.testbed2.android.ui.svg;
 
-import fi.testbed2.android.app.Logging;
+import fi.testbed2.android.app.Logger;
 import fi.testbed2.util.ColorUtil;
 import lombok.Getter;
 
@@ -19,8 +19,8 @@ public class LocationMarkerSVG {
         String colorWithoutAlpha = ColorUtil.getColorWithoutAlpha(colorHex);
         int strokeWidth = 60;
 
-        Logging.debug("LocationMarkerSVG opacity: "+opacity);
-        Logging.debug("LocationMarkerSVG color: "+colorWithoutAlpha);
+        Logger.debug("LocationMarkerSVG opacity: " + opacity);
+        Logger.debug("LocationMarkerSVG color: " + colorWithoutAlpha);
 
         xmlContent = "<?xml version=\"1.0\"?><svg width=\"2481\" height=\"2073\" xmlns=\"http://www.w3.org/2000/svg\">\n" +
                 " <title>map</title>\n" +

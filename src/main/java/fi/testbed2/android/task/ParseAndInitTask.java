@@ -6,7 +6,7 @@ import android.content.Intent;
 import com.google.inject.Inject;
 import fi.testbed2.R;
 import fi.testbed2.android.activity.ParsingActivity;
-import fi.testbed2.android.app.Logging;
+import fi.testbed2.android.app.Logger;
 import fi.testbed2.android.task.exception.DownloadTaskException;
 import fi.testbed2.android.task.result.TaskResult;
 import fi.testbed2.android.task.result.TaskResultType;
@@ -60,17 +60,17 @@ public class ParseAndInitTask extends AbstractTask<TaskResult> implements Task {
     @Override
     protected void onSuccess(TaskResult result) {
 
-        Logging.debug("ParseAndInitTask succeeded");
+        Logger.debug("ParseAndInitTask succeeded");
 
         Intent intent = new Intent();
         intent.putExtra(TaskResult.MSG_CODE, result.getMessage());
 
         if (result.isCancelled()) {
-            Logging.debug("ParseAndInitTask cancelled");
+            Logger.debug("ParseAndInitTask cancelled");
             activity.setResult(Activity.RESULT_CANCELED);
             activity.finish();
         } else {
-            Logging.debug("ParseAndInitTask result OK");
+            Logger.debug("ParseAndInitTask result OK");
             activity.onParsingFinished();
         }
 
@@ -79,7 +79,7 @@ public class ParseAndInitTask extends AbstractTask<TaskResult> implements Task {
     @Override
     public TaskResult call() throws DownloadTaskException {
 
-        Logging.debug("ParseAndInitTask call()");
+        Logger.debug("ParseAndInitTask call()");
 
         TaskResult result = new TaskResult(TaskResultType.OK, "Parsing and initialization OK");
 

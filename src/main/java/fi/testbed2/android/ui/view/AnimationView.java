@@ -12,7 +12,7 @@ import com.googlecode.androidannotations.annotations.EView;
 import com.jhlabs.map.Point2D;
 import com.larvalabs.svgandroid.SVGParser;
 import fi.testbed2.R;
-import fi.testbed2.android.app.Logging;
+import fi.testbed2.android.app.Logger;
 import fi.testbed2.android.ui.svg.LocationMarkerSVG;
 import fi.testbed2.android.ui.svg.MunicipalityMarkerSVG;
 import fi.testbed2.domain.MapLocationXY;
@@ -113,7 +113,7 @@ public class AnimationView extends View {
 
     public void initView(Context context) {
 
-        Logging.debug("Initializing AnimationView");
+        Logger.debug("Initializing AnimationView");
 
         player = new AnimationViewPlayer(this);
 
@@ -132,7 +132,7 @@ public class AnimationView extends View {
     }
 
     public void startAnimation(TextView timestampView, SeekBar seekBar, Rect bounds, MapScaleInfo scaleInfo) {
-        Logging.debug("Start animation");
+        Logger.debug("Start animation");
         player.play();
         this.scaleInfo = scaleInfo;
         this.timestampView = timestampView;
@@ -162,9 +162,9 @@ public class AnimationView extends View {
         int measuredHeight = getMeasuredHeight();
         int measuredWidth = getMeasuredWidth();
 
-        Logging.debug("Initializing bounds...");
-        Logging.debug("measuredHeight: "+measuredHeight);
-        Logging.debug("measuredWidth: "+measuredWidth);
+        Logger.debug("Initializing bounds...");
+        Logger.debug("measuredHeight: " + measuredHeight);
+        Logger.debug("measuredWidth: " + measuredWidth);
 
         if(measuredHeight > measuredWidth) {
             int scaleBy = measuredHeight-frameHeight;
@@ -414,7 +414,7 @@ public class AnimationView extends View {
 
                 Rect savedBounds = new Rect(bounds);
 
-                Logging.debug("Calculating new bounds...");
+                Logger.debug("Calculating new bounds...");
 
                 // Convert the dips to pixels
                 final float scale = getContext().getResources().getDisplayMetrics().density;
@@ -433,10 +433,10 @@ public class AnimationView extends View {
 
                     bounds.offset((int)mDistance_x_dip, (int)mDistance_y_dip);
 
-                    Logging.debug("New bounds left: "+bounds.left);
-                    Logging.debug("New bounds top: "+bounds.top);
-                    Logging.debug("New bounds right: "+bounds.right);
-                    Logging.debug("New bounds bottom: "+bounds.bottom);
+                    Logger.debug("New bounds left: " + bounds.left);
+                    Logger.debug("New bounds top: " + bounds.top);
+                    Logger.debug("New bounds right: " + bounds.right);
+                    Logger.debug("New bounds bottom: " + bounds.bottom);
 
                     // restart measuring distances
                     boundsStartY = event.getY();
@@ -521,13 +521,13 @@ public class AnimationView extends View {
             float xCanvas = convertRawXCoordinateToScaledCanvasCoordinate(e.getX());
             float yCanvas = convertRawYCoordinateToScaledCanvasCoordinate(e.getY());
 
-            Logging.debug("Long pressed x: "+e.getX());
-            Logging.debug("Long pressed y: "+e.getY());
-            Logging.debug("Long pressed x (canvas): "+xCanvas);
-            Logging.debug("Long pressed y (canvas): "+yCanvas);
-            Logging.debug("Scale factor: "+scaleInfo.getScaleFactor());
-            Logging.debug("Scale pivotX: "+scaleInfo.getPivotX());
-            Logging.debug("Scale pivotY: "+scaleInfo.getPivotY());
+            Logger.debug("Long pressed x: " + e.getX());
+            Logger.debug("Long pressed y: " + e.getY());
+            Logger.debug("Long pressed x (canvas): " + xCanvas);
+            Logger.debug("Long pressed y (canvas): " + yCanvas);
+            Logger.debug("Scale factor: " + scaleInfo.getScaleFactor());
+            Logger.debug("Scale pivotX: " + scaleInfo.getPivotX());
+            Logger.debug("Scale pivotY: " + scaleInfo.getPivotY());
 
             hideMunicipalityToast(); // always hide previous toast
             showInfoForMunicipality(xCanvas, yCanvas, e.getX(), e.getY());
@@ -563,7 +563,7 @@ public class AnimationView extends View {
 
                 if (pos!=null) {
 
-                    Logging.debug("Pos: "+pos+", for: "+municipality.getName());
+                    Logger.debug("Pos: " + pos + ", for: " + municipality.getName());
 
                     final float scale = getContext().getResources().getDisplayMetrics().density;
                     int threshold = (int) ((settingsService.getMapPointSize()/2)*scale +
@@ -571,7 +571,7 @@ public class AnimationView extends View {
 
                     if (Math.abs(pos.x-canvasX)<=threshold && Math.abs(pos.y-canvasY)<=threshold) {
 
-                        Logging.debug("Show info for municipality: "+municipality.getName());
+                        Logger.debug("Show info for municipality: " + municipality.getName());
 
                         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 

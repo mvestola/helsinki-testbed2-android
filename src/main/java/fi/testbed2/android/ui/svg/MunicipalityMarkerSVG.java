@@ -1,6 +1,6 @@
 package fi.testbed2.android.ui.svg;
 
-import fi.testbed2.android.app.Logging;
+import fi.testbed2.android.app.Logger;
 import fi.testbed2.util.ColorUtil;
 import lombok.Getter;
 
@@ -18,8 +18,8 @@ public class MunicipalityMarkerSVG {
         String colorWithoutAlpha = ColorUtil.getColorWithoutAlpha(colorHex);
         int strokeWidth = 20;
 
-        Logging.debug("MapPoint opacity: "+opacity);
-        Logging.debug("MapPoint color: "+colorWithoutAlpha);
+        Logger.debug("MapPoint opacity: " + opacity);
+        Logger.debug("MapPoint color: " + colorWithoutAlpha);
 
         xmlContent = "<?xml version=\"1.0\"?>\n" +
                 "<svg width=\"200\" height=\"200\" xmlns=\"http://www.w3.org/2000/svg\">\n" +

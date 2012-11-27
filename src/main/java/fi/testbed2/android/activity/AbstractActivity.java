@@ -1,7 +1,6 @@
 package fi.testbed2.android.activity;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,7 +10,6 @@ import com.google.ads.AdView;
 import com.google.inject.Inject;
 import fi.testbed2.R;
 import fi.testbed2.android.ui.dialog.DialogBuilder;
-import fi.testbed2.android.ui.dialog.DialogType;
 import fi.testbed2.service.SettingsService;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.OptionsItem;
@@ -36,7 +34,7 @@ public abstract class AbstractActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (settingsService.isShowWhatsNewDialog()) {
-            showDialog(DialogType.WHATS_NEW);
+            dialogBuilder.getWhatsNewDialog().show();
         }
     }
 
@@ -71,32 +69,12 @@ public abstract class AbstractActivity extends Activity {
 
     @OptionsItem(R.id.main_menu_about)
     public void onAboutMenuItemSelected() {
-        showDialog(DialogType.ABOUT);
+        dialogBuilder.getAboutDialog().show();
     }
 
     protected void showErrorDialog(String errorMsg) {
         currentErrorMsg = errorMsg;
-        showDialog(DialogType.ERROR);
-    }
-
-    protected void showDialog(DialogType dialogType) {
-
-        Dialog alertDialog = null;
-
-        switch(dialogType) {
-            case ABOUT:
-                alertDialog = dialogBuilder.getAboutDialog();
-                break;
-            case WHATS_NEW:
-                alertDialog = dialogBuilder.getWhatsNewDialog();
-                break;
-            case ERROR:
-                alertDialog = dialogBuilder.getErrorDialog(currentErrorMsg);
-                break;
-        }
-
-        alertDialog.show();
-
+        dialogBuilder.getErrorDialog(currentErrorMsg).show();
     }
 
     protected void showShortMessage(String msg) {

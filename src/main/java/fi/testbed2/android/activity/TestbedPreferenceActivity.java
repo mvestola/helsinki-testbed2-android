@@ -7,7 +7,7 @@ import android.preference.ListPreference;
 import com.google.inject.Inject;
 import com.threefiftynice.android.preference.ListPreferenceMultiSelect;
 import fi.testbed2.R;
-import fi.testbed2.android.app.Logging;
+import fi.testbed2.android.app.Logger;
 import fi.testbed2.android.ui.dialog.DialogBuilder;
 import fi.testbed2.domain.MapLocationGPS;
 import fi.testbed2.service.LocationService;
@@ -66,18 +66,18 @@ public class TestbedPreferenceActivity extends RoboPreferenceActivity
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 
-        Logging.debug("PreferenceActivity.onSharedPreferenceChanged: "+key);
+        Logger.debug("PreferenceActivity.onSharedPreferenceChanged: " + key);
 
         if (key.equals(SettingsService.PREF_LOCATION_PROVIDER)) {
 
-            Logging.debug("Updating location provider...");
+            Logger.debug("Updating location provider...");
 
             String newProvider = sharedPreferences.getString(key, LocationManager.NETWORK_PROVIDER);
 
             if (newProvider.equals(LocationService.LOCATION_PROVIDER_FIXED)) {
 
                 MapLocationGPS loc = settingsService.saveCurrentLocationAsFixedLocation();
-                Logging.debug("Using fixed provider: "+loc);
+                Logger.debug("Using fixed provider: " + loc);
 
                 /**
                  * If no location is available, revert to GPS provider.

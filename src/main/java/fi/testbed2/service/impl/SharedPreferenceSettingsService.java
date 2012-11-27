@@ -7,7 +7,7 @@ import android.location.LocationManager;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import fi.testbed2.R;
-import fi.testbed2.android.app.Logging;
+import fi.testbed2.android.app.Logger;
 import fi.testbed2.android.app.MainApplication;
 import fi.testbed2.android.ui.view.MapScaleInfo;
 import fi.testbed2.domain.MapLocationGPS;
@@ -36,7 +36,7 @@ public class SharedPreferenceSettingsService implements SettingsService {
     Context context;
 
     public SharedPreferenceSettingsService() {
-        Logging.debug("SharedPreferenceSettingsService instantiated");
+        Logger.debug("SharedPreferenceSettingsService instantiated");
     }
 
     /**
@@ -116,7 +116,7 @@ public class SharedPreferenceSettingsService implements SettingsService {
 
     @Override
     public void saveWhatsNewDialogShownForCurrentVersion() {
-        Logging.debug("Saving that what's new dialog is shown for version: "+MainApplication.getVersionName());
+        Logger.debug("Saving that what's new dialog is shown for version: " + MainApplication.getVersionName());
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(SettingsService.PREF_WHATS_NEW_DIALOG_SHOWN_FOR_VERSION,
                 MainApplication.getVersionName());
@@ -125,7 +125,7 @@ public class SharedPreferenceSettingsService implements SettingsService {
 
     @Override
     public void saveHardwareAccelerationDialogShown() {
-        Logging.debug("Saving hardware acceleration dialog is shown");
+        Logger.debug("Saving hardware acceleration dialog is shown");
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(SettingsService.PREF_HW_ACCEL_DIALOG_SHOWN, true);
         editor.commit();
@@ -147,7 +147,7 @@ public class SharedPreferenceSettingsService implements SettingsService {
         String dialogShownForVersion = sharedPreferences.
                 getString(SettingsService.PREF_WHATS_NEW_DIALOG_SHOWN_FOR_VERSION, "");
 
-        Logging.debug("What's new dialog is shown for version: "+dialogShownForVersion);
+        Logger.debug("What's new dialog is shown for version: " + dialogShownForVersion);
 
         if (!dialogShownForVersion.equals(MainApplication.getVersionName())) {
             return true;
@@ -250,7 +250,7 @@ public class SharedPreferenceSettingsService implements SettingsService {
         MapLocationGPS lastKnownLocation = locationService.getUserLastLocation();
 
         if (lastKnownLocation!=null) {
-            Logging.debug("Saving last known location to preferences: "+lastKnownLocation);
+            Logger.debug("Saving last known location to preferences: " + lastKnownLocation);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString(SettingsService.PREF_LOCATION_FIXED_LAT,""+lastKnownLocation.getLatitude());
             editor.putString(SettingsService.PREF_LOCATION_FIXED_LON,""+lastKnownLocation.getLongitude());

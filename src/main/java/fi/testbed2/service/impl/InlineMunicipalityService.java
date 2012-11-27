@@ -2,7 +2,7 @@ package fi.testbed2.service.impl;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import fi.testbed2.android.app.Logging;
+import fi.testbed2.android.app.Logger;
 import fi.testbed2.domain.MapLocationGPS;
 import fi.testbed2.domain.MapLocationXY;
 import fi.testbed2.domain.Municipality;
@@ -24,7 +24,7 @@ public class InlineMunicipalityService implements MunicipalityService {
     CoordinateService coordinateService;
 
     public InlineMunicipalityService() {
-        Logging.debug("InlineMunicipalityService instantiated");
+        Logger.debug("InlineMunicipalityService instantiated");
     }
 
     @Override

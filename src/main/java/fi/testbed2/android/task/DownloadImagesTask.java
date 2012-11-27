@@ -6,7 +6,7 @@ import android.content.Intent;
 import com.google.inject.Inject;
 import fi.testbed2.R;
 import fi.testbed2.android.activity.AnimationActivity;
-import fi.testbed2.android.app.Logging;
+import fi.testbed2.android.app.Logger;
 import fi.testbed2.android.app.MainApplication;
 import fi.testbed2.android.task.exception.DownloadTaskException;
 import fi.testbed2.android.task.result.TaskResult;
@@ -53,14 +53,14 @@ public class DownloadImagesTask extends AbstractTask<TaskResult> {
         Intent intent = new Intent();
         intent.putExtra(TaskResult.MSG_CODE, result.getMessage());
 
-        Logging.debug("DownloadImagesTask succeeded");
+        Logger.debug("DownloadImagesTask succeeded");
 
         if (result.isCancelled()) {
-            Logging.debug("DownloadImagesTask cancelled");
+            Logger.debug("DownloadImagesTask cancelled");
             activity.setResult(Activity.RESULT_CANCELED);
             activity.finish();
         } else {
-            Logging.debug("DownloadImagesTask result OK");
+            Logger.debug("DownloadImagesTask result OK");
             activity.setResult(MainApplication.RESULT_OK, intent);
             activity.onAllImagesDownloaded();
         }
@@ -69,7 +69,7 @@ public class DownloadImagesTask extends AbstractTask<TaskResult> {
     @Override
     public TaskResult call() throws DownloadTaskException {
 
-        Logging.debug("DownloadImagesTask call()");
+        Logger.debug("DownloadImagesTask call()");
 
         List<TestbedMapImage> testbedMapImages = pageService.getTestbedParsedPage().getAllTestbedImages();
         int totalImagesNotDownloaded = pageService.getNotDownloadedImagesCount();

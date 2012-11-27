@@ -1,6 +1,6 @@
 package fi.testbed2.android.ui.view;
 
-import fi.testbed2.android.app.Logging;
+import fi.testbed2.android.app.Logger;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,7 +29,7 @@ public class AnimationViewPlayer {
     }
 
     public void playOrPause() {
-        Logging.debug("AnimationViewPlayer playOrPause");
+        Logger.debug("AnimationViewPlayer playOrPause");
         if(isPlaying) {
             isPlaying = false;
         } else {
@@ -40,19 +40,19 @@ public class AnimationViewPlayer {
     }
 
     public void play() {
-        Logging.debug("AnimationViewPlayer isPlaying");
+        Logger.debug("AnimationViewPlayer isPlaying");
         isPlaying = true;
         view.invalidate();
     }
 
     public void pause() {
-        Logging.debug("AnimationViewPlayer pause");
+        Logger.debug("AnimationViewPlayer pause");
         isPlaying = false;
         view.invalidate();
     }
 
     public void previous() {
-        Logging.debug("AnimationViewPlayer previous");
+        Logger.debug("AnimationViewPlayer previous");
         this.isPlaying = false;
         currentFrame--;
         if(currentFrame < 0)

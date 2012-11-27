@@ -5,7 +5,7 @@ import android.support.v4.util.LruCache;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import fi.testbed2.R;
-import fi.testbed2.android.app.Logging;
+import fi.testbed2.android.app.Logger;
 import fi.testbed2.android.task.Task;
 import fi.testbed2.android.task.exception.DownloadTaskException;
 import fi.testbed2.domain.TestbedMapImage;
@@ -44,7 +44,7 @@ public class LruCachePageService implements PageService {
     private LruCache<String, TestbedParsedPage> pageCache;
 
     public LruCachePageService() {
-        Logging.debug("LruCachePageService instantiated");
+        Logger.debug("LruCachePageService instantiated");
     }
 
     private LruCache<String, TestbedParsedPage> getCache() {
@@ -139,7 +139,7 @@ public class LruCachePageService implements PageService {
      */
     public TestbedParsedPage downloadAndParseTestbedPage(final String url, Task task) throws DownloadTaskException {
 
-        Logging.debug("Downloading testbed page from url: " + url);
+        Logger.debug("Downloading testbed page from url: " + url);
 
         TestbedParsedPage testbedParsedPage = new TestbedParsedPage();
 

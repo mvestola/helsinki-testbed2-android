@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageButton;
 import fi.testbed2.R;
-import fi.testbed2.android.app.Logging;
+import fi.testbed2.android.app.Logger;
 import fi.testbed2.android.app.MainApplication;
 import fi.testbed2.android.task.result.TaskResult;
 import com.googlecode.androidannotations.annotations.*;
@@ -38,7 +38,7 @@ public class MainActivity extends AbstractActivity {
 	}
 
     private void startMainParsingActivity() {
-        Logging.debug("startMainParsingActivity");
+        Logger.debug("startMainParsingActivity");
         ParsingActivity_.intent(this).startForResult(PARSING_SUB_ACTIVITY);
     }
 

@@ -6,7 +6,7 @@ import roboguice.util.Ln;
 /**
  * Logger class used in testbed app.
  */
-public final class Logging {
+public final class Logger {
 
     public static void debug(String s) {
         if (Environment.DEBUG) {

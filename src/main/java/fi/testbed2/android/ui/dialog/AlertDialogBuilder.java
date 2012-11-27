@@ -12,7 +12,7 @@ import android.text.util.Linkify;
 import android.widget.TextView;
 import com.google.inject.Inject;
 import fi.testbed2.R;
-import fi.testbed2.android.app.Logging;
+import fi.testbed2.android.app.Logger;
 import fi.testbed2.android.app.MainApplication;
 import fi.testbed2.service.SettingsService;
 
@@ -25,7 +25,7 @@ public class AlertDialogBuilder implements DialogBuilder {
     SettingsService settingsService;
 
     public AlertDialogBuilder() {
-        Logging.debug("AlertDialogBuilder instantiated");
+        Logger.debug("AlertDialogBuilder instantiated");
     }
 
     @Override

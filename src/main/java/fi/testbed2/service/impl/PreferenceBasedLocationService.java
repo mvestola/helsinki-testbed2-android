@@ -7,7 +7,7 @@ import android.os.Bundle;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import fi.testbed2.Environment;
-import fi.testbed2.android.app.Logging;
+import fi.testbed2.android.app.Logger;
 import fi.testbed2.domain.MapLocationGPS;
 import fi.testbed2.domain.MapLocationXY;
 import fi.testbed2.service.CoordinateService;
@@ -41,7 +41,7 @@ public class PreferenceBasedLocationService implements LocationService, Location
     private MapLocationGPS userLocation;
 
     public PreferenceBasedLocationService() {
-        Logging.debug("PreferenceBasedLocationService instantiated");
+        Logger.debug("PreferenceBasedLocationService instantiated");
     }
 
     @Override
@@ -75,7 +75,7 @@ public class PreferenceBasedLocationService implements LocationService, Location
     @Override
     public void startListeningLocationChanges() {
 
-        Logging.debug("Started listening location changes");
+        Logger.debug("Started listening location changes");
 
         String provider = getProvider();
 
@@ -100,14 +100,14 @@ public class PreferenceBasedLocationService implements LocationService, Location
              * Seems to only occur in Android emulator, see bug description:
              * http://code.google.com/p/android/issues/detail?id=19857
              */
-            Logging.debug("RequestLocationUpdates failed: "+e.getMessage());
+            Logger.debug("RequestLocationUpdates failed: " + e.getMessage());
         }
 
     }
 
     @Override
     public void stopListeningLocationChanges() {
-        Logging.debug("Stopped listening location changes");
+        Logger.debug("Stopped listening location changes");
         locationManager.removeUpdates(this);
     }
 

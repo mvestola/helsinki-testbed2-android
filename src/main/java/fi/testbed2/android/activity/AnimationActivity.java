@@ -10,7 +10,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import com.google.inject.Inject;
 import fi.testbed2.R;
-import fi.testbed2.android.app.Logging;
+import fi.testbed2.android.app.Logger;
 import fi.testbed2.android.app.MainApplication;
 import fi.testbed2.android.task.DownloadImagesTask;
 import fi.testbed2.android.ui.view.AnimationView;
@@ -245,7 +245,7 @@ public class AnimationActivity extends AbstractActivity {
             Method m = View.class.getMethod("isHardwareAccelerated");
             boolean isHardwareAccelerated = (Boolean)m.invoke(this.findViewById(android.R.id.content));
 
-            Logging.debug("Hardware acceleration status: "+isHardwareAccelerated);
+            Logger.debug("Hardware acceleration status: " + isHardwareAccelerated);
 
             if(settingsService.isShowHardwareAccelerationDialog() &&
                     isHardwareAccelerated) {
@@ -254,7 +254,7 @@ public class AnimationActivity extends AbstractActivity {
 
         } catch (Exception e) {
             // Ignore
-            Logging.debug("OK. No hardware acceleration because API level < 11");
+            Logger.debug("OK. No hardware acceleration because API level < 11");
         }
 
     }

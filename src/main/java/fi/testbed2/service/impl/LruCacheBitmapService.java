@@ -8,7 +8,7 @@ import android.support.v4.util.LruCache;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import fi.testbed2.R;
-import fi.testbed2.android.app.Logging;
+import fi.testbed2.android.app.Logger;
 import fi.testbed2.android.task.exception.DownloadTaskException;
 import fi.testbed2.domain.TestbedMapImage;
 import fi.testbed2.service.BitmapService;
@@ -28,7 +28,7 @@ public class LruCacheBitmapService implements BitmapService {
     private int cacheSizeInBytes = -1;
 
     public LruCacheBitmapService() {
-        Logging.debug("LruCacheBitmapService instantiated");
+        Logger.debug("LruCacheBitmapService instantiated");
     }
 
     private LruCache<String, Bitmap> getCache() {
@@ -98,7 +98,7 @@ public class LruCacheBitmapService implements BitmapService {
 
         try {
 
-            Logging.debug("Downloading bitmap from url: " + imageURL);
+            Logger.debug("Downloading bitmap from url: " + imageURL);
 
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inTempStorage =  new byte[16 * 1024];
