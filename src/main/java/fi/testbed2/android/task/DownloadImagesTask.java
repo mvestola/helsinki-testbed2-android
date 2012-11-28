@@ -1,19 +1,17 @@
 package fi.testbed2.android.task;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import com.google.inject.Inject;
+import com.googlecode.androidannotations.annotations.Background;
+import com.googlecode.androidannotations.annotations.EBean;
+import com.googlecode.androidannotations.annotations.RootContext;
+import com.googlecode.androidannotations.annotations.UiThread;
 import fi.testbed2.R;
 import fi.testbed2.android.activity.AnimationActivity;
 import fi.testbed2.android.app.Logger;
 import fi.testbed2.android.app.MainApplication;
 import fi.testbed2.android.task.exception.DownloadTaskException;
-import fi.testbed2.android.task.result.TaskResult;
-import fi.testbed2.android.task.result.TaskResultType;
 import fi.testbed2.domain.TestbedMapImage;
-import fi.testbed2.service.BitmapService;
-import fi.testbed2.service.PageService;
 import roboguice.inject.InjectResource;
 
 import java.util.List;
@@ -21,55 +19,48 @@ import java.util.List;
 /**
  * Task which downloads all map images and reloads the animation view.
  */
-public class DownloadImagesTask extends AbstractTask<TaskResult> {
+@EBean
+public class DownloadImagesTask extends AbstractTask {
+
+    @RootContext
+    AnimationActivity activity;
 
     @InjectResource(R.string.error_msg_parsed_map_image_null)
     String errorMapImageNull;
 
-    @Inject
-    BitmapService bitmapService;
-
-    @Inject
-    PageService pageService;
-
-    AnimationActivity activity;
-
-    public DownloadImagesTask(Context context) {
-        super(context);
-    }
-
-    public void setActivity(AnimationActivity activity) {
-        this.activity = activity;
-    }
-
     @Override
     protected Activity getActivity() {
-        return this.activity;
+        return activity;
     }
 
     @Override
-    protected void onSuccess(TaskResult result) {
-
-        Intent intent = new Intent();
-        intent.putExtra(TaskResult.MSG_CODE, result.getMessage());
-
-        Logger.debug("DownloadImagesTask succeeded");
-
-        if (result.isCancelled()) {
-            Logger.debug("DownloadImagesTask cancelled");
-            activity.setResult(Activity.RESULT_CANCELED);
-            activity.finish();
-        } else {
-            Logger.debug("DownloadImagesTask result OK");
-            activity.setResult(MainApplication.RESULT_OK, intent);
-            activity.onAllImagesDownloaded();
-        }
+    protected String getTaskName() {
+        return "DownloadImagesTask";
     }
 
     @Override
-    public TaskResult call() throws DownloadTaskException {
+    protected void runOnBackground() throws DownloadTaskException {
+        downloadImages();
+    }
 
-        Logger.debug("DownloadImagesTask call()");
+    @UiThread
+    @Override
+    public void onSuccess() {
+        super.onSuccess();
+        activity.setResult(MainApplication.RESULT_OK);
+        activity.onAllImagesDownloaded();
+    }
+
+    @UiThread
+    public void updateDownloadProgress(int currentImageIndex, int totalImagesNotDownloaded) {
+        String progressText = activity.getString(R.string.progress_anim_downloading,
+                currentImageIndex, totalImagesNotDownloaded);
+        activity.updateDownloadProgressInfo(progressText);
+    }
+
+    private void downloadImages() throws DownloadTaskException {
+
+        Logger.debug("DownloadImagesTask downloadImages()");
 
         List<TestbedMapImage> testbedMapImages = pageService.getTestbedParsedPage().getAllTestbedImages();
         int totalImagesNotDownloaded = pageService.getNotDownloadedImagesCount();
@@ -83,12 +74,11 @@ public class DownloadImagesTask extends AbstractTask<TaskResult> {
 
             if (!bitmapService.bitmapIsDownloaded(image)) {
 
-                String progressText = getContext().getString(R.string.progress_anim_downloading,
-                        i, totalImagesNotDownloaded);
-                this.activity.updateDownloadProgressInfo(progressText);
+                updateDownloadProgress(i, totalImagesNotDownloaded);
 
                 if (isAbort()) {
-                    return new TaskResult(TaskResultType.CANCELLED, "Cancelled");
+                    onCancel();
+                    return;
                 }
                 bitmapService.downloadBitmap(image);
 
@@ -97,7 +87,7 @@ public class DownloadImagesTask extends AbstractTask<TaskResult> {
 
         }
 
-        return new TaskResult(TaskResultType.OK, "All images downloaded");
+        onSuccess();
 
     }
 

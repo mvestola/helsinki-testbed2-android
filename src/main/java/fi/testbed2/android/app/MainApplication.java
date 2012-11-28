@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import com.google.inject.Inject;
 import com.google.inject.Module;
+import com.googlecode.androidannotations.annotations.EApplication;
 import fi.testbed2.MainModule;
 import fi.testbed2.service.BitmapService;
 import fi.testbed2.service.PageService;
@@ -11,6 +12,7 @@ import roboguice.application.RoboApplication;
 
 import java.util.List;
 
+@EApplication
 public class MainApplication extends RoboApplication {
 
     public static final String LOG_IDENTIFIER = "TestbedViewer2";

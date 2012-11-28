@@ -64,7 +64,9 @@ public class AnimationActivity extends AbstractActivity {
     private int orientation;
     private boolean allImagesDownloaded;
 
-    private DownloadImagesTask task;
+    @NonConfigurationInstance
+    @Bean
+    DownloadImagesTask task;
 
 
     @Override
@@ -96,8 +98,6 @@ public class AnimationActivity extends AbstractActivity {
         updatePreferencesToView();
 
         if (!allImagesDownloaded) {
-            task = new DownloadImagesTask(this);
-            task.setActivity(this);
             task.execute();
         }
     }
@@ -105,9 +105,7 @@ public class AnimationActivity extends AbstractActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        if (task!=null) {
-            task.kill();
-        }
+        task.setAbort(true);
         pauseAnimation();
         saveMapBoundsAndScaleFactor();
         locationService.stopListeningLocationChanges();
@@ -120,7 +118,7 @@ public class AnimationActivity extends AbstractActivity {
     }
 
     @Override
-    public void onRefreshButtonSelected() {
+    public void onRefreshFromMenuSelected() {
         pauseAnimation();
         allImagesDownloaded = false;
         Intent intent = new Intent();
@@ -141,12 +139,8 @@ public class AnimationActivity extends AbstractActivity {
      * @param text
      */
     public void updateDownloadProgressInfo(final String text) {
-        runOnUiThread(new Runnable() {
-            public void run() {
-                animationView.setDownloadProgressText(text);
-                timestampView.invalidate();
-            }
-        });
+        animationView.setDownloadProgressText(text);
+        timestampView.invalidate();
     }
 
     public void onAllImagesDownloaded() {

@@ -7,7 +7,7 @@
         android:icon="@drawable/ic_launcher_drop"
         android:label="@string/app_name"
         android:hardwareAccelerated="false"
-        android:name=".android.app.MainApplication"
+        android:name=".android.app.MainApplication_"
         android:background="#C8C0CDB9">
         <activity android:name=".android.activity.MainActivity_"
                   android:label="@string/app_name"

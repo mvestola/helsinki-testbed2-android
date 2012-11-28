@@ -135,7 +135,7 @@ public class LruCachePageService implements PageService {
      * @param url HTML page url
      * @param task
      * @return
-     * @throws DownloadTaskException
+     * @throws fi.testbed2.android.task.exception.DownloadTaskException
      */
     public TestbedParsedPage downloadAndParseTestbedPage(final String url, Task task) throws DownloadTaskException {
 

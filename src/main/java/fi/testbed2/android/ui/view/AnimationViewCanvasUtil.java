@@ -9,6 +9,7 @@ import com.googlecode.androidannotations.api.Scope;
 import com.jhlabs.map.Point2D;
 import com.larvalabs.svgandroid.SVGParser;
 import fi.testbed2.android.app.MainApplication;
+import fi.testbed2.android.app.MainApplication_;
 import fi.testbed2.android.ui.svg.LocationMarkerSVG;
 import fi.testbed2.android.ui.svg.MunicipalityMarkerSVG;
 import fi.testbed2.domain.MapLocationXY;

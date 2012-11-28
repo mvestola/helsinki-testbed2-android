@@ -7,8 +7,8 @@ import android.widget.ImageButton;
 import fi.testbed2.R;
 import fi.testbed2.android.app.Logger;
 import fi.testbed2.android.app.MainApplication;
-import fi.testbed2.android.task.result.TaskResult;
 import com.googlecode.androidannotations.annotations.*;
+import fi.testbed2.android.task.Task;
 
 @EActivity(R.layout.main)
 @OptionsMenu(R.menu.main_menu)
@@ -64,7 +64,7 @@ public class MainActivity extends AbstractActivity {
                 break;
             case MainApplication.RESULT_ERROR:
                 String errorMsg = this.getString(R.string.error_message_detailed,
-                    data.getStringExtra(TaskResult.MSG_CODE));
+                    data.getStringExtra(Task.ERROR_MSG_CODE));
                 showErrorDialog(errorMsg);
                 break;
         }
@@ -72,7 +72,7 @@ public class MainActivity extends AbstractActivity {
     }
 
     @Override
-    public void onRefreshButtonSelected() {
+    public void onRefreshFromMenuSelected() {
         startMainParsingActivity();
     }
 

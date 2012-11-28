@@ -1,63 +1,85 @@
 package fi.testbed2.android.task;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
+import com.google.inject.Inject;
+import com.googlecode.androidannotations.annotations.*;
 import fi.testbed2.android.app.Logger;
 import fi.testbed2.android.app.MainApplication;
-import fi.testbed2.android.task.result.TaskResult;
-import roboguice.activity.event.OnDestroyEvent;
-import roboguice.event.Observes;
-import roboguice.inject.InjectorProvider;
-import roboguice.util.RoboAsyncTask;
+import fi.testbed2.android.task.exception.DownloadTaskException;
+import fi.testbed2.service.BitmapService;
+import fi.testbed2.service.PageService;
+import fi.testbed2.service.SettingsService;
+import lombok.Getter;
+import lombok.Setter;
 
-public abstract class AbstractTask<T extends TaskResult> extends RoboAsyncTask<T> implements Task {
+@EBean
+public abstract class AbstractTask implements Task {
 
+    @App
+    MainApplication mainApplication;
+
+    @Inject
+    protected SettingsService settingsService;
+
+    @Inject
+    protected BitmapService bitmapService;
+
+    @Inject
+    protected PageService pageService;
+
+    @Getter @Setter
     private boolean abort;
-    private Context context;
 
-    protected AbstractTask(Context context) {
-        super();
-        this.context = context;
-        ((InjectorProvider)context).getInjector().injectMembers(this);
-    }
-
-    public void abort() {
-        this.abort = true;
-    }
-
-    public boolean isAbort() {
-        return abort;
-    }
+    @Getter @Setter
+    private boolean running;
 
     protected abstract Activity getActivity();
+    protected abstract String getTaskName();
+    protected abstract void runOnBackground() throws DownloadTaskException;
 
+    @Background
     @Override
-    protected void onException(Exception e) {
-        e.printStackTrace();
+    public void execute() {
+        Logger.debug(getTaskName()+" execute()");
+        running = true;
+        abort = false;
+        try {
+            runOnBackground();
+        } catch (DownloadTaskException e) {
+            onError(e.getMessage());
+        }
+    }
+
+    /**
+     * Should be overridden and call super.onSuccess()
+     */
+    protected void onSuccess() {
+        Logger.debug(getTaskName()+" onSuccess()");
+        running = false;
+    }
+
+    @UiThread
+    public void onError(String errorMsg) {
+        Logger.debug(getTaskName()+" onError()");
+        running = false;
         Intent intent = new Intent();
-        intent.putExtra(TaskResult.MSG_CODE, e.getMessage());
+        intent.putExtra(Task.ERROR_MSG_CODE, errorMsg);
         getActivity().setResult(MainApplication.RESULT_ERROR, intent);
         getActivity().finish();
     }
 
-    @Override
-    protected void onInterrupted(Exception e) {
-        Logger.debug("Interrupting background task");
+    @UiThread
+    public void onCancel() {
+        Logger.debug(getTaskName()+" onCancel()");
+        running = false;
+        getActivity().setResult(Activity.RESULT_CANCELED);
+        getActivity().finish();
     }
 
-    protected void onActivityDestroy(@Observes OnDestroyEvent ignored ) {
-        Logger.debug("Killing background task");
-        kill();
-    }
-
-    protected Context getContext() {
-        return context;
-    }
-
-    public void kill() {
-        abort();
-        cancel(true);
+    @AfterInject
+    public void injectRoboGuice() {
+        mainApplication.getInjector().injectMembers(this);
     }
 
 }

@@ -55,11 +55,11 @@ public abstract class AbstractActivity extends Activity {
 
     }
 
-    public abstract void onRefreshButtonSelected();
+    public abstract void onRefreshFromMenuSelected();
 
     @OptionsItem(R.id.main_menu_refresh)
     public void onRefreshMenuItemSelected() {
-        onRefreshButtonSelected();
+        onRefreshFromMenuSelected();
     }
 
     @OptionsItem(R.id.main_menu_preferences)
