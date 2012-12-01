@@ -3,8 +3,8 @@ package fi.testbed2.robotium;
 import android.test.ActivityInstrumentationTestCase2;
 import com.jayway.android.robotium.solo.Solo;
 import fi.testbed2.R;
-import fi.testbed2.android.activity.AnimationActivity;
-import fi.testbed2.android.activity.MainActivity;
+import fi.testbed2.android.activity.AnimationActivity_;
+import fi.testbed2.android.activity.MainActivity_;
 import fi.testbed2.android.activity.TestbedPreferenceActivity;
 
 /**
@@ -20,12 +20,12 @@ import fi.testbed2.android.activity.TestbedPreferenceActivity;
  * downloaded.
  *
  */
-public class MainActivityRobotiumTest extends ActivityInstrumentationTestCase2<MainActivity> {
+public class MainActivityRobotiumTest extends ActivityInstrumentationTestCase2<MainActivity_> {
 
     private Solo solo;
 
     public MainActivityRobotiumTest() {
-        super(MainActivity.class);
+        super(MainActivity_.class);
     }
 
     @Override
@@ -40,11 +40,11 @@ public class MainActivityRobotiumTest extends ActivityInstrumentationTestCase2<M
 
     public void testAboutBoxShouldBeShown() throws Exception {
 
-        solo.assertCurrentActivity("Should be MainActivity", MainActivity.class);
+        solo.assertCurrentActivity("Should be MainActivity", MainActivity_.class);
         solo.sendKey(Solo.MENU);
         solo.clickOnText(solo.getString(R.string.main_menu_about));
         assertTrue(solo.searchText(solo.getString(R.string.about_visit_website)));
-        solo.assertCurrentActivity("Should be MainActivity", MainActivity.class);
+        solo.assertCurrentActivity("Should be MainActivity", MainActivity_.class);
         solo.clickOnText(getActivity().getResources().getString(R.string.close_button));
 
     }
@@ -74,7 +74,7 @@ public class MainActivityRobotiumTest extends ActivityInstrumentationTestCase2<M
 
         solo.goBack();
         solo.goBack();
-        solo.assertCurrentActivity("Should be MainActivity", MainActivity.class);
+        solo.assertCurrentActivity("Should be MainActivity", MainActivity_.class);
 
     }
 
@@ -83,7 +83,7 @@ public class MainActivityRobotiumTest extends ActivityInstrumentationTestCase2<M
         solo.clickOnImageButton(0);
 
         solo.waitForText("@");
-        solo.assertCurrentActivity("Should be AnimationActivity", AnimationActivity.class);
+        solo.assertCurrentActivity("Should be AnimationActivity", AnimationActivity_.class);
         solo.waitForText("/10");
         assertTrue(solo.searchText("/10"));
 
@@ -98,7 +98,7 @@ public class MainActivityRobotiumTest extends ActivityInstrumentationTestCase2<M
         solo.goBack();
 
         solo.waitForText(solo.getString(R.string.notice_cancelled));
-        solo.assertCurrentActivity("Should be MainActivity", MainActivity.class);
+        solo.assertCurrentActivity("Should be MainActivity", MainActivity_.class);
 
     }
 
@@ -109,7 +109,7 @@ public class MainActivityRobotiumTest extends ActivityInstrumentationTestCase2<M
         solo.clickOnImageButton(0);
 
         solo.waitForText("@");
-        solo.assertCurrentActivity("Should be AnimationActivity", AnimationActivity.class);
+        solo.assertCurrentActivity("Should be AnimationActivity", AnimationActivity_.class);
         solo.waitForText("/10");
         assertTrue(solo.searchText("/10"));
 
@@ -122,7 +122,7 @@ public class MainActivityRobotiumTest extends ActivityInstrumentationTestCase2<M
         solo.goBack();
 
         solo.waitForText(solo.getString(R.string.notice_cancelled));
-        solo.assertCurrentActivity("Should be MainActivity", MainActivity.class);
+        solo.assertCurrentActivity("Should be MainActivity", MainActivity_.class);
 
     }
 

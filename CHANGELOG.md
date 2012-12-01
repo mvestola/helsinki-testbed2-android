@@ -1,6 +1,12 @@
 Helsinki Testbed Viewer 2.0
 =============
 
+Version 2.0.12 (2012-12-01)
+-------
+
+* Major code refactorings (e.g. added AndroidAnnotations)
+* No visible changes to the users
+
 Version 2.0.11 (2012-11-04)
 -------
 

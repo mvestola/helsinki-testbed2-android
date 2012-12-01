@@ -177,7 +177,7 @@
                 <!-- See http://code.google.com/p/maven-android-plugin/ -->
                 <groupId>com.jayway.maven.plugins.android.generation2</groupId>
                 <artifactId>android-maven-plugin</artifactId>
-                <version>3.3.2</version>
+                <version>3.4.0</version>
                 <configuration>
                     <sdk>
                         <path>${sdk.dir}</path>
@@ -274,6 +274,9 @@
                             <sign>
                                 <debug>false</debug>
                             </sign>
+                            <zipalign>
+                                <skip>false</skip>
+                            </zipalign>
                         </configuration>
                         <executions>
                             <execution>
