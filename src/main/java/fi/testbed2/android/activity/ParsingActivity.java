@@ -5,10 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import com.googlecode.androidannotations.annotations.*;
 import fi.testbed2.R;
 import fi.testbed2.android.app.MainApplication;
 import fi.testbed2.android.task.ParseAndInitTask;
-import com.googlecode.androidannotations.annotations.*;
 
 @EActivity(R.layout.download)
 @OptionsMenu(R.menu.main_menu)

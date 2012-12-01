@@ -1,17 +1,16 @@
-package fi.testbed2.android.ui.view;
+package fi.testbed2.android.ui.view.util;
 
 import android.graphics.*;
 import com.google.inject.Inject;
 import com.googlecode.androidannotations.annotations.AfterInject;
-import com.googlecode.androidannotations.annotations.App;
 import com.googlecode.androidannotations.annotations.EBean;
 import com.googlecode.androidannotations.api.Scope;
 import com.jhlabs.map.Point2D;
 import com.larvalabs.svgandroid.SVGParser;
 import fi.testbed2.android.app.MainApplication;
-import fi.testbed2.android.app.MainApplication_;
 import fi.testbed2.android.ui.svg.LocationMarkerSVG;
 import fi.testbed2.android.ui.svg.MunicipalityMarkerSVG;
+import fi.testbed2.android.ui.view.MapScaleInfo;
 import fi.testbed2.domain.MapLocationXY;
 import fi.testbed2.domain.Municipality;
 import fi.testbed2.service.LocationService;

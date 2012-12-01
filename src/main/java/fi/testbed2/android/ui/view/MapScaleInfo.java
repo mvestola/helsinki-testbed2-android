@@ -1,6 +1,8 @@
 package fi.testbed2.android.ui.view;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Represents the scale information of the map image

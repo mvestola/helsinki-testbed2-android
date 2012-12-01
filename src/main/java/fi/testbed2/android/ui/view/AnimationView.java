@@ -1,10 +1,14 @@
 package fi.testbed2.android.ui.view;
 
 import android.content.Context;
-import android.graphics.*;
+import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
-import android.view.*;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
+import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import com.google.inject.Inject;
@@ -16,6 +20,9 @@ import com.jhlabs.map.Point2D;
 import fi.testbed2.R;
 import fi.testbed2.android.app.Logger;
 import fi.testbed2.android.app.MainApplication;
+import fi.testbed2.android.ui.view.util.AnimationViewBoundsUtil;
+import fi.testbed2.android.ui.view.util.AnimationViewCanvasUtil;
+import fi.testbed2.android.ui.view.util.AnimationViewScaleAndGestureUtil;
 import fi.testbed2.domain.Municipality;
 import fi.testbed2.domain.TestbedMapImage;
 import fi.testbed2.service.BitmapService;
@@ -36,11 +43,6 @@ import java.util.List;
 @EView
 public class AnimationView extends View {
 
-    /**
-     * Used for bounds calculation
-     */
-    private static final float GESTURE_THRESHOLD_DIP = 16.0f;
-
     @Getter
     private List<Municipality> municipalities;
 
@@ -55,26 +57,14 @@ public class AnimationView extends View {
     AnimationViewCanvasUtil canvasUtil;
     @Bean @Getter
     AnimationViewScaleAndGestureUtil scaleAndGestureUtil;
+    @Bean @Getter
+    AnimationViewBoundsUtil boundsUtil;
 
     // Scaling related
     private ScaleGestureDetector scaleDetector;
     private GestureDetector gestureDetector;
     @Getter @Setter
     private MapScaleInfo scaleInfo = new MapScaleInfo();
-    private boolean doNotMoveMap;
-
-    // Animation frame related
-    private int frameWidth;
-    private int frameHeight;
-
-    // Bounds calculation related
-    @Getter
-    private Rect bounds;
-    private float boundsStartY;
-    private float boundsStartX;
-    private float boundsDistanceY;
-	private float boundsDistanceX;
-	private boolean boundsMoveMap;
 
     // Views and texts
     @ViewById(R.id.timestamp_view)
@@ -123,14 +113,15 @@ public class AnimationView extends View {
 
         player = new AnimationViewPlayer(this);
         scaleAndGestureUtil.setView(this);
+        boundsUtil.setView(this);
 
         gestureDetector = new GestureDetector(context, scaleAndGestureUtil.getGestureListener());
         scaleDetector = new ScaleGestureDetector(context, scaleAndGestureUtil.getScaleListener());
 
         BitmapDrawable firstMap = new BitmapDrawable(bitmapService.getBitmap(getMapImagesToBeDrawn().get(0)));
 
-        frameWidth = firstMap.getMinimumWidth();
-        frameHeight = firstMap.getMinimumHeight();
+        boundsUtil.setFrameWidth(firstMap.getMinimumWidth());
+        boundsUtil.setFrameHeight(firstMap.getMinimumHeight());
 
         player.setFrameDelay(settingsService.getSavedFrameDelay());
         player.setCurrentFrame(0);
@@ -145,9 +136,9 @@ public class AnimationView extends View {
         this.timestampView = timestampView;
         this.seekBar = seekBar;
         if (bounds==null) {
-            initializeBounds();
+            boundsUtil.initializeBounds();
         } else {
-            this.bounds = bounds;
+            boundsUtil.setBounds(bounds);
         }
 		next();
 	}
@@ -163,30 +154,6 @@ public class AnimationView extends View {
         }, player.getFrameDelay());
     }
 
-    private void initializeBounds() {
-
-        // scale bounds
-        int measuredHeight = getMeasuredHeight();
-        int measuredWidth = getMeasuredWidth();
-
-        Logger.debug("Initializing bounds...");
-        Logger.debug("measuredHeight: " + measuredHeight);
-        Logger.debug("measuredWidth: " + measuredWidth);
-
-        if(measuredHeight > measuredWidth) {
-            int scaleBy = measuredHeight-frameHeight;
-            if(scaleBy > 0)
-                bounds = new Rect(0, 0, frameWidth + scaleBy, frameHeight + scaleBy);
-            else
-                bounds = new Rect(0, 0, frameWidth, frameHeight);
-        } else {
-            int scaleBy = measuredWidth-frameWidth;
-            if(scaleBy > 0)
-                bounds = new Rect(0, 0, frameWidth + scaleBy, frameHeight + scaleBy);
-            else
-                bounds = new Rect(0, 0, frameWidth, frameHeight);
-        }
-    }
 
     private List<TestbedMapImage> getMapImagesToBeDrawn() {
 
@@ -214,11 +181,11 @@ public class AnimationView extends View {
         updateSeekBar();
 
         BitmapDrawable frame = new BitmapDrawable(bitmapService.getBitmap(currentMap));
-        frame.setBounds(bounds);
+        frame.setBounds(boundsUtil.getBounds());
         frame.draw(canvas);
 
-        canvasUtil.drawMunicipalities(canvas, bounds, municipalities);
-        canvasUtil.drawUserLocation(canvas, bounds);
+        canvasUtil.drawMunicipalities(canvas, boundsUtil.getBounds(), municipalities);
+        canvasUtil.drawUserLocation(canvas, boundsUtil.getBounds());
 
         canvas.restore();
 
@@ -250,98 +217,12 @@ public class AnimationView extends View {
 
         gestureDetector.onTouchEvent(event);
         scaleDetector.onTouchEvent(event);
-        calculateNewBounds(event);
+        boundsUtil.calculateNewBounds(event);
 
         return true;
 	}
 
 
-    /**
-     * This method is quite a mess. It is hard to understand how the bounds
-     * are calculated. Do not touch this if you don't know what you are doing.
-     *
-     * @param event
-     * @return
-     */
-    private boolean calculateNewBounds(MotionEvent event) {
-
-        int action = event.getAction();
-        boolean isMultiTouchEvent = event.getPointerCount()>1;
-
-        // Do not move the map in multi-touch
-        if (isMultiTouchEvent) {
-            doNotMoveMap = true;
-        }
-
-        // Allow map movement again when new non-multi-touch down event occurs
-        if (!isMultiTouchEvent && action==MotionEvent.ACTION_DOWN) {
-            doNotMoveMap = false;
-        }
-
-        if (doNotMoveMap) {
-            return true;
-        }
-
-        switch(action) {
-            case MotionEvent.ACTION_CANCEL:
-                break;
-            case MotionEvent.ACTION_UP:
-                boundsMoveMap = false;
-                break;
-            case MotionEvent.ACTION_DOWN:
-                boundsStartY = event.getY();
-                boundsDistanceY = 0.0f;
-                boundsStartX = event.getX();
-                boundsDistanceX = 0.0f;
-                break;
-            case MotionEvent.ACTION_MOVE:
-                boundsDistanceY = -(boundsStartY - event.getY());
-                boundsDistanceX = -(boundsStartX - event.getX());
-
-                Rect savedBounds = new Rect(bounds);
-
-                Logger.debug("Calculating new bounds...");
-
-                // Convert the dips to pixels
-                final float scale = getContext().getResources().getDisplayMetrics().density;
-                int mGestureThreshold = (int) (GESTURE_THRESHOLD_DIP * scale / scaleInfo.getScaleFactor() + 0.5f);
-
-                if(!boundsMoveMap && (Math.abs(boundsDistanceY) > mGestureThreshold || Math.abs(boundsDistanceX) > mGestureThreshold)) {
-                    boundsMoveMap = true;
-                }
-
-                if(boundsMoveMap) {
-
-                    scaleAndGestureUtil.hideMunicipalityToast();
-
-                    float mDistance_y_dip = boundsDistanceY * scale / scaleInfo.getScaleFactor() + 0.5f;
-                    float mDistance_x_dip = boundsDistanceX * scale / scaleInfo.getScaleFactor() + 0.5f;
-
-                    bounds.offset((int)mDistance_x_dip, (int)mDistance_y_dip);
-
-                    Logger.debug("New bounds left: " + bounds.left);
-                    Logger.debug("New bounds top: " + bounds.top);
-                    Logger.debug("New bounds right: " + bounds.right);
-                    Logger.debug("New bounds bottom: " + bounds.bottom);
-
-                    // restart measuring distances
-                    boundsStartY = event.getY();
-                    boundsDistanceY = 0.0f;
-                    boundsStartX = event.getX();
-                    boundsDistanceX = 0.0f;
-
-                    invalidate();
-                }
-
-
-                break;
-            default:
-                return super.onTouchEvent(event);
-
-        }
-
-        return true;
-    }
 
 
 
@@ -353,9 +234,9 @@ public class AnimationView extends View {
 
     public void updateBounds(Rect bounds) {
         if (bounds==null) {
-            initializeBounds();
+            boundsUtil.initializeBounds();
         } else {
-            this.bounds = bounds;
+            boundsUtil.setBounds(bounds);
         }
     }
 

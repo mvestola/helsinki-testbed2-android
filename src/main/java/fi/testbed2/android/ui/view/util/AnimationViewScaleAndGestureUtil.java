@@ -1,4 +1,4 @@
-package fi.testbed2.android.ui.view;
+package fi.testbed2.android.ui.view.util;
 
 import android.content.Context;
 import android.view.*;
@@ -7,24 +7,22 @@ import android.widget.Toast;
 import com.google.inject.Inject;
 import com.googlecode.androidannotations.annotations.AfterInject;
 import com.googlecode.androidannotations.annotations.EBean;
-import com.googlecode.androidannotations.annotations.RootContext;
-import com.googlecode.androidannotations.api.Scope;
 import com.jhlabs.map.Point2D;
 import fi.testbed2.R;
 import fi.testbed2.android.app.Logger;
 import fi.testbed2.android.app.MainApplication;
+import fi.testbed2.android.ui.view.AnimationView;
+import fi.testbed2.android.ui.view.MapScaleInfo;
 import fi.testbed2.domain.Municipality;
 import fi.testbed2.service.SettingsService;
 import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 /**
  * Utility class for scaling and gesture related functions
  * in AnimationView.
  */
-@EBean(scope = Scope.Singleton)
+@EBean
 public class AnimationViewScaleAndGestureUtil {
 
     /**

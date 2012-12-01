@@ -8,11 +8,11 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 import com.google.ads.AdView;
 import com.google.inject.Inject;
+import com.googlecode.androidannotations.annotations.EActivity;
+import com.googlecode.androidannotations.annotations.OptionsItem;
 import fi.testbed2.R;
 import fi.testbed2.android.ui.dialog.DialogBuilder;
 import fi.testbed2.service.SettingsService;
-import com.googlecode.androidannotations.annotations.EActivity;
-import com.googlecode.androidannotations.annotations.OptionsItem;
 
 
 /**

@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import com.google.inject.Inject;
+import com.googlecode.androidannotations.annotations.*;
 import fi.testbed2.R;
 import fi.testbed2.android.app.Logger;
 import fi.testbed2.android.app.MainApplication;
@@ -16,9 +17,10 @@ import fi.testbed2.android.task.DownloadImagesTask;
 import fi.testbed2.android.ui.view.AnimationView;
 import fi.testbed2.android.ui.view.MapScaleInfo;
 import fi.testbed2.domain.TestbedParsedPage;
-import fi.testbed2.service.*;
+import fi.testbed2.service.BitmapService;
+import fi.testbed2.service.LocationService;
+import fi.testbed2.service.PageService;
 import fi.testbed2.util.SeekBarUtil;
-import com.googlecode.androidannotations.annotations.*;
 
 import java.lang.reflect.Method;
 
@@ -169,7 +171,7 @@ public class AnimationActivity extends AbstractActivity {
     }
 
     private void saveMapBoundsAndScaleFactor() {
-        settingsService.saveMapBoundsAndScaleFactor(animationView.getBounds(),
+        settingsService.saveMapBoundsAndScaleFactor(animationView.getBoundsUtil().getBounds(),
                 animationView.getScaleInfo(), orientation);
     }
 

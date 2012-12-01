@@ -4,10 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageButton;
+import com.googlecode.androidannotations.annotations.*;
 import fi.testbed2.R;
 import fi.testbed2.android.app.Logger;
 import fi.testbed2.android.app.MainApplication;
-import com.googlecode.androidannotations.annotations.*;
 import fi.testbed2.android.task.Task;
 
 @EActivity(R.layout.main)

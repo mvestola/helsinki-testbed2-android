@@ -1,13 +1,6 @@
 package fi.testbed2.android.task;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import com.google.inject.Inject;
-import com.googlecode.androidannotations.annotations.Background;
-import com.googlecode.androidannotations.annotations.EBean;
-import com.googlecode.androidannotations.annotations.RootContext;
-import com.googlecode.androidannotations.annotations.UiThread;
 import fi.testbed2.R;
 import fi.testbed2.android.activity.AnimationActivity;
 import fi.testbed2.android.app.Logger;
@@ -15,10 +8,6 @@ import fi.testbed2.android.app.MainApplication;
 import fi.testbed2.android.task.exception.DownloadTaskException;
 import fi.testbed2.android.task.exception.TaskCancelledException;
 import fi.testbed2.domain.TestbedMapImage;
-import fi.testbed2.service.BitmapService;
-import fi.testbed2.service.PageService;
-import fi.testbed2.service.SettingsService;
-import lombok.Setter;
 import roboguice.inject.InjectResource;
 
 import java.util.List;
