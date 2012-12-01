@@ -26,7 +26,7 @@
 
     <string name="whats_new_title">Uutta versiossa %s</string>
     <string name="whats_new_text">
-        - Koodipäivityksiä (ei näkyviä muutoksia käyttäjille)
+        - Korjattu ohjelman satunnainen kaatuminen
     </string>
 
     <string name="hardware_accel_dialog_title">Ota GPU-pakotus pois käytöstä</string>

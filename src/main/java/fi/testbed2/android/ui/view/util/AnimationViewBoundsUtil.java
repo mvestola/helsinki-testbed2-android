@@ -40,12 +40,8 @@ public class AnimationViewBoundsUtil {
 
     AnimationView view;
 
-    @Bean
-    AnimationViewScaleAndGestureUtil scaleAndGestureUtil;
-
     public void setView(AnimationView view) {
         this.view = view;
-        scaleAndGestureUtil.setView(view);
     }
 
     public void initializeBounds() {
@@ -129,7 +125,7 @@ public class AnimationViewBoundsUtil {
 
                 if(boundsMoveMap) {
 
-                    scaleAndGestureUtil.hideMunicipalityToast();
+                    view.getScaleAndGestureUtil().hideMunicipalityToast();
 
                     float mDistance_y_dip = boundsDistanceY * scale / view.getScaleInfo().getScaleFactor() + 0.5f;
                     float mDistance_x_dip = boundsDistanceX * scale / view.getScaleInfo().getScaleFactor() + 0.5f;

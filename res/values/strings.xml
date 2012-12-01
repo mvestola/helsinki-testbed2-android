@@ -28,7 +28,7 @@
 
     <string name="whats_new_title">New in version %s</string>
     <string name="whats_new_text">
-        - Code updates (no visible changes to users)
+        - Fixed application crashing in some rare cases
     </string>
 
     <string name="hardware_accel_dialog_title">Please disable force GPU setting</string>

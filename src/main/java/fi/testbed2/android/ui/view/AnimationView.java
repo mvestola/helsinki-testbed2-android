@@ -25,6 +25,7 @@ import fi.testbed2.android.ui.view.util.AnimationViewCanvasUtil;
 import fi.testbed2.android.ui.view.util.AnimationViewScaleAndGestureUtil;
 import fi.testbed2.domain.Municipality;
 import fi.testbed2.domain.TestbedMapImage;
+import fi.testbed2.domain.TestbedParsedPage;
 import fi.testbed2.service.BitmapService;
 import fi.testbed2.service.LocationService;
 import fi.testbed2.service.PageService;
@@ -67,10 +68,7 @@ public class AnimationView extends View {
     private MapScaleInfo scaleInfo = new MapScaleInfo();
 
     // Views and texts
-    @ViewById(R.id.timestamp_view)
     TextView timestampView;
-
-    @ViewById(R.id.seek)
     SeekBar seekBar;
 
     @Setter
@@ -161,7 +159,8 @@ public class AnimationView extends View {
             return pageService.getTestbedParsedPage().getAllTestbedImages();
         } else {
             List<TestbedMapImage> list = new ArrayList<TestbedMapImage>();
-            list.add(pageService.getTestbedParsedPage().getLatestTestbedImage());
+            TestbedParsedPage page = pageService.getTestbedParsedPage();
+            list.add(page.getLatestTestbedImage());
             return list;
         }
 
@@ -201,14 +200,18 @@ public class AnimationView extends View {
             text="@ "+timestamp+"  "+downloadProgressText;
         }
 
-        timestampView.setText(text);
-        timestampView.invalidate();
+        if (timestampView!=null) {
+            timestampView.setText(text);
+            timestampView.invalidate();
+        }
 
     }
 
     private void updateSeekBar() {
-        seekBar.setProgress(SeekBarUtil.getSeekBarValueFromFrameNumber(player.getCurrentFrame(),
-                pageService.getTestbedParsedPage().getAllTestbedImages().size()));
+        if (seekBar!=null) {
+            seekBar.setProgress(SeekBarUtil.getSeekBarValueFromFrameNumber(player.getCurrentFrame(),
+                    pageService.getTestbedParsedPage().getAllTestbedImages().size()));
+        }
     }
 
 
