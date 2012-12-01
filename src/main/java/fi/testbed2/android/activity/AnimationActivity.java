@@ -152,6 +152,12 @@ public class AnimationActivity extends AbstractActivity {
 
     @AfterViews
     protected void initView() {
+
+        if (!compulsoryDataIsAvailable()) {
+            reloadAllAndReturnToMainActivity();
+            return;
+        }
+
         animationView.setAllImagesDownloaded(false);
         animationView.setMunicipalities(settingsService.getSavedMunicipalities());
         animationView.initView(getApplicationContext());

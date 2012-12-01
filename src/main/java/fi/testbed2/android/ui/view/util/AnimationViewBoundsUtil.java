@@ -2,7 +2,6 @@ package fi.testbed2.android.ui.view.util;
 
 import android.graphics.Rect;
 import android.view.MotionEvent;
-import com.googlecode.androidannotations.annotations.Bean;
 import com.googlecode.androidannotations.annotations.EBean;
 import fi.testbed2.android.app.Logger;
 import fi.testbed2.android.ui.view.AnimationView;
