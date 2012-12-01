@@ -7,12 +7,15 @@ import android.util.AttributeSet;
 import android.view.*;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
+import com.google.inject.Inject;
+import com.googlecode.androidannotations.annotations.AfterInject;
 import com.googlecode.androidannotations.annotations.Bean;
 import com.googlecode.androidannotations.annotations.EView;
+import com.googlecode.androidannotations.annotations.ViewById;
 import com.jhlabs.map.Point2D;
 import fi.testbed2.R;
 import fi.testbed2.android.app.Logger;
+import fi.testbed2.android.app.MainApplication;
 import fi.testbed2.domain.Municipality;
 import fi.testbed2.domain.TestbedMapImage;
 import fi.testbed2.service.BitmapService;
@@ -34,19 +37,24 @@ import java.util.List;
 public class AnimationView extends View {
 
     /**
-     * Defines how many pixels the user is allowed to click
-     * off the municipality point. If the touch is withing this
-     * threshold, the municipality info is shown.
-     */
-    public static final float MUNICIPALITY_SEARCH_THRESHOLD = 15.0f;
-
-    /**
      * Used for bounds calculation
      */
     private static final float GESTURE_THRESHOLD_DIP = 16.0f;
 
+    @Getter
+    private List<Municipality> municipalities;
+
+    @Setter
+    private boolean allImagesDownloaded;
+
+    @Getter
+    private AnimationViewPlayer player;
+
+    // Utils
     @Bean @Getter
     AnimationViewCanvasUtil canvasUtil;
+    @Bean @Getter
+    AnimationViewScaleAndGestureUtil scaleAndGestureUtil;
 
     // Scaling related
     private ScaleGestureDetector scaleDetector;
@@ -69,28 +77,29 @@ public class AnimationView extends View {
 	private boolean boundsMoveMap;
 
     // Views and texts
-	private TextView timestampView;
-    private SeekBar seekBar;
+    @ViewById(R.id.timestamp_view)
+    TextView timestampView;
+
+    @ViewById(R.id.seek)
+    SeekBar seekBar;
+
     @Setter
     private String downloadProgressText;
 
-    // Marker image caching
-    private Toast municipalityToast;
-
-    // Data
-    private List<Municipality> municipalities;
 
     // Services
+
+    @Inject
     public LocationService userLocationService;
+
+    @Inject
     public BitmapService bitmapService;
+
+    @Inject
     public PageService pageService;
+
+    @Inject
     public SettingsService settingsService;
-
-    @Setter
-    private boolean allImagesDownloaded;
-
-    @Getter
-    private AnimationViewPlayer player;
 
     /**
      * All three constructors are needed!!
@@ -113,9 +122,10 @@ public class AnimationView extends View {
         Logger.debug("Initializing AnimationView");
 
         player = new AnimationViewPlayer(this);
+        scaleAndGestureUtil.setView(this);
 
-        gestureDetector = new GestureDetector(context, new GestureListener());
-        scaleDetector = new ScaleGestureDetector(context, new ScaleListener());
+        gestureDetector = new GestureDetector(context, scaleAndGestureUtil.getGestureListener());
+        scaleDetector = new ScaleGestureDetector(context, scaleAndGestureUtil.getScaleListener());
 
         BitmapDrawable firstMap = new BitmapDrawable(bitmapService.getBitmap(getMapImagesToBeDrawn().get(0)));
 
@@ -302,7 +312,7 @@ public class AnimationView extends View {
 
                 if(boundsMoveMap) {
 
-                    hideMunicipalityToast();
+                    scaleAndGestureUtil.hideMunicipalityToast();
 
                     float mDistance_y_dip = boundsDistanceY * scale / scaleInfo.getScaleFactor() + 0.5f;
                     float mDistance_x_dip = boundsDistanceX * scale / scaleInfo.getScaleFactor() + 0.5f;
@@ -333,148 +343,7 @@ public class AnimationView extends View {
         return true;
     }
 
-    /*
-    * ============
-    * Listeners for pinch zooming
-    * ============
-    */
 
-    private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
-        @Override
-        public boolean onScale(ScaleGestureDetector detector) {
-
-            if (detector.getScaleFactor()>1.0+MapScaleInfo.MIN_SCALE_STEP_WHEN_PINCHING ||
-                    detector.getScaleFactor()<1.0-MapScaleInfo.MIN_SCALE_STEP_WHEN_PINCHING) {
-
-                float newScaleFactor = scaleInfo.getScaleFactor() * detector.getScaleFactor();
-
-                // Don't let the map to get too small or too large.
-                newScaleFactor = Math.max(MapScaleInfo.MIN_SCALE_FACTOR,
-                        Math.min(newScaleFactor, MapScaleInfo.MAX_SCALE_FACTOR));
-                scaleInfo.setScaleFactor(newScaleFactor);
-                scaleInfo.setPivotX(getMeasuredWidth()/2);
-                scaleInfo.setPivotY(getMeasuredHeight()/2);
-
-                hideMunicipalityToast();
-                invalidate();
-                return true;
-
-            }
-
-            return false;
-        }
-    }
-
-    private class GestureListener extends GestureDetector.SimpleOnGestureListener {
-
-        @Override
-        public boolean onDown(MotionEvent e) {
-            return true;
-        }
-
-        @Override
-        public boolean onDoubleTap(MotionEvent e) {
-
-            scaleInfo.setPivotX(e.getX());
-            scaleInfo.setPivotY(e.getY());
-            float newScaleFactor = scaleInfo.getScaleFactor() *
-                    MapScaleInfo.SCALE_STEP_WHEN_DOUBLE_TAPPING;
-
-            if (newScaleFactor >= MapScaleInfo.MAX_SCALE_FACTOR) {
-                newScaleFactor = MapScaleInfo.DEFAULT_SCALE_FACTOR;
-            }
-
-            scaleInfo.setScaleFactor(newScaleFactor);
-
-            hideMunicipalityToast();
-            invalidate();
-            return true;
-        }
-
-        @Override
-        public void onLongPress(MotionEvent e) {
-
-            float xCanvas = canvasUtil.convertRawXCoordinateToScaledCanvasCoordinate(e.getX(), scaleInfo);
-            float yCanvas = canvasUtil.convertRawYCoordinateToScaledCanvasCoordinate(e.getY(), scaleInfo);
-
-            Logger.debug("Long pressed x: " + e.getX());
-            Logger.debug("Long pressed y: " + e.getY());
-            Logger.debug("Long pressed x (canvas): " + xCanvas);
-            Logger.debug("Long pressed y (canvas): " + yCanvas);
-            Logger.debug("Scale factor: " + scaleInfo.getScaleFactor());
-            Logger.debug("Scale pivotX: " + scaleInfo.getPivotX());
-            Logger.debug("Scale pivotY: " + scaleInfo.getPivotY());
-
-            hideMunicipalityToast(); // always hide previous toast
-            showInfoForMunicipality(xCanvas, yCanvas, e.getX(), e.getY());
-        }
-
-    }
-
-    /**
-     * Shows info toast about selected municipality if there is
-     * a municipality close to the given x,y coordinates.
-     *
-     * @param canvasX X coordinate in canvas coordinate
-     * @param canvasY Y coordinate in canvas coordinate
-     * @param rawX Raw X coordinate from the touch event
-     * @param rawY Raw Y coordinate from the touch event
-     * @return True if the toast was shown, false if not shown.
-     */
-    private boolean showInfoForMunicipality(float canvasX, float canvasY, float rawX, float rawY) {
-
-        for (Municipality municipality : municipalities) {
-
-            if (municipality!=null) {
-
-                Point2D.Double pos = canvasUtil.getMunicipalitiesOnScreen().get(municipality);
-
-                if (pos!=null) {
-
-                    Logger.debug("Pos: " + pos + ", for: " + municipality.getName());
-
-                    final float scale = getContext().getResources().getDisplayMetrics().density;
-                    int threshold = (int) ((settingsService.getMapPointSize()/2)*scale +
-                                            (MUNICIPALITY_SEARCH_THRESHOLD/scaleInfo.getScaleFactor())*scale);
-
-                    if (Math.abs(pos.x-canvasX)<=threshold && Math.abs(pos.y-canvasY)<=threshold) {
-
-                        Logger.debug("Show info for municipality: " + municipality.getName());
-
-                        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-                        View layout = inflater.inflate(R.layout.toast_municipality,
-                                (ViewGroup) findViewById(R.id.toast_layout_root));
-
-                        TextView text = (TextView) layout.findViewById(R.id.text);
-                        text.setText(municipality.getName());
-
-                        municipalityToast = new Toast(getContext());
-                        municipalityToast.setGravity(Gravity.TOP| Gravity.LEFT,
-                                Double.valueOf(rawX+20*scale).intValue(),
-                                Double.valueOf(rawY-40*scale).intValue());
-                        municipalityToast.setDuration(Toast.LENGTH_LONG);
-                        municipalityToast.setView(layout);
-                        municipalityToast.show();
-                        return true;
-
-                    }
-
-                }
-
-            }
-
-        }
-
-        return false;
-
-    }
-
-    private void hideMunicipalityToast() {
-        if (municipalityToast!=null) {
-            municipalityToast.cancel();
-        }
-    }
 
     /*
     * ============
@@ -494,4 +363,10 @@ public class AnimationView extends View {
         this.municipalities = municipalities;
         canvasUtil.setMunicipalitiesOnScreen(new HashMap<Municipality, Point2D.Double>());
     }
+
+    @AfterInject
+    void injectRoboGuiceDependencies() {
+        MainApplication.getApplication().getInjector().injectMembers(this);
+    }
+
 }

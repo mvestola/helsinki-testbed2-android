@@ -18,8 +18,8 @@ public class MunicipalityMarkerSVG {
         String colorWithoutAlpha = ColorUtil.getColorWithoutAlpha(colorHex);
         int strokeWidth = 20;
 
-        Logger.debug("MapPoint opacity: " + opacity);
-        Logger.debug("MapPoint color: " + colorWithoutAlpha);
+        Logger.debug("MunicipalityMarkerSVG opacity: " + opacity);
+        Logger.debug("MunicipalityMarkerSVG color: " + colorWithoutAlpha);
 
         xmlContent = "<?xml version=\"1.0\"?>\n" +
                 "<svg width=\"200\" height=\"200\" xmlns=\"http://www.w3.org/2000/svg\">\n" +

@@ -31,16 +31,7 @@ import java.lang.reflect.Method;
 public class AnimationActivity extends AbstractActivity {
 
     @Inject
-    MunicipalityService municipalityService;
-
-    @Inject
     LocationService locationService;
-
-    @Inject
-    CoordinateService coordinateService;
-
-    @Inject
-    SettingsService settingsService;
 
     @Inject
     BitmapService bitmapService;
@@ -65,7 +56,6 @@ public class AnimationActivity extends AbstractActivity {
     private boolean allImagesDownloaded;
 
     private DownloadImagesTask task;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -93,7 +83,7 @@ public class AnimationActivity extends AbstractActivity {
             locationService.startListeningLocationChanges();
         }
 
-        updatePreferencesToView();
+        updateSettingsToView();
 
         if (!allImagesDownloaded) {
             task = new DownloadImagesTask(this);
@@ -132,7 +122,7 @@ public class AnimationActivity extends AbstractActivity {
         super.onConfigurationChanged(newConfig);
         saveMapBoundsAndScaleFactor();
         orientation = newConfig.orientation;
-        updatePreferencesToView();
+        updateSettingsToView();
     }
 
     /**
@@ -162,10 +152,6 @@ public class AnimationActivity extends AbstractActivity {
     protected void initView() {
         animationView.setAllImagesDownloaded(false);
         animationView.setMunicipalities(settingsService.getSavedMunicipalities());
-        animationView.userLocationService = locationService;
-        animationView.bitmapService = bitmapService;
-        animationView.pageService = pageService;
-        animationView.settingsService = settingsService;
         animationView.initView(getApplicationContext());
         initAnimation();
     }
@@ -187,7 +173,7 @@ public class AnimationActivity extends AbstractActivity {
                 animationView.getScaleInfo(), orientation);
     }
 
-    private void updatePreferencesToView() {
+    private void updateSettingsToView() {
         animationView.setScaleInfo(settingsService.getSavedScaleInfo(orientation));
         animationView.updateBounds(settingsService.getSavedMapBounds(orientation));
         animationView.setMunicipalities(settingsService.getSavedMunicipalities());

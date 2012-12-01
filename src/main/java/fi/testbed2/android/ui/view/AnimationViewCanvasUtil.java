@@ -22,6 +22,9 @@ import lombok.Setter;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Utility class for canvas drawing operations used in AnimationView.
+ */
 @EBean(scope = Scope.Singleton)
 public class AnimationViewCanvasUtil {
 
