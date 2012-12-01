@@ -5,15 +5,12 @@ import fi.testbed2.android.ui.dialog.AlertDialogBuilder;
 import fi.testbed2.android.ui.dialog.DialogBuilder;
 import fi.testbed2.service.*;
 import fi.testbed2.service.impl.*;
+import roboguice.inject.SharedPreferencesName;
 
 /**
  * Module used by the RoboGuice IoC framework.
  */
 public class MainModule extends AbstractModule {
-
-    public MainModule() {
-
-    }
 
     @Override
     protected void configure() {
@@ -25,6 +22,8 @@ public class MainModule extends AbstractModule {
         bind(BitmapService.class).to(LruCacheBitmapService.class);
         bind(PageService.class).to(LruCachePageService.class);
         bind(HttpUrlService.class).to(ApacheHttpUrlService.class);
+        bindConstant().annotatedWith(SharedPreferencesName.class)
+                .to(SharedPreferenceSettingsService.SHARED_PREFERENCE_FILE_NAME);
     }
 
 }

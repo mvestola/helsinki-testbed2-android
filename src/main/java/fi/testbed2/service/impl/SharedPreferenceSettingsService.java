@@ -23,6 +23,8 @@ import java.util.List;
 @Singleton
 public class SharedPreferenceSettingsService implements SettingsService {
 
+    public static final String SHARED_PREFERENCE_FILE_NAME = "fi.testbed2_preferences";
+
     @Inject
     MunicipalityService municipalityService;
 
