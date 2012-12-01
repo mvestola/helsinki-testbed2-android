@@ -1,7 +1,9 @@
 package fi.testbed2.android.task;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import com.google.inject.Inject;
 import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.EBean;
 import com.googlecode.androidannotations.annotations.RootContext;
@@ -11,7 +13,12 @@ import fi.testbed2.android.activity.AnimationActivity;
 import fi.testbed2.android.app.Logger;
 import fi.testbed2.android.app.MainApplication;
 import fi.testbed2.android.task.exception.DownloadTaskException;
+import fi.testbed2.android.task.exception.TaskCancelledException;
 import fi.testbed2.domain.TestbedMapImage;
+import fi.testbed2.service.BitmapService;
+import fi.testbed2.service.PageService;
+import fi.testbed2.service.SettingsService;
+import lombok.Setter;
 import roboguice.inject.InjectResource;
 
 import java.util.List;
@@ -19,14 +26,17 @@ import java.util.List;
 /**
  * Task which downloads all map images and reloads the animation view.
  */
-@EBean
 public class DownloadImagesTask extends AbstractTask {
 
-    @RootContext
-    AnimationActivity activity;
+    private AnimationActivity activity;
 
     @InjectResource(R.string.error_msg_parsed_map_image_null)
     String errorMapImageNull;
+
+    public DownloadImagesTask(AnimationActivity activity) {
+        super(activity);
+        this.activity = activity;
+    }
 
     @Override
     protected Activity getActivity() {
@@ -39,26 +49,25 @@ public class DownloadImagesTask extends AbstractTask {
     }
 
     @Override
-    protected void runOnBackground() throws DownloadTaskException {
+    protected void runOnBackground() throws DownloadTaskException,
+            TaskCancelledException {
         downloadImages();
     }
 
-    @UiThread
     @Override
-    public void onSuccess() {
-        super.onSuccess();
+    public void doOnSuccess() {
         activity.setResult(MainApplication.RESULT_OK);
         activity.onAllImagesDownloaded();
     }
 
-    @UiThread
     public void updateDownloadProgress(int currentImageIndex, int totalImagesNotDownloaded) {
         String progressText = activity.getString(R.string.progress_anim_downloading,
                 currentImageIndex, totalImagesNotDownloaded);
         activity.updateDownloadProgressInfo(progressText);
     }
 
-    private void downloadImages() throws DownloadTaskException {
+    private void downloadImages() throws DownloadTaskException,
+            TaskCancelledException {
 
         Logger.debug("DownloadImagesTask downloadImages()");
 
@@ -76,18 +85,16 @@ public class DownloadImagesTask extends AbstractTask {
 
                 updateDownloadProgress(i, totalImagesNotDownloaded);
 
-                if (isAbort()) {
-                    onCancel();
-                    return;
+                if (isCancelled()) {
+                    throw new TaskCancelledException();
                 }
+
                 bitmapService.downloadBitmap(image);
 
                 i++;
             }
 
         }
-
-        onSuccess();
 
     }
 

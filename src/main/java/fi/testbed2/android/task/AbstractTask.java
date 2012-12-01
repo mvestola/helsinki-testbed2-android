@@ -1,23 +1,23 @@
 package fi.testbed2.android.task;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import com.google.inject.Inject;
-import com.googlecode.androidannotations.annotations.*;
 import fi.testbed2.android.app.Logger;
 import fi.testbed2.android.app.MainApplication;
 import fi.testbed2.android.task.exception.DownloadTaskException;
+import fi.testbed2.android.task.exception.TaskCancelledException;
 import fi.testbed2.service.BitmapService;
 import fi.testbed2.service.PageService;
 import fi.testbed2.service.SettingsService;
 import lombok.Getter;
-import lombok.Setter;
+import roboguice.activity.event.OnDestroyEvent;
+import roboguice.event.Observes;
+import roboguice.inject.InjectorProvider;
+import roboguice.util.RoboAsyncTask;
 
-@EBean
-public abstract class AbstractTask implements Task {
-
-    @App
-    MainApplication mainApplication;
+public abstract class AbstractTask extends RoboAsyncTask<Void> implements Task {
 
     @Inject
     protected SettingsService settingsService;
@@ -28,58 +28,104 @@ public abstract class AbstractTask implements Task {
     @Inject
     protected PageService pageService;
 
-    @Getter @Setter
-    private boolean abort;
+    @Getter
+    protected boolean cancelled;
 
-    @Getter @Setter
-    private boolean running;
+    protected AbstractTask(Context context) {
+        super();
 
-    protected abstract Activity getActivity();
-    protected abstract String getTaskName();
-    protected abstract void runOnBackground() throws DownloadTaskException;
-
-    @Background
-    @Override
-    public void execute() {
-        Logger.debug(getTaskName()+" execute()");
-        running = true;
-        abort = false;
-        try {
-            runOnBackground();
-        } catch (DownloadTaskException e) {
-            onError(e.getMessage());
-        }
+        /**
+         * In RoboGuice 1.1, RoboAsyncTask does not do injection although it should,
+         * so do it manually. See more:
+         * http://code.google.com/p/roboguice/issues/detail?id=93
+         */
+        ((InjectorProvider)context).getInjector().injectMembers(this);
     }
+
+    /**
+     * Return the activity which started this task
+     * @return
+     */
+    protected abstract Activity getActivity();
+
+    /**
+     * Return task name for logging.
+     * @return
+     */
+    protected abstract String getTaskName();
+
+    /**
+     * Executes this method on background.
+     * @throws DownloadTaskException Thrown e.g. if network connection fails
+     * @throws TaskCancelledException Thrown if task is cancelled
+     */
+    protected abstract void runOnBackground() throws DownloadTaskException,
+            TaskCancelledException;
 
     /**
      * Should be overridden and call super.onSuccess()
      */
-    protected void onSuccess() {
-        Logger.debug(getTaskName()+" onSuccess()");
-        running = false;
+    protected abstract void doOnSuccess();
+
+    /**
+     * This method is run on background in different thread, NOT in UI thread
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Void call() throws Exception {
+        Logger.debug(getTaskName()+" execute()");
+        runOnBackground();
+        return null;
     }
 
-    @UiThread
-    public void onError(String errorMsg) {
+    @Override
+    public void cancel() {
+        cancelled = true;
+        cancel(true);
+    }
+
+    public void onException(Exception e) {
+
+        if (e instanceof DownloadTaskException) {
+            onError(e.getMessage());
+        } else if (e instanceof TaskCancelledException) {
+            onCancel();
+        } else {
+            Logger.debug(getTaskName()+" onException(): "+e.getMessage());
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    protected void onSuccess(Void result) {
+        Logger.debug(getTaskName()+" onSuccess()");
+        doOnSuccess();
+    }
+
+    @Override
+    protected void onInterrupted(Exception e) {
+        Logger.debug(getTaskName()+" onInterrupted()");
+    }
+
+    protected void onActivityDestroy(@Observes OnDestroyEvent ignored ) {
+        Logger.debug(getTaskName() + " onActivityDestroy()");
+        cancel();
+    }
+
+    private void onError(String errorMsg) {
         Logger.debug(getTaskName()+" onError()");
-        running = false;
         Intent intent = new Intent();
-        intent.putExtra(Task.ERROR_MSG_CODE, errorMsg);
+        intent.putExtra(fi.testbed2.android.task.Task.ERROR_MSG_CODE, errorMsg);
         getActivity().setResult(MainApplication.RESULT_ERROR, intent);
         getActivity().finish();
     }
 
-    @UiThread
-    public void onCancel() {
+    private void onCancel() {
         Logger.debug(getTaskName()+" onCancel()");
-        running = false;
         getActivity().setResult(Activity.RESULT_CANCELED);
         getActivity().finish();
-    }
-
-    @AfterInject
-    public void injectRoboGuice() {
-        mainApplication.getInjector().injectMembers(this);
     }
 
 }

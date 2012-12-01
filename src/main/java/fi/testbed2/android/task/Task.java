@@ -7,11 +7,9 @@ public interface Task {
 
     public static final String ERROR_MSG_CODE = "errorMsg";
 
-    public boolean isAbort();
-    public void setAbort(boolean abort);
-
-    public boolean isRunning();
-
     public void execute();
+
+    public void cancel();
+    public boolean isCancelled();
 
 }

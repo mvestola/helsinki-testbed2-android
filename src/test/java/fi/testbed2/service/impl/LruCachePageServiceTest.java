@@ -35,7 +35,7 @@ public class LruCachePageServiceTest extends AbstractTestCase {
         initClassForMocks(lruCachePageService);
         lruCachePageService.setCacheSizeInBytes(1024 * 1024 * 100);
 
-        when(task.isAbort()).thenReturn(false);
+        when(task.isCancelled()).thenReturn(false);
     }
 
     @Test
@@ -160,7 +160,7 @@ public class LruCachePageServiceTest extends AbstractTestCase {
     public void testParseTestbedPageTaskAborted() throws Exception {
 
         initHTMLPage("testbed_rain_15.html");
-        when(task.isAbort()).thenReturn(true);
+        when(task.isCancelled()).thenReturn(true);
 
         TestbedParsedPage page = lruCachePageService.downloadAndParseTestbedPage("http://url.is.irrelevant.here", task);
         assertNull(page);

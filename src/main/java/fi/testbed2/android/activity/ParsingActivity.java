@@ -9,7 +9,6 @@ import fi.testbed2.R;
 import fi.testbed2.android.app.MainApplication;
 import fi.testbed2.android.task.ParseAndInitTask;
 import com.googlecode.androidannotations.annotations.*;
-import fi.testbed2.android.task.ParseAndInitTask_;
 
 @EActivity(R.layout.download)
 @OptionsMenu(R.menu.main_menu)
@@ -18,9 +17,7 @@ public class ParsingActivity extends AbstractActivity {
 
     public static final int ANIMATION_SUB_ACTIVITY = 2;
 
-    @NonConfigurationInstance
-    @Bean
-    ParseAndInitTask task;
+    private ParseAndInitTask task;
 
     @ViewById(R.id.progressbar)
     ProgressBar progressBar;
@@ -35,16 +32,14 @@ public class ParsingActivity extends AbstractActivity {
         super.onCreate(savedInstanceState);
     }
 
-	@Override
-	protected void onPause() {
+    @Override
+    protected void onPause() {
         super.onPause();
-        if (task!=null) {
-            task.setAbort(true);
-        }
-	}
+        task.cancel();
+    }
 
-	@Override
-	protected void onResume() {
+    @Override
+    protected void onResume() {
         super.onResume();
         if (parsingFinished) {
             // When back button from ready AnimationActivity is pressed
@@ -65,11 +60,10 @@ public class ParsingActivity extends AbstractActivity {
     private void startParsingTask() {
         parsingFinished = false;
         if (task!=null) {
-            if (task.isRunning()) {
-                task.setAbort(true);
-            }
-            task.execute();
+            task.cancel();
         }
+        task = new ParseAndInitTask(this);
+        task.execute();
     }
 
     public void onParsingFinished() {
@@ -117,6 +111,7 @@ public class ParsingActivity extends AbstractActivity {
         startParsingTask();
     }
 
+    @UiThread
     public void publishProgress(final int progress, final String text) {
         progressTextView.setText(text);
         progressBar.setProgress(progress);

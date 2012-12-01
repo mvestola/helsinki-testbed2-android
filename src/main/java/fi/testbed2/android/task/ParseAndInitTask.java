@@ -1,29 +1,31 @@
 package fi.testbed2.android.task;
 
 import android.app.Activity;
-import android.content.Intent;
-import com.googlecode.androidannotations.annotations.Background;
+import android.content.Context;
+import com.google.inject.Inject;
 import com.googlecode.androidannotations.annotations.EBean;
 import com.googlecode.androidannotations.annotations.RootContext;
 import com.googlecode.androidannotations.annotations.UiThread;
 import fi.testbed2.R;
+import fi.testbed2.android.activity.AnimationActivity;
 import fi.testbed2.android.activity.ParsingActivity;
-import fi.testbed2.android.app.Logger;
-import fi.testbed2.android.app.MainApplication;
 import fi.testbed2.android.task.exception.DownloadTaskException;
+import fi.testbed2.android.task.exception.TaskCancelledException;
 import fi.testbed2.domain.TestbedMapImage;
 import fi.testbed2.domain.TestbedParsedPage;
+import fi.testbed2.service.BitmapService;
+import fi.testbed2.service.PageService;
+import fi.testbed2.service.SettingsService;
+import lombok.Setter;
 import roboguice.inject.InjectResource;
 
 /**
  * Task which parses the testbed HTML page and initializes the animation view
  * with the latest map image. Should be called from ParsingActivity.
  */
-@EBean
 public class ParseAndInitTask extends AbstractTask implements Task {
 
-    @RootContext
-    ParsingActivity activity;
+    private ParsingActivity activity;
 
     @InjectResource(R.string.progress_parsing)
     String progressParsing;
@@ -33,6 +35,11 @@ public class ParseAndInitTask extends AbstractTask implements Task {
 
     @InjectResource(R.string.progress_done)
     String progressDone;
+
+    public ParseAndInitTask(ParsingActivity activity) {
+        super(activity);
+        this.activity = activity;
+    }
 
     @Override
     protected Activity getActivity() {
@@ -45,35 +52,33 @@ public class ParseAndInitTask extends AbstractTask implements Task {
     }
 
     @Override
-    protected void runOnBackground() throws DownloadTaskException {
+    protected void runOnBackground() throws DownloadTaskException,
+            TaskCancelledException {
         parseAndInit();
     }
 
-    @UiThread
     @Override
-    public void onSuccess() {
-        super.onSuccess();
+    public void doOnSuccess() {
         activity.onParsingFinished();
     }
 
-    @UiThread
-    public void publishProgress(int progress, String progressText) {
-        activity.publishProgress(progress, progressText);
-    }
+    private void parseAndInit() throws DownloadTaskException,
+            TaskCancelledException {
 
-    private void parseAndInit() throws DownloadTaskException {
-
-        publishProgress(0, progressParsing);
+        activity.publishProgress(0, progressParsing);
 
         TestbedParsedPage testbedParsedPage =
                 pageService.downloadAndParseTestbedPage(settingsService.getTestbedPageURL(), this);
 
-        if (testbedParsedPage == null || isAbort()) {
-            onCancel();
-            return;
+        if (testbedParsedPage == null) {
+
+            if (isCancelled()) {
+                throw new TaskCancelledException();
+            }
+
         }
 
-        publishProgress(50, progressDownloading);
+        activity.publishProgress(50, progressDownloading);
 
         TestbedMapImage mapImage = testbedParsedPage.getLatestTestbedImage();
 
@@ -81,8 +86,7 @@ public class ParseAndInitTask extends AbstractTask implements Task {
             bitmapService.downloadBitmap(mapImage);
         }
 
-        publishProgress(100, progressDone);
-        onSuccess();
+        activity.publishProgress(100, progressDone);
 
     }
 

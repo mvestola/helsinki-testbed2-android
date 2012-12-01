@@ -151,7 +151,7 @@ public class LruCachePageService implements PageService {
             String[] timestamps = null;
             String[] imageUrls = null;
 
-            while(!task.isAbort())
+            while(!task.isCancelled())
             {
                 String line = reader.readLine();
 
@@ -174,7 +174,7 @@ public class LruCachePageService implements PageService {
 
             in.close();
 
-            if (task.isAbort()) {
+            if (task.isCancelled()) {
                 return null;
             }
 
