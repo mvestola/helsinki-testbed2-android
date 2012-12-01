@@ -26,10 +26,7 @@
 
     <string name="whats_new_title">Uutta versiossa %s</string>
     <string name="whats_new_text">
-        - Korjattu ohjelman kaatuminen, jos GPU-hahmonnuksen pakotus on päällä.\n
-        - Kartta zoomautuu nyt kartan keskipisteeseen eikä vasempaan yläreunaan.\n
-        - Korjattu satunnainen ulkoasun välkkyminen päivitä-painiketta painettaessa.\n
-        - Ohjelma ei enää tue Android-versiota 2.1 tai sitä vanhempia.
+        - Koodipäivityksiä (ei näkyviä muutoksia käyttäjille)
     </string>
 
     <string name="hardware_accel_dialog_title">Ota GPU-pakotus pois käytöstä</string>

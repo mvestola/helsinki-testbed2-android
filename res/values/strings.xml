@@ -28,10 +28,7 @@
 
     <string name="whats_new_title">New in version %s</string>
     <string name="whats_new_text">
-        - Fixed application crash if hardware acceleration was forced to be used.\n
-        - Pinch and double-tap zooming now zooms to the center of the map.\n
-        - Fixed occasional layout flashing when refreshing the view.\n
-        - Dropped support for Android versions equal or lower than 2.1.
+        - Code updates (no visible changes to users)
     </string>
 
     <string name="hardware_accel_dialog_title">Please disable force GPU setting</string>
