@@ -16,6 +16,7 @@ import fi.testbed2.domain.Municipality;
 import fi.testbed2.service.SettingsService;
 import lombok.Getter;
 import lombok.Setter;
+import roboguice.RoboGuice;
 
 /**
  * Utility class for scaling and gesture related functions
@@ -197,7 +198,7 @@ public class AnimationViewScaleAndGestureUtil {
 
     @AfterInject
     void injectRoboGuiceDependencies() {
-        MainApplication.getApplication().getInjector().injectMembers(this);
+        RoboGuice.getInjector(MainApplication.getContext()).injectMembers(this);
     }
 
 

@@ -1,9 +1,11 @@
 package fi.testbed2;
 
-import com.xtremelabs.robolectric.Robolectric;
-import fi.testbed2.android.app.MainApplication;
 import org.junit.Before;
 import org.mockito.MockitoAnnotations;
+import org.robolectric.RuntimeEnvironment;
+
+import fi.testbed2.android.app.MainApplication;
+import roboguice.RoboGuice;
 
 /**
  * Base class for all test classes.
@@ -15,15 +17,15 @@ public abstract class AbstractTestCase  {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        MainApplication.setContext(Robolectric.application);
+        MainApplication.setContext(RuntimeEnvironment.application);
     }
 
     protected void initClassForMocks(Object obj) {
-        ((MainApplication) Robolectric.application).getInjector().injectMembers(obj);
+        RoboGuice.getInjector(MainApplication.getContext()).injectMembers(obj);
     }
 
     protected <T> T getInjectedMock(Class<T> clazz) {
-        return ((MainApplication) Robolectric.application).getInjector().getInstance(clazz);
+        return RoboGuice.getInjector(MainApplication.getContext()).getInstance(clazz);
     }
 
 }

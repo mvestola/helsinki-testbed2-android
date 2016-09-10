@@ -4,23 +4,25 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.view.MenuItem;
 import android.widget.ImageButton;
-import com.xtremelabs.robolectric.Robolectric;
-import com.xtremelabs.robolectric.shadows.ShadowActivity;
-import com.xtremelabs.robolectric.shadows.ShadowAlertDialog;
-import com.xtremelabs.robolectric.shadows.ShadowIntent;
-import com.xtremelabs.robolectric.tester.android.view.TestMenuItem;
 import fi.testbed2.AbstractTestCase;
+import fi.testbed2.BuildConfig;
 import fi.testbed2.InjectedTestRunner;
 import fi.testbed2.R;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
+import org.robolectric.fakes.RoboMenuItem;
+import org.robolectric.shadows.ShadowActivity;
+import org.robolectric.shadows.ShadowAlertDialog;
+import org.robolectric.shadows.ShadowIntent;
 
-import static com.xtremelabs.robolectric.Robolectric.shadowOf;
+import static org.robolectric.Shadows.shadowOf;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;
 
 @RunWith(InjectedTestRunner.class)
+@Config(constants = BuildConfig.class, sdk = 21)
 public class MainActivityTest extends AbstractTestCase {
 
     private MainActivity_ activity;
@@ -55,7 +57,7 @@ public class MainActivityTest extends AbstractTestCase {
     @Test
     public void shouldOpenParsingActivityWhenRefreshButtonFromMainMenuSelected() {
 
-        MenuItem item = new TestMenuItem(R.id.main_menu_refresh);
+        MenuItem item = new RoboMenuItem(R.id.main_menu_refresh);
         activity.onOptionsItemSelected(item);
 
         ShadowActivity shadowActivity = shadowOf(activity);
@@ -68,7 +70,7 @@ public class MainActivityTest extends AbstractTestCase {
     @Test
     public void shouldOpenAboutBoxWhenAboutButtonFromMainMenuSelected() {
 
-        MenuItem item = new TestMenuItem(R.id.main_menu_about);
+        MenuItem item = new RoboMenuItem(R.id.main_menu_about);
         activity.onOptionsItemSelected(item);
 
         ShadowActivity shadowActivity = shadowOf(activity);
@@ -76,7 +78,7 @@ public class MainActivityTest extends AbstractTestCase {
         assertNull(startedIntent);
 
         AlertDialog dialog = ShadowAlertDialog.getLatestAlertDialog();
-        ShadowAlertDialog shadowDialog = Robolectric.shadowOf(dialog);
+        ShadowAlertDialog shadowDialog = shadowOf(dialog);
         assertEquals("Helsinki Testbed Viewer 1.0", shadowDialog.getTitle());
 
     }
@@ -84,7 +86,7 @@ public class MainActivityTest extends AbstractTestCase {
     @Test
     public void shouldOpenPreferencesWhenPreferenceButtonFromMainMenuSelected() {
 
-        MenuItem item = new TestMenuItem(R.id.main_menu_preferences);
+        MenuItem item = new RoboMenuItem(R.id.main_menu_preferences);
         activity.onOptionsItemSelected(item);
 
         ShadowActivity shadowActivity = shadowOf(activity);

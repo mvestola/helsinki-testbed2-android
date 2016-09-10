@@ -1,15 +1,11 @@
 buildscript {
     repositories {
-        jcenter()
+        mavenCentral()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.1.3'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
     }
-}
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
 }
 
 repositories {
@@ -30,12 +26,18 @@ android {
     compileSdkVersion 24
     buildToolsVersion "24.0.2"
 
+    useLibrary 'org.apache.http.legacy'
+
     defaultConfig {
         applicationId "fi.testbed2"
         minSdkVersion 9
         targetSdkVersion 9
         versionCode 21
         versionName "2.0.13"
+    }
+
+    lintOptions {
+        abortOnError false
     }
 
     signingConfigs {
@@ -64,17 +66,18 @@ android {
 
 def powerMockVersion = '1.6.5'
 def androidAnnotationsVersion = '4.1.0'
+def robolectricVersion = '3.0'
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    provided 'org.roboguice:roboblender:3.+'
 	apt "org.projectlombok:lombok:1.16.10"
     provided "org.projectlombok:lombok:1.16.10"
 	apt "org.androidannotations:androidannotations:$androidAnnotationsVersion"
     compile "org.androidannotations:androidannotations-api:$androidAnnotationsVersion"
     apt "org.androidannotations:roboguice:$androidAnnotationsVersion"
     compile "org.androidannotations:roboguice-api:$androidAnnotationsVersion"
-    testCompile "org.robolectric:robolectric:3.1.2"
+    testCompile "org.robolectric:robolectric:$robolectricVersion"
+    testCompile "org.robolectric:shadows-httpclient:$robolectricVersion"
     testCompile 'junit:junit:4.12'
     testCompile "org.powermock:powermock-module-junit4:$powerMockVersion"
     testCompile "org.powermock:powermock-module-junit4-rule:$powerMockVersion"
@@ -83,13 +86,11 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.2.0'
     compile 'com.google.android.gms:play-services-ads:9.4.0'
     compile 'com.jhlabs:javaproj-noawt:1.0.6'
-    compile 'org.roboguice:roboguice:3.+'
+    compile 'org.roboguice:roboguice:3.0'
 }
 
 apt {
     arguments {
         androidManifestFile variant.outputs[0]?.processResources?.manifestFile
-        resourcePackageName "fi.testbed2"
-        logLevel 'INFO'
     }
 }

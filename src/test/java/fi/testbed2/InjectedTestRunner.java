@@ -1,42 +1,35 @@
 package fi.testbed2;
 
-import android.app.Application;
-import com.google.inject.Injector;
-import fi.testbed2.android.app.MainApplication;
 import org.junit.runners.model.InitializationError;
-import org.robolectric.RobolectricTestRunner;
+import org.robolectric.DefaultTestLifecycle;
+import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RuntimeEnvironment;
+import org.robolectric.TestLifecycle;
 
-import roboguice.inject.ContextScope;
+import roboguice.RoboGuice;
 
 /**
  * Use this test runner to for activity testing. This automatically injects the
  * beans in the activities defined in the TestModule class.
  */
-public class InjectedTestRunner extends RobolectricTestRunner {
+public class InjectedTestRunner extends RobolectricGradleTestRunner {
 
     public InjectedTestRunner(Class<?> testClass) throws InitializationError {
         super(testClass);
     }
 
     @Override
-    public void prepareTest(Object test) {
-        RoboApplication sampleApplication = (RoboApplication) Robolectric.application;
-        Injector injector = sampleApplication.getInjector();
-        ContextScope scope = injector.getInstance(ContextScope.class);
-        scope.enter(sampleApplication);
-        injector.injectMembers(test);
-
-        RoboGuice.overrideApplicationInjector(Robolectric.application, new MyTestModule());
-
-
+    protected Class<? extends TestLifecycle> getTestLifecycleClass() {
+        return TestLifeCycleWithInjection.class;
     }
 
-    @Override
-    protected Application createApplication() {
-        MainApplication application =
-                (MainApplication) super.createApplication();
-        application.setModule(new TestModule());
-        return application;
+    public static class TestLifeCycleWithInjection extends DefaultTestLifecycle {
+
+        @Override
+        public void prepareTest(Object test) {
+            RoboGuice.overrideApplicationInjector(RuntimeEnvironment.application, new TestModule());
+            RoboGuice.getInjector(RuntimeEnvironment.application).injectMembers(test);
+        }
     }
 
 }

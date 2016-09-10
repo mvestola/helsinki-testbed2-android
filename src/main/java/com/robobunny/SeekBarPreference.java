@@ -184,6 +184,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 
     @Override
     protected View onCreateView(ViewGroup parent){
+        super.onCreateView(parent);
 
         RelativeLayout layout =  null;
 

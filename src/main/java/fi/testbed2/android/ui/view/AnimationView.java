@@ -29,6 +29,7 @@ import fi.testbed2.service.SettingsService;
 import fi.testbed2.util.SeekBarUtil;
 import lombok.Getter;
 import lombok.Setter;
+import roboguice.RoboGuice;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -246,7 +247,7 @@ public class AnimationView extends View {
 
     @AfterInject
     void injectRoboGuiceDependencies() {
-        MainApplication.getApplication().getInjector().injectMembers(this);
+        RoboGuice.getInjector(MainApplication.getContext()).injectMembers(this);
     }
 
 }

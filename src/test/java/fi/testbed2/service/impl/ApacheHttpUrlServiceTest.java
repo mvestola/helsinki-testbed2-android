@@ -1,20 +1,24 @@
 package fi.testbed2.service.impl;
 
-import com.xtremelabs.robolectric.Robolectric;
-import fi.testbed2.AbstractTestCase;
-import fi.testbed2.InjectedTestRunner;
-import fi.testbed2.android.task.exception.DownloadTaskException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
+import org.robolectric.shadows.httpclient.FakeHttp;
 
 import java.io.InputStream;
+
+import fi.testbed2.AbstractTestCase;
+import fi.testbed2.BuildConfig;
+import fi.testbed2.InjectedTestRunner;
+import fi.testbed2.android.task.exception.DownloadTaskException;
 
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(InjectedTestRunner.class)
+@Config(constants = BuildConfig.class, sdk = 21)
 public class ApacheHttpUrlServiceTest extends AbstractTestCase {
 
     private ApacheHttpUrlService httpUrlService;
@@ -33,7 +37,7 @@ public class ApacheHttpUrlServiceTest extends AbstractTestCase {
     @Test
     public void testResponse200() throws Exception {
 
-        Robolectric.addPendingHttpResponse(200, "OK");
+        FakeHttp.setDefaultHttpResponse(200, "OK");
         InputStream stream = httpUrlService.getInputStreamForHttpUrl("fi.testbed2/test");
         assertNotNull(stream);
 
@@ -42,7 +46,7 @@ public class ApacheHttpUrlServiceTest extends AbstractTestCase {
     @Test
     public void testResponse404() throws Exception {
 
-        Robolectric.addPendingHttpResponse(404, "Not Found");
+        FakeHttp.setDefaultHttpResponse(404, "Not Found");
 
         thrown.expect(DownloadTaskException.class);
         thrown.expectMessage("Could not connect to the server (HTTP 404). Please try again later.");
@@ -53,7 +57,7 @@ public class ApacheHttpUrlServiceTest extends AbstractTestCase {
     @Test
     public void testResponse500() throws Exception {
 
-        Robolectric.addPendingHttpResponse(500, "Server error");
+        FakeHttp.setDefaultHttpResponse(500, "Server error");
 
         thrown.expect(DownloadTaskException.class);
         thrown.expectMessage("Could not connect to the server (HTTP 500). Please try again later.");

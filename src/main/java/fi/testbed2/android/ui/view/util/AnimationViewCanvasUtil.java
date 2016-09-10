@@ -15,6 +15,7 @@ import fi.testbed2.service.LocationService;
 import fi.testbed2.service.SettingsService;
 import lombok.Getter;
 import lombok.Setter;
+import roboguice.RoboGuice;
 
 import java.util.List;
 import java.util.Map;
@@ -177,7 +178,7 @@ public class AnimationViewCanvasUtil {
 
     @AfterInject
     void injectRoboGuiceDependencies() {
-        MainApplication.getApplication().getInjector().injectMembers(this);
+        RoboGuice.getInjector(MainApplication.getContext()).injectMembers(this);
     }
 
 }

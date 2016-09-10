@@ -12,7 +12,7 @@
         <item>Dew point</item>
     </string-array>
 
-    <string-array name="map_type_values">
+    <string-array name="map_type_values" translatable="false">
         <item>radar</item>
         <item>temperature</item>
         <item>relativehumidity</item>
@@ -32,7 +32,7 @@
         <item>3 h</item>
     </string-array>
 
-    <string-array name="map_time_step_values">
+    <string-array name="map_time_step_values" translatable="false">
         <item>5</item>
         <item>15</item>
         <item>30</item>
@@ -41,7 +41,7 @@
         <item>180</item>
     </string-array>
 
-    <string-array name="map_number_of_images_options">
+    <string-array name="map_number_of_images_options" translatable="false">
         <item>1</item>
         <item>2</item>
         <item>3</item>
@@ -50,7 +50,7 @@
         <item>15</item>
     </string-array>
 
-    <string-array name="map_number_of_images_values">
+    <string-array name="map_number_of_images_values" translatable="false">
         <item>1</item>
         <item>2</item>
         <item>3</item>
@@ -59,7 +59,7 @@
         <item>15</item>
     </string-array>
 
-    <string-array name="anim_frame_delay_options">
+    <string-array name="anim_frame_delay_options" translatable="false">
         <item>0.1</item>
         <item>0.2</item>
         <item>0.3</item>
@@ -76,7 +76,7 @@
         <item>3.0</item>
     </string-array>
 
-    <string-array name="anim_frame_delay_values">
+    <string-array name="anim_frame_delay_values" translatable="false">
         <item>100</item>
         <item>200</item>
         <item>300</item>
@@ -99,7 +99,7 @@
         <item>Fixed (freezes the current location)</item>
     </string-array>
 
-    <string-array name="location_provider_values">
+    <string-array name="location_provider_values" translatable="false">
         <item>network</item>
         <item>gps</item>
         <item>fixed</item>
