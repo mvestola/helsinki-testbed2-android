@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="powermock-classloading-base-1.6.5">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.powermock/powermock-classloading-base/1.6.5/586c25ebad8317683fc83b8d46602fd93a2f0845/powermock-classloading-base-1.6.5.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.powermock/powermock-classloading-base/1.6.5/ba34fe9c0b37206a62123cb92850201f99387d20/powermock-classloading-base-1.6.5-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

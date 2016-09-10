@@ -1,6 +1,6 @@
 package fi.testbed2.android.app;
 
-import fi.testbed2.Environment;
+import fi.testbed2.BuildConfig;
 import roboguice.util.Ln;
 
 /**
@@ -9,7 +9,7 @@ import roboguice.util.Ln;
 public final class Logger {
 
     public static void debug(String s) {
-        if (Environment.DEBUG) {
+        if (BuildConfig.DEBUG_OUTPUT) {
             Ln.e(s);
         }
     }

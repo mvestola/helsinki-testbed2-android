@@ -2,9 +2,7 @@ package fi.testbed2.android.ui.view.util;
 
 import android.graphics.*;
 import com.google.inject.Inject;
-import com.googlecode.androidannotations.annotations.AfterInject;
-import com.googlecode.androidannotations.annotations.EBean;
-import com.googlecode.androidannotations.api.Scope;
+import org.androidannotations.annotations.*;
 import com.jhlabs.map.Point2D;
 import com.larvalabs.svgandroid.SVGParser;
 import fi.testbed2.android.app.MainApplication;
@@ -24,7 +22,7 @@ import java.util.Map;
 /**
  * Utility class for canvas drawing operations used in AnimationView.
  */
-@EBean(scope = Scope.Singleton)
+@EBean(scope = EBean.Scope.Singleton)
 public class AnimationViewCanvasUtil {
 
     /**

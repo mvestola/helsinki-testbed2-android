@@ -2,11 +2,10 @@ package fi.testbed2;
 
 import android.app.Application;
 import com.google.inject.Injector;
-import com.xtremelabs.robolectric.Robolectric;
-import com.xtremelabs.robolectric.RobolectricTestRunner;
 import fi.testbed2.android.app.MainApplication;
 import org.junit.runners.model.InitializationError;
-import roboguice.application.RoboApplication;
+import org.robolectric.RobolectricTestRunner;
+
 import roboguice.inject.ContextScope;
 
 /**
@@ -26,6 +25,10 @@ public class InjectedTestRunner extends RobolectricTestRunner {
         ContextScope scope = injector.getInstance(ContextScope.class);
         scope.enter(sampleApplication);
         injector.injectMembers(test);
+
+        RoboGuice.overrideApplicationInjector(Robolectric.application, new MyTestModule());
+
+
     }
 
     @Override

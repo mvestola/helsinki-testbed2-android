@@ -1,27 +1,24 @@
 package fi.testbed2.android.app;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
+
 import com.google.inject.Inject;
-import com.google.inject.Module;
-import com.googlecode.androidannotations.annotations.EApplication;
-import fi.testbed2.MainModule;
+
+import org.androidannotations.annotations.EApplication;
+
 import fi.testbed2.service.BitmapService;
 import fi.testbed2.service.PageService;
-import roboguice.application.RoboApplication;
-
-import java.util.List;
 
 @EApplication
-public class MainApplication extends RoboApplication {
+public class MainApplication extends Application {
 
     public static final String LOG_IDENTIFIER = "TestbedViewer2";
 
 	public static final int RESULT_ERROR = Activity.RESULT_FIRST_USER;
     public static final int RESULT_OK = Activity.RESULT_OK;
     public static final int RESULT_REFRESH = 10;
-
-    private Module module = new MainModule();
 
     private static Context context;
     private static MainApplication app;
@@ -77,15 +74,6 @@ public class MainApplication extends RoboApplication {
      */
     public static void setContext(Context context) {
         MainApplication.context = context;
-    }
-
-    public void setModule(Module module) {
-        this.module = module;
-    }
-
-    @Override
-    protected void addApplicationModules(List<Module> modules) {
-        modules.add(module);
     }
 
 }

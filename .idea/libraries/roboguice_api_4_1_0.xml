@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="roboguice-api-4.1.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.androidannotations/roboguice-api/4.1.0/c1f9fa7b1f73f164fe599977ba132ee91d227f74/roboguice-api-4.1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.androidannotations/roboguice-api/4.1.0/d0cbe1d0e39ec20c775ef45e531991a272f10d19/roboguice-api-4.1.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

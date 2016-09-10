@@ -1,6 +1,8 @@
 *.apk
 testbed.iws
 
+.gradle/
+
 .idea/runConfigurations/Emulator__Defy_.xml
 .idea/runConfigurations/Emulator__Large_.xml
 .idea/workspace.xml
@@ -10,6 +12,7 @@ local.properties
 conf/local.properties
 src/main/config/local.properties
 
+build/
 tmp/
 target/
 out/

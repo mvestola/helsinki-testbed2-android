@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import com.googlecode.androidannotations.annotations.*;
+import org.androidannotations.annotations.*;
+import org.androidannotations.roboguice.annotations.RoboGuice;
+
 import fi.testbed2.R;
 import fi.testbed2.android.app.MainApplication;
 import fi.testbed2.android.task.ParseAndInitTask;

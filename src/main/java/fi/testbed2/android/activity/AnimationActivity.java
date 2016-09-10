@@ -9,7 +9,9 @@ import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import com.google.inject.Inject;
-import com.googlecode.androidannotations.annotations.*;
+import org.androidannotations.annotations.*;
+import org.androidannotations.roboguice.annotations.RoboGuice;
+
 import fi.testbed2.R;
 import fi.testbed2.android.app.Logger;
 import fi.testbed2.android.app.MainApplication;

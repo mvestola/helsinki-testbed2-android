@@ -6,7 +6,8 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import fi.testbed2.Environment;
+
+import fi.testbed2.BuildConfig;
 import fi.testbed2.android.app.Logger;
 import fi.testbed2.domain.MapLocationGPS;
 import fi.testbed2.domain.MapLocationXY;
@@ -51,7 +52,7 @@ public class PreferenceBasedLocationService implements LocationService, Location
             return null;
         }
 
-        if (Environment.TEST_ENVIRONMENT && !getProvider().equals(LOCATION_PROVIDER_FIXED)) {
+        if (isTestEnvironment() && !getProvider().equals(LOCATION_PROVIDER_FIXED)) {
             return municipalityService.getMunicipality("Helsinki").getXyPos();
         } else {
             return userLocationXY;
@@ -65,7 +66,7 @@ public class PreferenceBasedLocationService implements LocationService, Location
             return null;
         }
 
-        if (Environment.TEST_ENVIRONMENT) {
+        if (isTestEnvironment()) {
             return municipalityService.getMunicipality("Kouvola").getGpsPos();
         } else {
             return userLocation;
@@ -130,6 +131,10 @@ public class PreferenceBasedLocationService implements LocationService, Location
 
     private String getProvider() {
         return settingsService.getLocationProvider();
+    }
+
+    private boolean isTestEnvironment() {
+        return BuildConfig.ENVIRONMENT.equals("TEST");
     }
 
 }
