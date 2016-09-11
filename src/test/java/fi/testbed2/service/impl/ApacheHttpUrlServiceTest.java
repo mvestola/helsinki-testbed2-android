@@ -18,7 +18,7 @@ import fi.testbed2.android.task.exception.DownloadTaskException;
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(InjectedTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = 21)
+@Config(constants = BuildConfig.class, sdk = AbstractTestCase.ROBOLECTRIC_API_LEVEL)
 public class ApacheHttpUrlServiceTest extends AbstractTestCase {
 
     private ApacheHttpUrlService httpUrlService;

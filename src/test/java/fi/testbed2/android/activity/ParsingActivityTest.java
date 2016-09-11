@@ -10,6 +10,7 @@ import fi.testbed2.R;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.Robolectric;
 import org.robolectric.Shadows;
 import org.robolectric.annotation.Config;
 import org.robolectric.fakes.RoboMenuItem;
@@ -22,15 +23,14 @@ import static org.junit.Assert.*;
 import static org.robolectric.Shadows.shadowOf;
 
 @RunWith(InjectedTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = 21)
+@Config(constants = BuildConfig.class, sdk = AbstractTestCase.ROBOLECTRIC_API_LEVEL)
 public class ParsingActivityTest extends AbstractTestCase {
 
     private ParsingActivity_ activity;
 
     @Before
     public void setUp() throws Exception {
-        activity = new ParsingActivity_();
-        activity.onCreate(null);
+        activity = Robolectric.setupActivity(ParsingActivity_.class);
     }
 
     @Test
@@ -45,7 +45,7 @@ public class ParsingActivityTest extends AbstractTestCase {
 
         AlertDialog dialog = ShadowAlertDialog.getLatestAlertDialog();
         ShadowAlertDialog shadowDialog = shadowOf(dialog);
-        assertEquals("Helsinki Testbed Viewer 1.0", shadowDialog.getTitle());
+        assertEquals("Helsinki Testbed Viewer 2.0.13", shadowDialog.getTitle());
 
     }
 
@@ -55,13 +55,11 @@ public class ParsingActivityTest extends AbstractTestCase {
         MenuItem item = new RoboMenuItem(R.id.main_menu_preferences);
         activity.onOptionsItemSelected(item);
 
+        Intent expectedIntent = new Intent(activity, TestbedPreferenceActivity.class);
         ShadowActivity shadowActivity = shadowOf(activity);
-        Intent startedIntent = shadowActivity.getNextStartedActivity();
-        ShadowIntent shadowIntent = shadowOf(startedIntent);
-        assertThat(shadowIntent.getComponent().getClassName(),
-                equalTo(TestbedPreferenceActivity.class.getName()));
+        Intent actualIntent = shadowActivity.getNextStartedActivity();
+        assertTrue(actualIntent.filterEquals(expectedIntent));
 
     }
-
 
 }

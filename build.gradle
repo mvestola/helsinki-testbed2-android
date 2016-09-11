@@ -66,7 +66,7 @@ android {
 
 def powerMockVersion = '1.6.5'
 def androidAnnotationsVersion = '4.1.0'
-def robolectricVersion = '3.0'
+def robolectricVersion = '3.1'
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -87,10 +87,4 @@ dependencies {
     compile 'com.google.android.gms:play-services-ads:9.4.0'
     compile 'com.jhlabs:javaproj-noawt:1.0.6'
     compile 'org.roboguice:roboguice:3.0.1'
-}
-
-apt {
-    arguments {
-        androidManifestFile variant.outputs[0]?.processResources?.manifestFile
-    }
 }

@@ -12,6 +12,11 @@ import roboguice.RoboGuice;
  */
 public abstract class AbstractTestCase  {
 
+    /**
+     * API level supported by Robolectric
+     */
+    public static final int ROBOLECTRIC_API_LEVEL = 21;
+
     protected static final String TEST_DATA_PATH = "src/test/resources/";
 
     @Before
