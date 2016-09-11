@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+
+    <!-- Ignored due to android annotations -->
+    <issue id="Registered">
+        <ignore path="src/main/java/fi/testbed2/android/activity/MainActivity.java" />
+        <ignore path="src/main/java/fi/testbed2/android/activity/AnimationActivity.java" />
+        <ignore path="src/main/java/fi/testbed2/android/activity/ParsingActivity.java" />
+    </issue>
+
+    <issue id="InvalidPackage">
+        <ignore path="**/javaproj-noawt-1.0.6.jar" />
+        <ignore path="**/roboguice-3.0.1.jar" />
+    </issue>
+
+</lint>

@@ -8,9 +8,22 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
 import com.google.inject.Inject;
-import org.androidannotations.annotations.*;
+
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.OptionsItem;
+import org.androidannotations.annotations.OptionsMenu;
+import org.androidannotations.annotations.SeekBarProgressChange;
+import org.androidannotations.annotations.SeekBarTouchStart;
+import org.androidannotations.annotations.SeekBarTouchStop;
+import org.androidannotations.annotations.UiThread;
+import org.androidannotations.annotations.ViewById;
 import org.androidannotations.roboguice.annotations.RoboGuice;
+
+import java.lang.reflect.Method;
 
 import fi.testbed2.R;
 import fi.testbed2.android.app.Logger;
@@ -23,8 +36,6 @@ import fi.testbed2.service.BitmapService;
 import fi.testbed2.service.LocationService;
 import fi.testbed2.service.PageService;
 import fi.testbed2.util.SeekBarUtil;
-
-import java.lang.reflect.Method;
 
 /**
  * Activity handling the main map animation view.
