@@ -5,14 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageButton;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
-
-import org.androidannotations.annotations.*;
+import org.androidannotations.annotations.Click;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.OptionsMenu;
+import org.androidannotations.annotations.ViewById;
 import org.androidannotations.roboguice.annotations.RoboGuice;
 
-import fi.testbed2.BuildConfig;
 import fi.testbed2.R;
 import fi.testbed2.android.app.Logger;
 import fi.testbed2.android.app.MainApplication;
@@ -32,23 +30,6 @@ public class MainActivity extends AbstractActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        MobileAds.initialize(getApplicationContext(), "ca-app-pub-0260854390576047~2779636901");
-        AdView mAdView = (AdView) findViewById(R.id.adView);
-        mAdView.loadAd(getAdRequest());
-    }
-
-    private AdRequest getAdRequest() {
-
-        if(BuildConfig.ENVIRONMENT.equals("TEST")) {
-            return new AdRequest.Builder()
-                    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                    .addTestDevice("TEST_DEVICE_ID")
-                    .addTestDevice("TEST_EMULATOR")
-                    .build();
-        } else {
-            return new AdRequest.Builder().build();
-        }
     }
 
     /** Called when resuming, BUT after onActivityResult! */

@@ -4,17 +4,21 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 
+import com.google.android.gms.ads.MobileAds;
 import com.google.inject.Inject;
 
 import org.androidannotations.annotations.EApplication;
 
 import fi.testbed2.service.BitmapService;
 import fi.testbed2.service.PageService;
+import roboguice.RoboGuice;
 
 @EApplication
 public class MainApplication extends Application {
 
-    public static final String LOG_IDENTIFIER = "TestbedViewer2";
+    static {
+        RoboGuice.setUseAnnotationDatabases(false);
+    }
 
 	public static final int RESULT_ERROR = Activity.RESULT_FIRST_USER;
     public static final int RESULT_OK = Activity.RESULT_OK;
@@ -35,6 +39,7 @@ public class MainApplication extends Application {
         super.onCreate();
         context = this;
         app = this;
+        MobileAds.initialize(getApplicationContext(), "ca-app-pub-0260854390576047~2779636901");
         Logger.debug("MainApplication started");
     }
 

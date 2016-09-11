@@ -86,7 +86,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.2.0'
     compile 'com.google.android.gms:play-services-ads:9.4.0'
     compile 'com.jhlabs:javaproj-noawt:1.0.6'
-    compile 'org.roboguice:roboguice:3.0'
+    compile 'org.roboguice:roboguice:3.+'
 }
 
 apt {

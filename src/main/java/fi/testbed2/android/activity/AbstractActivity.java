@@ -11,6 +11,8 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.inject.Inject;
 import org.androidannotations.annotations.*;
+
+import fi.testbed2.BuildConfig;
 import fi.testbed2.R;
 import fi.testbed2.android.ui.dialog.DialogBuilder;
 import fi.testbed2.service.SettingsService;
@@ -28,6 +30,9 @@ public abstract class AbstractActivity extends Activity {
 
     @Inject
     SettingsService settingsService;
+
+    @ViewById(R.id.adView)
+    AdView adView;
 
     private String currentErrorMsg;
 
@@ -54,6 +59,22 @@ public abstract class AbstractActivity extends Activity {
             }
         }
 
+    }
+
+    @AfterViews
+    void initializeAds() {
+        adView.loadAd(getAdRequest());
+    }
+
+    private AdRequest getAdRequest() {
+        if(BuildConfig.ENVIRONMENT.equals("TEST")) {
+            return new AdRequest.Builder()
+                    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                    .addTestDevice("TEST_DEVICE_ID")
+                    .build();
+        } else {
+            return new AdRequest.Builder().build();
+        }
     }
 
     public abstract void onRefreshFromMenuSelected();

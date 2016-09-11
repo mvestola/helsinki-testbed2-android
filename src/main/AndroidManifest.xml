@@ -33,7 +33,6 @@
         <activity android:name="com.google.android.gms.ads.AdActivity"
                   android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
         <meta-data android:name="roboguice.modules" android:value="fi.testbed2.MainModule"/>
-        <meta-data android:name="roboguice.annotations.packages" android:value="fi.testbed2"/>
     </application>
 
     <!-- Although Google ads require API level 13 (Android 3.2),
