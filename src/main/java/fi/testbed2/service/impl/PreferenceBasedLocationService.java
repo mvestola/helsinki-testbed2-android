@@ -86,7 +86,14 @@ public class PreferenceBasedLocationService implements LocationService, Location
             return;
         }
 
-        Location lastKnownLocation = locationManager.getLastKnownLocation(provider);
+        Location lastKnownLocation = null;
+
+        try {
+            lastKnownLocation = locationManager.getLastKnownLocation(provider);
+        } catch (SecurityException e) {
+            Logger.debug("Permission not granted for last known location: " + e.getMessage());
+        }
+
         if (lastKnownLocation!=null) {
             userLocation = new MapLocationGPS(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
             userLocationXY = coordinateService.convertLocationToXyPos(userLocation);
@@ -95,6 +102,8 @@ public class PreferenceBasedLocationService implements LocationService, Location
         try {
             locationManager.requestLocationUpdates(provider,
                     LOCATION_UPDATE_INTERVAL_MINUTES * 60 * 1000, LOCATION_UPDATE_ACCURACY_METERS, this);
+        } catch (SecurityException e) {
+            Logger.debug("Permission not granted for location updates: " + e.getMessage());
         } catch (Exception e) {
             /*
              * Might throw exception if location provider not found.
@@ -109,7 +118,11 @@ public class PreferenceBasedLocationService implements LocationService, Location
     @Override
     public void stopListeningLocationChanges() {
         Logger.debug("Stopped listening location changes");
-        locationManager.removeUpdates(this);
+        try {
+            locationManager.removeUpdates(this);
+        } catch (SecurityException e) {
+            return;
+        }
     }
 
     @Override

@@ -27,6 +27,7 @@
             >
 
         <ImageButton android:id="@+id/playpause_button"
+                     android:contentDescription="@string/button_content_description_playpause"
                      android:src="@drawable/ic_media_play"
                      android:layout_alignParentLeft="true"
                      android:scaleType="fitCenter"

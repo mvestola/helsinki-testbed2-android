@@ -3,14 +3,14 @@
     <string name="app_name">Helsinki Testbed Viewer 2.0</string>
     <string name="app_homepage" translatable="false">https://github.com/mvestola/helsinki-testbed2-android</string>
 
-    <string name="testbed_base_url" formatted="false" translatable="false">http://testbed.fmi.fi/history_browser.php?imgtype=%s&amp;t=%s&amp;n=%s</string>
+    <string name="testbed_base_url" translatable="false">http://testbed.fmi.fi/history_browser.php?imgtype=%1$s&amp;t=%2$s&amp;n=%3$s</string>
 
     <string name="main_menu_refresh">Refresh</string>
     <string name="main_menu_reset_zoom">Reset zoom</string>
     <string name="main_menu_preferences">Settings</string>
     <string name="main_menu_about">About</string>
 
-    <string name="about_title" translatable="false">Helsinki Testbed Viewer %s</string>
+    <string name="about_title" translatable="false">Helsinki Testbed Viewer %1$s</string>
     <string name="about_text"><b>This application HAS NOTHING TO DO with the
         Helsinki Testbed project!\n\n</b>All map images are downloaded from the
         Helsinki Testbed website which is copyrighted by the Helsinki Testbed project.
@@ -22,11 +22,10 @@
 
     <string name="close_button">Close</string>
     <string name="button_save">Save</string>
-    <string name="button_ok">OK</string>
     <string name="button_cancel">Cancel</string>
     <string name="do_not_show_again">Do not show again</string>
 
-    <string name="whats_new_title">New in version %s</string>
+    <string name="whats_new_title">New in version %1$s</string>
     <string name="whats_new_text">
         - Fixed application crashing in some rare cases
     </string>
@@ -39,7 +38,7 @@
         Otherwise the current location and municipalities are not shown in the map.
     </string>
 
-    <string name="notice_cancelled" formatted="false">Download cancelled</string>
+    <string name="notice_cancelled">Download cancelled</string>
 
     <string name="activity_label_settings">Settings</string>
     <string name="activity_label_downloading">Downloading maps...</string>
@@ -72,11 +71,11 @@
     <string name="preference_location_user_summary">Check to show your current location on the map</string>
 
     <string name="preference_location_provider_title">Location provider</string>
-    <string name="preference_location_provider_summary" formatted="false">Select your location provider.
-        Currently selected: %s</string>
+    <string name="preference_location_provider_summary">Select your location provider.
+        Currently selected: %1$s</string>
     <string name="preference_location_provider_gps">GPS</string>
     <string name="preference_location_provider_network">Network</string>
-    <string name="preference_location_provider_fixed" formatted="false">Fixed location (%s)</string>
+    <string name="preference_location_provider_fixed">Fixed location (%1$s)</string>
     <string name="preference_location_provider_fixed_error_dialog">No current location is available.
         Reverted to the GPS provider. Please wait until the current location is available and then choose the
         fixed option.</string>
@@ -106,24 +105,27 @@
 
     <string name="progress_initializing">Initializing...</string>
     <string name="progress_parsing">Reading page from Testbed...</string>
-    <string name="progress_downloading" formatted="false">Downloading latest weather map...</string>
+    <string name="progress_downloading">Downloading latest weather map...</string>
     <string name="progress_done">Done</string>
-    <string name="progress_anim_downloading" formatted="false">(Downloading: %d/%d)</string>
+    <string name="progress_anim_downloading">(Downloading: %1$d/%2$d)</string>
 
-    <string name="error_message_detailed" formatted="false">Unexpected error occurred: %s</string>
+    <string name="error_message_detailed">Unexpected error occurred: %1$s</string>
     <string name="error_msg_map_image_could_not_download">Could not open map image. Please try again later.</string>
     <string name="error_msg_io_exception">Could not download map image. Please try again later.</string>
     <string name="error_msg_parsed_map_image_null">Could not process map image. Please try again later.</string>
-    <string name="error_msg_http_status" formatted="false">Could not connect to the server (HTTP %s). Please try again later.</string>
-    <string name="error_msg_http_error" formatted="false">Could not connect to the server. Please try again later.</string>
-    <string name="error_msg_invalid_url" formatted="false">Invalid URL: %s</string>
-    <string name="error_msg_parsing_timestamp" formatted="false">Could not parse image timestamps from HTML page.</string>
-    <string name="error_msg_parsing_urls" formatted="false">Could not parse image URLs from HTML page.</string>
-    <string name="error_msg_parsing_length" formatted="false">Could not parse images from HTML page.</string>
-    <string name="error_msg_parsing_page" formatted="false">Could not read HTML page.</string>
-    <string name="error_msg_parsing_page_changed" formatted="false">Could not parse HTML page. Webpage has changed its syntax. please report this error.</string>
+    <string name="error_msg_http_status">Could not connect to the server (HTTP %1$s). Please try again later.</string>
+    <string name="error_msg_http_error">Could not connect to the server. Please try again later.</string>
+    <string name="error_msg_invalid_url">Invalid URL: %1$s</string>
+    <string name="error_msg_parsing_timestamp">Could not parse image timestamps from HTML page.</string>
+    <string name="error_msg_parsing_urls">Could not parse image URLs from HTML page.</string>
+    <string name="error_msg_parsing_length">Could not parse images from HTML page.</string>
+    <string name="error_msg_parsing_page">Could not read HTML page.</string>
+    <string name="error_msg_parsing_page_changed">Could not parse HTML page. Webpage has changed its syntax. please report this error.</string>
 
     <!-- Color Picker dialog -->
     <string name="dialog_color_picker">Pick a color</string>
+
+    <string name="button_content_description_refresh">Refresh</string>
+    <string name="button_content_description_playpause">Play/Pause</string>
 
 </resources>

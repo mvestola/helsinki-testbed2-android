@@ -20,11 +20,10 @@
 
     <string name="close_button">Sulje</string>
     <string name="button_save">Tallenna</string>
-    <string name="button_ok">OK</string>
     <string name="button_cancel">Peruuta</string>
     <string name="do_not_show_again">Älä näytä jatkossa</string>
 
-    <string name="whats_new_title">Uutta versiossa %s</string>
+    <string name="whats_new_title">Uutta versiossa %1$s</string>
     <string name="whats_new_text">
         - Korjattu ohjelman satunnainen kaatuminen
     </string>
@@ -37,7 +36,7 @@
         Muutoin et näe nykyistä sijaintiasi tai valitsemiasi kuntia kartalla.
     </string>
 
-    <string name="notice_cancelled" formatted="false">Lataus keskeytetty</string>
+    <string name="notice_cancelled">Lataus keskeytetty</string>
 
     <string name="activity_label_settings">Asetukset</string>
     <string name="activity_label_downloading">Ladataan karttoja...</string>
@@ -70,11 +69,11 @@
     <string name="preference_location_user_summary">Rastita, jos haluat nykyisen sijaintisi näkyvän kartalla</string>
 
     <string name="preference_location_provider_title">Sijainnin tarjoaja</string>
-    <string name="preference_location_provider_summary" formatted="false">Valitse mistä sijaintisi luetaan.
-        Valittuna nyt: %s</string>
+    <string name="preference_location_provider_summary">Valitse mistä sijaintisi luetaan.
+        Valittuna nyt: %1$s</string>
     <string name="preference_location_provider_gps">GPS</string>
     <string name="preference_location_provider_network">Verkkopohjainen</string>
-    <string name="preference_location_provider_fixed" formatted="false">Kiinteä sijainti (%s)</string>
+    <string name="preference_location_provider_fixed">Kiinteä sijainti (%1$s)</string>
     <string name="preference_location_provider_fixed_error_dialog">Nykyinen sijaintisi ei ole saatavilla.
         Palautettu asetus GPS:ään. Odota kunnes nykyinen sijaintisi on saatavilla ja valitse vasta sitten
         kiinteä sijainti.</string>
@@ -102,25 +101,28 @@
 
     <string name="progress_initializing">Alustetaan...</string>
     <string name="progress_parsing">Luetaan sivua Testbedistä...</string>
-    <string name="progress_downloading" formatted="false">Ladataan viimeisin sääkartta...</string>
+    <string name="progress_downloading">Ladataan viimeisin sääkartta...</string>
     <string name="progress_done">Valmis</string>
-    <string name="progress_anim_downloading" formatted="false">(Ladataan: %d/%d)</string>
+    <string name="progress_anim_downloading">(Ladataan: %1$d/%2$d)</string>
 
-    <string name="error_message_detailed" formatted="false">Tapahtui odottamaton virhe: %s</string>
+    <string name="error_message_detailed">Tapahtui odottamaton virhe: %1$s</string>
     <string name="error_msg_map_image_could_not_download">Karttakuvan avaaminen epäonnistui. Kokeile myöhemmin uudestaan.</string>
     <string name="error_msg_io_exception">Karttakuvan lataaminen epäonnistui. Kokeile myöhemmin uudestaan.</string>
     <string name="error_msg_parsed_map_image_null">Karttakuvan prosessointi epäonnistui. Kokeile myöhemmin uudestaan.</string>
-    <string name="error_msg_http_status" formatted="false">Ei yhteyttä palvelimeen (HTTP %s). Kokeile myöhemmin uudestaan.</string>
-    <string name="error_msg_http_error" formatted="false">Ei yhteyttä palvelimeen. Kokeile myöhemmin uudestaan.</string>
-    <string name="error_msg_invalid_url" formatted="false">Virheellinen osoite: %s</string>
-    <string name="error_msg_parsing_timestamp" formatted="false">Karttakuvien aikaleimojen parsinta HTML-sivusta epäonnistui.</string>
-    <string name="error_msg_parsing_urls" formatted="false">Karttakuvien osoitteiden parsinta HTML-sivusta epäonnistui.</string>
-    <string name="error_msg_parsing_length" formatted="false">Karttakuvien parsinta HTML-sivusta epäonnistui.</string>
-    <string name="error_msg_parsing_page" formatted="false">HTML-sivun lukeminen epäonnistui.</string>
-    <string name="error_msg_parsing_page_changed" formatted="false">HTML-sivun lukeminen epäonnistui. Sivun rakenne on muuttunut. Raportoithan tämän virheen ohjelman kehittäjälle.</string>
+    <string name="error_msg_http_status">Ei yhteyttä palvelimeen (HTTP %1$s). Kokeile myöhemmin uudestaan.</string>
+    <string name="error_msg_http_error">Ei yhteyttä palvelimeen. Kokeile myöhemmin uudestaan.</string>
+    <string name="error_msg_invalid_url">Virheellinen osoite: %1$s</string>
+    <string name="error_msg_parsing_timestamp">Karttakuvien aikaleimojen parsinta HTML-sivusta epäonnistui.</string>
+    <string name="error_msg_parsing_urls">Karttakuvien osoitteiden parsinta HTML-sivusta epäonnistui.</string>
+    <string name="error_msg_parsing_length">Karttakuvien parsinta HTML-sivusta epäonnistui.</string>
+    <string name="error_msg_parsing_page">HTML-sivun lukeminen epäonnistui.</string>
+    <string name="error_msg_parsing_page_changed">HTML-sivun lukeminen epäonnistui. Sivun rakenne on muuttunut. Raportoithan tämän virheen ohjelman kehittäjälle.</string>
 
     <!-- Color Picker dialog -->
     <string name="dialog_color_picker">Valitse väri</string>
+
+    <string name="button_content_description_refresh">Päivitä</string>
+    <string name="button_content_description_playpause">Toista/Pysäytä</string>
 
 </resources>
 
