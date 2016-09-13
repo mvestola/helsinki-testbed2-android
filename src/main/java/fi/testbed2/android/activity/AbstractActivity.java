@@ -1,8 +1,9 @@
 package fi.testbed2.android.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -23,7 +24,7 @@ import fi.testbed2.service.SettingsService;
  * Handles options menu, for instance.
  */
 @EActivity
-public abstract class AbstractActivity extends Activity {
+public abstract class AbstractActivity extends AppCompatActivity {
 
     @Inject
     DialogBuilder dialogBuilder;
@@ -33,6 +34,10 @@ public abstract class AbstractActivity extends Activity {
 
     @ViewById(R.id.adView)
     AdView adView;
+
+
+    @ViewById(R.id.toolbar)
+    Toolbar toolbar;
 
     private String currentErrorMsg;
 
@@ -64,6 +69,16 @@ public abstract class AbstractActivity extends Activity {
     @AfterViews
     void initializeAds() {
         adView.loadAd(getAdRequest());
+    }
+
+    @AfterViews
+    void bindActionBar() {
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.ic_launcher_drop);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     private AdRequest getAdRequest() {

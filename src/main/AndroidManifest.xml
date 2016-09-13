@@ -32,7 +32,7 @@
         </activity>
         <activity android:name=".android.activity.AnimationActivity_"
 				  android:label="@string/activity_label_anim"
-                  android:theme="@style/AnimationCustomLightTheme"
+                  android:theme="@style/CustomLightTheme"
                   android:configChanges="orientation">
 		</activity>
         <activity android:name="com.google.android.gms.ads.AdActivity"
