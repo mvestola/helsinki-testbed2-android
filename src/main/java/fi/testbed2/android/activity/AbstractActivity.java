@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.inject.Inject;
 import org.androidannotations.annotations.*;
 
@@ -35,9 +36,10 @@ public abstract class AbstractActivity extends AppCompatActivity {
     @ViewById(R.id.adView)
     AdView adView;
 
-
     @ViewById(R.id.toolbar)
     Toolbar toolbar;
+
+    InterstitialAd interstitialAd;
 
     private String currentErrorMsg;
 
