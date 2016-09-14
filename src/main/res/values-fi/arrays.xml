@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="map_type_options">
-        <item>Sadetutka &amp; lämpötila</item>
-        <item>Lämpötila</item>
-        <item>Kosteus</item>
-        <item>Tuulen nopeus &amp; suunta</item>
-        <item>Tuulen nopeus</item>
-        <item>Tuulen suunta</item>
-        <item>Ilmanpaine</item>
-        <item>Kastepiste</item>
-    </string-array>
-
     <string-array name="map_time_step_options">
         <item>5 min</item>
         <item>15 min</item>

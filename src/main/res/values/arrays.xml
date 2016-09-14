@@ -1,28 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="map_type_options">
-        <item>Rain &amp; temperature</item>
-        <item>Temperature</item>
-        <item>Humidity</item>
-        <item>Wind</item>
-        <item>Wind speed</item>
-        <item>Wind direction</item>
-        <item>Air pressure</item>
-        <item>Dew point</item>
-    </string-array>
-
-    <string-array name="map_type_values" translatable="false">
-        <item>radar</item>
-        <item>temperature</item>
-        <item>relativehumidity</item>
-        <item>wind</item>
-        <item>windspeed</item>
-        <item>winddirection</item>
-        <item>pressure</item>
-        <item>dewpoint</item>
-    </string-array>
-
     <string-array name="map_time_step_options">
         <item>5 min</item>
         <item>15 min</item>

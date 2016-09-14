@@ -50,9 +50,6 @@
     <string name="preference_category_user_location">Oma sijaintisi kartalla</string>
     <string name="preference_category_municipality_location">Kunnat kartalla</string>
 
-    <string name="preference_map_type_title">Karttatyyppi</string>
-    <string name="preference_map_type_summary">Näytettävä karttatyyppi</string>
-
     <string name="preference_time_step_title">Aikaväli</string>
     <string name="preference_time_step_summary">Karttakuvien aikaväli</string>
 
@@ -119,7 +116,7 @@
     <string name="error_msg_parsing_page_changed">HTML-sivun lukeminen epäonnistui. Sivun rakenne on muuttunut. Raportoithan tämän virheen ohjelman kehittäjälle.</string>
 
     <string name="map_type_radar">Sadetutka &amp; lämpötila</string>
-    <string name="map_type_temperature">Lämpötila</string>>
+    <string name="map_type_temperature">Lämpötila</string>
     <string name="map_type_relativehumidity">Kosteus</string>
     <string name="map_type_wind">Tuulen nopeus &amp; suunta</string>
     <string name="map_type_windspeed">Tuulen nopeus</string>

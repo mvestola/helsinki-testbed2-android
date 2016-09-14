@@ -52,9 +52,6 @@
     <string name="preference_category_user_location">User\'s current location</string>
     <string name="preference_category_municipality_location">Municipalities on map</string>
 
-    <string name="preference_map_type_title">Map type</string>
-    <string name="preference_map_type_summary">Which type of weather map to show</string>
-
     <string name="preference_time_step_title">Time-step</string>
     <string name="preference_time_step_summary">Time-step between map images</string>
 
