@@ -3,11 +3,8 @@ package fi.testbed2.android.activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.view.MenuItem;
-import android.widget.ImageButton;
-import fi.testbed2.AbstractTestCase;
-import fi.testbed2.BuildConfig;
-import fi.testbed2.InjectedTestRunner;
-import fi.testbed2.R;
+import android.widget.Button;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,11 +13,18 @@ import org.robolectric.annotation.Config;
 import org.robolectric.fakes.RoboMenuItem;
 import org.robolectric.shadows.ShadowActivity;
 import org.robolectric.shadows.ShadowAlertDialog;
-import org.robolectric.shadows.ShadowIntent;
 
-import static org.robolectric.Shadows.shadowOf;
+import fi.testbed2.AbstractTestCase;
+import fi.testbed2.BuildConfig;
+import fi.testbed2.InjectedTestRunner;
+import fi.testbed2.R;
+
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.robolectric.Shadows.shadowOf;
 
 @RunWith(InjectedTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = AbstractTestCase.ROBOLECTRIC_API_LEVEL)
@@ -28,12 +32,12 @@ public class MainActivityTest extends AbstractTestCase {
 
     private MainActivity_ activity;
 
-    private ImageButton refreshButton;
+    private Button refreshButton;
 
     @Before
     public void setUp() throws Exception {
         activity = Robolectric.setupActivity(MainActivity_.class);
-        refreshButton = (ImageButton) activity.findViewById(R.id.button_refresh);
+        refreshButton = (Button) activity.findViewById(R.id.button_rain_temperature);
     }
 
     @Test
