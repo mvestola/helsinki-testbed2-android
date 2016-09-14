@@ -41,6 +41,18 @@ public class SharedPreferenceSettingsService implements SettingsService {
         Logger.debug("SharedPreferenceSettingsService instantiated");
     }
 
+    @Override
+    public void setMapType(String mapType) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(SettingsService.PREF_MAP_TYPE, mapType);
+        editor.apply();
+    }
+
+    @Override
+    public String getMapType() {
+        return sharedPreferences.getString(SettingsService.PREF_MAP_TYPE, "radar");
+    }
+
     /**
      * Saves the bounds of the map user has previously viewed to persistent storage.
      */

@@ -195,6 +195,7 @@ public class AnimationActivity extends AbstractActivity {
     }
 
     private void updateSettingsToView() {
+        setTitle(this.getResources().getIdentifier("map_type_"+settingsService.getMapType(), "string", this.getPackageName()));
         animationView.setScaleInfo(settingsService.getSavedScaleInfo(orientation));
         animationView.updateBounds(settingsService.getSavedMapBounds(orientation));
         animationView.setMunicipalities(settingsService.getSavedMunicipalities());

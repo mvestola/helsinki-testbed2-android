@@ -1,18 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
+
     <include layout="@layout/toolbar_and_ad" />
-    <ImageButton
-            android:id="@+id/button_refresh"
-            android:contentDescription="@string/button_content_description_refresh"
-            android:layout_width="250dip"
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/button_rain_temperature"
+            android:text="Rain &amp; Temperature"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_centerInParent="true"
-            android:layout_centerHorizontal="true"
-            android:src="@drawable/ic_refresh"
-            />
-</RelativeLayout>
+            android:layout_marginTop="10dp"
+            android:textAllCaps="false"
+            android:drawableLeft="@android:drawable/ic_media_play"
+            android:textSize="20sp"/>
+
+        <Button
+            android:id="@+id/button_humidity"
+            android:text="Humidity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textAllCaps="false"
+            android:drawableLeft="@android:drawable/ic_media_play"
+            android:textSize="20sp"/>
+
+        <Button
+            android:id="@+id/button_wind"
+            android:text="Wind"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textAllCaps="false"
+            android:drawableLeft="@android:drawable/ic_media_play"
+            android:textSize="20sp"/>
+
+        <Button
+            android:id="@+id/button_air_pressure"
+            android:text="Air pressure"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textAllCaps="false"
+            android:drawableLeft="@android:drawable/ic_media_play"
+            android:textSize="20sp"/>
+
+        <Button
+            android:id="@+id/button_dew_point"
+            android:text="Dew point"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textAllCaps="false"
+            android:drawableLeft="@android:drawable/ic_media_play"
+            android:textSize="20sp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

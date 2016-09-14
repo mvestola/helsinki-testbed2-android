@@ -10,19 +10,16 @@
     <item
             android:id="@+id/main_menu_preferences"
             android:title="@string/main_menu_preferences"
-            app:showAsAction="ifRoom"
             android:icon="@drawable/ic_menu_preferences">
     </item>
     <item
         android:id="@+id/main_menu_reset_zoom"
         android:title="@string/main_menu_reset_zoom"
-        app:showAsAction="ifRoom"
         android:icon="@drawable/ic_menu_reset_zoom">
     </item>
     <item
             android:id="@+id/main_menu_about"
             android:title="@string/main_menu_about"
-            app:showAsAction="ifRoom"
             android:icon="@drawable/ic_menu_info_details">
     </item>
 </menu>

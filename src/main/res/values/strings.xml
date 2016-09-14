@@ -122,6 +122,15 @@
     <string name="error_msg_parsing_page">Could not read HTML page.</string>
     <string name="error_msg_parsing_page_changed">Could not parse HTML page. Webpage has changed its syntax. please report this error.</string>
 
+    <string name="map_type_radar">Rain &amp; temperature</string>
+    <string name="map_type_temperature">Temperature</string>
+    <string name="map_type_relativehumidity">Humidity</string>
+    <string name="map_type_wind">Wind</string>
+    <string name="map_type_windspeed">Wind speed</string>
+    <string name="map_type_winddirection">Wind direction</string>
+    <string name="map_type_pressure">Air pressure</string>
+    <string name="map_type_dewpoint">Dew point</string>
+
     <!-- Color Picker dialog -->
     <string name="dialog_color_picker">Pick a color</string>
 

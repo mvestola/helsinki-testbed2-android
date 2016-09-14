@@ -118,6 +118,15 @@
     <string name="error_msg_parsing_page">HTML-sivun lukeminen epäonnistui.</string>
     <string name="error_msg_parsing_page_changed">HTML-sivun lukeminen epäonnistui. Sivun rakenne on muuttunut. Raportoithan tämän virheen ohjelman kehittäjälle.</string>
 
+    <string name="map_type_radar">Sadetutka &amp; lämpötila</string>
+    <string name="map_type_temperature">Lämpötila</string>>
+    <string name="map_type_relativehumidity">Kosteus</string>
+    <string name="map_type_wind">Tuulen nopeus &amp; suunta</string>
+    <string name="map_type_windspeed">Tuulen nopeus</string>
+    <string name="map_type_winddirection">Tuulen suunta</string>
+    <string name="map_type_pressure">Ilmanpaine</string>
+    <string name="map_type_dewpoint">Kastepiste</string>
+
     <!-- Color Picker dialog -->
     <string name="dialog_color_picker">Valitse väri</string>
 
