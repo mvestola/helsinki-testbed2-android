@@ -118,7 +118,7 @@
     <string name="map_type_radar">Sadetutka &amp; lämpötila</string>
     <string name="map_type_temperature">Lämpötila</string>
     <string name="map_type_relativehumidity">Kosteus</string>
-    <string name="map_type_wind">Tuulen nopeus &amp; suunta</string>
+    <string name="map_type_wind">Tuuli</string>
     <string name="map_type_windspeed">Tuulen nopeus</string>
     <string name="map_type_winddirection">Tuulen suunta</string>
     <string name="map_type_pressure">Ilmanpaine</string>

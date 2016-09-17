@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 
 import com.google.inject.Inject;
 
@@ -29,19 +27,19 @@ public class MainActivity extends AbstractActivity {
     public static final int PARSING_SUB_ACTIVITY = 1;
 
     @ViewById(R.id.button_rain_temperature)
-    Button buttonRainTemperature;
+    View buttonRainTemperature;
 
     @ViewById(R.id.button_wind)
-    Button buttonWind;
+    View buttonWind;
 
     @ViewById(R.id.button_humidity)
-    Button buttonHumidity;
+    View buttonHumidity;
 
     @ViewById(R.id.button_air_pressure)
-    Button buttonAirPressure;
+    View buttonAirPressure;
 
     @ViewById(R.id.button_dew_point)
-    Button buttonDewPoint;
+    View buttonDewPoint;
 
     @Inject
     SettingsService settingsService;

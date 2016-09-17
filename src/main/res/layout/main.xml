@@ -1,68 +1,193 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical">
 
     <include layout="@layout/toolbar_and_ad" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:orientation="vertical">
+    <com.google.android.flexbox.FlexboxLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:background="#32B6E6"
+        app:alignItems="center"
+        app:alignContent="center"
+        app:flexDirection="row"
+        app:justifyContent="center"
+        app:flexWrap="wrap">
 
-        <Button
+        <TextView
+            android:text="Valitse karttatyyppi"
+            android:textColor="#FFFFFF"
+            android:textAppearance="?android:attr/textAppearanceButton"
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:padding="20dp"
+            android:layout_height="wrap_content"></TextView>
+
+
+        <LinearLayout
             android:id="@+id/button_rain_temperature"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:drawableLeft="@android:drawable/ic_media_play"
-            android:text="@string/map_type_radar"
-            android:textAllCaps="false"
-            android:textSize="20sp" />
+            android:background="@android:drawable/btn_default"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_margin="1dp"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:minWidth="100dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-        <Button
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_alignParentTop="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <com.github.pwittchen.weathericonview.WeatherIconView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                custom:weatherIconResource="@string/wi_day_rain"
+                custom:weatherIconColor="#8b8b8b"
+                custom:weatherIconSize="35" />
+
+            <com.github.pwittchen.weathericonview.WeatherIconView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                custom:weatherIconResource="@string/wi_thermometer"
+                custom:weatherIconColor="#8b8b8b"
+                custom:weatherIconSize="35" />
+
+            </LinearLayout>
+
+            <TextView
+                android:text="@string/map_type_radar"
+                android:textColor="#8b8b8b"
+                android:textAppearance="?android:attr/textAppearanceButton"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></TextView>
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/button_wind"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:drawableLeft="@android:drawable/ic_media_play"
-            android:text="@string/map_type_wind"
-            android:textAllCaps="false"
-            android:textSize="20sp" />
+            android:clickable="true"
+            android:background="@android:drawable/btn_default"
+            android:layout_margin="1dp"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:minWidth="100dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-        <Button
+            <com.github.pwittchen.weathericonview.WeatherIconView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                custom:weatherIconResource="@string/wi_strong_wind"
+                custom:weatherIconColor="#8b8b8b"
+                custom:weatherIconSize="35" />
+
+            <TextView
+                android:text="@string/map_type_wind"
+                android:textColor="#8b8b8b"
+                android:textAppearance="?android:attr/textAppearanceButton"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></TextView>
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/button_humidity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:drawableLeft="@android:drawable/ic_media_play"
-            android:text="@string/map_type_relativehumidity"
-            android:textAllCaps="false"
-            android:textSize="20sp" />
+            android:clickable="true"
+            android:background="@android:drawable/btn_default"
+            android:layout_margin="1dp"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:minWidth="100dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-        <Button
+            <com.github.pwittchen.weathericonview.WeatherIconView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                custom:weatherIconResource="@string/wi_humidity"
+                custom:weatherIconColor="#8b8b8b"
+                custom:weatherIconSize="35" />
+
+            <TextView
+                android:text="@string/map_type_relativehumidity"
+                android:textColor="#8b8b8b"
+                android:textAppearance="?android:attr/textAppearanceButton"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></TextView>
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/button_air_pressure"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:drawableLeft="@android:drawable/ic_media_play"
-            android:text="@string/map_type_pressure"
-            android:textAllCaps="false"
-            android:textSize="20sp" />
+            android:clickable="true"
+            android:background="@android:drawable/btn_default"
+            android:layout_margin="1dp"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:minWidth="100dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-        <Button
+            <com.github.pwittchen.weathericonview.WeatherIconView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                custom:weatherIconResource="@string/wi_barometer"
+                custom:weatherIconColor="#8b8b8b"
+                custom:weatherIconSize="35" />
+
+            <TextView
+                android:text="@string/map_type_pressure"
+                android:textColor="#8b8b8b"
+                android:textAppearance="?android:attr/textAppearanceButton"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></TextView>
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/button_dew_point"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:drawableLeft="@android:drawable/ic_media_play"
-            android:text="@string/map_type_dewpoint"
-            android:textAllCaps="false"
-            android:textSize="20sp" />
+            android:clickable="true"
+            android:background="@android:drawable/btn_default"
+            android:layout_margin="1dp"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:minWidth="100dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-    </LinearLayout>
+            <com.github.pwittchen.weathericonview.WeatherIconView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                custom:weatherIconResource="@string/wi_raindrop"
+                custom:weatherIconColor="#8b8b8b"
+                custom:weatherIconSize="35" />
+
+            <TextView
+                android:text="@string/map_type_dewpoint"
+                android:textColor="#8b8b8b"
+                android:textAppearance="?android:attr/textAppearanceButton"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></TextView>
+        </LinearLayout>
+
+    </com.google.android.flexbox.FlexboxLayout>
 
 </LinearLayout>

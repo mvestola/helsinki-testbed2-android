@@ -16,6 +16,7 @@ repositories {
         url "https://raw.github.com/mvestola/helsinki-testbed2-android-repo/master/repo"
     }
     mavenCentral()
+    jcenter()
     mavenLocal()
 }
 
@@ -83,4 +84,6 @@ dependencies {
     compile 'com.google.android.gms:play-services-ads:9.4.0'
     compile 'com.jhlabs:javaproj-noawt:1.0.6'
     compile 'org.roboguice:roboguice:3.0.1'
+    compile 'com.github.pwittchen:weathericonview:1.1.0'
+    compile 'com.google.android:flexbox:0.2.3'
 }
