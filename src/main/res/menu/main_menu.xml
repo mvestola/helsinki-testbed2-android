@@ -2,19 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-            android:id="@+id/main_menu_refresh"
-            android:title="@string/main_menu_refresh"
-            app:showAsAction="ifRoom"
-            android:icon="@drawable/ic_menu_refresh">
-    </item>
+        android:id="@+id/main_menu_preferences"
+        android:icon="@drawable/ic_menu_preferences"
+        android:title="@string/main_menu_preferences"
+        app:showAsAction="ifRoom"></item>
     <item
-            android:id="@+id/main_menu_preferences"
-            android:title="@string/main_menu_preferences"
-            android:icon="@drawable/ic_menu_preferences">
-    </item>
-    <item
-            android:id="@+id/main_menu_about"
-            android:title="@string/main_menu_about"
-            android:icon="@drawable/ic_menu_info_details">
-    </item>
+        android:id="@+id/main_menu_about"
+        android:icon="@drawable/ic_menu_info_details"
+        android:title="@string/main_menu_about"
+        app:showAsAction="ifRoom"></item>
 </menu>

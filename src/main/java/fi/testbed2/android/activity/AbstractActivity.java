@@ -79,7 +79,7 @@ public abstract class AbstractActivity extends AppCompatActivity {
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
-        getSupportActionBar().setLogo(R.drawable.ic_launcher_drop);
+        getSupportActionBar().setLogo(R.drawable.toolbar_logo);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 

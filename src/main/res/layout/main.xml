@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:background="#71acd6"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical">
@@ -13,7 +14,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="10dp"
-        android:background="#32B6E6"
         app:alignItems="center"
         app:alignContent="center"
         app:flexDirection="row"
@@ -21,7 +21,7 @@
         app:flexWrap="wrap">
 
         <TextView
-            android:text="Valitse karttatyyppi"
+            android:text="@string/choose_map_type"
             android:textColor="#FFFFFF"
             android:textAppearance="?android:attr/textAppearanceButton"
             android:layout_centerVertical="true"

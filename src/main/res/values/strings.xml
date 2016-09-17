@@ -134,4 +134,6 @@
     <string name="button_content_description_refresh">Refresh</string>
     <string name="button_content_description_playpause">Play/Pause</string>
 
+    <string name="choose_map_type">Choose map type</string>
+
 </resources>

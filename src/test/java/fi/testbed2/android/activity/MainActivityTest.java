@@ -3,7 +3,7 @@ package fi.testbed2.android.activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.view.MenuItem;
-import android.widget.Button;
+import android.view.View;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -32,12 +32,12 @@ public class MainActivityTest extends AbstractTestCase {
 
     private MainActivity_ activity;
 
-    private Button refreshButton;
+    private View rainAndTemperatureButton;
 
     @Before
     public void setUp() throws Exception {
         activity = Robolectric.setupActivity(MainActivity_.class);
-        refreshButton = (Button) activity.findViewById(R.id.button_rain_temperature);
+        rainAndTemperatureButton = activity.findViewById(R.id.button_rain_temperature);
     }
 
     @Test
@@ -49,7 +49,7 @@ public class MainActivityTest extends AbstractTestCase {
     @Test
     public void shouldOpenParsingActivityWhenLargeRefreshButtonSelected() {
 
-        refreshButton.performClick();
+        rainAndTemperatureButton.performClick();
 
         Intent expectedIntent = new Intent(activity, ParsingActivity_.class);
         ShadowActivity shadowActivity = shadowOf(activity);

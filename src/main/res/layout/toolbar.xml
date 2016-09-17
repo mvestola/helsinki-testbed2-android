@@ -5,11 +5,11 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:background="?attr/colorPrimary"
+    android:background="#324c5f"
     android:elevation="4dp"
     android:contentInsetLeft="0dp"
     android:contentInsetStart="5dp"
     app:contentInsetLeft="0dp"
     app:contentInsetStart="5dp"
-    app:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />

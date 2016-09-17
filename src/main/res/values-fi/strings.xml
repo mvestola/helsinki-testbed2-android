@@ -130,5 +130,7 @@
     <string name="button_content_description_refresh">Päivitä</string>
     <string name="button_content_description_playpause">Toista/Pysäytä</string>
 
+    <string name="choose_map_type">Valitse karttatyyppi</string>
+
 </resources>
 
