@@ -11,8 +11,9 @@ You need to have the following software installed:
 * Gradle
 * Android SDK (API level 23)
 * Git
+* Android Studio
 
-Preferred IDE is Android Studio and preferred operating system is Ubuntu/Kubuntu.
+Preferred operating system is Ubuntu/Kubuntu.
 
 
 Android frameworks used
@@ -26,6 +27,7 @@ The following Android frameworks / libraries are used in this application:
 * [AndroidAnnotations](http://androidannotations.org/) (simplify Android development with annotations)
 * [Project Lombok](http://projectlombok.org/features/index.html) (simplify Java development with annotations generating e.g. getters and setters)
 * [WeatherIconView](https://github.com/pwittchen/WeatherIconView) (show weather icons using a font)
+* [FlexboxLayout](https://github.com/google/flexbox-layout) (flexible CSS style flexbox layout for Android)
 
 Some instructions for using RoboGuice:
 * https://github.com/robolectric/robolectric/wiki
@@ -35,17 +37,9 @@ Some instructions for using RoboGuice:
 Project installation and configuration
 -------
 
-TODO: fix this instructions
-
 1. Checkout the sources from GitHub:
 `git clone git@github.com:mvestola/helsinki-testbed2-android.git`
-2. To the root directory (where the pom.xml is), add file local.properties
-and specify where you have installed your Android SDK to "sdk.dir" property
-(see file src/main/config/default.properties for example).
-This file is required by the Robolectric framework.
-3. Also add local.properties file to src/main/config/local.properties. Just make a copy of
-the file default.properties and change the field to match your configuration.
-3. Build the project with maven: `mvn clean install`
+2. Open the project with Android Studio and run gradle command `build` to build the project. 
 
 You should also set the Android SDK to environmental variable "ANDROID_HOME"
 
@@ -101,12 +95,10 @@ from the Emulator's "Custom locale")
 Checklist for publishing a new release
 -------
 
-TODO: fix this
-
 1. Change the version code and version name from `build.gradle`
 2. Update `CHANGELOG.md`
 3. Update `whats_new_text` from `res/values/strings.xml` (both English and Finnish)
-4. Sign the app by running `mvn clean install` using the release profile
+4. Create a signed apk package by running `Build...Build APK` from the Android studio using the build variant `release` (bottom left corner in Android Studio)
 5. Tag the code: `git tag -a 2.0.x -m 'Tagged 2.0.x'; git push --tags`
-6. Upload the file `target/testbedViewer-aligned.apk` to [Google Play](https://play.google.com/apps/publish/v2) and activate it
+6. Upload the file `build/outputs/apk/testbed-release.apk` to [Google Play](https://play.google.com/apps/publish/) and activate it
 7. Update "Recent Changes" in Google Play (both English and Finnish)

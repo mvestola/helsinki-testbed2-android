@@ -16,11 +16,8 @@ Location data (user and municipalities) DOES NOT come from the Helsinki Testbed 
 
 The application supports displaying the following weather maps:
  * Rain & temperature
- * Temperature
+ * Wind speed & direction
  * Humidity
- * Wind
- * Wind speed
- * Wind direction
  * Air pressure
  * Dew point
 
@@ -37,7 +34,7 @@ from [the application website in Google Play]
 Previous versions and original author
 -------
 
-Helsinki Testbed Viewer 2.0 is based on the GPL licensed sources from the
+Helsinki Testbed Viewer 2.0 is originally based on the GPL licensed sources from the
 [Helsinki Testbed Weather View](https://play.google.com/store/apps/details?id=fi.asd.testbed)
 android application __originally developed by Petri Laakso (petri+testbed@asd.fi)__.
 The original version is currently not working anymore. Therefore, this project was created to continue the work.

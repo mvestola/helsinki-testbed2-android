@@ -24,7 +24,6 @@
             android:text="@string/choose_map_type"
             android:textColor="#FFFFFF"
             android:textAppearance="?android:attr/textAppearanceButton"
-            android:layout_centerVertical="true"
             android:layout_width="match_parent"
             android:gravity="center"
             android:padding="20dp"
@@ -46,7 +45,6 @@
 
         <LinearLayout
             android:orientation="horizontal"
-            android:layout_alignParentTop="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
@@ -71,7 +69,6 @@
                 android:text="@string/map_type_radar"
                 android:textColor="#8b8b8b"
                 android:textAppearance="?android:attr/textAppearanceButton"
-                android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"></TextView>
         </LinearLayout>
@@ -90,7 +87,6 @@
             <com.github.pwittchen.weathericonview.WeatherIconView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
                 custom:weatherIconResource="@string/wi_strong_wind"
                 custom:weatherIconColor="#8b8b8b"
                 custom:weatherIconSize="35" />
@@ -99,7 +95,6 @@
                 android:text="@string/map_type_wind"
                 android:textColor="#8b8b8b"
                 android:textAppearance="?android:attr/textAppearanceButton"
-                android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"></TextView>
         </LinearLayout>
@@ -118,7 +113,6 @@
             <com.github.pwittchen.weathericonview.WeatherIconView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
                 custom:weatherIconResource="@string/wi_humidity"
                 custom:weatherIconColor="#8b8b8b"
                 custom:weatherIconSize="35" />
@@ -127,7 +121,6 @@
                 android:text="@string/map_type_relativehumidity"
                 android:textColor="#8b8b8b"
                 android:textAppearance="?android:attr/textAppearanceButton"
-                android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"></TextView>
         </LinearLayout>
@@ -146,7 +139,6 @@
             <com.github.pwittchen.weathericonview.WeatherIconView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
                 custom:weatherIconResource="@string/wi_barometer"
                 custom:weatherIconColor="#8b8b8b"
                 custom:weatherIconSize="35" />
@@ -155,7 +147,6 @@
                 android:text="@string/map_type_pressure"
                 android:textColor="#8b8b8b"
                 android:textAppearance="?android:attr/textAppearanceButton"
-                android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"></TextView>
         </LinearLayout>
@@ -174,7 +165,6 @@
             <com.github.pwittchen.weathericonview.WeatherIconView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
                 custom:weatherIconResource="@string/wi_raindrop"
                 custom:weatherIconColor="#8b8b8b"
                 custom:weatherIconSize="35" />
@@ -183,7 +173,6 @@
                 android:text="@string/map_type_dewpoint"
                 android:textColor="#8b8b8b"
                 android:textAppearance="?android:attr/textAppearanceButton"
-                android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"></TextView>
         </LinearLayout>

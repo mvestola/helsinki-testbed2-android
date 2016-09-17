@@ -7,13 +7,12 @@
     <string name="main_menu_preferences">Asetukset</string>
     <string name="main_menu_about">Tietoja</string>
 
-    <string name="about_text"><b>Tällä ohjelmalla EI OLE MITÄÄN TEKEMISTÄ
-        Helsinki Testbed -projektin kanssa!\n\n</b>Kaikki karttakuvat
-        ladataan Helsinki Testbedin verkkosivuilta,
-        joiden tekijänoikeus kuuluu Helsinki Testbed -projektille.
-        Käyttäjän ja kuntien sijaintidata EI TULE Helsinki Testbed projektista.
-        Lisätietoa Helsinki Testbed -projektista:
-        testbed.fmi.fi.</string>
+    <string name="about_text">Helsinki Testbed Viewer 2.0
+        on ohjelma joka näyttää karttakuvia Ilmatieteen
+        laitoksen testbed.fmi.fi -sivustolta.\n\n
+        Ohjelma on yksityinen projekti, ei siis Ilmatieteen laitoksen
+        kehittämä. Kaikki karttakuvat ladataan Helsinki Testbedin verkkosivuilta,
+        joiden tekijänoikeus kuuluu Helsinki Testbed -projektille.</string>
     <string name="extra_license_text"></string>
 
     <string name="about_visit_website">Ohjelman kotisivulle</string>
@@ -116,18 +115,14 @@
     <string name="error_msg_parsing_page_changed">HTML-sivun lukeminen epäonnistui. Sivun rakenne on muuttunut. Raportoithan tämän virheen ohjelman kehittäjälle.</string>
 
     <string name="map_type_radar">Sadetutka &amp; lämpötila</string>
-    <string name="map_type_temperature">Lämpötila</string>
     <string name="map_type_relativehumidity">Kosteus</string>
     <string name="map_type_wind">Tuuli</string>
-    <string name="map_type_windspeed">Tuulen nopeus</string>
-    <string name="map_type_winddirection">Tuulen suunta</string>
     <string name="map_type_pressure">Ilmanpaine</string>
     <string name="map_type_dewpoint">Kastepiste</string>
 
     <!-- Color Picker dialog -->
     <string name="dialog_color_picker">Valitse väri</string>
 
-    <string name="button_content_description_refresh">Päivitä</string>
     <string name="button_content_description_playpause">Toista/Pysäytä</string>
 
     <string name="choose_map_type">Valitse karttatyyppi</string>

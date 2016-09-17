@@ -11,11 +11,10 @@
     <string name="main_menu_about">About</string>
 
     <string name="about_title" translatable="false">Helsinki Testbed Viewer %1$s</string>
-    <string name="about_text"><b>This application HAS NOTHING TO DO with the
-        Helsinki Testbed project!\n\n</b>All map images are downloaded from the
-        Helsinki Testbed website which is copyrighted by the Helsinki Testbed project.
-        Location data (user and municipalities) DOES NOT come from the Helsinki Testbed Project.
-        More about the Helsinki Testbed project: testbed.fmi.fi.</string>
+    <string name="about_text">Helsinki Testbed Viewer 2.0 is an application which shows weather maps
+        from the Finnish Meteorological Institute (FMI) website <b>testbed.fmi.fi</b>. \n\n
+        This application is a private project and not developed by the FMI.
+        All map images are downloaded from the Helsinki Testbed website which is copyrighted by the Helsinki Testbed project.</string>
     <string name="extra_license_text"></string>
 
     <string name="about_visit_website">Application website</string>
@@ -120,18 +119,14 @@
     <string name="error_msg_parsing_page_changed">Could not parse HTML page. Webpage has changed its syntax. please report this error.</string>
 
     <string name="map_type_radar">Rain &amp; temperature</string>
-    <string name="map_type_temperature">Temperature</string>
     <string name="map_type_relativehumidity">Humidity</string>
     <string name="map_type_wind">Wind</string>
-    <string name="map_type_windspeed">Wind speed</string>
-    <string name="map_type_winddirection">Wind direction</string>
     <string name="map_type_pressure">Air pressure</string>
     <string name="map_type_dewpoint">Dew point</string>
 
     <!-- Color Picker dialog -->
     <string name="dialog_color_picker">Pick a color</string>
 
-    <string name="button_content_description_refresh">Refresh</string>
     <string name="button_content_description_playpause">Play/Pause</string>
 
     <string name="choose_map_type">Choose map type</string>
