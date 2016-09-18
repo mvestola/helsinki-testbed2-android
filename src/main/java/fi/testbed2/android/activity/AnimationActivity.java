@@ -8,8 +8,23 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
 import com.google.inject.Inject;
-import com.googlecode.androidannotations.annotations.*;
+
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.OptionsItem;
+import org.androidannotations.annotations.OptionsMenu;
+import org.androidannotations.annotations.SeekBarProgressChange;
+import org.androidannotations.annotations.SeekBarTouchStart;
+import org.androidannotations.annotations.SeekBarTouchStop;
+import org.androidannotations.annotations.UiThread;
+import org.androidannotations.annotations.ViewById;
+import org.androidannotations.roboguice.annotations.RoboGuice;
+
+import java.lang.reflect.Method;
+
 import fi.testbed2.R;
 import fi.testbed2.android.app.Logger;
 import fi.testbed2.android.app.MainApplication;
@@ -21,8 +36,6 @@ import fi.testbed2.service.BitmapService;
 import fi.testbed2.service.LocationService;
 import fi.testbed2.service.PageService;
 import fi.testbed2.util.SeekBarUtil;
-
-import java.lang.reflect.Method;
 
 /**
  * Activity handling the main map animation view.
@@ -112,6 +125,7 @@ public class AnimationActivity extends AbstractActivity {
 
     @Override
     public void onRefreshFromMenuSelected() {
+        adManager.showInterstitialAdIfLoaded();
         pauseAnimation();
         allImagesDownloaded = false;
         Intent intent = new Intent();
@@ -126,6 +140,8 @@ public class AnimationActivity extends AbstractActivity {
         orientation = newConfig.orientation;
         updateSettingsToView();
     }
+
+
 
     /**
      * Updates the Downloading text in top left corner
@@ -182,6 +198,7 @@ public class AnimationActivity extends AbstractActivity {
     }
 
     private void updateSettingsToView() {
+        setTitle(this.getResources().getIdentifier("map_type_"+settingsService.getMapType(), "string", this.getPackageName()));
         animationView.setScaleInfo(settingsService.getSavedScaleInfo(orientation));
         animationView.updateBounds(settingsService.getSavedMapBounds(orientation));
         animationView.setMunicipalities(settingsService.getSavedMunicipalities());

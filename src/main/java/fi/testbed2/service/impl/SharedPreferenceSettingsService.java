@@ -41,6 +41,18 @@ public class SharedPreferenceSettingsService implements SettingsService {
         Logger.debug("SharedPreferenceSettingsService instantiated");
     }
 
+    @Override
+    public void setMapType(String mapType) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(SettingsService.PREF_MAP_TYPE, mapType);
+        editor.apply();
+    }
+
+    @Override
+    public String getMapType() {
+        return sharedPreferences.getString(SettingsService.PREF_MAP_TYPE, "radar");
+    }
+
     /**
      * Saves the bounds of the map user has previously viewed to persistent storage.
      */
@@ -58,7 +70,7 @@ public class SharedPreferenceSettingsService implements SettingsService {
             editor.putFloat(getMapScalePreferenceKey(orientation), scaleInfo.getScaleFactor());
             editor.putFloat(getMapScalePivotXPreferenceKey(orientation), scaleInfo.getPivotX());
             editor.putFloat(getMapScalePivotYPreferenceKey(orientation), scaleInfo.getPivotY());
-            editor.commit();
+            editor.apply();
         }
 
     }
@@ -122,7 +134,7 @@ public class SharedPreferenceSettingsService implements SettingsService {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(SettingsService.PREF_WHATS_NEW_DIALOG_SHOWN_FOR_VERSION,
                 MainApplication.getVersionName());
-        editor.commit();
+        editor.apply();
     }
 
     @Override
@@ -130,7 +142,7 @@ public class SharedPreferenceSettingsService implements SettingsService {
         Logger.debug("Saving hardware acceleration dialog is shown");
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(SettingsService.PREF_HW_ACCEL_DIALOG_SHOWN, true);
-        editor.commit();
+        editor.apply();
     }
 
     @Override
@@ -225,7 +237,7 @@ public class SharedPreferenceSettingsService implements SettingsService {
     public void setLocationProvider(String provider) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(SettingsService.PREF_LOCATION_PROVIDER, provider);
-        editor.commit();
+        editor.apply();
     }
 
     public MapLocationGPS getSavedFixedLocation() {
@@ -256,7 +268,7 @@ public class SharedPreferenceSettingsService implements SettingsService {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString(SettingsService.PREF_LOCATION_FIXED_LAT,""+lastKnownLocation.getLatitude());
             editor.putString(SettingsService.PREF_LOCATION_FIXED_LON,""+lastKnownLocation.getLongitude());
-            editor.commit();
+            editor.apply();
         }
 
         return lastKnownLocation;

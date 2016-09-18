@@ -41,6 +41,9 @@ public interface SettingsService {
     public static final String PREF_SHOW_ADS = "PREF_SHOW_ADS";
 
 
+    public void setMapType(String mapType);
+    public String getMapType();
+
     /**
      * Saves the bounds of the map user has previously viewed to persistent storage.
      */

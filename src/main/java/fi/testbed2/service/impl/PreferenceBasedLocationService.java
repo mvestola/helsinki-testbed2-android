@@ -6,7 +6,8 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import fi.testbed2.Environment;
+
+import fi.testbed2.BuildConfig;
 import fi.testbed2.android.app.Logger;
 import fi.testbed2.domain.MapLocationGPS;
 import fi.testbed2.domain.MapLocationXY;
@@ -51,7 +52,7 @@ public class PreferenceBasedLocationService implements LocationService, Location
             return null;
         }
 
-        if (Environment.TEST_ENVIRONMENT && !getProvider().equals(LOCATION_PROVIDER_FIXED)) {
+        if (isTestEnvironment() && !getProvider().equals(LOCATION_PROVIDER_FIXED)) {
             return municipalityService.getMunicipality("Helsinki").getXyPos();
         } else {
             return userLocationXY;
@@ -65,7 +66,7 @@ public class PreferenceBasedLocationService implements LocationService, Location
             return null;
         }
 
-        if (Environment.TEST_ENVIRONMENT) {
+        if (isTestEnvironment()) {
             return municipalityService.getMunicipality("Kouvola").getGpsPos();
         } else {
             return userLocation;
@@ -85,7 +86,14 @@ public class PreferenceBasedLocationService implements LocationService, Location
             return;
         }
 
-        Location lastKnownLocation = locationManager.getLastKnownLocation(provider);
+        Location lastKnownLocation = null;
+
+        try {
+            lastKnownLocation = locationManager.getLastKnownLocation(provider);
+        } catch (SecurityException e) {
+            Logger.debug("Permission not granted for last known location: " + e.getMessage());
+        }
+
         if (lastKnownLocation!=null) {
             userLocation = new MapLocationGPS(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
             userLocationXY = coordinateService.convertLocationToXyPos(userLocation);
@@ -94,6 +102,8 @@ public class PreferenceBasedLocationService implements LocationService, Location
         try {
             locationManager.requestLocationUpdates(provider,
                     LOCATION_UPDATE_INTERVAL_MINUTES * 60 * 1000, LOCATION_UPDATE_ACCURACY_METERS, this);
+        } catch (SecurityException e) {
+            Logger.debug("Permission not granted for location updates: " + e.getMessage());
         } catch (Exception e) {
             /*
              * Might throw exception if location provider not found.
@@ -108,7 +118,11 @@ public class PreferenceBasedLocationService implements LocationService, Location
     @Override
     public void stopListeningLocationChanges() {
         Logger.debug("Stopped listening location changes");
-        locationManager.removeUpdates(this);
+        try {
+            locationManager.removeUpdates(this);
+        } catch (SecurityException e) {
+            return;
+        }
     }
 
     @Override
@@ -130,6 +144,10 @@ public class PreferenceBasedLocationService implements LocationService, Location
 
     private String getProvider() {
         return settingsService.getLocationProvider();
+    }
+
+    private boolean isTestEnvironment() {
+        return BuildConfig.ENVIRONMENT.equals("TEST");
     }
 
 }

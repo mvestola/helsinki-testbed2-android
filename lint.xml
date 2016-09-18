@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+
+    <!-- Won't support other locales than FI and US -->
+    <issue id="RtlHardcoded" severity="ignore" />
+    <issue id="RtlSymmetry" severity="ignore" />
+
+    <!-- Does not look nice if replaced with one symbol -->
+    <issue id="TypographyEllipsis" severity="ignore" />
+
+    <!-- Won't support better screens for now -->
+    <issue id="IconMissingDensityFolder" severity="ignore" />
+
+    <!-- Ignored due to android annotations -->
+    <issue id="Registered">
+        <ignore path="src/main/java/fi/testbed2/**/MainApplication.java" />
+        <ignore path="src/main/java/fi/testbed2/**/MainActivity.java" />
+        <ignore path="src/main/java/fi/testbed2/**/AnimationActivity.java" />
+        <ignore path="src/main/java/fi/testbed2/**/ParsingActivity.java" />
+    </issue>
+
+    <!-- External libraries, should work -->
+    <issue id="InvalidPackage">
+        <ignore path="**/javaproj-noawt-1.0.6.jar" />
+        <ignore path="**/roboguice-3.0.1.jar" />
+    </issue>
+    <issue id="ButtonOrder">
+        <ignore path="src/main/res/**/dialog_color_picker.xml" />
+    </issue>
+    <issue id="ObsoleteLayoutParam">
+        <ignore path="src/main/res/**/dialog_color_picker.xml" />
+    </issue>
+    <issue id="InflateParams">
+        <ignore path="**/net/margaritov/preference/colorpicker/ColorPickerDialog.java" />
+    </issue>
+    <issue id="ParcelClassLoader">
+        <ignore path="**/net/margaritov/preference/colorpicker/ColorPickerPreference.java" />
+    </issue>
+    <issue id="UseSparseArrays">
+        <ignore path="src/main/java/com/robobunny/SeekBarPreference.java" />
+    </issue>
+    <issue id="Orientation">
+        <ignore path="src/main/res/layout/seek_bar_preference.xml" />
+    </issue>
+    <issue id="Recycle">
+        <ignore path="**/com/threefiftynice/android/preference/ListPreferenceMultiSelect.java" />
+    </issue>
+
+    <!-- Should work without locale -->
+    <issue id="DefaultLocale">
+        <ignore path="src/main/java/fi/testbed2/**/AnimationView.java" />
+    </issue>
+    <issue id="SimpleDateFormat">
+        <ignore path="src/main/java/fi/testbed2/**/TimeUtil.java" />
+    </issue>
+
+    <!-- Not really an issue, non-translatable string -->
+    <issue id="HardcodedText">
+        <ignore path="src/main/res/**/dialog_color_picker.xml" />
+        <ignore path="src/main/res/**/animation.xml" />
+    </issue>
+
+    <!-- External lib and map only reacts to gestures -->
+    <issue id="ClickableViewAccessibility">
+        <ignore path="**/net/margaritov/preference/colorpicker/ColorPickerView.java" />
+        <ignore path="src/main/java/fi/testbed2/**/AnimationView.java" />
+    </issue>
+
+    <!-- Don't want that the text start spilling outside the container is user has large font size.  -->
+    <issue id="SpUsage">
+        <ignore path="src/main/res/**/animation.xml" />
+        <ignore path="src/main/res/**/seek_bar_preference.xml" />
+    </issue>
+
+    <!-- Won't fix AbsoluteLayout -->
+    <issue id="Deprecated">
+        <ignore path="src/main/res/**/animation.xml" />
+    </issue>
+
+</lint>

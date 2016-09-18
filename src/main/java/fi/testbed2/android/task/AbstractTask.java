@@ -12,9 +12,8 @@ import fi.testbed2.service.BitmapService;
 import fi.testbed2.service.PageService;
 import fi.testbed2.service.SettingsService;
 import lombok.Getter;
-import roboguice.activity.event.OnDestroyEvent;
+import roboguice.context.event.OnDestroyEvent;
 import roboguice.event.Observes;
-import roboguice.inject.InjectorProvider;
 import roboguice.util.RoboAsyncTask;
 
 public abstract class AbstractTask extends RoboAsyncTask<Void> implements Task {
@@ -32,14 +31,7 @@ public abstract class AbstractTask extends RoboAsyncTask<Void> implements Task {
     protected boolean cancelled;
 
     protected AbstractTask(Context context) {
-        super();
-
-        /**
-         * In RoboGuice 1.1, RoboAsyncTask does not do injection although it should,
-         * so do it manually. See more:
-         * http://code.google.com/p/roboguice/issues/detail?id=93
-         */
-        ((InjectorProvider)context).getInjector().injectMembers(this);
+        super(context);
     }
 
     /**

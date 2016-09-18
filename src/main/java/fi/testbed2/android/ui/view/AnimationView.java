@@ -12,9 +12,7 @@ import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import com.google.inject.Inject;
-import com.googlecode.androidannotations.annotations.AfterInject;
-import com.googlecode.androidannotations.annotations.Bean;
-import com.googlecode.androidannotations.annotations.EView;
+import org.androidannotations.annotations.*;
 import com.jhlabs.map.Point2D;
 import fi.testbed2.android.app.Logger;
 import fi.testbed2.android.app.MainApplication;
@@ -31,6 +29,7 @@ import fi.testbed2.service.SettingsService;
 import fi.testbed2.util.SeekBarUtil;
 import lombok.Getter;
 import lombok.Setter;
+import roboguice.RoboGuice;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -248,7 +247,7 @@ public class AnimationView extends View {
 
     @AfterInject
     void injectRoboGuiceDependencies() {
-        MainApplication.getApplication().getInjector().injectMembers(this);
+        RoboGuice.getInjector(MainApplication.getContext()).injectMembers(this);
     }
 
 }

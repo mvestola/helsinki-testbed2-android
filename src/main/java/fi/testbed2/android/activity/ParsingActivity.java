@@ -5,7 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import com.googlecode.androidannotations.annotations.*;
+
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.OptionsMenu;
+import org.androidannotations.annotations.UiThread;
+import org.androidannotations.annotations.ViewById;
+import org.androidannotations.roboguice.annotations.RoboGuice;
+
 import fi.testbed2.R;
 import fi.testbed2.android.app.MainApplication;
 import fi.testbed2.android.task.ParseAndInitTask;

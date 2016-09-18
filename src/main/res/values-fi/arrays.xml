@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="map_time_step_options">
+        <item>5 min</item>
+        <item>15 min</item>
+        <item>30 min</item>
+        <item>1 tunti</item>
+        <item>2 tuntia</item>
+        <item>3 tuntia</item>
+    </string-array>
+
+    <string-array name="location_provider_options">
+        <item>Verkkopohjainen (sijainti reaaliaikainen)</item>
+        <item>GPS (sijainti reaaliaikainen)</item>
+        <item>Kiinteä (jäädyttää nykyisen sijainnin)</item>
+    </string-array>
+
+</resources>

@@ -3,12 +3,21 @@ package fi.testbed2.android.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ImageButton;
-import com.googlecode.androidannotations.annotations.*;
+import android.view.View;
+
+import com.google.inject.Inject;
+
+import org.androidannotations.annotations.Click;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.OptionsMenu;
+import org.androidannotations.annotations.ViewById;
+import org.androidannotations.roboguice.annotations.RoboGuice;
+
 import fi.testbed2.R;
 import fi.testbed2.android.app.Logger;
 import fi.testbed2.android.app.MainApplication;
 import fi.testbed2.android.task.Task;
+import fi.testbed2.service.SettingsService;
 
 @EActivity(R.layout.main)
 @OptionsMenu(R.menu.main_menu)
@@ -17,8 +26,23 @@ public class MainActivity extends AbstractActivity {
 
     public static final int PARSING_SUB_ACTIVITY = 1;
 
-    @ViewById(R.id.button_refresh)
-    ImageButton refreshButton;
+    @ViewById(R.id.button_rain_temperature)
+    View buttonRainTemperature;
+
+    @ViewById(R.id.button_wind)
+    View buttonWind;
+
+    @ViewById(R.id.button_humidity)
+    View buttonHumidity;
+
+    @ViewById(R.id.button_air_pressure)
+    View buttonAirPressure;
+
+    @ViewById(R.id.button_dew_point)
+    View buttonDewPoint;
+
+    @Inject
+    SettingsService settingsService;
 
 	/** Called when the activity is first created. */
     @Override
@@ -32,10 +56,29 @@ public class MainActivity extends AbstractActivity {
         super.onResume();
     }
 
-    @Click(R.id.button_refresh)
-    public void refreshButtonClicked() {
+    @Click({R.id.button_rain_temperature, R.id.button_wind, R.id.button_humidity, R.id.button_air_pressure, R.id.button_dew_point})
+    public void onMapTypeButtonClicked(View clickedView) {
+
+        switch(clickedView.getId()) {
+            case R.id.button_rain_temperature:
+                settingsService.setMapType("radar");
+                break;
+            case R.id.button_wind:
+                settingsService.setMapType("wind");
+                break;
+            case R.id.button_humidity:
+                settingsService.setMapType("relativehumidity");
+                break;
+            case R.id.button_air_pressure:
+                settingsService.setMapType("pressure");
+                break;
+            case R.id.button_dew_point:
+                settingsService.setMapType("dewpoint");
+                break;
+        }
+
         startMainParsingActivity();
-	}
+    }
 
     private void startMainParsingActivity() {
         Logger.debug("startMainParsingActivity");

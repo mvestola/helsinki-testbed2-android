@@ -1,6 +1,7 @@
 package fi.testbed2.service.impl;
 
 import fi.testbed2.AbstractTestCase;
+import fi.testbed2.BuildConfig;
 import fi.testbed2.InjectedTestRunner;
 import fi.testbed2.domain.MapLocationGPS;
 import fi.testbed2.domain.MapLocationXY;
@@ -9,6 +10,7 @@ import fi.testbed2.service.CoordinateService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import java.util.SortedMap;
 
@@ -17,6 +19,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
 @RunWith(InjectedTestRunner.class)
+@Config(constants = BuildConfig.class, sdk = AbstractTestCase.ROBOLECTRIC_API_LEVEL)
 public class InlineMunicipalityServiceTest extends AbstractTestCase {
 
     private InlineMunicipalityService inlineMunicipalityService;

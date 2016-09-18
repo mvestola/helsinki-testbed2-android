@@ -1,6 +1,7 @@
 package fi.testbed2.service.impl;
 
 import fi.testbed2.AbstractTestCase;
+import fi.testbed2.BuildConfig;
 import fi.testbed2.InjectedTestRunner;
 import fi.testbed2.android.task.Task;
 import fi.testbed2.android.task.exception.DownloadTaskException;
@@ -10,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.robolectric.annotation.Config;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -20,6 +22,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
 @RunWith(InjectedTestRunner.class)
+@Config(constants = BuildConfig.class, sdk = AbstractTestCase.ROBOLECTRIC_API_LEVEL)
 public class LruCachePageServiceTest extends AbstractTestCase {
 
     @Mock

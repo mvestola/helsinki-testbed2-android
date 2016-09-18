@@ -1,12 +1,14 @@
 package fi.testbed2.service.impl;
 
 import fi.testbed2.AbstractTestCase;
+import fi.testbed2.BuildConfig;
 import fi.testbed2.InjectedTestRunner;
 import fi.testbed2.domain.MapLocationGPS;
 import fi.testbed2.domain.MapLocationXY;
 import fi.testbed2.service.CoordinateService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
@@ -21,6 +23,7 @@ import static org.junit.Assert.assertNotNull;
  * with GIMP.
  */
 @RunWith(InjectedTestRunner.class)
+@Config(constants = BuildConfig.class, sdk = AbstractTestCase.ROBOLECTRIC_API_LEVEL)
 public class MercatorCoordinateServiceTest extends AbstractTestCase {
 
     /**

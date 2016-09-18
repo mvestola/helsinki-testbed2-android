@@ -1,15 +1,15 @@
 package fi.testbed2.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NonNull;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class MapLocationXY {
 
-    @NonNull
     private double x;
-
-    @NonNull
     private double y;
 
 }

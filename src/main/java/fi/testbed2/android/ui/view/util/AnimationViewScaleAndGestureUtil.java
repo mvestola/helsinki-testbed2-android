@@ -5,8 +5,7 @@ import android.view.*;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.inject.Inject;
-import com.googlecode.androidannotations.annotations.AfterInject;
-import com.googlecode.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.*;
 import com.jhlabs.map.Point2D;
 import fi.testbed2.R;
 import fi.testbed2.android.app.Logger;
@@ -17,6 +16,7 @@ import fi.testbed2.domain.Municipality;
 import fi.testbed2.service.SettingsService;
 import lombok.Getter;
 import lombok.Setter;
+import roboguice.RoboGuice;
 
 /**
  * Utility class for scaling and gesture related functions
@@ -198,7 +198,7 @@ public class AnimationViewScaleAndGestureUtil {
 
     @AfterInject
     void injectRoboGuiceDependencies() {
-        MainApplication.getApplication().getInjector().injectMembers(this);
+        RoboGuice.getInjector(MainApplication.getContext()).injectMembers(this);
     }
 
 

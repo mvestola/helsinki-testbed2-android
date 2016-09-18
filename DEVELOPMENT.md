@@ -8,32 +8,30 @@ Required software
 
 You need to have the following software installed:
 
-* Maven
-* Android SDK (API level 13)
+* Gradle
+* Android SDK (API level 23)
 * Git
+* Android Studio
 
-Preferred IDE is IntelliJ IDEA and preferred operating system is Linux.
+Preferred operating system is Ubuntu/Kubuntu.
 
 
 Android frameworks used
 -------
 
-The following Android frameworks are used in this application:
+The following Android frameworks / libraries are used in this application:
 
-* [RoboGuice 1.1](https://code.google.com/p/roboguice/) (dependency injection framework for Android based on Google Guice)
+* [RoboGuice](https://code.google.com/p/roboguice/) (dependency injection framework for Android based on Google Guice)
 * [Robolectric](http://pivotal.github.com/robolectric/) (advanced unit testing framework for Android)
 * [Robotium](http://code.google.com/p/robotium/) (automatic black-box testing framework for Android, like Selenium on Android)
 * [AndroidAnnotations](http://androidannotations.org/) (simplify Android development with annotations)
 * [Project Lombok](http://projectlombok.org/features/index.html) (simplify Java development with annotations generating e.g. getters and setters)
-
+* [WeatherIconView](https://github.com/pwittchen/WeatherIconView) (show weather icons using a font)
+* [FlexboxLayout](https://github.com/google/flexbox-layout) (flexible CSS style flexbox layout for Android)
 
 Some instructions for using RoboGuice:
-* http://code.google.com/p/roboguice/wiki/ProvidedInjections
-* http://code.google.com/p/roboguice/source/browse/astroboy/src/test/java/org/roboguice/astroboy/controller/Astroboy2Test.java
-* http://code.google.com/p/roboguice/wiki/UpgradingTo20
-* http://code.google.com/p/roboguice/wiki/SimpleExample
-* http://www.blog.project13.pl/wp-content/uploads/2011/12/presentation.html#slide35 (injection scopes)
-* http://www.blog.project13.pl/wp-content/uploads/2011/12/presentation.html#slide58 (testing)
+* https://github.com/robolectric/robolectric/wiki
+* https://github.com/codepath/android_guides/wiki/Unit-Testing-with-Robolectric
 
 
 Project installation and configuration
@@ -41,30 +39,17 @@ Project installation and configuration
 
 1. Checkout the sources from GitHub:
 `git clone git@github.com:mvestola/helsinki-testbed2-android.git`
-2. To the root directory (where the pom.xml is), add file local.properties
-and specify where you have installed your Android SDK to "sdk.dir" property
-(see file src/main/config/default.properties for example).
-This file is required by the Robolectric framework.
-3. Also add local.properties file to src/main/config/local.properties. Just make a copy of
-the file default.properties and change the field to match your configuration.
-3. Build the project with maven: `mvn clean install`
+2. Open the project with Android Studio and run gradle command `build` to build the project. 
 
 You should also set the Android SDK to environmental variable "ANDROID_HOME"
 
-
-Maven instructions
--------
-
-Start the emulator (remember to unlock the emulator after startup):
+To sign a release version of the application, you need to have a file `~/.gradle/gradle.properties` with the following content:
 ```
-mvn android:emulator-start
+RELEASE_STORE_FILE=/your/store/file/location
+RELEASE_STORE_PASSWORD=your_store_password
+RELEASE_KEY_ALIAS=your_alias
+RELEASE_KEY_PASSWORD=your_key_password
 ```
-Run the application in already started emulator
-(does not seem to save preferences so can be used for initial installation testing):
-```
-mvn -Dmaven.test.skip=true clean package android:redeploy android:run
-```
-
 
 Adding new custom jars to the project's Maven repository
 -------
@@ -90,45 +75,14 @@ mvn deploy:deploy-file \
 -Durl=file:///path/in/your/computer/to/the/clonedrepo/helsinki-testbed2-android-repo/repo
 ```
 
-
-Adding Android library projects as Maven dependencies
--------
-
-In addition to adding jar dependencies, you can also easily add Android library projects as project dependencies.
-Just do the following:
-
-1. Checkout the source of your Android library project. Do not compile the project
-(or make sure that there are no compiled classes by running `ant clean`).
-2. Make a zip file from the project sources. In addition to the src directory,
-also include the res, gen and other source folders to the zip file.
-Do not include any compiled classes.
-3. Rename the zip file to `something.apklib`.
-4. Install the file `something.apklib` into the testbed2 maven repository like jar files described above.
-Just change the packaging type to `apklib` (`-Dpackaging=apklib`).
-
-After that, you can use the apklib as a dependency in pom.xml:
-
-```
-<dependency>
-  <groupId>something</groupId>
-  <artifactId>something</artifactId>
-  <version>1.0</version>
-  <type>apklib</type>
-</dependency>
-```
-
-More information about maven and Android library projects:
-
-* http://stackoverflow.com/questions/9931039/adding-an-eclipse-android-library-project-and-building-via-maven
-* http://code.google.com/p/maven-android-plugin/wiki/ApkLib
-
-
 Testing guidelines
 -------
 
 Test at least these special cases:
 * Downloading images while changing screen orientation (Ctrl+F11).
 Should not pause download.
+* Slow network connection
+* Emulator with oldest supported API version and small screen
 * Only one map image selected.
 * No network connection (disable network from computer running emulator).
 Should show error dialog.
@@ -150,10 +104,10 @@ from the Emulator's "Custom locale")
 Checklist for publishing a new release
 -------
 
-1. Change the version code and version name from `AndroidManifest.xml`
+1. Change the version code and version name from `build.gradle`
 2. Update `CHANGELOG.md`
 3. Update `whats_new_text` from `res/values/strings.xml` (both English and Finnish)
-4. Sign the app by running `mvn clean install` using the release profile
+4. Create a signed apk package by running `Build...Build APK` from the Android studio using the build variant `release` (bottom left corner in Android Studio)
 5. Tag the code: `git tag -a 2.0.x -m 'Tagged 2.0.x'; git push --tags`
-6. Upload the file `target/testbedViewer-aligned.apk` to [Google Play](https://play.google.com/apps/publish/v2) and activate it
+6. Upload the file `build/outputs/apk/testbed-release.apk` to [Google Play](https://play.google.com/apps/publish/) and activate it
 7. Update "Recent Changes" in Google Play (both English and Finnish)

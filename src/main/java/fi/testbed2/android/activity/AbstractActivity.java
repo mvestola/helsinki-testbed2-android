@@ -1,16 +1,24 @@
 package fi.testbed2.android.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-import com.google.ads.AdView;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.inject.Inject;
-import com.googlecode.androidannotations.annotations.EActivity;
-import com.googlecode.androidannotations.annotations.OptionsItem;
+
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.OptionsItem;
+import org.androidannotations.annotations.ViewById;
+
 import fi.testbed2.R;
+import fi.testbed2.android.ui.ads.AdManager;
 import fi.testbed2.android.ui.dialog.DialogBuilder;
 import fi.testbed2.service.SettingsService;
 
@@ -20,13 +28,22 @@ import fi.testbed2.service.SettingsService;
  * Handles options menu, for instance.
  */
 @EActivity
-public abstract class AbstractActivity extends Activity {
+public abstract class AbstractActivity extends AppCompatActivity {
 
     @Inject
     DialogBuilder dialogBuilder;
 
     @Inject
     SettingsService settingsService;
+
+    @Inject
+    AdManager adManager;
+
+    @ViewById(R.id.adView)
+    AdView adView;
+
+    @ViewById(R.id.toolbar)
+    Toolbar toolbar;
 
     private String currentErrorMsg;
 
@@ -53,6 +70,25 @@ public abstract class AbstractActivity extends Activity {
             }
         }
 
+    }
+
+    @AfterViews
+    void initializeAds() {
+        AdRequest adRequest = adManager.getAdRequest();
+        if (adRequest != null) {
+            adView.loadAd(adRequest);
+        }
+        adManager.initInterstitialAd();
+    }
+
+    @AfterViews
+    void bindActionBar() {
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.toolbar_logo);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     public abstract void onRefreshFromMenuSelected();
