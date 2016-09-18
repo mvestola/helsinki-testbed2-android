@@ -4,11 +4,11 @@ Helsinki Testbed Viewer 2.0
 Version 2.0.13 (2016-09-18)
 ---------------------------
 
-* Easily select map type from the main screen
+* Added ability to select map type from the main screen
 * Updated icons, colors and toolbar
 * Updated library dependencies
 * Converted project to Gradle based build (works now with Android Studio)
-* Dropped support for Android versions equal or lower than 2.2 (API level 8),
+* Dropped support for Android versions equal or lower than 2.2 Froyo (API level 8),
 so the minimum supported Android version is now 2.3 Gingerbread (API level 9)
 
 Version 2.0.12 (2012-12-01)

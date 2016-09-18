@@ -23,7 +23,8 @@
 
     <string name="whats_new_title">Uutta versiossa %1$s</string>
     <string name="whats_new_text">
-        - Korjattu ohjelman satunnainen kaatuminen
+        - Lisätty karttatyypin valinta aloitusnäytöltä\n\n
+        - Päivitetty ikoneita, värejä ja työkalupalkki
     </string>
 
     <string name="hardware_accel_dialog_title">Ota GPU-pakotus pois käytöstä</string>

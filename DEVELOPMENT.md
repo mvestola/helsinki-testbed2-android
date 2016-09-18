@@ -43,6 +43,13 @@ Project installation and configuration
 
 You should also set the Android SDK to environmental variable "ANDROID_HOME"
 
+To sign a release version of the application, you need to have a file `~/.gradle/gradle.properties` with the following content:
+```
+RELEASE_STORE_FILE=/your/store/file/location
+RELEASE_STORE_PASSWORD=your_store_password
+RELEASE_KEY_ALIAS=your_alias
+RELEASE_KEY_PASSWORD=your_key_password
+```
 
 Adding new custom jars to the project's Maven repository
 -------
@@ -74,6 +81,8 @@ Testing guidelines
 Test at least these special cases:
 * Downloading images while changing screen orientation (Ctrl+F11).
 Should not pause download.
+* Slow network connection
+* Emulator with oldest supported API version and small screen
 * Only one map image selected.
 * No network connection (disable network from computer running emulator).
 Should show error dialog.

@@ -25,7 +25,8 @@
 
     <string name="whats_new_title">New in version %1$s</string>
     <string name="whats_new_text">
-        - Fixed application crashing in some rare cases
+        - Added ability to select map type from the main screen\n\n
+        - Updated icons, colors and toolbar
     </string>
 
     <string name="hardware_accel_dialog_title">Please disable force GPU setting</string>
