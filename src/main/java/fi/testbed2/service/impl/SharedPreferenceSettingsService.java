@@ -221,12 +221,12 @@ public class SharedPreferenceSettingsService implements SettingsService {
 
     @Override
     public int getMapMarkerSize() {
-        return Integer.valueOf(sharedPreferences.getString(PREF_LOCATION_MAP_MARKER_SIZE, "40"));
+        return Integer.valueOf(sharedPreferences.getString(PREF_LOCATION_MAP_MARKER_SIZE, "80"));
     }
 
     @Override
     public int getMapPointSize() {
-        return Integer.valueOf(sharedPreferences.getString(PREF_LOCATION_MAP_POINT_SIZE, "10"));
+        return Integer.valueOf(sharedPreferences.getString(PREF_LOCATION_MAP_POINT_SIZE, "30"));
     }
 
     @Override
