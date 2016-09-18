@@ -43,6 +43,7 @@
 
             <SeekBar android:id="@+id/seek"
                      android:max="100"
+                     style="@style/CustomProgressBarHorizontal"
                      android:progress="0"
                      android:layout_height="wrap_content"
                      android:layout_width="450dip"

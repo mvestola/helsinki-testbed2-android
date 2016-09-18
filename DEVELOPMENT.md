@@ -100,6 +100,7 @@ returning from preferences and using the slider.
 * Both English and Finnish languages (change language
 from the Emulator's "Custom locale")
 * Default settings (remove the app and reset all saved settings)
+* Try out with large screen device such as tablet
 
 Checklist for publishing a new release
 -------

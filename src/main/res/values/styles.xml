@@ -8,4 +8,5 @@
         <item name="android:minHeight">20dip</item>
         <item name="android:maxHeight">20dip</item>
     </style>
+    <style name="AlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert"></style>
 </resources>

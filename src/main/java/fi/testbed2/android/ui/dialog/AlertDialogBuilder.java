@@ -1,6 +1,6 @@
 package fi.testbed2.android.ui.dialog;
 
-import android.app.AlertDialog;
+import android.support.v7.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -31,7 +31,7 @@ public class AlertDialogBuilder implements DialogBuilder {
     @Override
     public Dialog getAboutDialog() {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        AlertDialog.Builder builder = getAlertDialogBuilder();
         builder.setView(getAboutDialogContents(context))
                 .setPositiveButton(context.getText(R.string.about_visit_website), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -55,7 +55,7 @@ public class AlertDialogBuilder implements DialogBuilder {
     @Override
     public Dialog getWhatsNewDialog() {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        AlertDialog.Builder builder = getAlertDialogBuilder();
         builder.setView(getWhatsNewDialogContents(context))
                 .setPositiveButton(context.getText(R.string.close_button), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -72,7 +72,7 @@ public class AlertDialogBuilder implements DialogBuilder {
     @Override
     public Dialog getHardwareAccelerationDialog() {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        AlertDialog.Builder builder = getAlertDialogBuilder();
         builder.setView(getHardwareAccelerationDialogContents(context))
                 .setNegativeButton(context.getText(R.string.do_not_show_again), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -92,23 +92,23 @@ public class AlertDialogBuilder implements DialogBuilder {
 
     @Override
     public Dialog getErrorDialog(String errorMessage) {
-        AlertDialog ad = new AlertDialog.Builder(context).create();
-        ad.setCancelable(false); // This blocks the 'BACK' button
-        ad.setMessage(errorMessage);
-        ad.setButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        return ad;
+        AlertDialog.Builder builder = getAlertDialogBuilder();
+        builder.setMessage(errorMessage)
+            .setPositiveButton(context.getText(R.string.close_button), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.dismiss();
+                }
+            });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setCancelable(false); // This blocks the 'BACK' button
+        return  alertDialog;
     }
 
     private TextView getAboutDialogContents(final Context context) {
 
         TextView messageBoxText = new TextView(context);
-        messageBoxText.setTextSize(16);
-        messageBoxText.setPadding(10,5,5,5);
+        int padding = 50;
+        messageBoxText.setPadding(padding, padding, padding, padding);
         final SpannableString s1 = new SpannableString(context.getText(R.string.about_text));
         final SpannableString s2 = new SpannableString(context.getText(R.string.extra_license_text));
         Linkify.addLinks(s1, Linkify.WEB_URLS);
@@ -124,8 +124,8 @@ public class AlertDialogBuilder implements DialogBuilder {
     private TextView getHardwareAccelerationDialogContents(final Context context) {
 
         TextView messageBoxText = new TextView(context);
-        messageBoxText.setTextSize(18);
-        messageBoxText.setPadding(10,5,5,5);
+        int padding = 50;
+        messageBoxText.setPadding(padding, padding, padding, padding);
         final SpannableString s = new SpannableString(" "+context.getText(R.string.hardware_accel_dialog_text));
         messageBoxText.setText(s);
         messageBoxText.setMovementMethod(LinkMovementMethod.getInstance());
@@ -137,14 +137,18 @@ public class AlertDialogBuilder implements DialogBuilder {
     private TextView getWhatsNewDialogContents(final Context context) {
 
         TextView messageBoxText = new TextView(context);
-        messageBoxText.setTextSize(18);
-        messageBoxText.setPadding(10,5,5,5);
+        int padding = 50;
+        messageBoxText.setPadding(padding, padding, padding, padding);
         final SpannableString s = new SpannableString(" "+context.getText(R.string.whats_new_text));
         messageBoxText.setText(s);
         messageBoxText.setMovementMethod(LinkMovementMethod.getInstance());
 
         return messageBoxText;
 
+    }
+
+    private AlertDialog.Builder getAlertDialogBuilder() {
+        return new AlertDialog.Builder(context, R.style.AlertDialogStyle);
     }
 
 }
