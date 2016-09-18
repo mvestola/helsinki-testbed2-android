@@ -9,8 +9,7 @@
 
     <string name="about_text">Helsinki Testbed Viewer 2.0
         on ohjelma joka näyttää karttakuvia Ilmatieteen
-        laitoksen testbed.fmi.fi -sivustolta.\n\n
-        Ohjelma on yksityinen projekti, ei siis Ilmatieteen laitoksen
+        laitoksen testbed.fmi.fi -sivustolta.\n\nOhjelma on yksityinen projekti, ei siis Ilmatieteen laitoksen
         kehittämä. Kaikki karttakuvat ladataan Helsinki Testbedin verkkosivuilta,
         joiden tekijänoikeus kuuluu Helsinki Testbed -projektille.</string>
     <string name="extra_license_text"></string>

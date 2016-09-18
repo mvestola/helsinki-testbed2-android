@@ -12,8 +12,7 @@
 
     <string name="about_title" translatable="false">Helsinki Testbed Viewer %1$s</string>
     <string name="about_text">Helsinki Testbed Viewer 2.0 is an application which shows weather maps
-        from the Finnish Meteorological Institute (FMI) website <b>testbed.fmi.fi</b>. \n\n
-        This application is a private project and not developed by the FMI.
+        from the Finnish Meteorological Institute (FMI) website <b>testbed.fmi.fi</b>.\n\nThis application is a private project and not developed by the FMI.
         All map images are downloaded from the Helsinki Testbed website which is copyrighted by the Helsinki Testbed project.</string>
     <string name="extra_license_text"></string>
 

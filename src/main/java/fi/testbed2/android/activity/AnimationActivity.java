@@ -9,9 +9,6 @@ import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.InterstitialAd;
 import com.google.inject.Inject;
 
 import org.androidannotations.annotations.AfterViews;
@@ -104,7 +101,6 @@ public class AnimationActivity extends AbstractActivity {
         updateSettingsToView();
 
         if (!allImagesDownloaded) {
-            showInterstitialAd();
             task = new DownloadImagesTask(this);
             task.execute();
         }
@@ -129,6 +125,7 @@ public class AnimationActivity extends AbstractActivity {
 
     @Override
     public void onRefreshFromMenuSelected() {
+        adManager.showInterstitialAdIfLoaded();
         pauseAnimation();
         allImagesDownloaded = false;
         Intent intent = new Intent();
@@ -144,32 +141,7 @@ public class AnimationActivity extends AbstractActivity {
         updateSettingsToView();
     }
 
-    @AfterViews
-    public void initInterstitialAd() {
-        interstitialAd = new InterstitialAd(this);
-        interstitialAd.setAdUnitId("ca-app-pub-0260854390576047/3107319706");
-        requestNewInterstitialAd();
 
-        interstitialAd.setAdListener(new AdListener() {
-            @Override
-            public void onAdClosed() {
-                requestNewInterstitialAd();
-            }
-        });
-    }
-
-    private void requestNewInterstitialAd() {
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice("SEE_YOUR_LOGCAT_TO_GET_YOUR_DEVICE_ID")
-                .build();
-        interstitialAd.loadAd(adRequest);
-    }
-
-    protected void showInterstitialAd() {
-        if (settingsService.showAds() && interstitialAd!=null && interstitialAd.isLoaded()) {
-            interstitialAd.show();
-        }
-    }
 
     /**
      * Updates the Downloading text in top left corner

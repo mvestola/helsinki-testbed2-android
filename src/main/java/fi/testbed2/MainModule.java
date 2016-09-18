@@ -1,6 +1,9 @@
 package fi.testbed2;
 
 import com.google.inject.AbstractModule;
+
+import fi.testbed2.android.ui.ads.AdManager;
+import fi.testbed2.android.ui.ads.CachedAdMobAdManager;
 import fi.testbed2.android.ui.dialog.AlertDialogBuilder;
 import fi.testbed2.android.ui.dialog.DialogBuilder;
 import fi.testbed2.service.*;
@@ -19,6 +22,7 @@ public class MainModule extends AbstractModule {
         bind(LocationService.class).to(PreferenceBasedLocationService.class);
         bind(CoordinateService.class).to(MercatorCoordinateService.class);
         bind(SettingsService.class).to(SharedPreferenceSettingsService.class);
+        bind(AdManager.class).to(CachedAdMobAdManager.class);
         bind(BitmapService.class).to(LruCacheBitmapService.class);
         bind(PageService.class).to(LruCachePageService.class);
         bind(HttpUrlService.class).to(ApacheHttpUrlService.class);

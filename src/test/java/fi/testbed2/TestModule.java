@@ -1,5 +1,6 @@
 package fi.testbed2;
 
+import fi.testbed2.android.ui.ads.AdManager;
 import fi.testbed2.android.ui.dialog.AlertDialogBuilder;
 import fi.testbed2.android.ui.dialog.DialogBuilder;
 import fi.testbed2.service.*;
@@ -29,6 +30,9 @@ public class TestModule extends MainModule {
     @Mock
     public HttpUrlService mockHttpUrlService;
 
+    @Mock
+    public AdManager mockAdManager;
+
     @Override
     protected void configure() {
 
@@ -45,5 +49,6 @@ public class TestModule extends MainModule {
         bind(BitmapService.class).toInstance(mockBitmapService);
         bind(PageService.class).toInstance(mockPageService);
         bind(HttpUrlService.class).toInstance(mockHttpUrlService);
+        bind(AdManager.class).toInstance(mockAdManager);
     }
 }

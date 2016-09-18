@@ -10,12 +10,15 @@ import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
 import com.google.inject.Inject;
-import org.androidannotations.annotations.*;
 
-import fi.testbed2.BuildConfig;
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.OptionsItem;
+import org.androidannotations.annotations.ViewById;
+
 import fi.testbed2.R;
+import fi.testbed2.android.ui.ads.AdManager;
 import fi.testbed2.android.ui.dialog.DialogBuilder;
 import fi.testbed2.service.SettingsService;
 
@@ -33,13 +36,14 @@ public abstract class AbstractActivity extends AppCompatActivity {
     @Inject
     SettingsService settingsService;
 
+    @Inject
+    AdManager adManager;
+
     @ViewById(R.id.adView)
     AdView adView;
 
     @ViewById(R.id.toolbar)
     Toolbar toolbar;
-
-    InterstitialAd interstitialAd;
 
     private String currentErrorMsg;
 
@@ -70,7 +74,11 @@ public abstract class AbstractActivity extends AppCompatActivity {
 
     @AfterViews
     void initializeAds() {
-        adView.loadAd(getAdRequest());
+        AdRequest adRequest = adManager.getAdRequest();
+        if (adRequest != null) {
+            adView.loadAd(adRequest);
+        }
+        adManager.initInterstitialAd();
     }
 
     @AfterViews
@@ -81,17 +89,6 @@ public abstract class AbstractActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setLogo(R.drawable.toolbar_logo);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-    }
-
-    private AdRequest getAdRequest() {
-        if(BuildConfig.ENVIRONMENT.equals("TEST")) {
-            return new AdRequest.Builder()
-                    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                    .addTestDevice("TEST_DEVICE_ID")
-                    .build();
-        } else {
-            return new AdRequest.Builder().build();
-        }
     }
 
     public abstract void onRefreshFromMenuSelected();
