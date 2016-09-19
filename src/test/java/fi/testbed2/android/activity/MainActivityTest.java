@@ -6,6 +6,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
@@ -72,6 +73,7 @@ public class MainActivityTest extends AbstractTestCase {
     }
 
     @Test
+    @Ignore("Robolectric does not work with appcompact AlertDialogs yet")
     public void shouldOpenAboutBoxWhenAboutButtonFromMainMenuSelected() {
 
         MenuItem item = new RoboMenuItem(R.id.main_menu_about);
