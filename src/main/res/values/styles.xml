@@ -4,9 +4,6 @@
     <style name="CustomLightTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@color/custom_theme_color</item>
     </style>
-    <style name="CustomProgressBarHorizontal" parent="android:Widget.ProgressBar.Horizontal">
-        <item name="android:minHeight">20dip</item>
-        <item name="android:maxHeight">20dip</item>
-    </style>
     <style name="AlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert"></style>
+    <style name="SeekBarStyle" parent="Widget.AppCompat.SeekBar"></style>
 </resources>
