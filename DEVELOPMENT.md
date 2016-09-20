@@ -21,8 +21,8 @@ Android frameworks used
 
 The following Android frameworks / libraries are used in this application:
 
-* [RoboGuice](https://code.google.com/p/roboguice/) (dependency injection framework for Android based on Google Guice)
-* [Robolectric](http://pivotal.github.com/robolectric/) (advanced unit testing framework for Android)
+* [RoboGuice](https://github.com/roboguice/roboguice/) (dependency injection framework for Android based on Google Guice)
+* [Robolectric](http://robolectric.org/) (advanced unit testing framework for Android)
 * [Robotium](http://code.google.com/p/robotium/) (automatic black-box testing framework for Android, like Selenium on Android)
 * [AndroidAnnotations](http://androidannotations.org/) (simplify Android development with annotations)
 * [Project Lombok](http://projectlombok.org/features/index.html) (simplify Java development with annotations generating e.g. getters and setters)
