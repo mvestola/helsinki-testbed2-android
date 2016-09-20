@@ -1,9 +1,8 @@
 Helsinki Testbed Viewer 2.0
 =============
 
-<img src="google_play/images/high_res_app_icon.png" width="200" alt="Rain radar from Helsinki Testbed project"/>
-
-![Screenshot of application in landscape mode](google_play/images/screenshot_2_landscape.png)
+<img src="google_play/images/high_res_app_icon.png" width="500" alt="Rain radar image from testbed.fmi.fi"/>
+<img src="google_play/images/screenshot_2_landscape.png" width="500" alt="Screenshot of application in landscape mode"/>
 
 __Helsinki Testbed Viewer 2.0__ is an Android application which shows the weather maps
 from the [Helsinki Testbed project](http://testbed.fmi.fi/). With the application,
