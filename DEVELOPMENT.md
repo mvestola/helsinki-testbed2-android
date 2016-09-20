@@ -28,6 +28,7 @@ The following Android frameworks / libraries are used in this application:
 * [Project Lombok](http://projectlombok.org/features/index.html) (simplify Java development with annotations generating e.g. getters and setters)
 * [WeatherIconView](https://github.com/pwittchen/WeatherIconView) (show weather icons using a font)
 * [FlexboxLayout](https://github.com/google/flexbox-layout) (flexible CSS style flexbox layout for Android)
+* [Java Map Projection Library in Android](http://augusttown.blogspot.fi/2010/03/using-java-map-projection-library-in.html) (Used for map projection calculation, JAR file in own testbd repo)
 
 Some instructions for using RoboGuice:
 * https://github.com/robolectric/robolectric/wiki
