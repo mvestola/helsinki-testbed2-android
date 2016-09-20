@@ -8,7 +8,7 @@
     <string name="main_menu_about">Tietoja</string>
 
     <string name="about_text">Helsinki Testbed Viewer 2.0
-        on ohjelma joka näyttää karttakuvia Ilmatieteen
+        on ohjelma, joka näyttää karttakuvia Ilmatieteen
         laitoksen testbed.fmi.fi -sivustolta.\n\nOhjelma on yksityinen projekti, ei siis Ilmatieteen laitoksen
         kehittämä. Kaikki karttakuvat ladataan Helsinki Testbedin verkkosivuilta,
         joiden tekijänoikeus kuuluu Helsinki Testbed -projektille.</string>
@@ -22,10 +22,7 @@
     <string name="do_not_show_again">Älä näytä jatkossa</string>
 
     <string name="whats_new_title">Uutta versiossa %1$s</string>
-    <string name="whats_new_text">
-        - Lisätty karttatyypin valinta aloitusnäytöltä\n\n
-        - Päivitetty ikoneita, värejä ja työkalupalkki
-    </string>
+    <string name="whats_new_text">- Lisätty karttatyypin valinta aloitusnäytöltä\n- Päivitetty ikoneita, värejä ja työkalupalkki</string>
 
     <string name="hardware_accel_dialog_title">Ota GPU-pakotus pois käytöstä</string>
     <string name="hardware_accel_dialog_text">

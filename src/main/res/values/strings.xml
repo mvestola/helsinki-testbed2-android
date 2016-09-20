@@ -24,10 +24,7 @@
     <string name="do_not_show_again">Do not show again</string>
 
     <string name="whats_new_title">New in version %1$s</string>
-    <string name="whats_new_text">
-        - Added ability to select map type from the main screen\n\n
-        - Updated icons, colors and toolbar
-    </string>
+    <string name="whats_new_text">- Added ability to select map type from the main screen\n- Updated icons, colors and toolbar</string>
 
     <string name="hardware_accel_dialog_title">Please disable force GPU setting</string>
     <string name="hardware_accel_dialog_text">
