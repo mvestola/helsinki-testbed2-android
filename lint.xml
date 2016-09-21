@@ -5,6 +5,9 @@
     <issue id="RtlHardcoded" severity="ignore" />
     <issue id="RtlSymmetry" severity="ignore" />
 
+    <!-- No use for app indexing -->
+    <issue id="GoogleAppIndexingWarning" severity="ignore" />
+
     <!-- Does not look nice if replaced with one symbol -->
     <issue id="TypographyEllipsis" severity="ignore" />
 
@@ -70,11 +73,6 @@
     <issue id="SpUsage">
         <ignore path="src/main/res/**/animation.xml" />
         <ignore path="src/main/res/**/seek_bar_preference.xml" />
-    </issue>
-
-    <!-- Won't fix AbsoluteLayout -->
-    <issue id="Deprecated">
-        <ignore path="src/main/res/**/animation.xml" />
     </issue>
 
 </lint>
