@@ -94,15 +94,15 @@
                         android:dependency="PREF_LOCATION_SHOW_USER_LOCATION"
                         />
                 <com.robobunny.SeekBarPreference
-                        android:key="PREF_LOCATION_MAP_MARKER_SIZE"
+                        android:key="PREF_LOCATION_MAP_MARKER_SIZE_DP"
                         android:title="@string/preference_map_marker_size_title"
                         android:summary="@string/preference_map_marker_size_summary"
-                        android:defaultValue="80"
-                        android:max="200"
+                        android:defaultValue="25"
+                        android:max="100"
                         android:dependency="PREF_LOCATION_SHOW_USER_LOCATION"
                         robobunny:min="10"
                         robobunny:unitsLeft=""
-                        robobunny:unitsRight=" px"
+                        robobunny:unitsRight=" dp"
                         />
 
             </PreferenceCategory>
@@ -126,14 +126,14 @@
                         alphaSlider="true"
                         />
                 <com.robobunny.SeekBarPreference
-                        android:key="PREF_LOCATION_MAP_POINT_SIZE"
+                        android:key="PREF_LOCATION_MAP_POINT_SIZE_DP"
                         android:title="@string/preference_map_point_size_title"
                         android:summary="@string/preference_map_point_size_summary"
-                        android:defaultValue="30"
-                        android:max="200"
+                        android:defaultValue="10"
+                        android:max="50"
                         robobunny:min="5"
                         robobunny:unitsLeft=""
-                        robobunny:unitsRight=" px"
+                        robobunny:unitsRight=" dp"
                         />
 
             </PreferenceCategory>

@@ -154,7 +154,7 @@ public class AnimationViewScaleAndGestureUtil {
                     Logger.debug("Pos: " + pos + ", for: " + municipality.getName());
 
                     final float scale = view.getContext().getResources().getDisplayMetrics().density;
-                    int threshold = (int) ((settingsService.getMapPointSize()/2)*scale +
+                    int threshold = (int) ((settingsService.getMapPointSizePx()/2)*scale +
                             (MUNICIPALITY_SEARCH_THRESHOLD/view.getScaleInfo().getScaleFactor())*scale);
 
                     if (Math.abs(pos.x-canvasX)<=threshold && Math.abs(pos.y-canvasY)<=threshold) {
@@ -170,9 +170,7 @@ public class AnimationViewScaleAndGestureUtil {
                         text.setText(municipality.getName());
 
                         municipalityToast = new Toast(view.getContext());
-                        municipalityToast.setGravity(Gravity.TOP| Gravity.LEFT,
-                                Double.valueOf(rawX+20*scale).intValue(),
-                                Double.valueOf(rawY-40*scale).intValue());
+                        municipalityToast.setGravity(Gravity.CENTER| Gravity.CENTER, 0, 0);
                         municipalityToast.setDuration(Toast.LENGTH_LONG);
                         municipalityToast.setView(layout);
                         municipalityToast.show();
@@ -188,6 +186,11 @@ public class AnimationViewScaleAndGestureUtil {
 
         return false;
 
+    }
+
+    private int dpToPixels(int dp) {
+        final float scale = view.getContext().getResources().getDisplayMetrics().density;
+        return (int) (dp * scale + 0.5f);
     }
 
     public void hideMunicipalityToast() {

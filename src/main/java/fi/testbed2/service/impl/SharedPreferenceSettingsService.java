@@ -220,13 +220,15 @@ public class SharedPreferenceSettingsService implements SettingsService {
     }
 
     @Override
-    public int getMapMarkerSize() {
-        return Integer.valueOf(sharedPreferences.getString(PREF_LOCATION_MAP_MARKER_SIZE, "80"));
+    public int getMapMarkerSizePx() {
+        int dp = Integer.valueOf(sharedPreferences.getString(PREF_LOCATION_MAP_MARKER_SIZE_DP, "25"));
+        return dpToPixels(dp);
     }
 
     @Override
-    public int getMapPointSize() {
-        return Integer.valueOf(sharedPreferences.getString(PREF_LOCATION_MAP_POINT_SIZE, "30"));
+    public int getMapPointSizePx() {
+        int dp = Integer.valueOf(sharedPreferences.getString(PREF_LOCATION_MAP_POINT_SIZE_DP, "10"));
+        return dpToPixels(dp);
     }
 
     @Override
@@ -279,4 +281,8 @@ public class SharedPreferenceSettingsService implements SettingsService {
         return sharedPreferences.getBoolean(SettingsService.PREF_SHOW_ADS, true);
     }
 
+    private int dpToPixels(int dp) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dp * scale + 0.5f);
+    }
 }

@@ -107,7 +107,7 @@ public class AlertDialogBuilder implements DialogBuilder {
     private TextView getAboutDialogContents(final Context context) {
 
         TextView messageBoxText = new TextView(context);
-        int padding = 50;
+        int padding = getDefaultPaddingInPx();
         messageBoxText.setPadding(padding, padding, padding, padding);
         final SpannableString s1 = new SpannableString(context.getText(R.string.about_text));
         final SpannableString s2 = new SpannableString(context.getText(R.string.extra_license_text));
@@ -124,7 +124,7 @@ public class AlertDialogBuilder implements DialogBuilder {
     private TextView getHardwareAccelerationDialogContents(final Context context) {
 
         TextView messageBoxText = new TextView(context);
-        int padding = 50;
+        int padding = getDefaultPaddingInPx();
         messageBoxText.setPadding(padding, padding, padding, padding);
         final SpannableString s = new SpannableString(" "+context.getText(R.string.hardware_accel_dialog_text));
         messageBoxText.setText(s);
@@ -137,7 +137,7 @@ public class AlertDialogBuilder implements DialogBuilder {
     private TextView getWhatsNewDialogContents(final Context context) {
 
         TextView messageBoxText = new TextView(context);
-        int padding = 50;
+        int padding = getDefaultPaddingInPx();
         messageBoxText.setPadding(padding, padding, padding, padding);
         final SpannableString s = new SpannableString(" "+context.getText(R.string.whats_new_text));
         messageBoxText.setText(s);
@@ -149,6 +149,15 @@ public class AlertDialogBuilder implements DialogBuilder {
 
     private AlertDialog.Builder getAlertDialogBuilder() {
         return new AlertDialog.Builder(context, R.style.AlertDialogStyle);
+    }
+
+    private int getDefaultPaddingInPx() {
+        return dpToPixels(25);
+    }
+
+    private int dpToPixels(int dp) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dp * scale + 0.5f);
     }
 
 }

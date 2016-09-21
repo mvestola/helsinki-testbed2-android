@@ -29,11 +29,11 @@ public interface SettingsService {
     public static final String PREF_LOCATION_FIXED_LAT = "PREF_LOCATION_FIXED_LAT";
     public static final String PREF_LOCATION_FIXED_LON = "PREF_LOCATION_FIXED_LON";
 
-    public static final String PREF_LOCATION_MAP_MARKER_SIZE = "PREF_LOCATION_MAP_MARKER_SIZE";
+    public static final String PREF_LOCATION_MAP_MARKER_SIZE_DP = "PREF_LOCATION_MAP_MARKER_SIZE_DP";
     public static final String PREF_LOCATION_MAP_MARKER_COLOR = "PREF_LOCATION_MAP_MARKER_COLOR";
 
     public static final String PREF_LOCATION_MAP_POINT_COLOR = "PREF_LOCATION_MAP_POINT_COLOR";
-    public static final String PREF_LOCATION_MAP_POINT_SIZE = "PREF_LOCATION_MAP_POINT_SIZE";
+    public static final String PREF_LOCATION_MAP_POINT_SIZE_DP = "PREF_LOCATION_MAP_POINT_SIZE_DP";
 
     public static final String PREF_LOCATION_SHOW_MUNICIPALITIES = "PREF_LOCATION_MUNICIPALITIES";
     public static final String PREF_LOCATION_SHOW_MUNICIPALITIES_SPLIT = "===";
@@ -72,8 +72,8 @@ public interface SettingsService {
     public String getMapMarkerColor();
     public String getMapPointColor();
 
-    public int getMapMarkerSize();
-    public int getMapPointSize();
+    public int getMapMarkerSizePx();
+    public int getMapPointSizePx();
 
     public String getLocationProvider();
     public void setLocationProvider(String provider);

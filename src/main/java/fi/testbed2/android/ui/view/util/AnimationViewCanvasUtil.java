@@ -99,7 +99,7 @@ public class AnimationViewCanvasUtil {
 
             Picture pic = getLocationMarkerImage();
 
-            int markerImageHeight = settingsService.getMapMarkerSize();
+            int markerImageHeight = settingsService.getMapMarkerSizePx();
 
             // Scale width a bit larger than original width (otherwise looks a bit too thin marker)
             float ratio = pic.getWidth()/pic.getHeight();
@@ -125,7 +125,7 @@ public class AnimationViewCanvasUtil {
 
             Picture pic = getMunicipalityMarkerImage();
 
-            int circleDiameter = settingsService.getMapPointSize();
+            int circleDiameter = settingsService.getMapPointSizePx();
 
             /*
             * x, y coordinates are image's top left corner,
