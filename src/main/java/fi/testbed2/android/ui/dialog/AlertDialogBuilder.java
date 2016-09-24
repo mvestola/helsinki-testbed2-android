@@ -126,7 +126,7 @@ public class AlertDialogBuilder implements DialogBuilder {
         TextView messageBoxText = new TextView(context);
         int padding = getDefaultPaddingInPx();
         messageBoxText.setPadding(padding, padding, padding, padding);
-        final SpannableString s = new SpannableString(" "+context.getText(R.string.hardware_accel_dialog_text));
+        final SpannableString s = new SpannableString(context.getText(R.string.hardware_accel_dialog_text));
         messageBoxText.setText(s);
         messageBoxText.setMovementMethod(LinkMovementMethod.getInstance());
 
@@ -139,7 +139,7 @@ public class AlertDialogBuilder implements DialogBuilder {
         TextView messageBoxText = new TextView(context);
         int padding = getDefaultPaddingInPx();
         messageBoxText.setPadding(padding, padding, padding, padding);
-        final SpannableString s = new SpannableString(" "+context.getText(R.string.whats_new_text));
+        final SpannableString s = new SpannableString(context.getText(R.string.whats_new_text));
         messageBoxText.setText(s);
         messageBoxText.setMovementMethod(LinkMovementMethod.getInstance());
 

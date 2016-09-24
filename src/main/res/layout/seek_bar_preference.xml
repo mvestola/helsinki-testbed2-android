@@ -19,7 +19,7 @@
               android:layout_alignParentTop="true"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-              android:textSize="22dp"
+              android:textSize="18sp"
               android:typeface="sans"
               android:textStyle="normal"
               android:textColor="@color/preference_title"
