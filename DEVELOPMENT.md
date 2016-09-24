@@ -113,3 +113,11 @@ Checklist for publishing a new release
 5. Tag the code: `git tag -a 2.0.x -m 'Tagged 2.0.x'; git push --tags`
 6. Upload the file `build/outputs/apk/testbed-release.apk` to [Google Play](https://play.google.com/apps/publish/) and activate it
 7. Update "Recent Changes" in Google Play (both English and Finnish)
+
+Future refactoring plans
+------------------------
+
+When API level 9 support can be dropped, can do the following refactorings:
+* Use com.android.support:preference-v7:24.2.1 and built in MultiSelectListPreference (remove ListPreferenceMultiSelect)
+* Use better color picker preference: https://github.com/martin-stone/hsv-alpha-color-picker-android
+* Use better seekbar preference: https://github.com/MrBIMC/MaterialSeekBarPreference (this does not support allowed values?)
