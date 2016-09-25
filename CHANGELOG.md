@@ -1,7 +1,7 @@
 Helsinki Testbed Viewer 2.0
 =============
 
-Version 2.0.13 (2016-09-18)
+Version 2.0.13 (2016-09-25)
 ---------------------------
 
 * Added ability to select map type from the main screen

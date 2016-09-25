@@ -4,8 +4,12 @@ import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.preference.ListPreference;
+import android.preference.Preference;
+import android.preference.PreferenceScreen;
+
 import com.google.inject.Inject;
 import com.threefiftynice.android.preference.ListPreferenceMultiSelect;
+
 import fi.testbed2.R;
 import fi.testbed2.android.app.Logger;
 import fi.testbed2.android.ui.dialog.DialogBuilder;
@@ -30,14 +34,32 @@ public class TestbedPreferenceActivity extends RoboPreferenceActivity
     private ListPreference locationProviderList;
 
     @Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    protected void onCreate(Bundle savedInstanceState) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            setTheme(android.R.style.Theme_DeviceDefault_Light);
+        } else if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+            setTheme(android.R.style.Theme_Holo_Light);
+        } else {
+            setTheme(android.R.style.Theme_Light);
+        }
+        super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.preferences);
         initMunicipalityList();
 
-        locationProviderList = (ListPreference)getPreferenceScreen().findPreference(SettingsService.PREF_LOCATION_PROVIDER);
+        locationProviderList = (ListPreference) getPreferenceScreen().findPreference(SettingsService.PREF_LOCATION_PROVIDER);
 
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+        super.onPreferenceTreeClick(preferenceScreen, preference);
+        if (preference != null)
+            if (preference instanceof PreferenceScreen)
+                if (((PreferenceScreen) preference).getDialog() != null)
+                    ((PreferenceScreen) preference).getDialog().getWindow().getDecorView().setBackgroundDrawable(this.getWindow().getDecorView().getBackground().getConstantState().newDrawable());
+        return false;
     }
 
     @Override
@@ -56,7 +78,7 @@ public class TestbedPreferenceActivity extends RoboPreferenceActivity
         String[] entries = municipalityService.getFinlandMunicipalityNamesShownInTestbedMap();
         String[] entryValues = entries;
         ListPreferenceMultiSelect lp =
-                (ListPreferenceMultiSelect)getPreferenceManager().
+                (ListPreferenceMultiSelect) getPreferenceManager().
                         findPreference(SettingsService.PREF_LOCATION_SHOW_MUNICIPALITIES);
         lp.setEntries(entries);
         lp.setEntryValues(entryValues);
@@ -82,7 +104,7 @@ public class TestbedPreferenceActivity extends RoboPreferenceActivity
                 /**
                  * If no location is available, revert to GPS provider.
                  */
-                if (loc==null) {
+                if (loc == null) {
                     newProvider = LocationManager.GPS_PROVIDER;
                     settingsService.setLocationProvider(newProvider);
                     dialogBuilder.getErrorDialog(
@@ -103,7 +125,7 @@ public class TestbedPreferenceActivity extends RoboPreferenceActivity
 
         if (newProvider.equals(LocationService.LOCATION_PROVIDER_FIXED)) {
             MapLocationGPS loc = settingsService.getSavedFixedLocation();
-            String coordinates = "lat: "+loc.getLatitude()+", lon: "+loc.getLongitude();
+            String coordinates = "lat: " + loc.getLatitude() + ", lon: " + loc.getLongitude();
             currentValue = this.getString(R.string.preference_location_provider_fixed, coordinates);
         } else if (newProvider.equals(LocationManager.NETWORK_PROVIDER)) {
             currentValue = this.getString(R.string.preference_location_provider_network);

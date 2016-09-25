@@ -26,8 +26,7 @@
             </intent-filter>
         </activity>
 		<activity android:name=".android.activity.TestbedPreferenceActivity"
-				  android:label="@string/activity_label_settings"
-            android:theme="@style/ThemeOverlay.AppCompat.Light">
+				  android:label="@string/activity_label_settings">
 		</activity>
         <activity android:name=".android.activity.ParsingActivity_"
                   android:label="@string/activity_label_downloading"
