@@ -1,17 +1,10 @@
-Helsinki Testbed Viewer 2.0 is an Android application which shows the weather maps from the Helsinki Testbed project (http://testbed.fmi.fi/). With the application, you can, for example, view the real-time rain radar or current wind speed and direction. The maps cover the Southern Finland. You can also see your own location on the map.
-
+Helsinki Testbed Viewer 2.0 is an Android application which shows weather maps from the Finnish Meteorological Institute (FMI) website Helsinki Testbed (http://testbed.fmi.fi/). With the application, you can, for example, view the real-time rain radar or current wind speed and direction. The maps cover the Southern Finland. You can also see your own location on the map.
 
 The application supports displaying the following weather maps:
+- Rain & temperature
+- Wind speed & direction
+- Humidity
+- Air pressure
+- Dew point
 
- * Rain & temperature
- * Temperature
- * Humidity
- * Wind
- * Wind speed
- * Wind direction
- * Air pressure
- * Dew point
-
-The Helsinki Testbed project is owned by the Finnish Meteorological Institute (http://ilmatieteenlaitos.fi/). The Helsinki Testbed Viewer 2.0 application HAS NOTHING TO DO WITH the Helsinki Testbed project or the Finnish Meteorological Institute. This application is a private project and it just downloads the weather maps from the Helsinki Testbed project websites and shows the maps on Android phones. All map data is copyrighted to the Helsinki Testbed project.
-
-Helsinki Testbed Viewer 2.0 is based on the GPL licensed sources from the "Helsinki Testbed Weather View" android application (https://play.google.com/store/apps/details?id=fi.asd.testbed) originally developed by Petri Laakso (petri+testbed@asd.fi). The original version is currently not working anymore. Therefore, this project was created to continue the work.
+This application is a private project and not developed by the FMI. All map images are downloaded from the Helsinki Testbed website which is copyrighted by the Helsinki Testbed project.
