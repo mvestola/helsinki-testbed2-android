@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Helsinki Testbed Viewer 2.0</string>
-    <string name="app_homepage" translatable="false">https://github.com/mvestola/helsinki-testbed2-android</string>
+    <string name="app_homepage" translatable="false">http://mvestola.github.io/helsinki-testbed2-android/</string>
 
     <string name="testbed_base_url" translatable="false">http://testbed.fmi.fi/history_browser.php?imgtype=%1$s&amp;t=%2$s&amp;n=%3$s</string>
 
