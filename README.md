@@ -51,3 +51,8 @@ Helsinki Testbed Viewer 2.0 is a completely free and open project. The source co
 licensed as GNU GENERAL PUBLIC LICENSE Version 3. See more from the LICENSE file.
 
 All map data is copyrighted to the Helsinki Testbed project.
+
+Homepage
+-------
+
+See http://mvestola.github.io/helsinki-testbed2-android/
