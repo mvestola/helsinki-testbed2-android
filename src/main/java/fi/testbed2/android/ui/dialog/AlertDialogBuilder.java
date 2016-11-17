@@ -66,7 +66,23 @@ public class AlertDialogBuilder implements DialogBuilder {
         AlertDialog alertDialog = builder.create();
         alertDialog.setTitle(context.getString(R.string.whats_new_title,
                 MainApplication.getVersionName()));
-        return  alertDialog;
+        return alertDialog;
+    }
+
+    @Override
+    public Dialog getLocationPermissionDialog(final String permission, final LocationPermissionDialogCloseHandler locationPermissionDialogCloseHandler) {
+
+        AlertDialog.Builder builder = getAlertDialogBuilder();
+        builder.setView(getLocationPermissionDialogContents(context))
+                .setPositiveButton(context.getText(R.string.close_button), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                        locationPermissionDialogCloseHandler.onCloseLocationPermissionDialog(permission);
+                    }
+                });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setTitle(context.getString(R.string.location_permission_title));
+        return alertDialog;
     }
 
     @Override
@@ -87,7 +103,7 @@ public class AlertDialogBuilder implements DialogBuilder {
                 });
         AlertDialog alertDialog = builder.create();
         alertDialog.setTitle(context.getString(R.string.hardware_accel_dialog_title));
-        return  alertDialog;
+        return alertDialog;
     }
 
     @Override
@@ -101,7 +117,7 @@ public class AlertDialogBuilder implements DialogBuilder {
             });
         AlertDialog alertDialog = builder.create();
         alertDialog.setCancelable(false); // This blocks the 'BACK' button
-        return  alertDialog;
+        return alertDialog;
     }
 
     private TextView getAboutDialogContents(final Context context) {
@@ -134,6 +150,19 @@ public class AlertDialogBuilder implements DialogBuilder {
 
     }
 
+    private TextView getLocationPermissionDialogContents(final Context context) {
+
+        TextView messageBoxText = new TextView(context);
+        int padding = getDefaultPaddingInPx();
+        messageBoxText.setPadding(padding, padding, padding, padding);
+        final SpannableString s = new SpannableString(context.getText(R.string.location_permission_text));
+        messageBoxText.setText(s);
+        messageBoxText.setMovementMethod(LinkMovementMethod.getInstance());
+
+        return messageBoxText;
+
+    }
+
     private TextView getWhatsNewDialogContents(final Context context) {
 
         TextView messageBoxText = new TextView(context);
@@ -158,6 +187,10 @@ public class AlertDialogBuilder implements DialogBuilder {
     private int dpToPixels(int dp) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dp * scale + 0.5f);
+    }
+
+    public interface LocationPermissionDialogCloseHandler {
+        void onCloseLocationPermissionDialog(String permission);
     }
 
 }
