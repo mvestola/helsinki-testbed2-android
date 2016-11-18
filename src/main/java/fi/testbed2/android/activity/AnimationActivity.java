@@ -1,13 +1,9 @@
 package fi.testbed2.android.activity;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
@@ -33,7 +29,6 @@ import fi.testbed2.R;
 import fi.testbed2.android.app.Logger;
 import fi.testbed2.android.app.MainApplication;
 import fi.testbed2.android.task.DownloadImagesTask;
-import fi.testbed2.android.ui.dialog.AlertDialogBuilder;
 import fi.testbed2.android.ui.view.AnimationView;
 import fi.testbed2.android.ui.view.MapScaleInfo;
 import fi.testbed2.domain.TestbedParsedPage;
@@ -48,7 +43,7 @@ import fi.testbed2.util.SeekBarUtil;
 @EActivity(R.layout.animation)
 @OptionsMenu(R.menu.animation_menu)
 @RoboGuice
-public class AnimationActivity extends AbstractActivity implements AlertDialogBuilder.LocationPermissionDialogCloseHandler {
+public class AnimationActivity extends AbstractActivity {
 
     @Inject
     LocationService locationService;
@@ -77,8 +72,6 @@ public class AnimationActivity extends AbstractActivity implements AlertDialogBu
 
     private DownloadImagesTask task;
 
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,7 +94,10 @@ public class AnimationActivity extends AbstractActivity implements AlertDialogBu
             return;
         }
 
-        initListeningUserLocationChanges();
+        if (settingsService.showUserLocation()) {
+            locationService.startListeningLocationChanges();
+        }
+
         updateSettingsToView();
 
         if (!allImagesDownloaded) {
@@ -282,7 +278,7 @@ public class AnimationActivity extends AbstractActivity implements AlertDialogBu
 
 
     @Click(R.id.playpause_button)
-	public void onPlayPauseButtonClick() {
+    public void onPlayPauseButtonClick() {
 
         if (!allImagesDownloaded) {
             return;
@@ -291,7 +287,7 @@ public class AnimationActivity extends AbstractActivity implements AlertDialogBu
         animationView.getPlayer().playOrPause();
         updatePlayingState(!isPlaying);
 
-	}
+    }
 
     private void updatePlayingState(boolean animationIsPlaying) {
 
@@ -303,56 +299,6 @@ public class AnimationActivity extends AbstractActivity implements AlertDialogBu
             playPauseButton.setImageResource(R.drawable.ic_media_play);
         }
 
-    }
-
-    private void initListeningUserLocationChanges() {
-        if (settingsService.showUserLocation()) {
-            if (LocationService.LOCATION_PROVIDER_NETWORK.equals(settingsService.getLocationProvider())) {
-                checkAndRequestLocationPermission(Manifest.permission.ACCESS_COARSE_LOCATION);
-            } else if (LocationService.LOCATION_PROVIDER_GPS.equals(settingsService.getLocationProvider())) {
-                checkAndRequestLocationPermission(Manifest.permission.ACCESS_FINE_LOCATION);
-            } else if (LocationService.LOCATION_PROVIDER_FIXED.equals(settingsService.getLocationProvider())) {
-                // No need to request location permission since fixed location
-                startListeningLocationChanges();
-            }
-        }
-    }
-
-    private void startListeningLocationChanges() {
-        locationService.startListeningLocationChanges();
-    }
-
-    private void checkAndRequestLocationPermission(String permission) {
-        if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
-                dialogBuilder.getLocationPermissionDialog(permission, this).show();
-            } else {
-                requestLocationPermission(permission);
-            }
-        } else {
-            startListeningLocationChanges();
-        }
-    }
-
-    private void requestLocationPermission(String permission) {
-        ActivityCompat.requestPermissions(this, new String[]{permission}, LOCATION_PERMISSION_REQUEST_CODE);
-    }
-
-    @Override
-    public void onCloseLocationPermissionDialog(String permission) {
-        requestLocationPermission(permission);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case LOCATION_PERMISSION_REQUEST_CODE: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    startListeningLocationChanges();
-                }
-                return;
-            }
-        }
     }
 
     @OptionsItem(R.id.main_menu_reset_zoom)

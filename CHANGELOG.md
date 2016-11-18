@@ -1,7 +1,7 @@
 Helsinki Testbed Viewer 2.0
 =============
 
-Version 2.0.14 (2016-11-17)
+Version 2.0.14 (2016-11-18)
 ---------------------------
 
 * Fixed showing user's current location on the map for Android versions equal or greater than 6.0 Marshmallow (API level 23)

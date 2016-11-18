@@ -1,8 +1,12 @@
 package fi.testbed2.android.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 
 import com.google.inject.Inject;
@@ -17,14 +21,17 @@ import fi.testbed2.R;
 import fi.testbed2.android.app.Logger;
 import fi.testbed2.android.app.MainApplication;
 import fi.testbed2.android.task.Task;
+import fi.testbed2.android.ui.dialog.AlertDialogBuilder;
+import fi.testbed2.service.LocationService;
 import fi.testbed2.service.SettingsService;
 
 @EActivity(R.layout.main)
 @OptionsMenu(R.menu.main_menu)
 @RoboGuice
-public class MainActivity extends AbstractActivity {
+public class MainActivity extends AbstractActivity implements AlertDialogBuilder.LocationPermissionDialogCloseHandler {
 
     public static final int PARSING_SUB_ACTIVITY = 1;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 10;
 
     @ViewById(R.id.button_rain_temperature)
     View buttonRainTemperature;
@@ -77,7 +84,7 @@ public class MainActivity extends AbstractActivity {
                 break;
         }
 
-        startMainParsingActivity();
+        checkPermissionsAndStartMainParsingActivity();
     }
 
     private void startMainParsingActivity() {
@@ -114,9 +121,57 @@ public class MainActivity extends AbstractActivity {
 
     }
 
+    private void checkPermissionsAndStartMainParsingActivity() {
+        String locationProvider = settingsService.getLocationProvider();
+        if (settingsService.showUserLocation() && (LocationService.LOCATION_PROVIDER_NETWORK.equals(locationProvider) || LocationService.LOCATION_PROVIDER_GPS.equals(locationProvider))) {
+            checkAndRequestLocationPermission();
+        } else {
+            Logger.debug("No need to request location permission");
+            startMainParsingActivity();
+        }
+    }
+
+    private void checkAndRequestLocationPermission() {
+        String permission = Manifest.permission.ACCESS_FINE_LOCATION;
+        Logger.debug("Checking location permission");
+        if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
+                dialogBuilder.getLocationPermissionDialog(permission, this).show();
+            } else {
+                requestLocationPermission(permission);
+            }
+        } else {
+            Logger.debug("Location permission already granted");
+            startMainParsingActivity();
+        }
+    }
+
+    private void requestLocationPermission(String permission) {
+        Logger.debug("Requesting location permission: "+permission);
+        ActivityCompat.requestPermissions(this, new String[]{permission}, LOCATION_PERMISSION_REQUEST_CODE);
+    }
+
+    @Override
+    public void onCloseLocationPermissionDialog(String permission) {
+        requestLocationPermission(permission);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case LOCATION_PERMISSION_REQUEST_CODE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Logger.debug("User granted location permission");
+                }
+                startMainParsingActivity();
+                return;
+            }
+        }
+    }
+
     @Override
     public void onRefreshFromMenuSelected() {
-        startMainParsingActivity();
+        checkPermissionsAndStartMainParsingActivity();
     }
 
 }
