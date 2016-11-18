@@ -60,7 +60,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
     private void initPreference(Context context, AttributeSet attrs) {
         setValuesFromXml(attrs);
         mSeekBar = new SeekBar(context, attrs);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             mSeekBar.setScaleY(3f);
         }
         mSeekBar.setMax(mMaxValue - mMinValue);
