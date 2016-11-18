@@ -2,6 +2,7 @@ package com.robobunny;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Build;
 import android.preference.Preference;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -59,6 +60,9 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
     private void initPreference(Context context, AttributeSet attrs) {
         setValuesFromXml(attrs);
         mSeekBar = new SeekBar(context, attrs);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            mSeekBar.setScaleY(3f);
+        }
         mSeekBar.setMax(mMaxValue - mMinValue);
         mSeekBar.setOnSeekBarChangeListener(this);
     }

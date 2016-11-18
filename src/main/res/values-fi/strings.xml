@@ -25,7 +25,7 @@
     <string name="whats_new_text">- Korjattu käyttäjän oman sijainnin näyttäminen kartalla Android-versioissa 6.0 (Marshmallow) tai uudempi</string>
 
     <string name="location_permission_title">Sijainnin käytön salliminen</string>
-    <string name="location_permission_text">Sallimalla ohjelman käyttää sijaintiasi näet paremmin kartalta onko sadealue tulossa nykyiseen sijaintiisi.\nOn suositeltavaa sallia ohjelman käyttää sijaintiasi.</string>
+    <string name="location_permission_text">Sallimalla ohjelman käyttää sijaintiasi näet paremmin kartalta esim. onko sadealue tulossa nykyiseen sijaintiisi.\n\nOn suositeltavaa sallia ohjelman käyttää sijaintiasi.</string>
 
     <string name="hardware_accel_dialog_title">Ota GPU-pakotus pois käytöstä</string>
     <string name="hardware_accel_dialog_text">

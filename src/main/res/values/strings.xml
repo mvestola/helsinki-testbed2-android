@@ -27,7 +27,7 @@
     <string name="whats_new_text">- Fixed showing user\'s current location on the map for Android versions equal or greater than 6.0 Marshmallow</string>
 
     <string name="location_permission_title">Allowing to read current location</string>
-    <string name="location_permission_text">Allowing the application to use your location helps you to see from the map if rain clouds are coming to your current location.\nIt is recommended to allow the application to use your location.</string>
+    <string name="location_permission_text">Allowing the application to use your location helps you to see from the map e.g. if rain clouds are coming to your current location.\n\nIt is recommended to allow the application to use your location.</string>
 
     <string name="hardware_accel_dialog_title">Please disable force GPU setting</string>
     <string name="hardware_accel_dialog_text">
