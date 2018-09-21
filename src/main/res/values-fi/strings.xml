@@ -11,8 +11,9 @@
         on ohjelma, joka näyttää karttakuvia Ilmatieteen
         laitoksen testbed.fmi.fi -sivustolta.\n\nOhjelma on yksityinen projekti, ei siis Ilmatieteen laitoksen
         kehittämä. Kaikki karttakuvat ladataan Helsinki Testbedin verkkosivuilta,
-        joiden tekijänoikeus kuuluu Helsinki Testbed -projektille.</string>
-    <string name="extra_license_text"></string>
+        joiden tekijänoikeus kuuluu Helsinki Testbed -projektille.\n\n
+    </string>
+    <string name="extra_license_text"><a href="https://mvestola.github.io/helsinki-testbed2-android/privacy-policy.html">Tietosuojakäytäntö (englanniksi)</a></string>
 
     <string name="about_visit_website">Ohjelman kotisivulle</string>
 
@@ -22,7 +23,10 @@
     <string name="do_not_show_again">Älä näytä jatkossa</string>
 
     <string name="whats_new_title">Uutta versiossa %1$s</string>
-    <string name="whats_new_text">- Korjattu käyttäjän oman sijainnin näyttäminen kartalla Android-versioissa 6.0 (Marshmallow) tai uudempi</string>
+    <string name="whats_new_text">
+        - Lisätty linkki tietosuojakäytäntöön ja päivitetty kirjastoja\n\n
+        - Lopetettu tuki vanhoille Android-versioille. Pienin tuettu Android-versio on 4.2 Jelly Bean (API level 17)
+    </string>
 
     <string name="location_permission_title">Sijainnin käytön salliminen</string>
     <string name="location_permission_text">Sallimalla ohjelman käyttää sijaintiasi näet paremmin kartalta esim. onko sadealue tulossa nykyiseen sijaintiisi.\n\nOn suositeltavaa sallia ohjelman käyttää sijaintiasi.</string>

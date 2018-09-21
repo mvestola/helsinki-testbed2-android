@@ -9,11 +9,11 @@ Required software
 You need to have the following software installed:
 
 * Gradle
-* Android SDK (API level 23)
+* Android SDK (API level 27)
 * Git
 * Android Studio
 
-Preferred operating system is Ubuntu/Kubuntu.
+Preferred operating system is Ubuntu.
 
 
 Android frameworks used
