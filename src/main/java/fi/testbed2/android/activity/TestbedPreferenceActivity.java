@@ -35,13 +35,7 @@ public class TestbedPreferenceActivity extends RoboPreferenceActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            setTheme(android.R.style.Theme_DeviceDefault_Light);
-        } else if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
-            setTheme(android.R.style.Theme_Holo_Light);
-        } else {
-            setTheme(android.R.style.Theme_Light);
-        }
+        setTheme(android.R.style.Theme_DeviceDefault_Light);
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.preferences);

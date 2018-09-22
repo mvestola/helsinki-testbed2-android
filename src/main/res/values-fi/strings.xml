@@ -18,8 +18,6 @@
     <string name="about_visit_website">Ohjelman kotisivulle</string>
 
     <string name="close_button">Sulje</string>
-    <string name="button_save">Tallenna</string>
-    <string name="button_cancel">Peruuta</string>
     <string name="do_not_show_again">Älä näytä jatkossa</string>
 
     <string name="whats_new_title">Uutta versiossa %1$s</string>
@@ -124,9 +122,6 @@
     <string name="map_type_wind">Tuuli</string>
     <string name="map_type_pressure">Ilmanpaine</string>
     <string name="map_type_dewpoint">Kastepiste</string>
-
-    <!-- Color Picker dialog -->
-    <string name="dialog_color_picker">Valitse väri</string>
 
     <string name="button_content_description_playpause">Toista/Pysäytä</string>
 

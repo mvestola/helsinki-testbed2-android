@@ -20,8 +20,6 @@
     <string name="about_visit_website">Application website</string>
 
     <string name="close_button">Close</string>
-    <string name="button_save">Save</string>
-    <string name="button_cancel">Cancel</string>
     <string name="do_not_show_again">Do not show again</string>
 
     <string name="whats_new_title">New in version %1$s</string>
@@ -128,9 +126,6 @@
     <string name="map_type_wind">Wind</string>
     <string name="map_type_pressure">Air pressure</string>
     <string name="map_type_dewpoint">Dew point</string>
-
-    <!-- Color Picker dialog -->
-    <string name="dialog_color_picker">Pick a color</string>
 
     <string name="button_content_description_playpause">Play/Pause</string>
 
