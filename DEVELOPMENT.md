@@ -117,7 +117,4 @@ Checklist for publishing a new release
 Future refactoring plans
 ------------------------
 
-When API level 9 support can be dropped, can do the following refactorings:
-* Use com.android.support:preference-v7:24.2.1 and built in MultiSelectListPreference (remove ListPreferenceMultiSelect)
-* Use better color picker preference: https://github.com/martin-stone/hsv-alpha-color-picker-android
 * Use better seekbar preference: https://github.com/MrBIMC/MaterialSeekBarPreference (this does not support allowed values?)

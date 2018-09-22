@@ -4,11 +4,11 @@ import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.preference.ListPreference;
+import android.preference.MultiSelectListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
 
 import com.google.inject.Inject;
-import com.threefiftynice.android.preference.ListPreferenceMultiSelect;
 
 import fi.testbed2.R;
 import fi.testbed2.android.app.Logger;
@@ -77,12 +77,11 @@ public class TestbedPreferenceActivity extends RoboPreferenceActivity
 
         String[] entries = municipalityService.getFinlandMunicipalityNamesShownInTestbedMap();
         String[] entryValues = entries;
-        ListPreferenceMultiSelect lp =
-                (ListPreferenceMultiSelect) getPreferenceManager().
-                        findPreference(SettingsService.PREF_LOCATION_SHOW_MUNICIPALITIES);
-        lp.setEntries(entries);
-        lp.setEntryValues(entryValues);
-
+        MultiSelectListPreference multiSelectListPreference =
+                (MultiSelectListPreference) getPreferenceManager().
+                        findPreference(SettingsService.PREF_LOCATION_SHOW_MUNICIPALITIES_LIST);
+        multiSelectListPreference.setEntries(entries);
+        multiSelectListPreference.setEntryValues(entryValues);
     }
 
     @Override

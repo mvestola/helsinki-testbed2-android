@@ -2,6 +2,7 @@ package fi.testbed2.service.impl;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.location.LocationManager;
 import com.google.inject.Inject;
@@ -15,10 +16,13 @@ import fi.testbed2.domain.Municipality;
 import fi.testbed2.service.LocationService;
 import fi.testbed2.service.MunicipalityService;
 import fi.testbed2.service.SettingsService;
-import net.margaritov.preference.colorpicker.ColorPickerPreference;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Singleton
 public class SharedPreferenceSettingsService implements SettingsService {
@@ -103,21 +107,34 @@ public class SharedPreferenceSettingsService implements SettingsService {
         return new MapScaleInfo(scaleFactor, pivotX, pivotY);
     }
 
+    private void handleLegacyMunicipalityListPreference() {
+        String municipalitiesString = sharedPreferences.getString(PREF_LOCATION_SHOW_MUNICIPALITIES_LEGACY, "");
+
+        if (municipalitiesString != null && municipalitiesString.length() > 0) {
+            Logger.debug("Found legacy municipalities value");
+            String[] municipalityArray = municipalitiesString.split("===");
+            if (municipalityArray.length<1 || municipalityArray[0].length()==0) {
+                Logger.debug("Copy legacy municipality values to new preference");
+                Set<String> municipalitySet = new HashSet<String>(Arrays.asList(municipalityArray));
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putStringSet(PREF_LOCATION_SHOW_MUNICIPALITIES_LIST, municipalitySet);
+                editor.remove(PREF_LOCATION_SHOW_MUNICIPALITIES_LEGACY);
+                editor.apply();
+            }
+        }
+    }
+
     @Override
     public List<Municipality> getSavedMunicipalities() {
+        handleLegacyMunicipalityListPreference();
 
         List<Municipality> municipalities = new ArrayList<Municipality>();
 
-        String municipalitiesString = sharedPreferences.getString(PREF_LOCATION_SHOW_MUNICIPALITIES, "");
+        Set<String> municipalitiesSet = sharedPreferences.getStringSet(PREF_LOCATION_SHOW_MUNICIPALITIES_LIST, Collections.<String>emptySet());
+        List<String> municipalityList = new ArrayList(municipalitiesSet);
+        Collections.sort(municipalityList);
 
-        String[] municipalityArray = municipalitiesString.split(
-                SettingsService.PREF_LOCATION_SHOW_MUNICIPALITIES_SPLIT);
-
-        if (municipalityArray.length<1 || municipalityArray[0].length()==0) {
-            return municipalities;
-        }
-
-        for (String municipalityName : municipalityArray) {
+        for (String municipalityName : municipalityList) {
             Municipality municipality = municipalityService.getMunicipality(municipalityName);
             if (municipality!=null) {
                 municipalities.add(municipality);
@@ -125,7 +142,6 @@ public class SharedPreferenceSettingsService implements SettingsService {
         }
 
         return municipalities;
-
     }
 
     @Override
@@ -192,16 +208,66 @@ public class SharedPreferenceSettingsService implements SettingsService {
     @Override
     public String getMapMarkerColor() {
         int color = sharedPreferences.getInt(PREF_LOCATION_MAP_MARKER_COLOR,
-                ColorPickerPreference.convertToColorInt(context.getString(R.string.preference_map_marker_color_default)));
-        return ColorPickerPreference.convertToARGB(color);
+                convertToColorInt(context.getString(R.string.preference_map_marker_color_default)));
+        return convertToARGB(color);
     }
 
     @Override
     public String getMapPointColor() {
         int color = sharedPreferences.getInt(PREF_LOCATION_MAP_POINT_COLOR,
-                ColorPickerPreference.convertToColorInt(context.getString(R.string.preference_map_point_color_default)));
-        return ColorPickerPreference.convertToARGB(color);
+                convertToColorInt(context.getString(R.string.preference_map_point_color_default)));
+        return convertToARGB(color);
     }
+
+    private int convertToColorInt(String argb) throws NumberFormatException {
+
+        if (argb.startsWith("#")) {
+            argb = argb.replace("#", "");
+        }
+
+        int alpha = 0, red = 0, green = 0, blue = 0;
+
+        if (argb.length() == 8) {
+            alpha = Integer.parseInt(argb.substring(0, 2), 16);
+            red = Integer.parseInt(argb.substring(2, 4), 16);
+            green = Integer.parseInt(argb.substring(4, 6), 16);
+            blue = Integer.parseInt(argb.substring(6, 8), 16);
+        }
+        else if (argb.length() == 6) {
+            alpha = 255;
+            red = Integer.parseInt(argb.substring(0, 2), 16);
+            green = Integer.parseInt(argb.substring(2, 4), 16);
+            blue = Integer.parseInt(argb.substring(4, 6), 16);
+        }
+
+        return Color.argb(alpha, red, green, blue);
+    }
+
+    private String convertToARGB(int color) {
+        String alpha = Integer.toHexString(Color.alpha(color));
+        String red = Integer.toHexString(Color.red(color));
+        String green = Integer.toHexString(Color.green(color));
+        String blue = Integer.toHexString(Color.blue(color));
+
+        if (alpha.length() == 1) {
+            alpha = "0" + alpha;
+        }
+
+        if (red.length() == 1) {
+            red = "0" + red;
+        }
+
+        if (green.length() == 1) {
+            green = "0" + green;
+        }
+
+        if (blue.length() == 1) {
+            blue = "0" + blue;
+        }
+
+        return "#" + alpha + red + green + blue;
+    }
+
 
     private static String getMapBoundsPreferenceKey(int orientation) {
         return PREF_BOUNDS_PREFERENCE_KEY_PREFIX + orientation;

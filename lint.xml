@@ -33,20 +33,11 @@
     <issue id="ObsoleteLayoutParam">
         <ignore path="src/main/res/**/dialog_color_picker.xml" />
     </issue>
-    <issue id="InflateParams">
-        <ignore path="**/net/margaritov/preference/colorpicker/ColorPickerDialog.java" />
-    </issue>
-    <issue id="ParcelClassLoader">
-        <ignore path="**/net/margaritov/preference/colorpicker/ColorPickerPreference.java" />
-    </issue>
     <issue id="UseSparseArrays">
         <ignore path="src/main/java/com/robobunny/SeekBarPreference.java" />
     </issue>
     <issue id="Orientation">
         <ignore path="src/main/res/layout/seek_bar_preference.xml" />
-    </issue>
-    <issue id="Recycle">
-        <ignore path="**/com/threefiftynice/android/preference/ListPreferenceMultiSelect.java" />
     </issue>
 
     <!-- Should work without locale -->
@@ -65,7 +56,6 @@
 
     <!-- External lib and map only reacts to gestures -->
     <issue id="ClickableViewAccessibility">
-        <ignore path="**/net/margaritov/preference/colorpicker/ColorPickerView.java" />
         <ignore path="src/main/java/fi/testbed2/**/AnimationView.java" />
     </issue>
 
