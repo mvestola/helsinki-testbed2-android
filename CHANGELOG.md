@@ -1,10 +1,11 @@
 Helsinki Testbed Viewer 2.0
 =============
 
-Version 2.0.15 (2018-09-21)
+Version 2.0.15 (2018-09-22)
 ---------------------------
 
-* Update libraries and privacy policy
+* Updated support libraries and target Android version to 8.1 Oreo (API level 27)
+* Added link to privacy policy
 * Dropped support for old Android versions. The minimum supported Android version is now 4.2 Jelly Bean (API level 17)
 
 Version 2.0.14 (2016-11-18)

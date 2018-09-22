@@ -24,7 +24,8 @@
 
     <string name="whats_new_title">Uutta versiossa %1$s</string>
     <string name="whats_new_text">
-        - Lisätty linkki tietosuojakäytäntöön ja päivitetty kirjastoja\n\n
+        - Päivitetty apu-kirjastoja kohde Android-versio versioon 8.1 Oreo (API level 27)\n\n
+        - Lisätty linkki tietosuojakäytäntöön\n\n
         - Lopetettu tuki vanhoille Android-versioille. Pienin tuettu Android-versio on 4.2 Jelly Bean (API level 17)
     </string>
 
