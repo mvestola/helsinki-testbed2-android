@@ -107,27 +107,8 @@ public class SharedPreferenceSettingsService implements SettingsService {
         return new MapScaleInfo(scaleFactor, pivotX, pivotY);
     }
 
-    private void handleLegacyMunicipalityListPreference() {
-        String municipalitiesString = sharedPreferences.getString(PREF_LOCATION_SHOW_MUNICIPALITIES_LEGACY, "");
-
-        if (municipalitiesString != null && municipalitiesString.length() > 0) {
-            Logger.debug("Found legacy municipalities value");
-            String[] municipalityArray = municipalitiesString.split("===");
-            if (municipalityArray.length<1 || municipalityArray[0].length()==0) {
-                Logger.debug("Copy legacy municipality values to new preference");
-                Set<String> municipalitySet = new HashSet<String>(Arrays.asList(municipalityArray));
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putStringSet(PREF_LOCATION_SHOW_MUNICIPALITIES_LIST, municipalitySet);
-                editor.remove(PREF_LOCATION_SHOW_MUNICIPALITIES_LEGACY);
-                editor.apply();
-            }
-        }
-    }
-
     @Override
     public List<Municipality> getSavedMunicipalities() {
-        handleLegacyMunicipalityListPreference();
-
         List<Municipality> municipalities = new ArrayList<Municipality>();
 
         Set<String> municipalitiesSet = sharedPreferences.getStringSet(PREF_LOCATION_SHOW_MUNICIPALITIES_LIST, Collections.<String>emptySet());
