@@ -1,140 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:robobunny="http://robobunny.com"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:robobunny="http://robobunny.com">
 
     <PreferenceCategory android:title="@string/preference_category_basic">
         <com.robobunny.SeekBarPreference
-                android:key="PREF_MAP_TIME_STEP"
-                android:title="@string/preference_time_step_title"
-                android:summary="@string/preference_time_step_summary"
-                android:defaultValue="15"
-                android:max="180"
-                robobunny:min="5"
-                robobunny:unitsLeft=""
-                robobunny:unitsRight=""
-                robobunny:allowedEntries="@array/map_time_step_options"
-                robobunny:allowedEntryValues="@array/map_time_step_values"
-                />
+            android:defaultValue="15"
+            android:key="PREF_MAP_TIME_STEP"
+            android:max="180"
+            android:summary="@string/preference_time_step_summary"
+            android:title="@string/preference_time_step_title"
+            robobunny:allowedEntries="@array/map_time_step_options"
+            robobunny:allowedEntryValues="@array/map_time_step_values"
+            robobunny:min="5"
+            robobunny:unitsLeft=""
+            robobunny:unitsRight="" />
 
         <com.robobunny.SeekBarPreference
-                android:key="PREF_MAP_NUMBER_OF_IMAGES"
-                android:title="@string/preference_number_of_images_title"
-                android:summary="@string/preference_number_of_images_summary"
-                android:defaultValue="10"
-                android:max="15"
-                robobunny:min="1"
-                robobunny:unitsLeft=""
-                robobunny:unitsRight=""
-                robobunny:allowedEntries="@array/map_number_of_images_options"
-                robobunny:allowedEntryValues="@array/map_number_of_images_values"
-                />
+            android:defaultValue="10"
+            android:key="PREF_MAP_NUMBER_OF_IMAGES"
+            android:max="15"
+            android:summary="@string/preference_number_of_images_summary"
+            android:title="@string/preference_number_of_images_title"
+            robobunny:allowedEntries="@array/map_number_of_images_options"
+            robobunny:allowedEntryValues="@array/map_number_of_images_values"
+            robobunny:min="1"
+            robobunny:unitsLeft=""
+            robobunny:unitsRight="" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/preference_category_advanced">
 
         <PreferenceScreen
-                android:key="PREF_SCREEN_ANIM"
-                android:title="@string/preference_category_animation"
-                android:summary="@string/preference_screen_animation_summary">
+            android:key="PREF_SCREEN_ANIM"
+            android:summary="@string/preference_screen_animation_summary"
+            android:title="@string/preference_category_animation">
 
             <com.robobunny.SeekBarPreference
-                    android:key="PREF_ANIM_FRAME_DELAY"
-                    android:title="@string/preference_anim_frame_delay_title"
-                    android:summary="@string/preference_anim_frame_delay_summary"
-                    android:defaultValue="1000"
-                    android:max="3000"
-                    robobunny:min="100"
-                    robobunny:unitsLeft=""
-                    robobunny:unitsRight=" s"
-                    robobunny:allowedEntries="@array/anim_frame_delay_options"
-                    robobunny:allowedEntryValues="@array/anim_frame_delay_values"
-                    />
+                android:defaultValue="1000"
+                android:key="PREF_ANIM_FRAME_DELAY"
+                android:max="3000"
+                android:summary="@string/preference_anim_frame_delay_summary"
+                android:title="@string/preference_anim_frame_delay_title"
+                robobunny:allowedEntries="@array/anim_frame_delay_options"
+                robobunny:allowedEntryValues="@array/anim_frame_delay_values"
+                robobunny:min="100"
+                robobunny:unitsLeft=""
+                robobunny:unitsRight=" s" />
 
             <CheckBoxPreference
-                    android:key="PREF_ANIM_AUTOSTART"
-                    android:title="@string/preference_anim_autostart_title"
-                    android:summary="@string/preference_anim_autostart_summary"
-                    android:defaultValue="true"
-                    />
+                android:defaultValue="true"
+                android:key="PREF_ANIM_AUTOSTART"
+                android:summary="@string/preference_anim_autostart_summary"
+                android:title="@string/preference_anim_autostart_title" />
 
         </PreferenceScreen>
 
         <PreferenceScreen
-                android:key="PREF_SCREEN_LOCATION"
-                android:title="@string/preference_category_location"
-                android:summary="@string/preference_screen_location_summary">
+            android:key="PREF_SCREEN_LOCATION"
+            android:summary="@string/preference_screen_location_summary"
+            android:title="@string/preference_category_location">
 
             <PreferenceCategory android:title="@string/preference_category_user_location">
 
                 <CheckBoxPreference
-                        android:id="@+id/preference_location_shown_user_location"
-                        android:key="PREF_LOCATION_SHOW_USER_LOCATION"
-                        android:title="@string/preference_location_user_title"
-                        android:summary="@string/preference_location_user_summary"
-                        android:defaultValue="true"
-                        />
+                    android:id="@+id/preference_location_shown_user_location"
+                    android:defaultValue="true"
+                    android:key="PREF_LOCATION_SHOW_USER_LOCATION"
+                    android:summary="@string/preference_location_user_summary"
+                    android:title="@string/preference_location_user_title" />
+
                 <ListPreference
-                        android:id="@+id/preference_location_provider"
-                        android:key="PREF_LOCATION_PROVIDER"
-                        android:title="@string/preference_location_provider_title"
-                        android:summary="@string/preference_location_provider_summary"
-                        android:entries="@array/location_provider_options"
-                        android:entryValues="@array/location_provider_values"
-                        android:defaultValue="network"
-                        android:dependency="PREF_LOCATION_SHOW_USER_LOCATION"
-                        />
-            <net.margaritov.preference.colorpicker.ColorPickerPreference
-                        android:key="PREF_LOCATION_MAP_MARKER_COLOR"
-                        android:title="@string/preference_map_marker_color_title"
-                        android:summary="@string/preference_map_marker_color_summary"
-                        android:defaultValue="@string/preference_map_marker_color_default"
-                        alphaSlider="true"
-                        android:dependency="PREF_LOCATION_SHOW_USER_LOCATION"
-                        />
+                    android:id="@+id/preference_location_provider"
+                    android:defaultValue="network"
+                    android:dependency="PREF_LOCATION_SHOW_USER_LOCATION"
+                    android:entries="@array/location_provider_options"
+                    android:entryValues="@array/location_provider_values"
+                    android:key="PREF_LOCATION_PROVIDER"
+                    android:summary="@string/preference_location_provider_summary"
+                    android:title="@string/preference_location_provider_title" />
+
+                <com.rarepebble.colorpicker.ColorPreference
+                    android:defaultValue="@string/preference_map_marker_color_default"
+                    android:dependency="PREF_LOCATION_SHOW_USER_LOCATION"
+                    android:key="PREF_LOCATION_MAP_MARKER_COLOR"
+                    android:summary="@string/preference_map_marker_color_summary"
+                    android:title="@string/preference_map_marker_color_title"
+                    app:colorpicker_showHex="false" />
+
                 <com.robobunny.SeekBarPreference
-                        android:key="PREF_LOCATION_MAP_MARKER_SIZE_DP"
-                        android:title="@string/preference_map_marker_size_title"
-                        android:summary="@string/preference_map_marker_size_summary"
-                        android:defaultValue="25"
-                        android:max="100"
-                        android:dependency="PREF_LOCATION_SHOW_USER_LOCATION"
-                        robobunny:min="10"
-                        robobunny:unitsLeft=""
-                        robobunny:unitsRight=" dp"
-                        />
+                    android:defaultValue="25"
+                    android:dependency="PREF_LOCATION_SHOW_USER_LOCATION"
+                    android:key="PREF_LOCATION_MAP_MARKER_SIZE_DP"
+                    android:max="100"
+                    android:summary="@string/preference_map_marker_size_summary"
+                    android:title="@string/preference_map_marker_size_title"
+                    robobunny:min="10"
+                    robobunny:unitsLeft=""
+                    robobunny:unitsRight=" dp" />
 
             </PreferenceCategory>
 
             <PreferenceCategory android:title="@string/preference_category_municipality_location">
 
-                <com.threefiftynice.android.preference.ListPreferenceMultiSelect
-                        app:checkAll="check"
-                        app:separator="==="
-                        android:defaultValue=""
-                        android:key="PREF_LOCATION_MUNICIPALITIES"
-                        android:title="@string/preference_location_municipalities_title"
-                        android:dialogTitle="@string/preference_location_municipalities_title"
-                        android:summary="@string/preference_location_municipalities_summary"
-                        />
-                <net.margaritov.preference.colorpicker.ColorPickerPreference
-                        android:key="PREF_LOCATION_MAP_POINT_COLOR"
-                        android:title="@string/preference_map_point_color_title"
-                        android:summary="@string/preference_map_point_color_summary"
-                        android:defaultValue="@string/preference_map_point_color_default"
-                        alphaSlider="true"
-                        />
+                <MultiSelectListPreference
+                    android:enabled="true"
+                    android:key="PREF_LOCATION_MUNICIPALITIES_LIST"
+                    android:persistent="true"
+                    android:summary="@string/preference_location_municipalities_summary"
+                    android:title="@string/preference_location_municipalities_title" />
+
+                <com.rarepebble.colorpicker.ColorPreference
+                    android:defaultValue="@string/preference_map_point_color_default"
+                    android:key="PREF_LOCATION_MAP_POINT_COLOR"
+                    android:summary="@string/preference_map_point_color_summary"
+                    android:title="@string/preference_map_point_color_title"
+                    app:colorpicker_showHex="false" />
+
                 <com.robobunny.SeekBarPreference
-                        android:key="PREF_LOCATION_MAP_POINT_SIZE_DP"
-                        android:title="@string/preference_map_point_size_title"
-                        android:summary="@string/preference_map_point_size_summary"
-                        android:defaultValue="10"
-                        android:max="50"
-                        robobunny:min="5"
-                        robobunny:unitsLeft=""
-                        robobunny:unitsRight=" dp"
-                        />
+                    android:defaultValue="10"
+                    android:key="PREF_LOCATION_MAP_POINT_SIZE_DP"
+                    android:max="50"
+                    android:summary="@string/preference_map_point_size_summary"
+                    android:title="@string/preference_map_point_size_title"
+                    robobunny:min="5"
+                    robobunny:unitsLeft=""
+                    robobunny:unitsRight=" dp" />
 
             </PreferenceCategory>
 
@@ -143,11 +134,10 @@
     </PreferenceCategory>
 
     <CheckBoxPreference
-            android:key="PREF_SHOW_ADS"
-            android:title="@string/preference_show_ads_title"
-            android:summary="@string/preference_show_ads_summary"
-            android:defaultValue="true"
-            android:editable="false"
-            />
+        android:defaultValue="true"
+        android:editable="false"
+        android:key="PREF_SHOW_ADS"
+        android:summary="@string/preference_show_ads_summary"
+        android:title="@string/preference_show_ads_title" />
 
 </PreferenceScreen>

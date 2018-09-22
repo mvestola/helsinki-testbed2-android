@@ -35,8 +35,7 @@ public interface SettingsService {
     public static final String PREF_LOCATION_MAP_POINT_COLOR = "PREF_LOCATION_MAP_POINT_COLOR";
     public static final String PREF_LOCATION_MAP_POINT_SIZE_DP = "PREF_LOCATION_MAP_POINT_SIZE_DP";
 
-    public static final String PREF_LOCATION_SHOW_MUNICIPALITIES = "PREF_LOCATION_MUNICIPALITIES";
-    public static final String PREF_LOCATION_SHOW_MUNICIPALITIES_SPLIT = "===";
+    public static final String PREF_LOCATION_SHOW_MUNICIPALITIES_LIST = "PREF_LOCATION_MUNICIPALITIES_LIST";
 
     public static final String PREF_SHOW_ADS = "PREF_SHOW_ADS";
 

@@ -76,6 +76,7 @@
         <LinearLayout
             android:id="@+id/button_wind"
             android:clickable="true"
+            android:focusable="true"
             android:background="@android:drawable/btn_default"
             android:layout_margin="1dp"
             android:orientation="vertical"
@@ -102,6 +103,7 @@
         <LinearLayout
             android:id="@+id/button_humidity"
             android:clickable="true"
+            android:focusable="true"
             android:background="@android:drawable/btn_default"
             android:layout_margin="1dp"
             android:orientation="vertical"
@@ -128,6 +130,7 @@
         <LinearLayout
             android:id="@+id/button_air_pressure"
             android:clickable="true"
+            android:focusable="true"
             android:background="@android:drawable/btn_default"
             android:layout_margin="1dp"
             android:orientation="vertical"
@@ -154,6 +157,7 @@
         <LinearLayout
             android:id="@+id/button_dew_point"
             android:clickable="true"
+            android:focusable="true"
             android:background="@android:drawable/btn_default"
             android:layout_margin="1dp"
             android:orientation="vertical"

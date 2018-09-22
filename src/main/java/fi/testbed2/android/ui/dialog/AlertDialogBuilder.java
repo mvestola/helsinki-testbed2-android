@@ -128,10 +128,10 @@ public class AlertDialogBuilder implements DialogBuilder {
         final SpannableString s1 = new SpannableString(context.getText(R.string.about_text));
         final SpannableString s2 = new SpannableString(context.getText(R.string.extra_license_text));
         Linkify.addLinks(s1, Linkify.WEB_URLS);
-        Linkify.addLinks(s2, Linkify.WEB_URLS);
         messageBoxText.append(s1);
         messageBoxText.append(s2);
         messageBoxText.setMovementMethod(LinkMovementMethod.getInstance());
+        messageBoxText.setAutoLinkMask(1);
 
         return messageBoxText;
 

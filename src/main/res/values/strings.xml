@@ -13,18 +13,21 @@
     <string name="about_title" translatable="false">Helsinki Testbed Viewer %1$s</string>
     <string name="about_text">Helsinki Testbed Viewer 2.0 is an application which shows weather maps
         from the Finnish Meteorological Institute (FMI) website <b>testbed.fmi.fi</b>.\n\nThis application is a private project and not developed by the FMI.
-        All map images are downloaded from the Helsinki Testbed website which is copyrighted by the Helsinki Testbed project.</string>
-    <string name="extra_license_text"></string>
+        All map images are downloaded from the Helsinki Testbed website which is copyrighted by the Helsinki Testbed project.\n\n
+    </string>
+    <string name="extra_license_text"><a href="https://mvestola.github.io/helsinki-testbed2-android/privacy-policy.html">Privacy policy</a></string>
 
     <string name="about_visit_website">Application website</string>
 
     <string name="close_button">Close</string>
-    <string name="button_save">Save</string>
-    <string name="button_cancel">Cancel</string>
     <string name="do_not_show_again">Do not show again</string>
 
     <string name="whats_new_title">New in version %1$s</string>
-    <string name="whats_new_text">- Fixed showing user\'s current location on the map for Android versions equal or greater than 6.0 Marshmallow</string>
+    <string name="whats_new_text">
+        - Updated support libraries and target Android version to 8.1 Oreo (API level 27)\n\n
+        - Added link to privacy policy\n\n
+        - Dropped support for old Android versions. The minimum supported Android version is now 4.2 Jelly Bean (API level 17)
+    </string>
 
     <string name="location_permission_title">Allowing to read current location</string>
     <string name="location_permission_text">Allowing the application to use your location helps you to see from the map e.g. if rain clouds are coming to your current location.\n\nIt is recommended to allow the application to use your location.</string>
@@ -123,9 +126,6 @@
     <string name="map_type_wind">Wind</string>
     <string name="map_type_pressure">Air pressure</string>
     <string name="map_type_dewpoint">Dew point</string>
-
-    <!-- Color Picker dialog -->
-    <string name="dialog_color_picker">Pick a color</string>
 
     <string name="button_content_description_playpause">Play/Pause</string>
 

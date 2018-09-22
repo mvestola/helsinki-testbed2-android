@@ -2,7 +2,7 @@ package fi.testbed2;
 
 import org.junit.runners.model.InitializationError;
 import org.robolectric.DefaultTestLifecycle;
-import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.TestLifecycle;
 
@@ -12,7 +12,7 @@ import roboguice.RoboGuice;
  * Use this test runner to for activity testing. This automatically injects the
  * beans in the activities defined in the TestModule class.
  */
-public class InjectedTestRunner extends RobolectricGradleTestRunner {
+public class InjectedTestRunner extends RobolectricTestRunner {
 
     public InjectedTestRunner(Class<?> testClass) throws InitializationError {
         super(testClass);
