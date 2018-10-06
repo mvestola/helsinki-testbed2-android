@@ -6,10 +6,7 @@ from the [Helsinki Testbed project](http://testbed.fmi.fi/). With the applicatio
 you can, for example, view the real-time rain radar or current wind speed and direction.
 The maps cover the Southern Finland.
 
-<img src="google_play/images/phone/en/main_screen.png" width="200" alt="Main screen of the application"/>
-<img src="google_play/images/phone/en/rain_radar_municipalities.png" width="200" alt="Rain and temperature view from the application"/>
-<img src="google_play/images/phone/en/wind.png" width="200" alt="Wind view from the application"/>
-<img src="google_play/images/phone/en/settings_1.png" width="200" alt="Settings view from the application"/>
+<img src="google_play/images/phone/en/main_screen.png" width="200" alt="Main screen of the application"/> <img src="google_play/images/phone/en/rain_radar_municipalities.png" width="200" alt="Rain and temperature view from the application"/> <img src="google_play/images/phone/en/wind.png" width="200" alt="Wind view from the application"/> <img src="google_play/images/phone/en/settings_1.png" width="200" alt="Settings view from the application"/>
 
 The Helsinki Testbed project is owned by the
 [Finnish Meteorological Institute](http://ilmatieteenlaitos.fi/). __The Helsinki Testbed Viewer 2.0
