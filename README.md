@@ -33,8 +33,7 @@ Download
 -------
 
 The latest stable version of this application can be downloaded to an Android phone
-from [the application website in Google Play]
-(https://play.google.com/store/apps/details?id=fi.testbed2).
+from [the application website in Google Play](https://play.google.com/store/apps/details?id=fi.testbed2).
 
 Previous versions and original author
 -------
