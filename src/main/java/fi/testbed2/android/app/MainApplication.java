@@ -39,7 +39,7 @@ public class MainApplication extends Application {
         super.onCreate();
         context = this;
         app = this;
-        MobileAds.initialize(getApplicationContext(), "ca-app-pub-0260854390576047~2779636901");
+        MobileAds.initialize(getApplicationContext());
         Logger.debug("MainApplication started");
     }
 
