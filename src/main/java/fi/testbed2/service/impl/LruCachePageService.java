@@ -1,7 +1,7 @@
 package fi.testbed2.service.impl;
 
 import android.app.ActivityManager;
-import android.support.v4.util.LruCache;
+import androidx.collection.LruCache;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import fi.testbed2.R;

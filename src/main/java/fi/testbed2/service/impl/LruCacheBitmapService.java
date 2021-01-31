@@ -4,7 +4,7 @@ import android.app.ActivityManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
-import android.support.v4.util.LruCache;
+import androidx.collection.LruCache;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import fi.testbed2.R;
