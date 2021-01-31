@@ -28,7 +28,6 @@ import static org.junit.Assert.assertTrue;
 import static org.robolectric.Shadows.shadowOf;
 
 @RunWith(InjectedTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = AbstractTestCase.ROBOLECTRIC_API_LEVEL)
 public class MainActivityTest extends AbstractTestCase {
 
     private MainActivity_ activity;

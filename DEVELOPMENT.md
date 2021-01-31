@@ -8,10 +8,11 @@ Required software
 
 You need to have the following software installed:
 
-* Gradle 4.4
-* Android SDK (API level 27)
+* Java 11
+* Gradle 6.5
+* Android SDK (API level 30)
 * Git
-* Android Studio 3.1.4
+* Android Studio 4.1.2
 
 Preferred operating system is Ubuntu.
 

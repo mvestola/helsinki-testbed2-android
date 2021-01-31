@@ -24,7 +24,6 @@ import static org.junit.Assert.*;
 import static org.robolectric.Shadows.shadowOf;
 
 @RunWith(InjectedTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = AbstractTestCase.ROBOLECTRIC_API_LEVEL)
 public class ParsingActivityTest extends AbstractTestCase {
 
     private ParsingActivity_ activity;

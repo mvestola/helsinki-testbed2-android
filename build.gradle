@@ -4,7 +4,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.0'
+        classpath 'com.android.tools.build:gradle:4.1.2'
     }
 }
 
@@ -70,20 +70,19 @@ android {
 def powerMockVersion = '2.0.9'
 def androidAnnotationsVersion = '4.8.0'
 def robolectricVersion = '4.5'
-def androidxVersion = '1.2.0'
 
 dependencies {
+    implementation 'androidx.appcompat:appcompat:1.2.0'
     testImplementation 'junit:junit:4.13.1'
     annotationProcessor "org.projectlombok:lombok:1.18.18"
-    compileOnly 'org.projectlombok:lombok:1.18.2'
+    compileOnly 'org.projectlombok:lombok:1.18.18'
     annotationProcessor "org.androidannotations:androidannotations:$androidAnnotationsVersion"
     implementation "org.androidannotations:androidannotations-api:$androidAnnotationsVersion"
     annotationProcessor "org.androidannotations:roboguice:$androidAnnotationsVersion"
     implementation "org.androidannotations:roboguice-api:$androidAnnotationsVersion"
     implementation 'com.google.android.gms:play-services-ads:19.7.0'
-    implementation "androidx.appcompat:appcompat:$androidxVersion"
     implementation 'com.jhlabs:javaproj-noawt:1.0.6'
-    implementation 'org.roboguice:roboguice:4.0.0'
+    implementation 'org.roboguice:roboguice:3.0.1'
     implementation 'com.github.pwittchen:weathericonview:1.1.0'
     implementation 'com.google.android:flexbox:1.1.1'
     implementation 'com.rarepebble:colorpicker:3.0.1'
@@ -93,19 +92,4 @@ dependencies {
     testImplementation "org.powermock:powermock-module-junit4-rule:$powerMockVersion"
     testImplementation "org.powermock:powermock-classloading-xstream:$powerMockVersion"
     testImplementation "org.powermock:powermock-api-mockito2:$powerMockVersion"
-
-    // Need to explicitly define versions here because of conflicts with play-services-ads lib old dependencies
-    implementation "androidx.vectordrawable:vectordrawable:$androidxVersion"
-    implementation "androidx.browser:browser:$androidxVersion"
-    implementation "androidx.annotation:annotation:$androidxVersion"
-    implementation "androidx.legacy:legacy-support-v4:$androidxVersion"
-    implementation "androidx.legacy:legacy-support-v13:$androidxVersion"
-    implementation "com.google.android.material:material:$androidxVersion"
-    implementation "androidx.gridlayout:gridlayout:$androidxVersion"
-    implementation "androidx.mediarouter:mediarouter:$androidxVersion"
-    implementation "androidx.cardview:cardview:$androidxVersion"
-    implementation "androidx.palette:palette:$androidxVersion"
-    implementation "androidx.leanback:leanback:$androidxVersion"
-    implementation "androidx.recyclerview:recyclerview:$androidxVersion"
-    implementation "androidx.exifinterface:exifinterface:$androidxVersion"
 }
