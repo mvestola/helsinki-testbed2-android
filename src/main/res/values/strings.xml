@@ -81,13 +81,13 @@
 
     <string name="preference_map_marker_color_title">Map marker color</string>
     <string name="preference_map_marker_color_summary">Choose the background color of the marker showing your current location</string>
-    <string name="preference_map_marker_color_default" translatable="false">#C8D94585</string>
+    <string name="preference_map_marker_color_default" translatable="false">0xC8D94585</string>
     <string name="preference_map_marker_size_title">Map marker size</string>
     <string name="preference_map_marker_size_summary">Specify the height of the marker showing your current location</string>
 
     <string name="preference_map_point_color_title">Municipality color</string>
     <string name="preference_map_point_color_summary">Choose the background color of the point showing a municipality</string>
-    <string name="preference_map_point_color_default" translatable="false">#C8FF8000</string>
+    <string name="preference_map_point_color_default" translatable="false">0xC8FF8000</string>
     <string name="preference_map_point_size_title">Municipality point size</string>
     <string name="preference_map_point_size_summary">Specify the diameter of the point showing a municipality</string>
 

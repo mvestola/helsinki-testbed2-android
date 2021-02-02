@@ -118,4 +118,5 @@ Checklist for publishing a new release
 Future refactoring plans
 ------------------------
 
+* Get rid of RoboGuice and use Dagger Hilt
 * Use better seekbar preference: https://github.com/MrBIMC/MaterialSeekBarPreference (this does not support allowed values?)

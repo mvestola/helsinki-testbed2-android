@@ -100,7 +100,7 @@ public abstract class AbstractActivity extends AppCompatActivity {
 
     @OptionsItem(R.id.main_menu_preferences)
     public void onPreferencesMenuItemSelected() {
-        startActivity(new Intent(this, TestbedPreferenceActivity.class));
+        startActivity(new Intent(this, TestbedPreferenceActivity_.class));
     }
 
     @OptionsItem(R.id.main_menu_about)

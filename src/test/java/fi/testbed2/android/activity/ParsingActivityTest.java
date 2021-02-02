@@ -56,7 +56,7 @@ public class ParsingActivityTest extends AbstractTestCase {
         MenuItem item = new RoboMenuItem(R.id.main_menu_preferences);
         activity.onOptionsItemSelected(item);
 
-        Intent expectedIntent = new Intent(activity, TestbedPreferenceActivity.class);
+        Intent expectedIntent = new Intent(activity, TestbedPreferenceActivity_.class);
         ShadowActivity shadowActivity = shadowOf(activity);
         Intent actualIntent = shadowActivity.getNextStartedActivity();
         assertTrue(actualIntent.filterEquals(expectedIntent));

@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface SettingsService {
 
-    public static final String PREF_ANIM_FRAME_DELAY = "PREF_ANIM_FRAME_DELAY";
+    public static final String PREF_ANIM_FRAME_DELAY = "PREF_ANIM_FRAME_DELAY_INT";
     public static final String PREF_ANIM_AUTOSTART = "PREF_ANIM_AUTOSTART";
 
     public static final String PREF_MAP_TYPE = "PREF_MAP_TYPE";
@@ -29,11 +29,11 @@ public interface SettingsService {
     public static final String PREF_LOCATION_FIXED_LAT = "PREF_LOCATION_FIXED_LAT";
     public static final String PREF_LOCATION_FIXED_LON = "PREF_LOCATION_FIXED_LON";
 
-    public static final String PREF_LOCATION_MAP_MARKER_SIZE_DP = "PREF_LOCATION_MAP_MARKER_SIZE_DP";
-    public static final String PREF_LOCATION_MAP_MARKER_COLOR = "PREF_LOCATION_MAP_MARKER_COLOR";
+    public static final String PREF_LOCATION_MAP_MARKER_SIZE_DP = "PREF_LOCATION_MAP_MARKER_SIZE_DP_INT";
+    public static final String PREF_LOCATION_MAP_MARKER_COLOR = "PREF_LOCATION_MAP_MARKER_COLOR_HEX";
 
-    public static final String PREF_LOCATION_MAP_POINT_COLOR = "PREF_LOCATION_MAP_POINT_COLOR";
-    public static final String PREF_LOCATION_MAP_POINT_SIZE_DP = "PREF_LOCATION_MAP_POINT_SIZE_DP";
+    public static final String PREF_LOCATION_MAP_POINT_COLOR = "PREF_LOCATION_MAP_POINT_COLOR_HEX";
+    public static final String PREF_LOCATION_MAP_POINT_SIZE_DP = "PREF_LOCATION_MAP_POINT_SIZE_DP_INT";
 
     public static final String PREF_LOCATION_SHOW_MUNICIPALITIES_LIST = "PREF_LOCATION_MUNICIPALITIES_LIST";
 

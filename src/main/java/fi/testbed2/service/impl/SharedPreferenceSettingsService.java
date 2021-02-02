@@ -144,7 +144,7 @@ public class SharedPreferenceSettingsService implements SettingsService {
 
     @Override
     public int getSavedFrameDelay() {
-        return Integer.parseInt(sharedPreferences.getString(SettingsService.PREF_ANIM_FRAME_DELAY, "1000"));
+        return sharedPreferences.getInt(SettingsService.PREF_ANIM_FRAME_DELAY, 1000);
     }
 
     @Override
@@ -202,8 +202,8 @@ public class SharedPreferenceSettingsService implements SettingsService {
 
     private int convertToColorInt(String argb) throws NumberFormatException {
 
-        if (argb.startsWith("#")) {
-            argb = argb.replace("#", "");
+        if (argb.startsWith("0x")) {
+            argb = argb.replace("0x", "");
         }
 
         int alpha = 0, red = 0, green = 0, blue = 0;
@@ -268,13 +268,13 @@ public class SharedPreferenceSettingsService implements SettingsService {
 
     @Override
     public int getMapMarkerSizePx() {
-        int dp = Integer.valueOf(sharedPreferences.getString(PREF_LOCATION_MAP_MARKER_SIZE_DP, "25"));
+        int dp = sharedPreferences.getInt(PREF_LOCATION_MAP_MARKER_SIZE_DP, 25);
         return dpToPixels(dp);
     }
 
     @Override
     public int getMapPointSizePx() {
-        int dp = Integer.valueOf(sharedPreferences.getString(PREF_LOCATION_MAP_POINT_SIZE_DP, "10"));
+        int dp = sharedPreferences.getInt(PREF_LOCATION_MAP_POINT_SIZE_DP, 10);
         return dpToPixels(dp);
     }
 

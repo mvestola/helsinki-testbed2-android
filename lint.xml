@@ -27,9 +27,6 @@
         <ignore path="**/javaproj-noawt-1.0.6.jar" />
         <ignore path="**/roboguice-3.0.1.jar" />
     </issue>
-    <issue id="UseSparseArrays">
-        <ignore path="src/main/java/com/robobunny/SeekBarPreference.java" />
-    </issue>
     <issue id="Orientation">
         <ignore path="src/main/res/layout/seek_bar_preference.xml" />
     </issue>

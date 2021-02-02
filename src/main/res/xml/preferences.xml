@@ -1,31 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:robobunny="http://robobunny.com">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <androidx.preference.PreferenceCategory android:title="@string/preference_category_basic">
-        <com.robobunny.SeekBarPreference
+
+        <ListPreference
             android:defaultValue="15"
             android:key="PREF_MAP_TIME_STEP"
-            android:max="180"
             android:summary="@string/preference_time_step_summary"
             android:title="@string/preference_time_step_title"
-            robobunny:allowedEntries="@array/map_time_step_options"
-            robobunny:allowedEntryValues="@array/map_time_step_values"
-            robobunny:min="5"
-            robobunny:unitsLeft=""
-            robobunny:unitsRight="" />
+            android:entries="@array/map_time_step_options"
+            android:entryValues="@array/map_time_step_values" />
 
-        <com.robobunny.SeekBarPreference
+        <ListPreference
             android:defaultValue="10"
             android:key="PREF_MAP_NUMBER_OF_IMAGES"
-            android:max="15"
             android:summary="@string/preference_number_of_images_summary"
             android:title="@string/preference_number_of_images_title"
-            robobunny:allowedEntries="@array/map_number_of_images_options"
-            robobunny:allowedEntryValues="@array/map_number_of_images_values"
-            robobunny:min="1"
-            robobunny:unitsLeft=""
-            robobunny:unitsRight="" />
+            android:entries="@array/map_number_of_images_options"
+            android:entryValues="@array/map_number_of_images_values" />
+
     </androidx.preference.PreferenceCategory>
 
     <androidx.preference.PreferenceCategory android:title="@string/preference_category_advanced">
@@ -35,17 +28,14 @@
             android:summary="@string/preference_screen_animation_summary"
             android:title="@string/preference_category_animation">
 
-            <com.robobunny.SeekBarPreference
+            <SeekBarPreference
                 android:defaultValue="1000"
-                android:key="PREF_ANIM_FRAME_DELAY"
+                android:key="PREF_ANIM_FRAME_DELAY_INT"
+                android:min="100"
                 android:max="3000"
                 android:summary="@string/preference_anim_frame_delay_summary"
                 android:title="@string/preference_anim_frame_delay_title"
-                robobunny:allowedEntries="@array/anim_frame_delay_options"
-                robobunny:allowedEntryValues="@array/anim_frame_delay_values"
-                robobunny:min="100"
-                robobunny:unitsLeft=""
-                robobunny:unitsRight=" s" />
+                />
 
             <CheckBoxPreference
                 android:defaultValue="true"
@@ -60,7 +50,7 @@
             android:summary="@string/preference_screen_location_summary"
             android:title="@string/preference_category_location">
 
-            <PreferenceCategory android:title="@string/preference_category_user_location">
+            <androidx.preference.PreferenceCategory android:title="@string/preference_category_user_location">
 
                 <CheckBoxPreference
                     android:id="@+id/preference_location_shown_user_location"
@@ -80,25 +70,24 @@
                     android:title="@string/preference_location_provider_title" />
 
                 <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
-                    android:defaultValue="@string/preference_map_marker_color_default"
+                    android:defaultValue="0xC8D94585"
                     android:dependency="PREF_LOCATION_SHOW_USER_LOCATION"
-                    android:key="PREF_LOCATION_MAP_MARKER_COLOR"
+                    android:key="PREF_LOCATION_MAP_MARKER_COLOR_HEX"
                     android:summary="@string/preference_map_marker_color_summary"
                     android:title="@string/preference_map_marker_color_title"
                 />
 
-                <com.robobunny.SeekBarPreference
+                <SeekBarPreference
                     android:defaultValue="25"
                     android:dependency="PREF_LOCATION_SHOW_USER_LOCATION"
-                    android:key="PREF_LOCATION_MAP_MARKER_SIZE_DP"
+                    android:key="PREF_LOCATION_MAP_MARKER_SIZE_DP_INT"
+                    android:min="10"
                     android:max="100"
                     android:summary="@string/preference_map_marker_size_summary"
                     android:title="@string/preference_map_marker_size_title"
-                    robobunny:min="10"
-                    robobunny:unitsLeft=""
-                    robobunny:unitsRight=" dp" />
+                    />
 
-            </PreferenceCategory>
+            </androidx.preference.PreferenceCategory>
 
             <androidx.preference.PreferenceCategory android:title="@string/preference_category_municipality_location">
 
@@ -110,21 +99,20 @@
                     android:title="@string/preference_location_municipalities_title" />
 
                 <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
-                    android:defaultValue="@string/preference_map_point_color_default"
-                    android:key="PREF_LOCATION_MAP_POINT_COLOR"
+                    android:defaultValue="0xC8FF8000"
+                    android:key="PREF_LOCATION_MAP_POINT_COLOR_HEX"
                     android:summary="@string/preference_map_point_color_summary"
                     android:title="@string/preference_map_point_color_title"
                     />
 
-                <com.robobunny.SeekBarPreference
+                <SeekBarPreference
                     android:defaultValue="10"
-                    android:key="PREF_LOCATION_MAP_POINT_SIZE_DP"
+                    android:key="PREF_LOCATION_MAP_POINT_SIZE_DP_INT"
+                    android:min="5"
                     android:max="50"
                     android:summary="@string/preference_map_point_size_summary"
                     android:title="@string/preference_map_point_size_title"
-                    robobunny:min="5"
-                    robobunny:unitsLeft=""
-                    robobunny:unitsRight=" dp" />
+                />
 
             </androidx.preference.PreferenceCategory>
 
