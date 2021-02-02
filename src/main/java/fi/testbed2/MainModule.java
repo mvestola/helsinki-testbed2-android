@@ -25,7 +25,7 @@ public class MainModule extends AbstractModule {
         bind(AdManager.class).to(CachedAdMobAdManager.class);
         bind(BitmapService.class).to(LruCacheBitmapService.class);
         bind(PageService.class).to(LruCachePageService.class);
-        bind(HttpUrlService.class).to(ApacheHttpUrlService.class);
+        bind(HttpUrlService.class).to(URLConnectionHttpUrlService.class);
         bindConstant().annotatedWith(SharedPreferencesName.class)
                 .to(SharedPreferenceSettingsService.SHARED_PREFERENCE_FILE_NAME);
     }

@@ -5,22 +5,20 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
-import org.robolectric.annotation.Config;
 import org.robolectric.shadows.httpclient.FakeHttp;
 
 import java.io.InputStream;
 
 import fi.testbed2.AbstractTestCase;
-import fi.testbed2.BuildConfig;
 import fi.testbed2.InjectedTestRunner;
 import fi.testbed2.android.task.exception.DownloadTaskException;
 
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(InjectedTestRunner.class)
-public class ApacheHttpUrlServiceTest extends AbstractTestCase {
+public class URLConnectionHttpUrlServiceTest extends AbstractTestCase {
 
-    private ApacheHttpUrlService httpUrlService;
+    private URLConnectionHttpUrlService httpUrlService;
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -29,7 +27,7 @@ public class ApacheHttpUrlServiceTest extends AbstractTestCase {
     @Before
     public void setUp() throws Exception {
         super.setUp();
-        httpUrlService = new ApacheHttpUrlService();
+        httpUrlService = new URLConnectionHttpUrlService();
         initClassForMocks(httpUrlService);
     }
 

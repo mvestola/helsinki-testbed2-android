@@ -24,12 +24,12 @@ The following Android frameworks / libraries are used in this application:
 
 * [RoboGuice](https://github.com/roboguice/roboguice/) (dependency injection framework for Android based on Google Guice)
 * [Robolectric](http://robolectric.org/) (advanced unit testing framework for Android)
-* [Robotium](http://code.google.com/p/robotium/) (automatic black-box testing framework for Android, like Selenium on Android)
 * [AndroidAnnotations](http://androidannotations.org/) (simplify Android development with annotations)
 * [Project Lombok](http://projectlombok.org/features/index.html) (simplify Java development with annotations generating e.g. getters and setters)
 * [WeatherIconView](https://github.com/pwittchen/WeatherIconView) (show weather icons using a font)
 * [FlexboxLayout](https://github.com/google/flexbox-layout) (flexible CSS style flexbox layout for Android)
 * [Java Map Projection Library in Android](http://augusttown.blogspot.fi/2010/03/using-java-map-projection-library-in.html) (Used for map projection calculation, JAR file in own testbd repo)
+* [Color Picker](https://github.com/jaredrummler/ColorPicker) (Android color picker for color preferences)
 
 Some instructions for using RoboGuice:
 * https://github.com/robolectric/robolectric/wiki

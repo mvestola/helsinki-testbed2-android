@@ -2,7 +2,7 @@ Helsinki Testbed Viewer 2.0
 =============
 
 __Helsinki Testbed Viewer 2.0__ is an Android application which shows the weather maps
-from the [Helsinki Testbed project](http://testbed.fmi.fi/). With the application,
+from the [Helsinki Testbed project](https://testbed.fmi.fi/). With the application,
 you can, for example, view the real-time rain radar or current wind speed and direction.
 The maps cover the Southern Finland.
 

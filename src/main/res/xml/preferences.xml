@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:robobunny="http://robobunny.com">
 
-    <PreferenceCategory android:title="@string/preference_category_basic">
+    <androidx.preference.PreferenceCategory android:title="@string/preference_category_basic">
         <com.robobunny.SeekBarPreference
             android:defaultValue="15"
             android:key="PREF_MAP_TIME_STEP"
@@ -27,9 +26,9 @@
             robobunny:min="1"
             robobunny:unitsLeft=""
             robobunny:unitsRight="" />
-    </PreferenceCategory>
+    </androidx.preference.PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/preference_category_advanced">
+    <androidx.preference.PreferenceCategory android:title="@string/preference_category_advanced">
 
         <PreferenceScreen
             android:key="PREF_SCREEN_ANIM"
@@ -80,13 +79,13 @@
                     android:summary="@string/preference_location_provider_summary"
                     android:title="@string/preference_location_provider_title" />
 
-                <com.rarepebble.colorpicker.ColorPreference
+                <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
                     android:defaultValue="@string/preference_map_marker_color_default"
                     android:dependency="PREF_LOCATION_SHOW_USER_LOCATION"
                     android:key="PREF_LOCATION_MAP_MARKER_COLOR"
                     android:summary="@string/preference_map_marker_color_summary"
                     android:title="@string/preference_map_marker_color_title"
-                    app:colorpicker_showHex="false" />
+                />
 
                 <com.robobunny.SeekBarPreference
                     android:defaultValue="25"
@@ -101,7 +100,7 @@
 
             </PreferenceCategory>
 
-            <PreferenceCategory android:title="@string/preference_category_municipality_location">
+            <androidx.preference.PreferenceCategory android:title="@string/preference_category_municipality_location">
 
                 <MultiSelectListPreference
                     android:enabled="true"
@@ -110,12 +109,12 @@
                     android:summary="@string/preference_location_municipalities_summary"
                     android:title="@string/preference_location_municipalities_title" />
 
-                <com.rarepebble.colorpicker.ColorPreference
+                <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
                     android:defaultValue="@string/preference_map_point_color_default"
                     android:key="PREF_LOCATION_MAP_POINT_COLOR"
                     android:summary="@string/preference_map_point_color_summary"
                     android:title="@string/preference_map_point_color_title"
-                    app:colorpicker_showHex="false" />
+                    />
 
                 <com.robobunny.SeekBarPreference
                     android:defaultValue="10"
@@ -127,15 +126,14 @@
                     robobunny:unitsLeft=""
                     robobunny:unitsRight=" dp" />
 
-            </PreferenceCategory>
+            </androidx.preference.PreferenceCategory>
 
         </PreferenceScreen>
 
-    </PreferenceCategory>
+    </androidx.preference.PreferenceCategory>
 
     <CheckBoxPreference
         android:defaultValue="true"
-        android:editable="false"
         android:key="PREF_SHOW_ADS"
         android:summary="@string/preference_show_ads_summary"
         android:title="@string/preference_show_ads_title" />
