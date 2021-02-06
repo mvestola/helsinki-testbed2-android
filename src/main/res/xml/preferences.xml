@@ -23,7 +23,6 @@
 
     <androidx.preference.PreferenceCategory
         android:key="PREF_SCREEN_ANIM"
-        android:summary="@string/preference_screen_animation_summary"
         android:title="@string/preference_category_animation">
 
         <SeekBarPreference
@@ -43,83 +42,80 @@
 
     </androidx.preference.PreferenceCategory>
 
-    <androidx.preference.PreferenceCategory
-        android:key="PREF_SCREEN_LOCATION"
-        android:summary="@string/preference_screen_location_summary"
-        android:title="@string/preference_category_location">
+    <androidx.preference.PreferenceCategory android:title="@string/preference_category_user_location">
 
-        <androidx.preference.PreferenceCategory android:title="@string/preference_category_user_location">
+        <CheckBoxPreference
+            android:id="@+id/preference_location_shown_user_location"
+            android:defaultValue="true"
+            android:key="PREF_LOCATION_SHOW_USER_LOCATION"
+            android:summary="@string/preference_location_user_summary"
+            android:title="@string/preference_location_user_title" />
 
-            <CheckBoxPreference
-                android:id="@+id/preference_location_shown_user_location"
-                android:defaultValue="true"
-                android:key="PREF_LOCATION_SHOW_USER_LOCATION"
-                android:summary="@string/preference_location_user_summary"
-                android:title="@string/preference_location_user_title" />
+        <ListPreference
+            android:id="@+id/preference_location_provider"
+            android:defaultValue="network"
+            android:dependency="PREF_LOCATION_SHOW_USER_LOCATION"
+            android:entries="@array/location_provider_options"
+            android:entryValues="@array/location_provider_values"
+            android:key="PREF_LOCATION_PROVIDER"
+            android:summary="@string/preference_location_provider_summary"
+            android:title="@string/preference_location_provider_title" />
 
-            <ListPreference
-                android:id="@+id/preference_location_provider"
-                android:defaultValue="network"
-                android:dependency="PREF_LOCATION_SHOW_USER_LOCATION"
-                android:entries="@array/location_provider_options"
-                android:entryValues="@array/location_provider_values"
-                android:key="PREF_LOCATION_PROVIDER"
-                android:summary="@string/preference_location_provider_summary"
-                android:title="@string/preference_location_provider_title" />
+        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
+            android:defaultValue="0xC8D94585"
+            android:dependency="PREF_LOCATION_SHOW_USER_LOCATION"
+            android:key="PREF_LOCATION_MAP_MARKER_COLOR_HEX"
+            android:summary="@string/preference_map_marker_color_summary"
+            android:title="@string/preference_map_marker_color_title"
+        />
 
-            <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
-                android:defaultValue="0xC8D94585"
-                android:dependency="PREF_LOCATION_SHOW_USER_LOCATION"
-                android:key="PREF_LOCATION_MAP_MARKER_COLOR_HEX"
-                android:summary="@string/preference_map_marker_color_summary"
-                android:title="@string/preference_map_marker_color_title"
+        <SeekBarPreference
+            android:defaultValue="25"
+            android:dependency="PREF_LOCATION_SHOW_USER_LOCATION"
+            android:key="PREF_LOCATION_MAP_MARKER_SIZE_DP_INT"
+            android:min="10"
+            android:max="100"
+            android:summary="@string/preference_map_marker_size_summary"
+            android:title="@string/preference_map_marker_size_title"
             />
-
-            <SeekBarPreference
-                android:defaultValue="25"
-                android:dependency="PREF_LOCATION_SHOW_USER_LOCATION"
-                android:key="PREF_LOCATION_MAP_MARKER_SIZE_DP_INT"
-                android:min="10"
-                android:max="100"
-                android:summary="@string/preference_map_marker_size_summary"
-                android:title="@string/preference_map_marker_size_title"
-                />
-
-        </androidx.preference.PreferenceCategory>
-
-        <androidx.preference.PreferenceCategory android:title="@string/preference_category_municipality_location">
-
-            <MultiSelectListPreference
-                android:enabled="true"
-                android:key="PREF_LOCATION_MUNICIPALITIES_LIST"
-                android:persistent="true"
-                android:summary="@string/preference_location_municipalities_summary"
-                android:title="@string/preference_location_municipalities_title" />
-
-            <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
-                android:defaultValue="0xC8FF8000"
-                android:key="PREF_LOCATION_MAP_POINT_COLOR_HEX"
-                android:summary="@string/preference_map_point_color_summary"
-                android:title="@string/preference_map_point_color_title"
-                />
-
-            <SeekBarPreference
-                android:defaultValue="10"
-                android:key="PREF_LOCATION_MAP_POINT_SIZE_DP_INT"
-                android:min="5"
-                android:max="50"
-                android:summary="@string/preference_map_point_size_summary"
-                android:title="@string/preference_map_point_size_title"
-            />
-
-        </androidx.preference.PreferenceCategory>
 
     </androidx.preference.PreferenceCategory>
 
-    <CheckBoxPreference
-        android:defaultValue="true"
-        android:key="PREF_SHOW_ADS"
-        android:summary="@string/preference_show_ads_summary"
-        android:title="@string/preference_show_ads_title" />
+    <androidx.preference.PreferenceCategory android:title="@string/preference_category_municipality_location">
+
+        <MultiSelectListPreference
+            android:enabled="true"
+            android:key="PREF_LOCATION_MUNICIPALITIES_LIST"
+            android:persistent="true"
+            android:summary="@string/preference_location_municipalities_summary"
+            android:title="@string/preference_location_municipalities_title" />
+
+        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
+            android:defaultValue="0xC8FF8000"
+            android:key="PREF_LOCATION_MAP_POINT_COLOR_HEX"
+            android:summary="@string/preference_map_point_color_summary"
+            android:title="@string/preference_map_point_color_title"
+            />
+
+        <SeekBarPreference
+            android:defaultValue="10"
+            android:key="PREF_LOCATION_MAP_POINT_SIZE_DP_INT"
+            android:min="5"
+            android:max="50"
+            android:summary="@string/preference_map_point_size_summary"
+            android:title="@string/preference_map_point_size_title"
+        />
+
+    </androidx.preference.PreferenceCategory>
+
+    <androidx.preference.PreferenceCategory android:title="@string/preference_category_ads">
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="PREF_SHOW_ADS"
+            android:summary="@string/preference_show_ads_summary"
+            android:title="@string/preference_show_ads_title" />
+
+    </androidx.preference.PreferenceCategory>
 
 </PreferenceScreen>

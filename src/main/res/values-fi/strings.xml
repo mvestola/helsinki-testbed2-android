@@ -51,6 +51,7 @@
     <string name="preference_category_location">Sijainnit kartalla</string>
     <string name="preference_category_user_location">Oma sijaintisi kartalla</string>
     <string name="preference_category_municipality_location">Kunnat kartalla</string>
+    <string name="preference_category_ads">Mainokset</string>
 
     <string name="preference_time_step_title">Aikaväli</string>
     <string name="preference_time_step_summary">Karttakuvien aikaväli</string>
@@ -59,7 +60,7 @@
     <string name="preference_number_of_images_summary">Ladattavien karttakuvien määrä</string>
 
     <string name="preference_anim_frame_delay_title">Animaation nopeus</string>
-    <string name="preference_anim_frame_delay_summary">Karttakuvien vaihtumisväli</string>
+    <string name="preference_anim_frame_delay_summary">Karttakuvien vaihtumisväli millisekunteina</string>
 
     <string name="preference_anim_autostart_title">Automaattinen animaatio</string>
     <string name="preference_anim_autostart_summary">Rastita, jos haluat että animaatio alkaa automaattisesti</string>
@@ -85,7 +86,7 @@
     <string name="preference_map_point_color_title">Kunnan väri</string>
     <string name="preference_map_point_color_summary">Valitse taustaväri ympyrälle, joka näyttää kunnan kartalla</string>
     <string name="preference_map_point_size_title">Kunnan koko</string>
-    <string name="preference_map_point_size_summary">Aseta halkaisija ympyrälle, joka näyttää kunnan kartalla</string>
+    <string name="preference_map_point_size_summary">Aseta halkaisija pikseleinä ympyrälle, joka näyttää kunnan kartalla</string>
 
     <string name="preference_location_municipalities_title">Näytettävät kunnat</string>
     <string name="preference_location_municipalities_summary">Valitse kunnat, jotka haluat näyttää ympyröinä kartalla</string>

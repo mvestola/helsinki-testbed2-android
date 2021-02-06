@@ -53,6 +53,7 @@
     <string name="preference_category_location">Locations on map</string>
     <string name="preference_category_user_location">User\'s current location</string>
     <string name="preference_category_municipality_location">Municipalities on map</string>
+    <string name="preference_category_ads">Advertising</string>
 
     <string name="preference_time_step_title">Time-step</string>
     <string name="preference_time_step_summary">Time-step between map images</string>
@@ -61,7 +62,7 @@
     <string name="preference_number_of_images_summary">How many map images to download</string>
 
     <string name="preference_anim_frame_delay_title">Animation speed</string>
-    <string name="preference_anim_frame_delay_summary">Delay between animation frames</string>
+    <string name="preference_anim_frame_delay_summary">Delay between animation frames in milliseconds</string>
 
     <string name="preference_anim_autostart_title">Automatic animation</string>
     <string name="preference_anim_autostart_summary">Check this if you want the animation to start automatically</string>
@@ -83,13 +84,13 @@
     <string name="preference_map_marker_color_summary">Choose the background color of the marker showing your current location</string>
     <string name="preference_map_marker_color_default" translatable="false">0xC8D94585</string>
     <string name="preference_map_marker_size_title">Map marker size</string>
-    <string name="preference_map_marker_size_summary">Specify the height of the marker showing your current location</string>
+    <string name="preference_map_marker_size_summary">Specify the height of the marker showing your current location in pixels</string>
 
     <string name="preference_map_point_color_title">Municipality color</string>
     <string name="preference_map_point_color_summary">Choose the background color of the point showing a municipality</string>
     <string name="preference_map_point_color_default" translatable="false">0xC8FF8000</string>
     <string name="preference_map_point_size_title">Municipality point size</string>
-    <string name="preference_map_point_size_summary">Specify the diameter of the point showing a municipality</string>
+    <string name="preference_map_point_size_summary">Specify the diameter of the point showing a municipality in pixels</string>
 
     <string name="preference_location_municipalities_title">Shown municipalities</string>
     <string name="preference_location_municipalities_summary">Choose which municipalities are shown on the map as dots</string>
