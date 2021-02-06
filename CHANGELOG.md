@@ -5,7 +5,7 @@ Version 2.0.16 (2021-02-??)
 ---------------------------
 
 * Better dark mode support
-* Restructured preferences layout
+* Improved animation seek bar and preferences
 * Updated support libraries and target Android version to Android 11 (API level 30)
 * Dropped support for old Android versions. The minimum supported Android version is now 8.0 Oreo (API level 26)
 

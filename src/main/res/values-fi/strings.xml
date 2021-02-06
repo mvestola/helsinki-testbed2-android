@@ -23,7 +23,7 @@
     <string name="whats_new_title">Uutta versiossa %1$s</string>
     <string name="whats_new_text">
         - Parempi tuki tummalle teemalle\n\n
-        - Uudelleenjärjestelty asetuksia\n\n
+        - Paranneltu animaation hakupalkkia ja asetuksia\n\n
         - Päivitetty apukirjastoja ja kohde Android-versio versioon Android 11 (API level 30)\n\n
         - Lopetettu tuki vanhoille Android-versioille. Pienin tuettu Android-versio on 8.0 Oreo (API level 26)
     </string>
