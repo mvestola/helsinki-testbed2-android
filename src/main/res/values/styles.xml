@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="seek_bar_background">#ababab</color>
+    <color name="seek_bar_progress">#ffb600</color>
+    <color name="seek_bar_secondary_progress">#3399CC</color>
+
+    <dimen name="seek_bar_thickness">8dp</dimen>
+    <dimen name="seek_bar_thumb_size">22dp</dimen>
+
     <style name="SettingsTheme" parent="@style/Theme.AppCompat.DayNight.NoActionBar" />
 
     <color name="custom_theme_color">#C8C0CDB9</color>

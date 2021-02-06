@@ -22,8 +22,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:paddingTop="3dp"
+            android:layout_height="130dp"
+            android:paddingTop="10dp"
             android:background="@drawable/seekbar_border">
 
             <TextView
@@ -33,13 +33,15 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:text="timestamp"
-                android:layout_marginRight="15dp"
+                android:layout_marginRight="10dp"
                 android:textColor="?android:attr/textColorSecondary"
                 android:textSize="14dp" />
 
             <com.google.android.flexbox.FlexboxLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:paddingTop="8dp"
                 app:flexDirection="row"
                 app:alignItems="center">
 
@@ -58,6 +60,8 @@
                     android:layout_height="wrap_content"
                     android:max="100"
                     android:progress="0"
+                    android:progressDrawable="@drawable/seek_bar"
+                    android:thumb="@drawable/seek_thumb"
                     app:layout_flexGrow="1.0" />
 
             </com.google.android.flexbox.FlexboxLayout>
