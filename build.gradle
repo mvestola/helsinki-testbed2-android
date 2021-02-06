@@ -70,13 +70,15 @@ android {
 def powerMockVersion = '2.0.9'
 def androidAnnotationsVersion = '4.8.0'
 def robolectricVersion = '4.5.1'
+def mockServerVersion = '5.11.2'
+def lombokVersion = '1.18.18'
 
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     testImplementation 'junit:junit:4.13.1'
-    annotationProcessor "org.projectlombok:lombok:1.18.18"
+    annotationProcessor "org.projectlombok:lombok:$lombokVersion"
     //noinspection AnnotationProcessorOnCompilePath
-    compileOnly 'org.projectlombok:lombok:1.18.18'
+    compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.androidannotations:androidannotations:$androidAnnotationsVersion"
     implementation "org.androidannotations:androidannotations-api:$androidAnnotationsVersion"
     annotationProcessor "org.androidannotations:roboguice:$androidAnnotationsVersion"
@@ -94,4 +96,6 @@ dependencies {
     testImplementation "org.powermock:powermock-module-junit4-rule:$powerMockVersion"
     testImplementation "org.powermock:powermock-classloading-xstream:$powerMockVersion"
     testImplementation "org.powermock:powermock-api-mockito2:$powerMockVersion"
+    testImplementation "org.mock-server:mockserver-netty:$mockServerVersion"
+    testImplementation "org.mock-server:mockserver-junit-rule:$mockServerVersion"
 }

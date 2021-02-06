@@ -1,11 +1,15 @@
 package fi.testbed2.service.impl;
 
+import org.apache.http.HttpStatus;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
-import org.robolectric.shadows.httpclient.FakeHttp;
+import org.mockserver.client.MockServerClient;
+import org.mockserver.junit.MockServerRule;
+import org.mockserver.model.HttpRequest;
+import org.mockserver.model.HttpResponse;
 
 import java.io.InputStream;
 
@@ -17,6 +21,12 @@ import static org.junit.Assert.assertNotNull;
 
 @RunWith(InjectedTestRunner.class)
 public class URLConnectionHttpUrlServiceTest extends AbstractTestCase {
+
+    private static final String TEST_URL = "/testing";
+
+    @Rule
+    public MockServerRule mockServerRule = new MockServerRule(this);
+    private MockServerClient mockServerClient;
 
     private URLConnectionHttpUrlService httpUrlService;
 
@@ -32,35 +42,30 @@ public class URLConnectionHttpUrlServiceTest extends AbstractTestCase {
         initClassForMocks(httpUrlService);
     }
 
+    private String getFullTestUrl() {
+        return "http://localhost:" + mockServerClient.getPort() + TEST_URL;
+    }
+
     @Test
     public void testResponse200() throws Exception {
-
-        FakeHttp.setDefaultHttpResponse(200, "OK");
-        InputStream stream = httpUrlService.getInputStreamForHttpUrl("fi.testbed2/test");
+        mockServerClient.when(HttpRequest.request(TEST_URL)).respond(HttpResponse.response().withStatusCode(HttpStatus.SC_OK));
+        InputStream stream = httpUrlService.getInputStreamForHttpUrl(getFullTestUrl());
         assertNotNull(stream);
-
     }
 
     @Test
     public void testResponse404() throws Exception {
-
-        FakeHttp.setDefaultHttpResponse(404, "Not Found");
-
+        mockServerClient.when(HttpRequest.request(TEST_URL)).respond(HttpResponse.response().withStatusCode(HttpStatus.SC_NOT_FOUND));
         thrown.expect(DownloadTaskException.class);
         thrown.expectMessage("Could not connect to the server (HTTP 404). Please try again later.");
-        httpUrlService.getInputStreamForHttpUrl("fi.testbed2/test");
-
+        httpUrlService.getInputStreamForHttpUrl(getFullTestUrl());
     }
 
     @Test
     public void testResponse500() throws Exception {
-
-        FakeHttp.setDefaultHttpResponse(500, "Server error");
-
+        mockServerClient.when(HttpRequest.request(TEST_URL)).respond(HttpResponse.response().withStatusCode(HttpStatus.SC_INTERNAL_SERVER_ERROR));
         thrown.expect(DownloadTaskException.class);
         thrown.expectMessage("Could not connect to the server (HTTP 500). Please try again later.");
-        httpUrlService.getInputStreamForHttpUrl("fi.testbed2/test");
-
+        httpUrlService.getInputStreamForHttpUrl(getFullTestUrl());
     }
-
 }

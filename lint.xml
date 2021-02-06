@@ -11,6 +11,9 @@
     <!-- Does not look nice if replaced with one symbol -->
     <issue id="TypographyEllipsis" severity="ignore" />
 
+    <!-- Seems not valid issue at all -->
+    <issue id="ObsoleteLintCustomCheck" severity="ignore" />
+
     <!-- Won't support better screens for now -->
     <issue id="IconMissingDensityFolder" severity="ignore" />
 
