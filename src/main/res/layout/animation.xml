@@ -34,7 +34,7 @@
                 android:layout_alignParentTop="true"
                 android:text="timestamp"
                 android:layout_marginRight="15dp"
-                android:textColor="#7c7c7c"
+                android:textColor="?android:attr/textColorSecondary"
                 android:textSize="14dp"></TextView>
 
             <com.google.android.flexbox.FlexboxLayout

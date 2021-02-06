@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="SettingsTheme" parent="@style/Theme.AppCompat.DayNight.NoActionBar"></style>
     <color name="custom_theme_color">#C8C0CDB9</color>
-    <style name="CustomLightTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
+    <style name="CustomTheme" parent="@style/Theme.AppCompat.DayNight.NoActionBar">
         <item name="android:windowBackground">@color/custom_theme_color</item>
     </style>
-    <style name="AlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert"></style>
+    <style name="AlertDialogStyle" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="android:background">?android:attr/colorBackground</item>
+    </style>
     <style name="SeekBarStyle" parent="Widget.AppCompat.SeekBar"></style>
 </resources>

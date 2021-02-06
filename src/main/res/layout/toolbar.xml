@@ -10,4 +10,4 @@
     app:contentInsetLeft="0dp"
     app:contentInsetStart="5dp"
     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+    app:popupTheme="@style/ThemeOverlay.AppCompat.DayNight" />

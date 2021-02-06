@@ -25,7 +25,7 @@ android {
 
     defaultConfig {
         applicationId "fi.testbed2"
-        minSdkVersion 17
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode 24
         versionName "2.0.16"
