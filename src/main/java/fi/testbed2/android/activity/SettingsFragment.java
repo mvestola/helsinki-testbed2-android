@@ -3,6 +3,7 @@ package fi.testbed2.android.activity;
 import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.view.View;
 
 import com.google.inject.Inject;
 
@@ -34,23 +35,12 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        // Need to do manual injecting due to RoboGuice not supporting PreferenceFragmentCompat
-        if (municipalityService == null) {
-            this.municipalityService = RoboGuice.getInjector(MainApplication.getContext()).getInstance(MunicipalityService.class);
-        }
-        if (settingsService == null) {
-            this.settingsService = RoboGuice.getInjector(MainApplication.getContext()).getInstance(SettingsService.class);
-        }
-        if (dialogBuilder == null) {
-            this.dialogBuilder = RoboGuice.getInjector(MainApplication.getContext()).getInstance(DialogBuilder.class);
-        }
-
+        RoboGuice.getInjector(MainApplication.getContext()).injectMembersWithoutViews(this);
         setPreferencesFromResource(R.xml.preferences, rootKey);
 
         initMunicipalityList();
         locationProviderList = (ListPreference) getPreferenceScreen().findPreference(SettingsService.PREF_LOCATION_PROVIDER);
     }
-
 
     private void initMunicipalityList() {
 
@@ -124,5 +114,17 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
         // Set up a listener whenever a key changes
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        RoboGuice.getInjector(MainApplication.getContext()).injectMembersWithoutViews(this);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        RoboGuice.getInjector(MainApplication.getContext()).injectViewMembers(this);
     }
 }
