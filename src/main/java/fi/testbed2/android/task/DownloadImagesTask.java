@@ -1,5 +1,6 @@
 package fi.testbed2.android.task;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import fi.testbed2.R;
 import fi.testbed2.android.activity.AnimationActivity;
@@ -17,8 +18,9 @@ import java.util.List;
  */
 public class DownloadImagesTask extends AbstractTask {
 
-    private AnimationActivity activity;
+    private final AnimationActivity activity;
 
+    @SuppressLint("NonConstantResourceId")
     @InjectResource(R.string.error_msg_parsed_map_image_null)
     String errorMapImageNull;
 
@@ -70,7 +72,7 @@ public class DownloadImagesTask extends AbstractTask {
                 throw new DownloadTaskException(errorMapImageNull);
             }
 
-            if (!bitmapService.bitmapIsDownloaded(image)) {
+            if (bitmapService.bitmapIsNotDownloaded(image)) {
 
                 updateDownloadProgress(i, totalImagesNotDownloaded);
 

@@ -23,12 +23,13 @@ package com.larvalabs.svgandroid;
  *
  * @author Apache Software Foundation, Larva Labs LLC
  */
+@SuppressWarnings("TextLabelInSwitchStatement")
 public class ParserHelper {
 
     private char current;
-    private CharSequence s;
+    private final CharSequence s;
     public int pos;
-    private int n;
+    private final int n;
 
     public ParserHelper(CharSequence s, int pos) {
         this.s = s;

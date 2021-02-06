@@ -1,14 +1,12 @@
 package fi.testbed2.service.impl;
 
 import fi.testbed2.AbstractTestCase;
-import fi.testbed2.BuildConfig;
 import fi.testbed2.InjectedTestRunner;
 import fi.testbed2.domain.MapLocationGPS;
 import fi.testbed2.domain.MapLocationXY;
 import fi.testbed2.service.CoordinateService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.annotation.Config;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
@@ -42,10 +40,10 @@ public class MercatorCoordinateServiceTest extends AbstractTestCase {
      */
     private static final double PRECISION_VERY_LOOSE = 13.0;
 
-    private static CoordinateService coordinateService = new MercatorCoordinateService();
+    private static final CoordinateService coordinateService = new MercatorCoordinateService();
 
     @Test
-    public void testGetRoadIntersectionNearHumppila() throws Exception {
+    public void testGetRoadIntersectionNearHumppila() {
 
         MapLocationGPS point = new MapLocationGPS(60.95357, 23.33907);
         MapLocationXY pos = coordinateService.convertLocationToXyPos(point);
@@ -56,7 +54,7 @@ public class MercatorCoordinateServiceTest extends AbstractTestCase {
     }
 
     @Test
-    public void testGetRoadIntersectionNearPorvoo() throws Exception {
+    public void testGetRoadIntersectionNearPorvoo() {
 
         MapLocationGPS point = new MapLocationGPS(60.39069, 25.61653);
         MapLocationXY pos = coordinateService.convertLocationToXyPos(point);
@@ -67,7 +65,7 @@ public class MercatorCoordinateServiceTest extends AbstractTestCase {
     }
 
     @Test
-    public void testGetRoadIntersectionNearTammela() throws Exception {
+    public void testGetRoadIntersectionNearTammela() {
 
         MapLocationGPS point = new MapLocationGPS(60.82826, 24.01678);
         MapLocationXY pos = coordinateService.convertLocationToXyPos(point);
@@ -89,7 +87,7 @@ public class MercatorCoordinateServiceTest extends AbstractTestCase {
     }
 
     @Test
-    public void testGetRoadIntersectionOfKeha3AndLansivayla() throws Exception {
+    public void testGetRoadIntersectionOfKeha3AndLansivayla() {
 
         MapLocationGPS point = new MapLocationGPS(60.13773, 24.53475);
         MapLocationXY pos = coordinateService.convertLocationToXyPos(point);
@@ -100,7 +98,7 @@ public class MercatorCoordinateServiceTest extends AbstractTestCase {
     }
 
     @Test
-    public void testGetPointInVihdintieKeha3Intersection() throws Exception {
+    public void testGetPointInVihdintieKeha3Intersection() {
 
         MapLocationGPS point = new MapLocationGPS(60.27414, 24.80443);
         MapLocationXY pos = coordinateService.convertLocationToXyPos(point);
@@ -111,7 +109,7 @@ public class MercatorCoordinateServiceTest extends AbstractTestCase {
     }
 
     @Test
-    public void testGetRoadIntersectionNearKouvola() throws Exception {
+    public void testGetRoadIntersectionNearKouvola() {
 
         MapLocationGPS point = new MapLocationGPS(60.88512, 26.76588);
         MapLocationXY pos = coordinateService.convertLocationToXyPos(point);
@@ -122,7 +120,7 @@ public class MercatorCoordinateServiceTest extends AbstractTestCase {
     }
 
     @Test
-    public void testGetPointNearLoviisa() throws Exception {
+    public void testGetPointNearLoviisa() {
 
         MapLocationGPS point = new MapLocationGPS(60.49151, 25.95929);
         MapLocationXY pos = coordinateService.convertLocationToXyPos(point);
@@ -133,7 +131,7 @@ public class MercatorCoordinateServiceTest extends AbstractTestCase {
     }
 
     @Test
-    public void testGetPointNearVahvala() throws Exception {
+    public void testGetPointNearVahvala() {
 
         MapLocationGPS point = new MapLocationGPS(60.95451, 22.86604);
         MapLocationXY pos = coordinateService.convertLocationToXyPos(point);
@@ -144,7 +142,7 @@ public class MercatorCoordinateServiceTest extends AbstractTestCase {
     }
 
     @Test
-    public void testGetPointNearRaasepori() throws Exception {
+    public void testGetPointNearRaasepori() {
 
         MapLocationGPS point = new MapLocationGPS(60.39320, 23.13106);
         MapLocationXY pos = coordinateService.convertLocationToXyPos(point);
@@ -155,7 +153,7 @@ public class MercatorCoordinateServiceTest extends AbstractTestCase {
     }
 
     @Test
-    public void testGetPointNearKarjalohja() throws Exception {
+    public void testGetPointNearKarjalohja() {
 
         MapLocationGPS point = new MapLocationGPS(60.21003, 23.66773);
         MapLocationXY pos = coordinateService.convertLocationToXyPos(point);
@@ -166,7 +164,7 @@ public class MercatorCoordinateServiceTest extends AbstractTestCase {
     }
 
     @Test
-    public void testGetPointInRussaro() throws Exception {
+    public void testGetPointInRussaro() {
 
         MapLocationGPS point = new MapLocationGPS(59.77339, 22.94221);
         MapLocationXY pos = coordinateService.convertLocationToXyPos(point);
@@ -177,7 +175,7 @@ public class MercatorCoordinateServiceTest extends AbstractTestCase {
     }
 
     @Test
-    public void testTopLeftPointOfTestbedImage() throws Exception {
+    public void testTopLeftPointOfTestbedImage() {
 
         MapLocationGPS point = new MapLocationGPS(61.005, 22.657);
         MapLocationXY pos = coordinateService.convertLocationToXyPos(point);
@@ -188,7 +186,7 @@ public class MercatorCoordinateServiceTest extends AbstractTestCase {
     }
 
     @Test
-    public void testTopRightPointOfTestbedImage() throws Exception {
+    public void testTopRightPointOfTestbedImage() {
 
         MapLocationGPS point = new MapLocationGPS(61.005, 26.792);
         MapLocationXY pos = coordinateService.convertLocationToXyPos(point);
@@ -199,7 +197,7 @@ public class MercatorCoordinateServiceTest extends AbstractTestCase {
     }
 
     @Test
-    public void testErrorValues() throws Exception {
+    public void testErrorValues() {
 
         MapLocationXY nullPos = coordinateService.convertLocationToXyPos(null);
         assertNull(nullPos);

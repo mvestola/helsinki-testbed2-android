@@ -86,9 +86,7 @@ public class ColorUtil {
             blue = Integer.parseInt(argb.substring(4, 6), 16);
         }
 
-        int[] components = {alpha, red, green, blue};
-
-        return components;
+        return new int[]{alpha, red, green, blue};
 
     }
 

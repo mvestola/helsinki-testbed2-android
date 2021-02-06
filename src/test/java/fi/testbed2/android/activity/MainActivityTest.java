@@ -10,20 +10,18 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
-import org.robolectric.annotation.Config;
 import org.robolectric.fakes.RoboMenuItem;
 import org.robolectric.shadows.ShadowActivity;
 import org.robolectric.shadows.ShadowAlertDialog;
 
 import fi.testbed2.AbstractTestCase;
-import fi.testbed2.BuildConfig;
 import fi.testbed2.InjectedTestRunner;
 import fi.testbed2.R;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.robolectric.Shadows.shadowOf;
 
@@ -34,14 +32,15 @@ public class MainActivityTest extends AbstractTestCase {
 
     private View rainAndTemperatureButton;
 
+    @SuppressWarnings("deprecation")
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         activity = Robolectric.setupActivity(MainActivity_.class);
         rainAndTemperatureButton = activity.findViewById(R.id.button_rain_temperature);
     }
 
     @Test
-    public void shouldReturnCorrectName() throws Exception {
+    public void shouldReturnCorrectName() {
         String appName = activity.getResources().getString(R.string.app_name);
         assertThat(appName, equalTo("Helsinki Testbed Viewer 2.0"));
     }

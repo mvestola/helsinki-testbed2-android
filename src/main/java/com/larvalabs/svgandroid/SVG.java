@@ -32,12 +32,12 @@ public class SVG {
     /**
      * The parsed Picture object.
      */
-    private Picture picture;
+    private final Picture picture;
 
     /**
      * These are the bounds for the SVG specified as a hidden "bounds" layer in the SVG.
      */
-    private RectF bounds;
+    private final RectF bounds;
 
     /**
      * These are the estimated bounds of the SVG computed from the SVG elements while parsing.

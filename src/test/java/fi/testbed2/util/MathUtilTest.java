@@ -12,9 +12,9 @@ import static junit.framework.Assert.assertEquals;
 public class MathUtilTest extends AbstractTestCase {
 
     @Test
-    public void testGetClosestValue() throws Exception {
+    public void testGetClosestValue() {
 
-        List<Integer> allowedValues = new ArrayList<Integer>();
+        List<Integer> allowedValues = new ArrayList<>();
         Collections.addAll(allowedValues, 1, 2, 3, 5, 10, 15, 30, 45, 100);
 
         assertEquals(1, MathUtil.getClosestValue(-1, allowedValues));

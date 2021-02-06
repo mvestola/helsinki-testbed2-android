@@ -5,14 +5,14 @@ import fi.testbed2.domain.MapLocationXY;
 
 public interface LocationService {
 
-    public static final String LOCATION_PROVIDER_FIXED = "fixed";
-    public static final String LOCATION_PROVIDER_NETWORK = "network";
-    public static final String LOCATION_PROVIDER_GPS = "gps";
+    String LOCATION_PROVIDER_FIXED = "fixed";
+    String LOCATION_PROVIDER_NETWORK = "network";
+    String LOCATION_PROVIDER_GPS = "gps";
 
-    public MapLocationGPS getUserLastLocation();
-    public MapLocationXY getUserLocationXY();
+    MapLocationGPS getUserLastLocation();
+    MapLocationXY getUserLocationXY();
 
-    public void startListeningLocationChanges();
-    public void stopListeningLocationChanges();
+    void startListeningLocationChanges();
+    void stopListeningLocationChanges();
 
 }

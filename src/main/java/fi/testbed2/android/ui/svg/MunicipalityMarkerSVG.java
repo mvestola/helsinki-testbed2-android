@@ -10,7 +10,7 @@ import lombok.Getter;
 public class MunicipalityMarkerSVG {
 
     @Getter
-    private String xmlContent;
+    private final String xmlContent;
 
     public MunicipalityMarkerSVG(String colorHex) {
 

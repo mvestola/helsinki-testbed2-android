@@ -45,10 +45,8 @@
     <string name="activity_label_anim">Kartat</string>
 
     <string name="preference_category_basic">Perusasetukset</string>
-    <string name="preference_category_advanced">Lisäasetukset</string>
 
     <string name="preference_category_animation">Animaation asetukset</string>
-    <string name="preference_category_location">Sijainnit kartalla</string>
     <string name="preference_category_user_location">Oma sijaintisi kartalla</string>
     <string name="preference_category_municipality_location">Kunnat kartalla</string>
     <string name="preference_category_ads">Mainokset</string>
@@ -90,10 +88,6 @@
 
     <string name="preference_location_municipalities_title">Näytettävät kunnat</string>
     <string name="preference_location_municipalities_summary">Valitse kunnat, jotka haluat näyttää ympyröinä kartalla</string>
-
-    <string name="preference_screen_animation_summary">Muuta karttakuvien animaation asetuksia</string>
-    <string name="preference_screen_location_summary">Muuta käyttäjän sijainnin ja valittujen kuntien
-        esitykseen liittyviä asetuksia</string>
 
     <string name="preference_show_ads_title">Näytä mainoksia</string>
     <string name="preference_show_ads_summary">Valitse, jos haluat nähdä mainoksia.

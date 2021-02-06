@@ -23,7 +23,7 @@ import java.util.List;
 @Singleton
 public class LruCachePageService implements PageService {
 
-    private static String PAGE_CACHE_KEY = "TESTBED_PAGE";
+    private static final String PAGE_CACHE_KEY = "TESTBED_PAGE";
 
     private static final String HTML_TIMESTAMP_PREFIX = "var anim_timestamps = new Array(\"";
     private static final String HTML_TIMESTAMP_SUFFIX = "\");";
@@ -71,7 +71,7 @@ public class LruCachePageService implements PageService {
     }
 
     private void initPageCache() {
-        pageCache = new LruCache<String, TestbedParsedPage>(getCacheSizeInBytes());
+        pageCache = new LruCache<>(getCacheSizeInBytes());
     }
 
     public TestbedParsedPage getTestbedParsedPage() {
@@ -105,7 +105,7 @@ public class LruCachePageService implements PageService {
 
         int notDownloaded = 0;
         for (TestbedMapImage mapImage : testbedMapImages) {
-            if (mapImage==null || !bitmapService.bitmapIsDownloaded(mapImage)) {
+            if (mapImage==null || bitmapService.bitmapIsNotDownloaded(mapImage)) {
                 notDownloaded++;
             }
         }

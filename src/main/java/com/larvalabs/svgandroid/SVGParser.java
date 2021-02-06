@@ -6,7 +6,6 @@ import android.graphics.*;
 import android.util.Log;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -50,6 +49,7 @@ import java.util.HashMap;
  * @see #getSVGFromInputStream(java.io.InputStream)
  * @see #parsePath(String)
  */
+@SuppressWarnings({"EmptyMethod", "SameParameterValue"})
 public class SVGParser {
 
     static final String TAG = "SVGAndroid";
@@ -201,7 +201,7 @@ public class SVGParser {
         //Util.debug("Parsing numbers from: '" + s + "'");
         int n = s.length();
         int p = 0;
-        ArrayList<Float> numbers = new ArrayList<Float>();
+        ArrayList<Float> numbers = new ArrayList<>();
         boolean skipChar = false;
         for (int i = 1; i < n; i++) {
             if (skipChar) {
@@ -621,8 +621,8 @@ public class SVGParser {
     }
 
     private static class NumberParse {
-        private ArrayList<Float> numbers;
-        private int nextCmd;
+        private final ArrayList<Float> numbers;
+        private final int nextCmd;
 
         public NumberParse(ArrayList<Float> numbers, int nextCmd) {
             this.numbers = numbers;
@@ -645,8 +645,8 @@ public class SVGParser {
         boolean isLinear;
         float x1, y1, x2, y2;
         float x, y, radius;
-        ArrayList<Float> positions = new ArrayList<Float>();
-        ArrayList<Integer> colors = new ArrayList<Integer>();
+        ArrayList<Float> positions = new ArrayList<>();
+        ArrayList<Integer> colors = new ArrayList<>();
         Matrix matrix = null;
 
         public Gradient createChild(Gradient g) {
@@ -678,7 +678,7 @@ public class SVGParser {
     }
 
     private static class StyleSet {
-        HashMap<String, String> styleMap = new HashMap<String, String>();
+        final HashMap<String, String> styleMap = new HashMap<>();
 
         private StyleSet(String string) {
             String[] styles = string.split(";");
@@ -697,7 +697,7 @@ public class SVGParser {
 
     private static class Properties {
         StyleSet styles = null;
-        Attributes atts;
+        final Attributes atts;
 
         private Properties(Attributes atts) {
             this.atts = atts;
@@ -759,15 +759,16 @@ public class SVGParser {
         }
     }
 
+    @SuppressWarnings({"StatementWithEmptyBody", "ConstantConditions"})
     private static class SVGHandler extends DefaultHandler {
 
-        Picture picture;
+        final Picture picture;
         Canvas canvas;
-        Paint paint;
+        final Paint paint;
         // Scratch rect (so we aren't constantly making new ones)
-        RectF rect = new RectF();
+        final RectF rect = new RectF();
         RectF bounds = null;
-        RectF limits = new RectF(Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY, Float.NEGATIVE_INFINITY, Float.NEGATIVE_INFINITY);
+        final RectF limits = new RectF(Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY, Float.NEGATIVE_INFINITY, Float.NEGATIVE_INFINITY);
 
         Integer searchColor = null;
         Integer replaceColor = null;
@@ -776,8 +777,8 @@ public class SVGParser {
 
         boolean pushed = false;
 
-        HashMap<String, Shader> gradientMap = new HashMap<String, Shader>();
-        HashMap<String, Gradient> gradientRefMap = new HashMap<String, Gradient>();
+        final HashMap<String, Shader> gradientMap = new HashMap<>();
+        final HashMap<String, Gradient> gradientRefMap = new HashMap<>();
         Gradient gradient = null;
 
         private SVGHandler(Picture picture) {
@@ -796,12 +797,12 @@ public class SVGParser {
         }
 
         @Override
-        public void startDocument() throws SAXException {
+        public void startDocument() {
             // Set up prior to parsing a doc
         }
 
         @Override
-        public void endDocument() throws SAXException {
+        public void endDocument() {
             // Clean up after parsing a doc
         }
 
@@ -922,7 +923,7 @@ public class SVGParser {
 
         private void doColor(Properties atts, Integer color, boolean fillMode) {
             int c = (0xFFFFFF & color) | 0xFF000000;
-            if (searchColor != null && searchColor.intValue() == c) {
+            if (searchColor != null && searchColor == c) {
                 c = replaceColor;
             }
             paint.setColor(c);
@@ -984,7 +985,7 @@ public class SVGParser {
         }
 
         @Override
-        public void startElement(String namespaceURI, String localName, String qName, Attributes atts) throws SAXException {
+        public void startElement(String namespaceURI, String localName, String qName, Attributes atts) {
             // Reset paint opacity
             paint.setAlpha(255);
             // Ignore everything but rectangles in bounds mode
@@ -1172,84 +1173,88 @@ public class SVGParser {
         }
 
         @Override
-        public void characters(char ch[], int start, int length) {
+        public void characters(char[] ch, int start, int length) {
             // no-op
         }
 
         @Override
-        public void endElement(String namespaceURI, String localName, String qName)
-                throws SAXException {
-            if (localName.equals("svg")) {
-                picture.endRecording();
-            } else if (localName.equals("linearGradient")) {
-                if (gradient.id != null) {
-                    if (gradient.xlink != null) {
-                        Gradient parent = gradientRefMap.get(gradient.xlink);
-                        if (parent != null) {
-                            gradient = parent.createChild(gradient);
+        public void endElement(String namespaceURI, String localName, String qName) {
+            switch (localName) {
+                case "svg":
+                    picture.endRecording();
+                    break;
+                case "linearGradient":
+                    if (gradient.id != null) {
+                        if (gradient.xlink != null) {
+                            Gradient parent = gradientRefMap.get(gradient.xlink);
+                            if (parent != null) {
+                                gradient = parent.createChild(gradient);
+                            }
+                        }
+                        int[] colors = new int[gradient.colors.size()];
+                        for (int i = 0; i < colors.length; i++) {
+                            colors[i] = gradient.colors.get(i);
+                        }
+                        float[] positions = new float[gradient.positions.size()];
+                        for (int i = 0; i < positions.length; i++) {
+                            positions[i] = gradient.positions.get(i);
+                        }
+                        if (colors.length == 0) {
+                            Log.d("BAD", "BAD");
+                        }
+                        LinearGradient g = new LinearGradient(gradient.x1, gradient.y1, gradient.x2, gradient.y2, colors, positions, Shader.TileMode.CLAMP);
+                        if (gradient.matrix != null) {
+                            g.setLocalMatrix(gradient.matrix);
+                        }
+                        gradientMap.put(gradient.id, g);
+                        gradientRefMap.put(gradient.id, gradient);
+                    }
+                    break;
+                case "radialGradient":
+                    if (gradient.id != null) {
+                        if (gradient.xlink != null) {
+                            Gradient parent = gradientRefMap.get(gradient.xlink);
+                            if (parent != null) {
+                                gradient = parent.createChild(gradient);
+                            }
+                        }
+                        int[] colors = new int[gradient.colors.size()];
+                        for (int i = 0; i < colors.length; i++) {
+                            colors[i] = gradient.colors.get(i);
+                        }
+                        float[] positions = new float[gradient.positions.size()];
+                        for (int i = 0; i < positions.length; i++) {
+                            positions[i] = gradient.positions.get(i);
+                        }
+                        if (gradient.xlink != null) {
+                            Gradient parent = gradientRefMap.get(gradient.xlink);
+                            if (parent != null) {
+                                gradient = parent.createChild(gradient);
+                            }
+                        }
+                        RadialGradient g = new RadialGradient(gradient.x, gradient.y, gradient.radius, colors, positions, Shader.TileMode.CLAMP);
+                        if (gradient.matrix != null) {
+                            g.setLocalMatrix(gradient.matrix);
+                        }
+                        gradientMap.put(gradient.id, g);
+                        gradientRefMap.put(gradient.id, gradient);
+                    }
+                    break;
+                case "g":
+                    if (boundsMode) {
+                        boundsMode = false;
+                    }
+                    // Break out of hidden mode
+                    if (hidden) {
+                        hiddenLevel--;
+                        //Util.debug("Hidden down: " + hiddenLevel);
+                        if (hiddenLevel == 0) {
+                            hidden = false;
                         }
                     }
-                    int[] colors = new int[gradient.colors.size()];
-                    for (int i = 0; i < colors.length; i++) {
-                        colors[i] = gradient.colors.get(i);
-                    }
-                    float[] positions = new float[gradient.positions.size()];
-                    for (int i = 0; i < positions.length; i++) {
-                        positions[i] = gradient.positions.get(i);
-                    }
-                    if (colors.length == 0) {
-                        Log.d("BAD", "BAD");
-                    }
-                    LinearGradient g = new LinearGradient(gradient.x1, gradient.y1, gradient.x2, gradient.y2, colors, positions, Shader.TileMode.CLAMP);
-                    if (gradient.matrix != null) {
-                        g.setLocalMatrix(gradient.matrix);
-                    }
-                    gradientMap.put(gradient.id, g);
-                    gradientRefMap.put(gradient.id, gradient);
-                }
-            } else if (localName.equals("radialGradient")) {
-                if (gradient.id != null) {
-                    if (gradient.xlink != null) {
-                        Gradient parent = gradientRefMap.get(gradient.xlink);
-                        if (parent != null) {
-                            gradient = parent.createChild(gradient);
-                        }
-                    }
-                    int[] colors = new int[gradient.colors.size()];
-                    for (int i = 0; i < colors.length; i++) {
-                        colors[i] = gradient.colors.get(i);
-                    }
-                    float[] positions = new float[gradient.positions.size()];
-                    for (int i = 0; i < positions.length; i++) {
-                        positions[i] = gradient.positions.get(i);
-                    }
-                    if (gradient.xlink != null) {
-                        Gradient parent = gradientRefMap.get(gradient.xlink);
-                        if (parent != null) {
-                            gradient = parent.createChild(gradient);
-                        }
-                    }
-                    RadialGradient g = new RadialGradient(gradient.x, gradient.y, gradient.radius, colors, positions, Shader.TileMode.CLAMP);
-                    if (gradient.matrix != null) {
-                        g.setLocalMatrix(gradient.matrix);
-                    }
-                    gradientMap.put(gradient.id, g);
-                    gradientRefMap.put(gradient.id, gradient);
-                }
-            } else if (localName.equals("g")) {
-                if (boundsMode) {
-                    boundsMode = false;
-                }
-                // Break out of hidden mode
-                if (hidden) {
-                    hiddenLevel--;
-                    //Util.debug("Hidden down: " + hiddenLevel);
-                    if (hiddenLevel == 0) {
-                        hidden = false;
-                    }
-                }
-                // Clear gradient map
-                gradientMap.clear();
+                    // Clear gradient map
+                    gradientMap.clear();
+                    break;
             }
         }
     }

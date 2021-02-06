@@ -1,5 +1,6 @@
 package fi.testbed2.android.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Rect;
@@ -40,6 +41,7 @@ import fi.testbed2.util.SeekBarUtil;
 /**
  * Activity handling the main map animation view.
  */
+@SuppressLint("NonConstantResourceId")
 @EActivity(R.layout.animation)
 @OptionsMenu(R.menu.animation_menu)
 @RoboGuice
@@ -54,15 +56,19 @@ public class AnimationActivity extends AbstractActivity {
     @Inject
     PageService pageService;
 
+    @SuppressLint("NonConstantResourceId")
     @ViewById(R.id.animation_view)
     AnimationView animationView;
 
+    @SuppressLint("NonConstantResourceId")
     @ViewById(R.id.playpause_button)
     ImageButton playPauseButton;
 
+    @SuppressLint("NonConstantResourceId")
     @ViewById(R.id.timestamp_view)
     TextView timestampView;
 
+    @SuppressLint("NonConstantResourceId")
     @ViewById(R.id.seek)
     SeekBar seekBar;
 
@@ -76,7 +82,7 @@ public class AnimationActivity extends AbstractActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (!compulsoryDataIsAvailable()) {
+        if (compulsoryDataIsNotAvailable()) {
             reloadAllAndReturnToMainActivity();
             return;
         }
@@ -89,7 +95,7 @@ public class AnimationActivity extends AbstractActivity {
     protected void onResume() {
         super.onResume();
 
-        if (!compulsoryDataIsAvailable()) {
+        if (compulsoryDataIsNotAvailable()) {
             reloadAllAndReturnToMainActivity();
             return;
         }
@@ -125,7 +131,6 @@ public class AnimationActivity extends AbstractActivity {
 
     @Override
     public void onRefreshFromMenuSelected() {
-        adManager.showInterstitialAdIfLoaded();
         pauseAnimation();
         allImagesDownloaded = false;
         Intent intent = new Intent();
@@ -133,6 +138,7 @@ public class AnimationActivity extends AbstractActivity {
         finish();
     }
 
+    @SuppressWarnings("NullableProblems")
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -140,8 +146,6 @@ public class AnimationActivity extends AbstractActivity {
         orientation = newConfig.orientation;
         updateSettingsToView();
     }
-
-
 
     /**
      * Updates the Downloading text in top left corner
@@ -169,7 +173,7 @@ public class AnimationActivity extends AbstractActivity {
     @AfterViews
     protected void initView() {
 
-        if (!compulsoryDataIsAvailable()) {
+        if (compulsoryDataIsNotAvailable()) {
             reloadAllAndReturnToMainActivity();
             return;
         }
@@ -213,7 +217,7 @@ public class AnimationActivity extends AbstractActivity {
      *
      * @return
      */
-    private boolean compulsoryDataIsAvailable() {
+    private boolean compulsoryDataIsNotAvailable() {
 
         TestbedParsedPage page = pageService.getTestbedParsedPage();
 
@@ -221,17 +225,13 @@ public class AnimationActivity extends AbstractActivity {
         * Parsed page should always be non-null.
         */
         if (page==null) {
-            return false;
+            return true;
         }
 
         boolean noImagesExist = page.getAllTestbedImages()==null || page.getAllTestbedImages().isEmpty();
         boolean allImagesDownloadedButSomeAreMissing = allImagesDownloaded && pageService.getNotDownloadedImagesCount()>0;
 
-        if (noImagesExist || allImagesDownloadedButSomeAreMissing) {
-            return false;
-        }
-
-        return true;
+        return noImagesExist || allImagesDownloadedButSomeAreMissing;
 
     }
 
@@ -245,6 +245,7 @@ public class AnimationActivity extends AbstractActivity {
         finish();
     }
 
+    @SuppressWarnings("ConstantConditions")
     private void showHardwareAccelerationWarningIfNeeded() {
 
         try {
@@ -277,6 +278,7 @@ public class AnimationActivity extends AbstractActivity {
     }
 
 
+    @SuppressLint("NonConstantResourceId")
     @Click(R.id.playpause_button)
     public void onPlayPauseButtonClick() {
 
@@ -301,6 +303,7 @@ public class AnimationActivity extends AbstractActivity {
 
     }
 
+    @SuppressLint("NonConstantResourceId")
     @OptionsItem(R.id.main_menu_reset_zoom)
     public void onResetZoomSelected() {
         animationView.setScaleInfo(new MapScaleInfo());
@@ -308,6 +311,7 @@ public class AnimationActivity extends AbstractActivity {
         animationView.invalidate();
     }
 
+    @SuppressLint("NonConstantResourceId")
     @SeekBarProgressChange(R.id.seek)
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         if (fromUser) {
@@ -318,11 +322,14 @@ public class AnimationActivity extends AbstractActivity {
         }
     }
 
+    @SuppressLint("NonConstantResourceId")
     @SeekBarTouchStart(R.id.seek)
     public void onStartTrackingTouch(SeekBar seekBar) {
         pauseAnimation();
     }
 
+    @SuppressWarnings("EmptyMethod")
+    @SuppressLint("NonConstantResourceId")
     @SeekBarTouchStop(R.id.seek)
     public void onStopTrackingTouch(SeekBar seekBar) {
         // Don't do anything

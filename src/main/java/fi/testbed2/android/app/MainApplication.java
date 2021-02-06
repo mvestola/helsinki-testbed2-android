@@ -1,5 +1,6 @@
 package fi.testbed2.android.app;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
@@ -24,7 +25,9 @@ public class MainApplication extends Application {
     public static final int RESULT_OK = Activity.RESULT_OK;
     public static final int RESULT_REFRESH = 10;
 
+    @SuppressLint("StaticFieldLeak")
     private static Context context;
+    @SuppressLint("StaticFieldLeak")
     private static MainApplication app;
 
     @Inject

@@ -1,5 +1,6 @@
 package fi.testbed2.android.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -39,13 +40,13 @@ public abstract class AbstractActivity extends AppCompatActivity {
     @Inject
     AdManager adManager;
 
+    @SuppressLint("NonConstantResourceId")
     @ViewById(R.id.adView)
     AdView adView;
 
+    @SuppressLint("NonConstantResourceId")
     @ViewById(R.id.toolbar)
     Toolbar toolbar;
-
-    private String currentErrorMsg;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,7 +61,7 @@ public abstract class AbstractActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        AdView adView = (AdView)this.findViewById(R.id.adView);
+        AdView adView = this.findViewById(R.id.adView);
 
         if (adView!=null) {
             if (settingsService.showAds()) {
@@ -78,9 +79,9 @@ public abstract class AbstractActivity extends AppCompatActivity {
         if (adRequest != null) {
             adView.loadAd(adRequest);
         }
-        adManager.initInterstitialAd();
     }
 
+    @SuppressWarnings("ConstantConditions")
     @AfterViews
     void bindActionBar() {
         setSupportActionBar(toolbar);
@@ -93,24 +94,26 @@ public abstract class AbstractActivity extends AppCompatActivity {
 
     public abstract void onRefreshFromMenuSelected();
 
+    @SuppressLint("NonConstantResourceId")
     @OptionsItem(R.id.main_menu_refresh)
     public void onRefreshMenuItemSelected() {
         onRefreshFromMenuSelected();
     }
 
+    @SuppressLint("NonConstantResourceId")
     @OptionsItem(R.id.main_menu_preferences)
     public void onPreferencesMenuItemSelected() {
         startActivity(new Intent(this, TestbedPreferenceActivity_.class));
     }
 
+    @SuppressLint("NonConstantResourceId")
     @OptionsItem(R.id.main_menu_about)
     public void onAboutMenuItemSelected() {
         dialogBuilder.getAboutDialog().show();
     }
 
     protected void showErrorDialog(String errorMsg) {
-        currentErrorMsg = errorMsg;
-        dialogBuilder.getErrorDialog(currentErrorMsg).show();
+        dialogBuilder.getErrorDialog(errorMsg).show();
     }
 
     protected void showShortMessage(String msg) {

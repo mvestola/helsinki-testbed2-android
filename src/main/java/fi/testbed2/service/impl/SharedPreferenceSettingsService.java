@@ -18,9 +18,7 @@ import fi.testbed2.service.MunicipalityService;
 import fi.testbed2.service.SettingsService;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -90,9 +88,8 @@ public class SharedPreferenceSettingsService implements SettingsService {
         }
 
         String[] parts = frameBoundsPref.split(":");
-        final Rect bounds = new Rect(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2]), Integer.parseInt(parts[3]));
 
-        return bounds;
+        return new Rect(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2]), Integer.parseInt(parts[3]));
 
     }
 
@@ -109,10 +106,10 @@ public class SharedPreferenceSettingsService implements SettingsService {
 
     @Override
     public List<Municipality> getSavedMunicipalities() {
-        List<Municipality> municipalities = new ArrayList<Municipality>();
+        List<Municipality> municipalities = new ArrayList<>();
 
         Set<String> municipalitiesSet = sharedPreferences.getStringSet(PREF_LOCATION_SHOW_MUNICIPALITIES_LIST, Collections.<String>emptySet());
-        List<String> municipalityList = new ArrayList(municipalitiesSet);
+        List<String> municipalityList = new ArrayList<>(municipalitiesSet);
         Collections.sort(municipalityList);
 
         for (String municipalityName : municipalityList) {
@@ -160,11 +157,7 @@ public class SharedPreferenceSettingsService implements SettingsService {
 
         Logger.debug("What's new dialog is shown for version: " + dialogShownForVersion);
 
-        if (!dialogShownForVersion.equals(MainApplication.getVersionName())) {
-            return true;
-        }
-
-        return false;
+        return !dialogShownForVersion.equals(MainApplication.getVersionName());
     }
 
     @Override

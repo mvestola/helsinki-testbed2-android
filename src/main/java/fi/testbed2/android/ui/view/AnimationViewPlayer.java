@@ -10,7 +10,7 @@ import lombok.Setter;
  */
 public class AnimationViewPlayer {
 
-    private AnimationView view;
+    private final AnimationView view;
 
     @Getter
     private boolean isPlaying;

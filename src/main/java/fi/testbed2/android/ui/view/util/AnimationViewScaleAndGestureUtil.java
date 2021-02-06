@@ -39,10 +39,10 @@ public class AnimationViewScaleAndGestureUtil {
     AnimationView view;
 
     @Getter
-    private ScaleListener scaleListener;
+    private final ScaleListener scaleListener;
 
     @Getter
-    private GestureListener gestureListener;
+    private final GestureListener gestureListener;
 
     private Toast municipalityToast;
 
@@ -59,6 +59,7 @@ public class AnimationViewScaleAndGestureUtil {
 
     private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
 
+        @SuppressWarnings("IntegerDivisionInFloatingPointContext")
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
 
@@ -139,9 +140,8 @@ public class AnimationViewScaleAndGestureUtil {
      * @param canvasY Y coordinate in canvas coordinate
      * @param rawX Raw X coordinate from the touch event
      * @param rawY Raw Y coordinate from the touch event
-     * @return True if the toast was shown, false if not shown.
      */
-    public boolean showInfoForMunicipality(float canvasX, float canvasY, float rawX, float rawY) {
+    public void showInfoForMunicipality(float canvasX, float canvasY, float rawX, float rawY) {
 
         for (Municipality municipality : view.getMunicipalities()) {
 
@@ -166,15 +166,15 @@ public class AnimationViewScaleAndGestureUtil {
                         View layout = inflater.inflate(R.layout.toast_municipality,
                                 (ViewGroup) view.findViewById(R.id.toast_layout_root));
 
-                        TextView text = (TextView) layout.findViewById(R.id.text);
+                        TextView text = layout.findViewById(R.id.text);
                         text.setText(municipality.getName());
 
                         municipalityToast = new Toast(view.getContext());
-                        municipalityToast.setGravity(Gravity.CENTER| Gravity.CENTER, 0, 0);
+                        municipalityToast.setGravity(Gravity.CENTER, 0, 0);
                         municipalityToast.setDuration(Toast.LENGTH_LONG);
                         municipalityToast.setView(layout);
                         municipalityToast.show();
-                        return true;
+                        return;
 
                     }
 
@@ -183,8 +183,6 @@ public class AnimationViewScaleAndGestureUtil {
             }
 
         }
-
-        return false;
 
     }
 

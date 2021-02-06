@@ -10,10 +10,10 @@ import fi.testbed2.domain.TestbedMapImage;
  */
 public interface BitmapService {
 
-    public boolean bitmapIsDownloaded(TestbedMapImage image);
-    public Bitmap downloadBitmap(TestbedMapImage image) throws DownloadTaskException;
-    public Bitmap getBitmap(TestbedMapImage image);
-    public void evictBitmap(TestbedMapImage image);
-    public void evictAll();
+    boolean bitmapIsNotDownloaded(TestbedMapImage image);
+    Bitmap downloadBitmap(TestbedMapImage image) throws DownloadTaskException;
+    Bitmap getBitmap(TestbedMapImage image);
+    void evictBitmap(TestbedMapImage image);
+    void evictAll();
 
 }

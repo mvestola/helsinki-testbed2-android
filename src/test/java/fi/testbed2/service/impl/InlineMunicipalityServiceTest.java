@@ -1,7 +1,6 @@
 package fi.testbed2.service.impl;
 
 import fi.testbed2.AbstractTestCase;
-import fi.testbed2.BuildConfig;
 import fi.testbed2.InjectedTestRunner;
 import fi.testbed2.domain.MapLocationGPS;
 import fi.testbed2.domain.MapLocationXY;
@@ -10,11 +9,12 @@ import fi.testbed2.service.CoordinateService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.annotation.Config;
 
 import java.util.SortedMap;
 
-import static junit.framework.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
@@ -33,7 +33,7 @@ public class InlineMunicipalityServiceTest extends AbstractTestCase {
     }
 
     @Test
-    public void testGetFinlandMunicipalitiesShownInTestbedMap() throws Exception {
+    public void testGetFinlandMunicipalitiesShownInTestbedMap() {
 
         SortedMap<String, Municipality> municipalities = inlineMunicipalityService.getFinlandMunicipalitiesShownInTestbedMap();
 
@@ -61,7 +61,7 @@ public class InlineMunicipalityServiceTest extends AbstractTestCase {
     }
 
     @Test
-    public void testGetFinlandMunicipalityNamesShownInTestbedMapRightOrder() throws Exception {
+    public void testGetFinlandMunicipalityNamesShownInTestbedMapRightOrder() {
 
         String[] municipalities = inlineMunicipalityService.getFinlandMunicipalityNamesShownInTestbedMap();
 

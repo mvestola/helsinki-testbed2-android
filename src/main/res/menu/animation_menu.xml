@@ -5,20 +5,20 @@
         android:id="@+id/main_menu_refresh"
         android:icon="@drawable/ic_menu_refresh"
         android:title="@string/main_menu_refresh"
-        app:showAsAction="ifRoom"></item>
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/main_menu_preferences"
         android:icon="@drawable/ic_menu_preferences"
         android:title="@string/main_menu_preferences"
-        app:showAsAction="ifRoom"></item>
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/main_menu_reset_zoom"
         android:icon="@drawable/ic_menu_reset_zoom"
         android:title="@string/main_menu_reset_zoom"
-        app:showAsAction="ifRoom"></item>
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/main_menu_about"
         android:icon="@drawable/ic_menu_info_details"
         android:title="@string/main_menu_about"
-        app:showAsAction="ifRoom"></item>
+        app:showAsAction="ifRoom" />
 </menu>

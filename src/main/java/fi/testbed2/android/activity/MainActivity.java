@@ -1,10 +1,13 @@
 package fi.testbed2.android.activity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.view.View;
@@ -25,6 +28,7 @@ import fi.testbed2.android.ui.dialog.AlertDialogBuilder;
 import fi.testbed2.service.LocationService;
 import fi.testbed2.service.SettingsService;
 
+@SuppressLint("NonConstantResourceId")
 @EActivity(R.layout.main)
 @OptionsMenu(R.menu.main_menu)
 @RoboGuice
@@ -33,18 +37,23 @@ public class MainActivity extends AbstractActivity implements AlertDialogBuilder
     public static final int PARSING_SUB_ACTIVITY = 1;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 10;
 
+    @SuppressLint("NonConstantResourceId")
     @ViewById(R.id.button_rain_temperature)
     View buttonRainTemperature;
 
+    @SuppressLint("NonConstantResourceId")
     @ViewById(R.id.button_wind)
     View buttonWind;
 
+    @SuppressLint("NonConstantResourceId")
     @ViewById(R.id.button_humidity)
     View buttonHumidity;
 
+    @SuppressLint("NonConstantResourceId")
     @ViewById(R.id.button_air_pressure)
     View buttonAirPressure;
 
+    @SuppressLint("NonConstantResourceId")
     @ViewById(R.id.button_dew_point)
     View buttonDewPoint;
 
@@ -57,12 +66,7 @@ public class MainActivity extends AbstractActivity implements AlertDialogBuilder
         super.onCreate(savedInstanceState);
     }
 
-    /** Called when resuming, BUT after onActivityResult! */
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
+    @SuppressLint("NonConstantResourceId")
     @Click({R.id.button_rain_temperature, R.id.button_wind, R.id.button_humidity, R.id.button_air_pressure, R.id.button_dew_point})
     public void onMapTypeButtonClicked(View clickedView) {
 
@@ -95,13 +99,10 @@ public class MainActivity extends AbstractActivity implements AlertDialogBuilder
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        switch (requestCode) {
-            case PARSING_SUB_ACTIVITY:
-                handleParsingResult(resultCode, data);
-                break;
-            default:
-                super.onActivityResult(requestCode, resultCode, data);
-                break;
+        if (requestCode == PARSING_SUB_ACTIVITY) {
+            handleParsingResult(resultCode, data);
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
         }
 
     }
@@ -165,15 +166,12 @@ public class MainActivity extends AbstractActivity implements AlertDialogBuilder
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case LOCATION_PERMISSION_REQUEST_CODE: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Logger.debug("User granted location permission");
-                }
-                startMainParsingActivity();
-                return;
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Logger.debug("User granted location permission");
             }
+            startMainParsingActivity();
         }
     }
 

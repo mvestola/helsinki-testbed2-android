@@ -1,7 +1,6 @@
 package fi.testbed2.service.impl;
 
 import fi.testbed2.AbstractTestCase;
-import fi.testbed2.BuildConfig;
 import fi.testbed2.InjectedTestRunner;
 import fi.testbed2.android.task.Task;
 import fi.testbed2.android.task.exception.DownloadTaskException;
@@ -11,7 +10,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.robolectric.annotation.Config;
 
 import java.io.FileInputStream;
 import java.io.InputStream;

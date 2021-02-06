@@ -1,5 +1,6 @@
 package fi.testbed2.android.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import fi.testbed2.R;
 import fi.testbed2.android.app.MainApplication;
 import fi.testbed2.android.task.ParseAndInitTask;
 
+@SuppressLint("NonConstantResourceId")
 @EActivity(R.layout.download)
 @OptionsMenu(R.menu.main_menu)
 @RoboGuice
@@ -25,9 +27,11 @@ public class ParsingActivity extends AbstractActivity {
 
     private ParseAndInitTask task;
 
+    @SuppressLint("NonConstantResourceId")
     @ViewById(R.id.progressbar)
     ProgressBar progressBar;
 
+    @SuppressLint("NonConstantResourceId")
     @ViewById(R.id.progresstext)
     TextView progressTextView;
 
@@ -80,13 +84,10 @@ public class ParsingActivity extends AbstractActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        switch (requestCode) {
-            case ANIMATION_SUB_ACTIVITY:
-                handleAnimationResult(resultCode, data);
-                break;
-            default:
-                super.onActivityResult(requestCode, resultCode, data);
-                break;
+        if (requestCode == ANIMATION_SUB_ACTIVITY) {
+            handleAnimationResult(resultCode, data);
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
         }
 
     }
@@ -98,9 +99,6 @@ public class ParsingActivity extends AbstractActivity {
                 startParsingTask();
                 break;
             case Activity.RESULT_CANCELED:
-                this.setResult(resultCode, data);
-                finish();
-                break;
             case MainApplication.RESULT_ERROR:
                 this.setResult(resultCode, data);
                 finish();

@@ -14,6 +14,7 @@ public abstract class AbstractTestCase  {
 
     protected static final String TEST_DATA_PATH = "src/test/resources/";
 
+    @SuppressWarnings("deprecation")
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);

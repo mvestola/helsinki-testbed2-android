@@ -14,6 +14,7 @@ import lombok.Setter;
  * Utility class for map image bounds calculation related functions
  * in AnimationView.
  */
+@SuppressWarnings("FieldCanBeLocal")
 @EBean
 public class AnimationViewBoundsUtil {
 
@@ -45,6 +46,7 @@ public class AnimationViewBoundsUtil {
         this.view = view;
     }
 
+    @SuppressWarnings("IfStatementWithIdenticalBranches")
     public void initializeBounds() {
 
         // scale bounds
@@ -75,9 +77,9 @@ public class AnimationViewBoundsUtil {
      * are calculated. Do not touch this if you don't know what you are doing.
      *
      * @param event
-     * @return
      */
-    public boolean calculateNewBounds(MotionEvent event) {
+    @SuppressWarnings("SameReturnValue")
+    public void calculateNewBounds(MotionEvent event) {
 
         int action = event.getAction();
         boolean isMultiTouchEvent = event.getPointerCount()>1;
@@ -93,7 +95,7 @@ public class AnimationViewBoundsUtil {
         }
 
         if (doNotMoveMap) {
-            return true;
+            return;
         }
 
         switch(action) {
@@ -151,7 +153,6 @@ public class AnimationViewBoundsUtil {
 
         }
 
-        return true;
     }
 
 

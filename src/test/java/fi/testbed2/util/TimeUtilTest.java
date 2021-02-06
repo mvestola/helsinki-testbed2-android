@@ -9,7 +9,7 @@ import static org.junit.Assert.assertNull;
 public class TimeUtilTest extends AbstractTestCase {
 
     @Test
-    public void testGetLocalTimestampFromGMTTimestamp() throws Exception {
+    public void testGetLocalTimestampFromGMTTimestamp() {
 
         // Daylight savings time used
         assertEquals("20:35", TimeUtil.getLocalTimestampFromGMTTimestamp("201210121735"));

@@ -11,7 +11,7 @@ import lombok.Getter;
 public class LocationMarkerSVG {
 
     @Getter
-    private String xmlContent;
+    private final String xmlContent;
 
     public LocationMarkerSVG(String colorHex) {
 

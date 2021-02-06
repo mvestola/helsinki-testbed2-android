@@ -13,11 +13,11 @@ public interface PageService {
      * @return
      * @throws fi.testbed2.android.task.exception.DownloadTaskException
      */
-    public TestbedParsedPage downloadAndParseTestbedPage(final String url, Task task) throws DownloadTaskException;
+    TestbedParsedPage downloadAndParseTestbedPage(final String url, Task task) throws DownloadTaskException;
 
-    public TestbedParsedPage getTestbedParsedPage();
+    TestbedParsedPage getTestbedParsedPage();
 
-    public int getNotDownloadedImagesCount();
-    public void evictPage();
+    int getNotDownloadedImagesCount();
+    void evictPage();
 
 }

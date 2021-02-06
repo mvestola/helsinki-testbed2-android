@@ -23,9 +23,6 @@ import fi.testbed2.service.SettingsService;
 @Singleton
 public class PreferenceBasedLocationService implements LocationService, LocationListener {
 
-    private static int LOCATION_UPDATE_INTERVAL_MINUTES = 1;
-    private static int LOCATION_UPDATE_ACCURACY_METERS = 1000;
-
     @Inject
     LocationManager locationManager;
 
@@ -100,6 +97,8 @@ public class PreferenceBasedLocationService implements LocationService, Location
         }
 
         try {
+            int LOCATION_UPDATE_ACCURACY_METERS = 1000;
+            int LOCATION_UPDATE_INTERVAL_MINUTES = 1;
             locationManager.requestLocationUpdates(provider,
                     LOCATION_UPDATE_INTERVAL_MINUTES * 60 * 1000, LOCATION_UPDATE_ACCURACY_METERS, this);
         } catch (SecurityException e) {
@@ -121,14 +120,14 @@ public class PreferenceBasedLocationService implements LocationService, Location
         try {
             locationManager.removeUpdates(this);
         } catch (SecurityException e) {
-            return;
+            Logger.debug("Error while stopped listening location changes: " + e.getMessage());
         }
     }
 
     @Override
     public void onLocationChanged(Location location) {
         if (location!=null) {
-            userLocation = new MapLocationGPS(location.getLatitude(), location.getLongitude());;
+            userLocation = new MapLocationGPS(location.getLatitude(), location.getLongitude());
             userLocationXY = coordinateService.convertLocationToXyPos(userLocation);
         }
     }
@@ -146,6 +145,7 @@ public class PreferenceBasedLocationService implements LocationService, Location
         return settingsService.getLocationProvider();
     }
 
+    @SuppressWarnings("ConstantConditions")
     private boolean isTestEnvironment() {
         return BuildConfig.ENVIRONMENT.equals("TEST");
     }

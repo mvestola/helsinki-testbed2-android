@@ -20,7 +20,7 @@ public class TestbedParsedPage {
 
     public void addTestbedMapImage(TestbedMapImage image) {
         if (testbedMapImages==null) {
-            testbedMapImages = new ArrayList<TestbedMapImage>();
+            testbedMapImages = new ArrayList<>();
         }
         testbedMapImages.add(image);
     }

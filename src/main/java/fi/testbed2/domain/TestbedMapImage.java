@@ -12,10 +12,10 @@ import lombok.NonNull;
 public class TestbedMapImage {
 
     @Getter @NonNull
-    private String imageURL;
+    private final String imageURL;
 
     @Getter @NonNull
-    private String timestamp;
+    private final String timestamp;
 
     @Getter(lazy=true)
     private final String localTimestamp = convertTimestampToLocalTimestamp();

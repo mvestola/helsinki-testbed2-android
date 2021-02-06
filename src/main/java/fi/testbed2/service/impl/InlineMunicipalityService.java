@@ -67,7 +67,7 @@ public class InlineMunicipalityService implements MunicipalityService {
 
         if (municipalitiesInTestbedMap==null) {
 
-            municipalitiesInTestbedMap = new TreeMap<String, Municipality>();
+            municipalitiesInTestbedMap = new TreeMap<>();
 
             addMunicipality("Akaa", 61.169, 23.858);
             addMunicipality("Alajärvi", 63, 23.817);

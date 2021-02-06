@@ -8,7 +8,7 @@ import static org.junit.Assert.assertEquals;
 public class ColorUtilTest extends AbstractTestCase {
 
     @Test
-    public void testGetOpacityFromARGB() throws Exception {
+    public void testGetOpacityFromARGB() {
 
         // ff (255) = no transparency,  0.0 is completely transparent
 
@@ -25,7 +25,7 @@ public class ColorUtilTest extends AbstractTestCase {
     }
 
     @Test
-    public void testGetColorWithoutAlpha() throws Exception {
+    public void testGetColorWithoutAlpha() {
 
         // With alpha
         assertEquals("#000000", ColorUtil.getColorWithoutAlpha("#ff000000"));
@@ -38,7 +38,7 @@ public class ColorUtilTest extends AbstractTestCase {
     }
 
     @Test
-    public void testGetColorWithInvertedAplha() throws Exception {
+    public void testGetColorWithInvertedAplha() {
 
         // With alpha
         assertEquals("#00000000", ColorUtil.getColorWithInvertedAplha("#ff000000"));

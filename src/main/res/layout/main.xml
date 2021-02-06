@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="#71acd6"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="Overdraw">
 
     <include layout="@layout/toolbar_and_ad" />
 
-    <com.google.android.flexbox.FlexboxLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <com.google.android.flexbox.FlexboxLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -27,7 +28,7 @@
             android:layout_width="match_parent"
             android:gravity="center"
             android:padding="20dp"
-            android:layout_height="wrap_content"></TextView>
+            android:layout_height="wrap_content" />
 
 
         <LinearLayout
@@ -70,7 +71,7 @@
                 android:textColor="#8b8b8b"
                 android:textAppearance="?android:attr/textAppearanceButton"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"></TextView>
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <LinearLayout
@@ -97,7 +98,7 @@
                 android:textColor="#8b8b8b"
                 android:textAppearance="?android:attr/textAppearanceButton"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"></TextView>
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <LinearLayout
@@ -124,7 +125,7 @@
                 android:textColor="#8b8b8b"
                 android:textAppearance="?android:attr/textAppearanceButton"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"></TextView>
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <LinearLayout
@@ -151,7 +152,7 @@
                 android:textColor="#8b8b8b"
                 android:textAppearance="?android:attr/textAppearanceButton"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"></TextView>
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <LinearLayout
@@ -178,7 +179,7 @@
                 android:textColor="#8b8b8b"
                 android:textAppearance="?android:attr/textAppearanceButton"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"></TextView>
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
     </com.google.android.flexbox.FlexboxLayout>

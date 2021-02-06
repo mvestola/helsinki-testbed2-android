@@ -5,11 +5,11 @@ package fi.testbed2.android.task;
  */
 public interface Task {
 
-    public static final String ERROR_MSG_CODE = "errorMsg";
+    String ERROR_MSG_CODE = "errorMsg";
 
-    public void execute();
+    void execute();
 
-    public void cancel();
-    public boolean isCancelled();
+    void cancel();
+    boolean isCancelled();
 
 }

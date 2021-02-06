@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.view.MenuItem;
 import fi.testbed2.AbstractTestCase;
-import fi.testbed2.BuildConfig;
 import fi.testbed2.InjectedTestRunner;
 import fi.testbed2.R;
 import org.junit.Before;
@@ -12,14 +11,10 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
-import org.robolectric.Shadows;
-import org.robolectric.annotation.Config;
 import org.robolectric.fakes.RoboMenuItem;
 import org.robolectric.shadows.ShadowActivity;
 import org.robolectric.shadows.ShadowAlertDialog;
-import org.robolectric.shadows.ShadowIntent;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;
 import static org.robolectric.Shadows.shadowOf;
 
@@ -28,8 +23,9 @@ public class ParsingActivityTest extends AbstractTestCase {
 
     private ParsingActivity_ activity;
 
+    @SuppressWarnings("deprecation")
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         activity = Robolectric.setupActivity(ParsingActivity_.class);
     }
 

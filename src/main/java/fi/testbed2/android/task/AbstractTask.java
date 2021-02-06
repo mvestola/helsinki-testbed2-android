@@ -16,6 +16,7 @@ import roboguice.context.event.OnDestroyEvent;
 import roboguice.event.Observes;
 import roboguice.util.RoboAsyncTask;
 
+@SuppressWarnings("rawtypes")
 public abstract class AbstractTask extends RoboAsyncTask<Void> implements Task {
 
     @Inject

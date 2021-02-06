@@ -8,7 +8,7 @@ import static junit.framework.Assert.assertEquals;
 public class SeekBarUtilTest extends AbstractTestCase {
 
     @Test
-    public void testGetFrameNumberFromSeekBarValue() throws Exception {
+    public void testGetFrameNumberFromSeekBarValue() {
 
         // NOTE! Returned frame number starts from 0, NOT 1
 
@@ -34,7 +34,7 @@ public class SeekBarUtilTest extends AbstractTestCase {
     }
 
     @Test
-    public void testGetSeekBarValueFromFrameNumber() throws Exception {
+    public void testGetSeekBarValueFromFrameNumber() {
 
         assertEquals(0, SeekBarUtil.getSeekBarValueFromFrameNumber(0, 2));
         assertEquals(100, SeekBarUtil.getSeekBarValueFromFrameNumber(1, 2));

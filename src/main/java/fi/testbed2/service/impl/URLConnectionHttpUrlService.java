@@ -41,11 +41,7 @@ public class URLConnectionHttpUrlService implements HttpUrlService {
             } finally {
                 urlConnection.disconnect();
             }
-        } catch(IllegalStateException e) {
-            e.printStackTrace();
-            throw new DownloadTaskException(R.string.error_msg_invalid_url, url);
-        }
-        catch(IllegalArgumentException e) {
+        } catch(IllegalStateException | IllegalArgumentException e) {
             e.printStackTrace();
             throw new DownloadTaskException(R.string.error_msg_invalid_url, url);
         } catch (IOException e) {

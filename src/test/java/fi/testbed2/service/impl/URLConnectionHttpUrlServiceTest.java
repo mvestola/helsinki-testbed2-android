@@ -20,8 +20,9 @@ public class URLConnectionHttpUrlServiceTest extends AbstractTestCase {
 
     private URLConnectionHttpUrlService httpUrlService;
 
+    @SuppressWarnings("deprecation")
     @Rule
-    public ExpectedException thrown = ExpectedException.none();
+    public final ExpectedException thrown = ExpectedException.none();
 
     @Override
     @Before

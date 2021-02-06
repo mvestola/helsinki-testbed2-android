@@ -57,7 +57,7 @@ public class AnimationViewCanvasUtil {
     public void drawUserLocation(Canvas canvas, Rect bounds) {
         MapLocationXY userLocation = userLocationService.getUserLocationXY();
         if (userLocation!=null) {
-            drawPoint(userLocation, Color.BLACK, canvas, bounds, null);
+            drawPoint(userLocation, canvas, bounds, null);
         }
     }
 
@@ -65,7 +65,7 @@ public class AnimationViewCanvasUtil {
 
         for (Municipality municipality : municipalities) {
             if (municipality!=null) {
-                drawPoint(municipality.getXyPos(), Color.BLACK, canvas, bounds, municipality);
+                drawPoint(municipality.getXyPos(), canvas, bounds, municipality);
             }
         }
 
@@ -76,10 +76,11 @@ public class AnimationViewCanvasUtil {
         municipalityMarkerImage = null;
     }
 
-    private void drawPoint(MapLocationXY point, int color, Canvas canvas, Rect bounds, Municipality municipality) {
+    @SuppressWarnings("IntegerDivisionInFloatingPointContext")
+    private void drawPoint(MapLocationXY point, Canvas canvas, Rect bounds, Municipality municipality) {
 
         Paint paint = new Paint();
-        paint.setColor(color);
+        paint.setColor(Color.BLACK);
         paint.setAntiAlias(true);
         paint.setAlpha(200); // 0...255, 255 = no transparency, does not affect SVG transparency!
 
@@ -104,18 +105,16 @@ public class AnimationViewCanvasUtil {
             // Scale width a bit larger than original width (otherwise looks a bit too thin marker)
             float ratio = pic.getWidth()/pic.getHeight();
             int width = Float.valueOf(markerImageHeight*ratio+markerImageHeight/5).intValue();
-            int height = markerImageHeight;
 
             /*
             * x, y coordinates are image's top left corner,
             * so position the marker to the bottom center
             */
             int left = xInt-width/2;
-            int top = yInt-height;
+            int top = yInt- markerImageHeight;
             int right = xInt+width/2;
-            int bottom = yInt;
 
-            drawPicture(pic, canvas, new Rect(left,top,right,bottom));
+            drawPicture(pic, canvas, new Rect(left,top,right, yInt));
 
         } else {
 

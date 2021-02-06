@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.google.inject.Inject;
 
+import androidx.annotation.NonNull;
 import androidx.preference.ListPreference;
 import androidx.preference.MultiSelectListPreference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -45,12 +46,11 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     private void initMunicipalityList() {
 
         String[] entries = municipalityService.getFinlandMunicipalityNamesShownInTestbedMap();
-        String[] entryValues = entries;
         MultiSelectListPreference multiSelectListPreference =
                 (MultiSelectListPreference) getPreferenceManager().
                         findPreference(SettingsService.PREF_LOCATION_SHOW_MUNICIPALITIES_LIST);
         multiSelectListPreference.setEntries(entries);
-        multiSelectListPreference.setEntryValues(entryValues);
+        multiSelectListPreference.setEntryValues(entries);
     }
 
     @Override
@@ -69,8 +69,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
                 MapLocationGPS loc = settingsService.saveCurrentLocationAsFixedLocation();
                 Logger.debug("Using fixed provider: " + loc);
 
-                /**
-                 * If no location is available, revert to GPS provider.
+                /*
+                  If no location is available, revert to GPS provider.
                  */
                 if (loc == null) {
                     newProvider = LocationManager.GPS_PROVIDER;
@@ -91,14 +91,18 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
         String currentValue = "";
 
-        if (newProvider.equals(LocationService.LOCATION_PROVIDER_FIXED)) {
-            MapLocationGPS loc = settingsService.getSavedFixedLocation();
-            String coordinates = "lat: " + loc.getLatitude() + ", lon: " + loc.getLongitude();
-            currentValue = this.getString(R.string.preference_location_provider_fixed, coordinates);
-        } else if (newProvider.equals(LocationManager.NETWORK_PROVIDER)) {
-            currentValue = this.getString(R.string.preference_location_provider_network);
-        } else if (newProvider.equals(LocationManager.GPS_PROVIDER)) {
-            currentValue = this.getString(R.string.preference_location_provider_gps);
+        switch (newProvider) {
+            case LocationService.LOCATION_PROVIDER_FIXED:
+                MapLocationGPS loc = settingsService.getSavedFixedLocation();
+                String coordinates = "lat: " + loc.getLatitude() + ", lon: " + loc.getLongitude();
+                currentValue = this.getString(R.string.preference_location_provider_fixed, coordinates);
+                break;
+            case LocationManager.NETWORK_PROVIDER:
+                currentValue = this.getString(R.string.preference_location_provider_network);
+                break;
+            case LocationManager.GPS_PROVIDER:
+                currentValue = this.getString(R.string.preference_location_provider_gps);
+                break;
         }
 
         return this.getString(R.string.preference_location_provider_summary, currentValue);
@@ -123,7 +127,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         RoboGuice.getInjector(MainApplication.getContext()).injectViewMembers(this);
     }

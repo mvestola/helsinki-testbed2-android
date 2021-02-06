@@ -4,6 +4,8 @@ import android.app.ActivityManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
+
+import androidx.annotation.NonNull;
 import androidx.collection.LruCache;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -58,11 +60,11 @@ public class LruCacheBitmapService implements BitmapService {
 
         imageCache = new LruCache<String, Bitmap>(getCacheSizeInBytes()) {
             @Override
-            protected int sizeOf(String key, Bitmap bitmap) {
+            protected int sizeOf(@NonNull String key, @NonNull Bitmap bitmap) {
                 return bitmap.getRowBytes()*bitmap.getHeight();
             }
             @Override
-            protected void entryRemoved(boolean evicted, String key, Bitmap oldValue, Bitmap newValue) {
+            protected void entryRemoved(boolean evicted, @NonNull String key, @NonNull Bitmap oldValue, Bitmap newValue) {
                 if (evicted) {
                     oldValue.recycle();
                 }
@@ -86,8 +88,8 @@ public class LruCacheBitmapService implements BitmapService {
         return getCache().get(image.getImageURL());
     }
 
-    public boolean bitmapIsDownloaded(TestbedMapImage image) {
-        return getCache().get(image.getImageURL())!=null;
+    public boolean bitmapIsNotDownloaded(TestbedMapImage image) {
+        return getCache().get(image.getImageURL()) == null;
     }
 
     public Bitmap downloadBitmap(TestbedMapImage image) throws DownloadTaskException {
@@ -102,9 +104,6 @@ public class LruCacheBitmapService implements BitmapService {
 
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inTempStorage =  new byte[16 * 1024];
-            options.inPurgeable = true;
-            options.inInputShareable = true;
-            options.inDither=false;
 
             stream = new URL(imageURL).openStream();
             Bitmap downloadedBitmapImage = BitmapFactory.decodeStream(stream, new Rect(-1,-1,-1,-1), options);

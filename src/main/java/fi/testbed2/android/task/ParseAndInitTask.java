@@ -1,6 +1,10 @@
 package fi.testbed2.android.task;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+
+import java.util.Objects;
+
 import fi.testbed2.R;
 import fi.testbed2.android.activity.ParsingActivity;
 import fi.testbed2.android.task.exception.DownloadTaskException;
@@ -15,14 +19,17 @@ import roboguice.inject.InjectResource;
  */
 public class ParseAndInitTask extends AbstractTask implements Task {
 
-    private ParsingActivity activity;
+    private final ParsingActivity activity;
 
+    @SuppressLint("NonConstantResourceId")
     @InjectResource(R.string.progress_parsing)
     String progressParsing;
 
+    @SuppressLint("NonConstantResourceId")
     @InjectResource(R.string.progress_downloading)
     String progressDownloading;
 
+    @SuppressLint("NonConstantResourceId")
     @InjectResource(R.string.progress_done)
     String progressDone;
 
@@ -70,9 +77,9 @@ public class ParseAndInitTask extends AbstractTask implements Task {
 
         activity.publishProgress(50, progressDownloading);
 
-        TestbedMapImage mapImage = testbedParsedPage.getLatestTestbedImage();
+        TestbedMapImage mapImage = Objects.requireNonNull(testbedParsedPage).getLatestTestbedImage();
 
-        if (!bitmapService.bitmapIsDownloaded(mapImage)) {
+        if (bitmapService.bitmapIsNotDownloaded(mapImage)) {
             bitmapService.downloadBitmap(mapImage);
         }
 

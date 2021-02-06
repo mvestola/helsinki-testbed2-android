@@ -1,7 +1,6 @@
 package fi.testbed2.service.impl;
 
 import fi.testbed2.AbstractTestCase;
-import fi.testbed2.BuildConfig;
 import fi.testbed2.InjectedTestRunner;
 import fi.testbed2.android.task.exception.DownloadTaskException;
 import fi.testbed2.domain.TestbedMapImage;
@@ -10,7 +9,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
-import org.robolectric.annotation.Config;
 
 import java.io.File;
 
@@ -20,8 +18,9 @@ import static org.junit.Assert.assertNull;
 @RunWith(InjectedTestRunner.class)
 public class LruCacheBitmapServiceTest extends AbstractTestCase {
 
+    @SuppressWarnings("deprecation")
     @Rule
-    public ExpectedException thrown = ExpectedException.none();
+    public final ExpectedException thrown = ExpectedException.none();
 
     private LruCacheBitmapService lruCacheBitmapService;
 

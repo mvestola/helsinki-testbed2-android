@@ -1,5 +1,6 @@
 package fi.testbed2.android.ui.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -113,7 +114,7 @@ public class AnimationView extends View {
         gestureDetector = new GestureDetector(context, scaleAndGestureUtil.getGestureListener());
         scaleDetector = new ScaleGestureDetector(context, scaleAndGestureUtil.getScaleListener());
 
-        BitmapDrawable firstMap = new BitmapDrawable(bitmapService.getBitmap(getMapImagesToBeDrawn().get(0)));
+        BitmapDrawable firstMap = new BitmapDrawable(context.getResources(), bitmapService.getBitmap(getMapImagesToBeDrawn().get(0)));
 
         boundsUtil.setFrameWidth(firstMap.getMinimumWidth());
         boundsUtil.setFrameHeight(firstMap.getMinimumHeight());
@@ -155,7 +156,7 @@ public class AnimationView extends View {
         if (allImagesDownloaded) {
             return pageService.getTestbedParsedPage().getAllTestbedImages();
         } else {
-            List<TestbedMapImage> list = new ArrayList<TestbedMapImage>();
+            List<TestbedMapImage> list = new ArrayList<>();
             TestbedParsedPage page = pageService.getTestbedParsedPage();
             list.add(page.getLatestTestbedImage());
             return list;
@@ -176,7 +177,7 @@ public class AnimationView extends View {
         updateTimestampView(currentMap);
         updateSeekBar();
 
-        BitmapDrawable frame = new BitmapDrawable(bitmapService.getBitmap(currentMap));
+        @SuppressLint("DrawAllocation") BitmapDrawable frame = new BitmapDrawable(getContext().getResources(), bitmapService.getBitmap(currentMap));
         frame.setBounds(boundsUtil.getBounds());
         frame.draw(canvas);
 
