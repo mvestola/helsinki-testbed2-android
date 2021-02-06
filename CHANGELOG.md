@@ -1,6 +1,14 @@
 Helsinki Testbed Viewer 2.0
 =============
 
+Version 2.0.16
+---------------------------
+
+* Better dark mode support
+* Restructure preferences layout
+* Updated support libraries and target Android version to Android 11 (API level 30)
+* Dropped support for old Android versions. The minimum supported Android version is now 5.0 Lollipop (API level 21)
+
 Version 2.0.15 (2018-09-22)
 ---------------------------
 
