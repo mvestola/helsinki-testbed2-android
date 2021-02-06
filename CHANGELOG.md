@@ -1,7 +1,7 @@
 Helsinki Testbed Viewer 2.0
 =============
 
-Version 2.0.16 (2021-02-09)
+Version 2.0.16 (2021-02-06)
 ---------------------------
 
 * Better dark mode support
