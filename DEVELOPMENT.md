@@ -31,7 +31,7 @@ The following Android frameworks / libraries are used in this application:
 * [Java Map Projection Library in Android](http://augusttown.blogspot.fi/2010/03/using-java-map-projection-library-in.html) (Used for map projection calculation, JAR file in own testbd repo)
 * [Color Picker](https://github.com/jaredrummler/ColorPicker) (Android color picker for color preferences)
 
-Some instructions for using RoboGuice:
+Some instructions for using Robolectric:
 * https://github.com/robolectric/robolectric/wiki
 * https://github.com/codepath/android_guides/wiki/Unit-Testing-with-Robolectric
 
