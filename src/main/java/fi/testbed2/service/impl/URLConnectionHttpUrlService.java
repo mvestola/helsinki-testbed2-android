@@ -25,8 +25,7 @@ public class URLConnectionHttpUrlService implements HttpUrlService {
 
     public InputStream getInputStreamForHttpUrl(final String url) throws DownloadTaskException {
 
-        try
-        {
+        try {
 
             Logger.debug("getInputStreamForHttpUrl: " + url);
 
@@ -34,14 +33,14 @@ public class URLConnectionHttpUrlService implements HttpUrlService {
             HttpURLConnection urlConnection = (HttpURLConnection) urlObj.openConnection();
             try {
                 int statusCode = urlConnection.getResponseCode();
-                if(statusCode != HTTP_VALID_STATUS_CODE) {
-                    throw new DownloadTaskException(R.string.error_msg_http_status, ""+statusCode);
+                if (statusCode != HTTP_VALID_STATUS_CODE) {
+                    throw new DownloadTaskException(R.string.error_msg_http_status, "" + statusCode);
                 }
                 return new BufferedInputStream(urlConnection.getInputStream());
             } finally {
                 urlConnection.disconnect();
             }
-        } catch(IllegalStateException | IllegalArgumentException e) {
+        } catch (IllegalStateException | IllegalArgumentException e) {
             e.printStackTrace();
             throw new DownloadTaskException(R.string.error_msg_invalid_url, url);
         } catch (IOException e) {

@@ -1,16 +1,17 @@
 package fi.testbed2.service.impl;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import java.util.SortedMap;
+
 import fi.testbed2.AbstractTestCase;
 import fi.testbed2.InjectedTestRunner;
 import fi.testbed2.domain.MapLocationGPS;
 import fi.testbed2.domain.MapLocationXY;
 import fi.testbed2.domain.Municipality;
 import fi.testbed2.service.CoordinateService;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import java.util.SortedMap;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -29,7 +30,7 @@ public class InlineMunicipalityServiceTest extends AbstractTestCase {
         super.setUp();
         inlineMunicipalityService = new InlineMunicipalityService();
         initClassForMocks(inlineMunicipalityService);
-        when(getInjectedMock(CoordinateService.class).convertLocationToXyPos(any(MapLocationGPS.class))).thenReturn(new MapLocationXY(0,0));
+        when(getInjectedMock(CoordinateService.class).convertLocationToXyPos(any(MapLocationGPS.class))).thenReturn(new MapLocationXY(0, 0));
     }
 
     @Test

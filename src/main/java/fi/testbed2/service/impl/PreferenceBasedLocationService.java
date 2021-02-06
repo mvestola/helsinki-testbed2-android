@@ -4,6 +4,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -91,7 +92,7 @@ public class PreferenceBasedLocationService implements LocationService, Location
             Logger.debug("Permission not granted for last known location: " + e.getMessage());
         }
 
-        if (lastKnownLocation!=null) {
+        if (lastKnownLocation != null) {
             userLocation = new MapLocationGPS(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
             userLocationXY = coordinateService.convertLocationToXyPos(userLocation);
         }
@@ -126,20 +127,23 @@ public class PreferenceBasedLocationService implements LocationService, Location
 
     @Override
     public void onLocationChanged(Location location) {
-        if (location!=null) {
+        if (location != null) {
             userLocation = new MapLocationGPS(location.getLatitude(), location.getLongitude());
             userLocationXY = coordinateService.convertLocationToXyPos(userLocation);
         }
     }
 
     @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {}
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+    }
 
     @Override
-    public void onProviderEnabled(String provider) {}
+    public void onProviderEnabled(String provider) {
+    }
 
     @Override
-    public void onProviderDisabled(String provider) {}
+    public void onProviderDisabled(String provider) {
+    }
 
     private String getProvider() {
         return settingsService.getLocationProvider();

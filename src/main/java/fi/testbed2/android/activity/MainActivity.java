@@ -6,10 +6,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import android.view.View;
 
 import com.google.inject.Inject;
@@ -20,6 +16,9 @@ import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.roboguice.annotations.RoboGuice;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import fi.testbed2.R;
 import fi.testbed2.android.app.Logger;
 import fi.testbed2.android.app.MainApplication;
@@ -60,7 +59,9 @@ public class MainActivity extends AbstractActivity implements AlertDialogBuilder
     @Inject
     SettingsService settingsService;
 
-	/** Called when the activity is first created. */
+    /**
+     * Called when the activity is first created.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +71,7 @@ public class MainActivity extends AbstractActivity implements AlertDialogBuilder
     @Click({R.id.button_rain_temperature, R.id.button_wind, R.id.button_humidity, R.id.button_air_pressure, R.id.button_dew_point})
     public void onMapTypeButtonClicked(View clickedView) {
 
-        switch(clickedView.getId()) {
+        switch (clickedView.getId()) {
             case R.id.button_rain_temperature:
                 settingsService.setMapType("radar");
                 break;
@@ -109,13 +110,13 @@ public class MainActivity extends AbstractActivity implements AlertDialogBuilder
 
     private void handleParsingResult(int resultCode, Intent data) {
 
-        switch(resultCode) {
+        switch (resultCode) {
             case Activity.RESULT_CANCELED:
                 showShortMessage(this.getString(R.string.notice_cancelled));
                 break;
             case MainApplication.RESULT_ERROR:
                 String errorMsg = this.getString(R.string.error_message_detailed,
-                    data.getStringExtra(Task.ERROR_MSG_CODE));
+                        data.getStringExtra(Task.ERROR_MSG_CODE));
                 showErrorDialog(errorMsg);
                 break;
         }
@@ -156,7 +157,7 @@ public class MainActivity extends AbstractActivity implements AlertDialogBuilder
     }
 
     private void requestLocationPermission(String permission) {
-        Logger.debug("Requesting location permission: "+permission);
+        Logger.debug("Requesting location permission: " + permission);
         ActivityCompat.requestPermissions(this, new String[]{permission}, LOCATION_PERMISSION_REQUEST_CODE);
     }
 

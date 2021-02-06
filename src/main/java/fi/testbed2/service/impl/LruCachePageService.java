@@ -1,9 +1,17 @@
 package fi.testbed2.service.impl;
 
 import android.app.ActivityManager;
-import androidx.collection.LruCache;
+
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.List;
+
+import androidx.collection.LruCache;
 import fi.testbed2.R;
 import fi.testbed2.android.app.Logger;
 import fi.testbed2.android.task.Task;
@@ -13,12 +21,6 @@ import fi.testbed2.domain.TestbedParsedPage;
 import fi.testbed2.service.BitmapService;
 import fi.testbed2.service.HttpUrlService;
 import fi.testbed2.service.PageService;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.List;
 
 @Singleton
 public class LruCachePageService implements PageService {
@@ -48,7 +50,7 @@ public class LruCachePageService implements PageService {
     }
 
     private LruCache<String, TestbedParsedPage> getCache() {
-        if (pageCache==null) {
+        if (pageCache == null) {
             initPageCache();
         }
         return pageCache;
@@ -61,9 +63,9 @@ public class LruCachePageService implements PageService {
     private int getCacheSizeInBytes() {
         if (cacheSizeInBytes == -1) {
             /*
-            * Get memory class of this device, exceeding this amount
-            * will throw an OutOfMemory exception.
-            */
+             * Get memory class of this device, exceeding this amount
+             * will throw an OutOfMemory exception.
+             */
             final int memClass = activityManager.getMemoryClass();
             cacheSizeInBytes = 1024 * 1024 * memClass / 8;
         }
@@ -82,7 +84,7 @@ public class LruCachePageService implements PageService {
 
         clearPreviousOldData(getTestbedParsedPage(), newTestbedParsedPage);
 
-        if (newTestbedParsedPage==null) {
+        if (newTestbedParsedPage == null) {
             getCache().remove(PAGE_CACHE_KEY);
             System.gc();
         } else {
@@ -99,13 +101,13 @@ public class LruCachePageService implements PageService {
 
         List<TestbedMapImage> testbedMapImages = getTestbedParsedPage().getAllTestbedImages();
 
-        if (testbedMapImages==null || testbedMapImages.isEmpty()) {
+        if (testbedMapImages == null || testbedMapImages.isEmpty()) {
             return Integer.MAX_VALUE;
         }
 
         int notDownloaded = 0;
         for (TestbedMapImage mapImage : testbedMapImages) {
-            if (mapImage==null || bitmapService.bitmapIsNotDownloaded(mapImage)) {
+            if (mapImage == null || bitmapService.bitmapIsNotDownloaded(mapImage)) {
                 notDownloaded++;
             }
         }
@@ -116,13 +118,13 @@ public class LruCachePageService implements PageService {
 
     private void clearPreviousOldData(TestbedParsedPage oldPage, TestbedParsedPage newPage) {
 
-        if (oldPage==null) {
+        if (oldPage == null) {
             return;
         }
 
         for (TestbedMapImage mapImg : oldPage.getAllTestbedImages()) {
 
-            if (mapImg!=null && !newPage.getAllTestbedImages().contains(mapImg)) {
+            if (mapImg != null && !newPage.getAllTestbedImages().contains(mapImg)) {
                 bitmapService.evictBitmap(mapImg);
             }
 
@@ -131,8 +133,7 @@ public class LruCachePageService implements PageService {
     }
 
     /**
-     *
-     * @param url HTML page url
+     * @param url  HTML page url
      * @param task
      * @return
      * @throws fi.testbed2.android.task.exception.DownloadTaskException
@@ -151,20 +152,17 @@ public class LruCachePageService implements PageService {
             String[] timestamps = null;
             String[] imageUrls = null;
 
-            while(!task.isCancelled())
-            {
+            while (!task.isCancelled()) {
                 String line = reader.readLine();
 
                 if (line == null)
                     break;
 
-                if(line.startsWith(HTML_TIMESTAMP_PREFIX) && line.endsWith(HTML_TIMESTAMP_SUFFIX)) {
+                if (line.startsWith(HTML_TIMESTAMP_PREFIX) && line.endsWith(HTML_TIMESTAMP_SUFFIX)) {
                     String tmp = line.substring(HTML_TIMESTAMP_PREFIX.length(), line.length() - HTML_TIMESTAMP_SUFFIX.length());
                     tmp = tmp.replaceAll("\"", "");
                     timestamps = tmp.split(",");
-                }
-
-                else if(line.startsWith(HTML_IMAGE_PREFIX) && line.endsWith(HTML_IMAGE_SUFFIX)) {
+                } else if (line.startsWith(HTML_IMAGE_PREFIX) && line.endsWith(HTML_IMAGE_SUFFIX)) {
                     String tmp = line.substring(HTML_IMAGE_PREFIX.length(), line.length() - HTML_IMAGE_SUFFIX.length());
                     tmp = tmp.replaceAll("\"", "");
                     imageUrls = tmp.split(",");
@@ -179,18 +177,18 @@ public class LruCachePageService implements PageService {
             }
 
             // validate timestamps and imageUrls
-            if(timestamps == null) {
+            if (timestamps == null) {
                 throw new DownloadTaskException(R.string.error_msg_parsing_timestamp);
             }
-            if(imageUrls == null) {
+            if (imageUrls == null) {
                 throw new DownloadTaskException(R.string.error_msg_parsing_urls);
             }
-            if(timestamps.length != imageUrls.length) {
+            if (timestamps.length != imageUrls.length) {
                 throw new DownloadTaskException(R.string.error_msg_parsing_length);
             }
 
             int i = 0;
-            for(String imageUrl : imageUrls) {
+            for (String imageUrl : imageUrls) {
                 TestbedMapImage image = new TestbedMapImage(imageUrl, timestamps[i]);
                 i++;
                 testbedParsedPage.addTestbedMapImage(image);
@@ -198,7 +196,7 @@ public class LruCachePageService implements PageService {
 
         } catch (IOException e) {
             throw new DownloadTaskException(R.string.error_msg_parsing_page);
-        } catch(IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             throw new DownloadTaskException(R.string.error_msg_parsing_page_changed);
         }
 

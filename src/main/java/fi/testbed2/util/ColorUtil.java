@@ -15,11 +15,11 @@ public class ColorUtil {
      */
     public static double getOpacityFromARGB(String argb) {
         int[] components = getARGBComponents(argb);
-        double opacity = components[0]/255.0;
+        double opacity = components[0] / 255.0;
 
-        if (opacity>1.0) {
+        if (opacity > 1.0) {
             opacity = 1.0;
-        } else if (opacity<0.0) {
+        } else if (opacity < 0.0) {
             opacity = 0.0;
         }
 
@@ -35,8 +35,8 @@ public class ColorUtil {
      */
     public static String getColorWithoutAlpha(String argb) {
         int[] components = getARGBComponents(argb);
-        return "#"+ getTwoDigitHexString(components[1])+
-                getTwoDigitHexString(components[2])+
+        return "#" + getTwoDigitHexString(components[1]) +
+                getTwoDigitHexString(components[2]) +
                 getTwoDigitHexString(components[3]);
     }
 
@@ -50,17 +50,18 @@ public class ColorUtil {
     public static String getColorWithInvertedAplha(String argb) {
 
         int[] components = getARGBComponents(argb);
-        components[0] = 255-components[0];
+        components[0] = 255 - components[0];
 
-        return "#"+ getTwoDigitHexString(components[0])+
-                    getTwoDigitHexString(components[1])+
-                    getTwoDigitHexString(components[2])+
-                    getTwoDigitHexString(components[3]);
+        return "#" + getTwoDigitHexString(components[0]) +
+                getTwoDigitHexString(components[1]) +
+                getTwoDigitHexString(components[2]) +
+                getTwoDigitHexString(components[3]);
 
     }
 
     /**
      * Return ARGB values in int array
+     *
      * @param argb Color in HEX format (either with or without alpha, e.g.
      *             #CCCCCC or #ffCCCCCC.
      * @return
@@ -78,8 +79,7 @@ public class ColorUtil {
             red = Integer.parseInt(argb.substring(2, 4), 16);
             green = Integer.parseInt(argb.substring(4, 6), 16);
             blue = Integer.parseInt(argb.substring(6, 8), 16);
-        }
-        else if (argb.length() == 6) {
+        } else if (argb.length() == 6) {
             alpha = 255;
             red = Integer.parseInt(argb.substring(0, 2), 16);
             green = Integer.parseInt(argb.substring(2, 4), 16);

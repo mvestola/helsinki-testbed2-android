@@ -1,11 +1,12 @@
 package fi.testbed2.util;
 
-import fi.testbed2.AbstractTestCase;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import fi.testbed2.AbstractTestCase;
 
 import static junit.framework.Assert.assertEquals;
 

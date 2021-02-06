@@ -12,9 +12,18 @@ import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
 import com.google.inject.Inject;
-import org.androidannotations.annotations.*;
 import com.jhlabs.map.Point2D;
+
+import org.androidannotations.annotations.AfterInject;
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EView;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import fi.testbed2.android.app.Logger;
 import fi.testbed2.android.app.MainApplication;
 import fi.testbed2.android.ui.view.util.AnimationViewBoundsUtil;
@@ -32,10 +41,6 @@ import lombok.Getter;
 import lombok.Setter;
 import roboguice.RoboGuice;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 /**
  * View which shows the map animation.
  */
@@ -52,17 +57,21 @@ public class AnimationView extends View {
     private AnimationViewPlayer player;
 
     // Utils
-    @Bean @Getter
+    @Bean
+    @Getter
     AnimationViewCanvasUtil canvasUtil;
-    @Bean @Getter
+    @Bean
+    @Getter
     AnimationViewScaleAndGestureUtil scaleAndGestureUtil;
-    @Bean @Getter
+    @Bean
+    @Getter
     AnimationViewBoundsUtil boundsUtil;
 
     // Scaling related
     private ScaleGestureDetector scaleDetector;
     private GestureDetector gestureDetector;
-    @Getter @Setter
+    @Getter
+    @Setter
     private MapScaleInfo scaleInfo = new MapScaleInfo();
 
     // Views and texts
@@ -91,17 +100,17 @@ public class AnimationView extends View {
      * All three constructors are needed!!
      */
 
-	public AnimationView(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
-	}
+    public AnimationView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+    }
 
-	public AnimationView(Context context, AttributeSet attrs) {
-		super(context, attrs);
-	}
+    public AnimationView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
 
-	public AnimationView(Context context) {
-		super(context);
-	}
+    public AnimationView(Context context) {
+        super(context);
+    }
 
     public void initView(Context context) {
 
@@ -131,19 +140,19 @@ public class AnimationView extends View {
         this.scaleInfo = scaleInfo;
         this.timestampView = timestampView;
         this.seekBar = seekBar;
-        if (bounds==null) {
+        if (bounds == null) {
             boundsUtil.initializeBounds();
         } else {
             boundsUtil.setBounds(bounds);
         }
-		next();
-	}
+        next();
+    }
 
     public void next() {
         postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(player.isPlaying()) {
+                if (player.isPlaying()) {
                     player.goToNextFrame();
                 }
             }
@@ -165,8 +174,8 @@ public class AnimationView extends View {
     }
 
     @Override
-	protected void onDraw(Canvas canvas) {
-		super.onDraw(canvas);
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
 
         canvas.save();
         canvas.scale(scaleInfo.getScaleFactor(), scaleInfo.getScaleFactor(),
@@ -192,13 +201,13 @@ public class AnimationView extends View {
 
         String timestamp = currentMap.getLocalTimestamp();
         String text = String.format("%1$02d/%2$02d @ ",
-                player.getCurrentFrame() + 1 , player.getFrames() + 1) + timestamp;
+                player.getCurrentFrame() + 1, player.getFrames() + 1) + timestamp;
 
-        if (downloadProgressText!=null) {
-            text="@ "+timestamp+"  "+downloadProgressText;
+        if (downloadProgressText != null) {
+            text = "@ " + timestamp + "  " + downloadProgressText;
         }
 
-        if (timestampView!=null) {
+        if (timestampView != null) {
             timestampView.setText(text);
             timestampView.invalidate();
         }
@@ -206,35 +215,35 @@ public class AnimationView extends View {
     }
 
     private void updateSeekBar() {
-        if (seekBar!=null) {
+        if (seekBar != null) {
             seekBar.setProgress(SeekBarUtil.getSeekBarValueFromFrameNumber(player.getCurrentFrame(),
                     pageService.getTestbedParsedPage().getAllTestbedImages().size()));
         }
     }
 
 
-	@Override
-	public boolean onTouchEvent(MotionEvent event) {
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
 
         gestureDetector.onTouchEvent(event);
         scaleDetector.onTouchEvent(event);
         boundsUtil.calculateNewBounds(event);
 
         return true;
-	}
+    }
 
 
 
 
 
     /*
-    * ============
-    * Setters and getters
-    * ============
-    */
+     * ============
+     * Setters and getters
+     * ============
+     */
 
     public void updateBounds(Rect bounds) {
-        if (bounds==null) {
+        if (bounds == null) {
             boundsUtil.initializeBounds();
         } else {
             boundsUtil.setBounds(bounds);

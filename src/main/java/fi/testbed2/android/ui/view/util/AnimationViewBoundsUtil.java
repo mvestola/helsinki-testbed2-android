@@ -23,7 +23,8 @@ public class AnimationViewBoundsUtil {
      */
     private static final float GESTURE_THRESHOLD_DIP = 16.0f;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private Rect bounds;
 
     private float boundsStartY;
@@ -57,15 +58,15 @@ public class AnimationViewBoundsUtil {
         Logger.debug("measuredHeight: " + measuredHeight);
         Logger.debug("measuredWidth: " + measuredWidth);
 
-        if(measuredHeight > measuredWidth) {
-            int scaleBy = measuredHeight-frameHeight;
-            if(scaleBy > 0)
+        if (measuredHeight > measuredWidth) {
+            int scaleBy = measuredHeight - frameHeight;
+            if (scaleBy > 0)
                 bounds = new Rect(0, 0, frameWidth + scaleBy, frameHeight + scaleBy);
             else
                 bounds = new Rect(0, 0, frameWidth, frameHeight);
         } else {
-            int scaleBy = measuredWidth-frameWidth;
-            if(scaleBy > 0)
+            int scaleBy = measuredWidth - frameWidth;
+            if (scaleBy > 0)
                 bounds = new Rect(0, 0, frameWidth + scaleBy, frameHeight + scaleBy);
             else
                 bounds = new Rect(0, 0, frameWidth, frameHeight);
@@ -82,7 +83,7 @@ public class AnimationViewBoundsUtil {
     public void calculateNewBounds(MotionEvent event) {
 
         int action = event.getAction();
-        boolean isMultiTouchEvent = event.getPointerCount()>1;
+        boolean isMultiTouchEvent = event.getPointerCount() > 1;
 
         // Do not move the map in multi-touch
         if (isMultiTouchEvent) {
@@ -90,7 +91,7 @@ public class AnimationViewBoundsUtil {
         }
 
         // Allow map movement again when new non-multi-touch down event occurs
-        if (!isMultiTouchEvent && action==MotionEvent.ACTION_DOWN) {
+        if (!isMultiTouchEvent && action == MotionEvent.ACTION_DOWN) {
             doNotMoveMap = false;
         }
 
@@ -98,7 +99,7 @@ public class AnimationViewBoundsUtil {
             return;
         }
 
-        switch(action) {
+        switch (action) {
             case MotionEvent.ACTION_CANCEL:
                 break;
             case MotionEvent.ACTION_UP:
@@ -122,18 +123,18 @@ public class AnimationViewBoundsUtil {
                 final float scale = view.getContext().getResources().getDisplayMetrics().density;
                 int mGestureThreshold = (int) (GESTURE_THRESHOLD_DIP * scale / view.getScaleInfo().getScaleFactor() + 0.5f);
 
-                if(!boundsMoveMap && (Math.abs(boundsDistanceY) > mGestureThreshold || Math.abs(boundsDistanceX) > mGestureThreshold)) {
+                if (!boundsMoveMap && (Math.abs(boundsDistanceY) > mGestureThreshold || Math.abs(boundsDistanceX) > mGestureThreshold)) {
                     boundsMoveMap = true;
                 }
 
-                if(boundsMoveMap) {
+                if (boundsMoveMap) {
 
                     view.getScaleAndGestureUtil().hideMunicipalityToast();
 
                     float mDistance_y_dip = boundsDistanceY * scale / view.getScaleInfo().getScaleFactor() + 0.5f;
                     float mDistance_x_dip = boundsDistanceX * scale / view.getScaleInfo().getScaleFactor() + 0.5f;
 
-                    bounds.offset((int)mDistance_x_dip, (int)mDistance_y_dip);
+                    bounds.offset((int) mDistance_x_dip, (int) mDistance_y_dip);
 
                     Logger.debug("New bounds left: " + bounds.left);
                     Logger.debug("New bounds top: " + bounds.top);

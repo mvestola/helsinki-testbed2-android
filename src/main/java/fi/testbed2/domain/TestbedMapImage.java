@@ -8,16 +8,18 @@ import lombok.NonNull;
 /**
  * Represents the image object read from the testbed website.
  */
-@EqualsAndHashCode(exclude={"localTimestamp"})
+@EqualsAndHashCode(exclude = {"localTimestamp"})
 public class TestbedMapImage {
 
-    @Getter @NonNull
+    @Getter
+    @NonNull
     private final String imageURL;
 
-    @Getter @NonNull
+    @Getter
+    @NonNull
     private final String timestamp;
 
-    @Getter(lazy=true)
+    @Getter(lazy = true)
     private final String localTimestamp = convertTimestampToLocalTimestamp();
 
     public TestbedMapImage(String imageURL, String timestamp) {

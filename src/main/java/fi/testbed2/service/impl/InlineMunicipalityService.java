@@ -2,15 +2,16 @@ package fi.testbed2.service.impl;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+
+import java.util.SortedMap;
+import java.util.TreeMap;
+
 import fi.testbed2.android.app.Logger;
 import fi.testbed2.domain.MapLocationGPS;
 import fi.testbed2.domain.MapLocationXY;
 import fi.testbed2.domain.Municipality;
 import fi.testbed2.service.CoordinateService;
 import fi.testbed2.service.MunicipalityService;
-
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 /**
  * Municipality service containing the municipalities inline in the Java code.
@@ -39,7 +40,7 @@ public class InlineMunicipalityService implements MunicipalityService {
          * Limit lon (x-axis) both directions and lat (y-axis) only from the top boundary
          * (cause no Finnish municipalities are below the map bottom boundary).
          */
-        if (lat<=61.005 && lon>=22.657 && lon<=26.792) {
+        if (lat <= 61.005 && lon >= 22.657 && lon <= 26.792) {
 
             MapLocationGPS mapLocationGPS = new MapLocationGPS(lat, lon);
             MapLocationXY mapLocationXY = coordinateService.convertLocationToXyPos(mapLocationGPS);
@@ -65,7 +66,7 @@ public class InlineMunicipalityService implements MunicipalityService {
     @Override
     public SortedMap<String, Municipality> getFinlandMunicipalitiesShownInTestbedMap() {
 
-        if (municipalitiesInTestbedMap==null) {
+        if (municipalitiesInTestbedMap == null) {
 
             municipalitiesInTestbedMap = new TreeMap<>();
 

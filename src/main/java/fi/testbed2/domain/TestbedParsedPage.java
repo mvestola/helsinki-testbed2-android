@@ -11,7 +11,7 @@ public class TestbedParsedPage {
     private List<TestbedMapImage> testbedMapImages;
 
     public TestbedMapImage getLatestTestbedImage() {
-        return testbedMapImages.get(testbedMapImages.size()-1);
+        return testbedMapImages.get(testbedMapImages.size() - 1);
     }
 
     public List<TestbedMapImage> getAllTestbedImages() {
@@ -19,7 +19,7 @@ public class TestbedParsedPage {
     }
 
     public void addTestbedMapImage(TestbedMapImage image) {
-        if (testbedMapImages==null) {
+        if (testbedMapImages == null) {
             testbedMapImages = new ArrayList<>();
         }
         testbedMapImages.add(image);

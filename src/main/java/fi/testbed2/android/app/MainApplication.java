@@ -21,7 +21,7 @@ public class MainApplication extends Application {
         RoboGuice.setUseAnnotationDatabases(false);
     }
 
-	public static final int RESULT_ERROR = Activity.RESULT_FIRST_USER;
+    public static final int RESULT_ERROR = Activity.RESULT_FIRST_USER;
     public static final int RESULT_OK = Activity.RESULT_OK;
     public static final int RESULT_REFRESH = 10;
 
@@ -46,11 +46,11 @@ public class MainApplication extends Application {
         Logger.debug("MainApplication started");
     }
 
-    public static Context getContext(){
+    public static Context getContext() {
         return context;
     }
 
-    public static MainApplication getApplication(){
+    public static MainApplication getApplication() {
         return app;
     }
 
@@ -62,6 +62,7 @@ public class MainApplication extends Application {
 
     /**
      * Returns the version name (number), e.g. 2.0.3
+     *
      * @return
      */
     public static String getVersionName() {

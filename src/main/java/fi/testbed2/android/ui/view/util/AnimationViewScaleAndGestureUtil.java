@@ -1,12 +1,22 @@
 package fi.testbed2.android.ui.view.util;
 
 import android.content.Context;
-import android.view.*;
+import android.view.GestureDetector;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.inject.Inject;
-import org.androidannotations.annotations.*;
 import com.jhlabs.map.Point2D;
+
+import org.androidannotations.annotations.AfterInject;
+import org.androidannotations.annotations.EBean;
+
 import fi.testbed2.R;
 import fi.testbed2.android.app.Logger;
 import fi.testbed2.android.app.MainApplication;
@@ -52,10 +62,10 @@ public class AnimationViewScaleAndGestureUtil {
     }
 
     /*
-    * ============
-    * Listeners for pinch zooming
-    * ============
-    */
+     * ============
+     * Listeners for pinch zooming
+     * ============
+     */
 
     private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
 
@@ -63,8 +73,8 @@ public class AnimationViewScaleAndGestureUtil {
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
 
-            if (detector.getScaleFactor()>1.0+MapScaleInfo.MIN_SCALE_STEP_WHEN_PINCHING ||
-                    detector.getScaleFactor()<1.0-MapScaleInfo.MIN_SCALE_STEP_WHEN_PINCHING) {
+            if (detector.getScaleFactor() > 1.0 + MapScaleInfo.MIN_SCALE_STEP_WHEN_PINCHING ||
+                    detector.getScaleFactor() < 1.0 - MapScaleInfo.MIN_SCALE_STEP_WHEN_PINCHING) {
 
                 float newScaleFactor = view.getScaleInfo().getScaleFactor() * detector.getScaleFactor();
 
@@ -138,26 +148,26 @@ public class AnimationViewScaleAndGestureUtil {
      *
      * @param canvasX X coordinate in canvas coordinate
      * @param canvasY Y coordinate in canvas coordinate
-     * @param rawX Raw X coordinate from the touch event
-     * @param rawY Raw Y coordinate from the touch event
+     * @param rawX    Raw X coordinate from the touch event
+     * @param rawY    Raw Y coordinate from the touch event
      */
     public void showInfoForMunicipality(float canvasX, float canvasY, float rawX, float rawY) {
 
         for (Municipality municipality : view.getMunicipalities()) {
 
-            if (municipality!=null) {
+            if (municipality != null) {
 
                 Point2D.Double pos = view.getCanvasUtil().getMunicipalitiesOnScreen().get(municipality);
 
-                if (pos!=null) {
+                if (pos != null) {
 
                     Logger.debug("Pos: " + pos + ", for: " + municipality.getName());
 
                     final float scale = view.getContext().getResources().getDisplayMetrics().density;
-                    int threshold = (int) ((settingsService.getMapPointSizePx()/2)*scale +
-                            (MUNICIPALITY_SEARCH_THRESHOLD/view.getScaleInfo().getScaleFactor())*scale);
+                    int threshold = (int) ((settingsService.getMapPointSizePx() / 2) * scale +
+                            (MUNICIPALITY_SEARCH_THRESHOLD / view.getScaleInfo().getScaleFactor()) * scale);
 
-                    if (Math.abs(pos.x-canvasX)<=threshold && Math.abs(pos.y-canvasY)<=threshold) {
+                    if (Math.abs(pos.x - canvasX) <= threshold && Math.abs(pos.y - canvasY) <= threshold) {
 
                         Logger.debug("Show info for municipality: " + municipality.getName());
 
@@ -192,7 +202,7 @@ public class AnimationViewScaleAndGestureUtil {
     }
 
     public void hideMunicipalityToast() {
-        if (municipalityToast!=null) {
+        if (municipalityToast != null) {
             municipalityToast.cancel();
         }
     }

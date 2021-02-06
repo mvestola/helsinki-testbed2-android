@@ -3,7 +3,9 @@ package fi.testbed2.android.task;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+
 import com.google.inject.Inject;
+
 import fi.testbed2.android.app.Logger;
 import fi.testbed2.android.app.MainApplication;
 import fi.testbed2.android.task.exception.DownloadTaskException;
@@ -37,19 +39,22 @@ public abstract class AbstractTask extends RoboAsyncTask<Void> implements Task {
 
     /**
      * Return the activity which started this task
+     *
      * @return
      */
     protected abstract Activity getActivity();
 
     /**
      * Return task name for logging.
+     *
      * @return
      */
     protected abstract String getTaskName();
 
     /**
      * Executes this method on background.
-     * @throws DownloadTaskException Thrown e.g. if network connection fails
+     *
+     * @throws DownloadTaskException  Thrown e.g. if network connection fails
      * @throws TaskCancelledException Thrown if task is cancelled
      */
     protected abstract void runOnBackground() throws DownloadTaskException,
@@ -62,12 +67,13 @@ public abstract class AbstractTask extends RoboAsyncTask<Void> implements Task {
 
     /**
      * This method is run on background in different thread, NOT in UI thread
+     *
      * @return
      * @throws Exception
      */
     @Override
     public Void call() throws Exception {
-        Logger.debug(getTaskName()+" execute()");
+        Logger.debug(getTaskName() + " execute()");
         runOnBackground();
         return null;
     }
@@ -85,7 +91,7 @@ public abstract class AbstractTask extends RoboAsyncTask<Void> implements Task {
         } else if (e instanceof TaskCancelledException) {
             onCancel();
         } else {
-            Logger.debug(getTaskName()+" onException(): "+e.getMessage());
+            Logger.debug(getTaskName() + " onException(): " + e.getMessage());
             e.printStackTrace();
         }
 
@@ -93,22 +99,22 @@ public abstract class AbstractTask extends RoboAsyncTask<Void> implements Task {
 
     @Override
     protected void onSuccess(Void result) {
-        Logger.debug(getTaskName()+" onSuccess()");
+        Logger.debug(getTaskName() + " onSuccess()");
         doOnSuccess();
     }
 
     @Override
     protected void onInterrupted(Exception e) {
-        Logger.debug(getTaskName()+" onInterrupted()");
+        Logger.debug(getTaskName() + " onInterrupted()");
     }
 
-    protected void onActivityDestroy(@Observes OnDestroyEvent ignored ) {
+    protected void onActivityDestroy(@Observes OnDestroyEvent ignored) {
         Logger.debug(getTaskName() + " onActivityDestroy()");
         cancel();
     }
 
     private void onError(String errorMsg) {
-        Logger.debug(getTaskName()+" onError()");
+        Logger.debug(getTaskName() + " onError()");
         Intent intent = new Intent();
         intent.putExtra(fi.testbed2.android.task.Task.ERROR_MSG_CODE, errorMsg);
         getActivity().setResult(MainApplication.RESULT_ERROR, intent);
@@ -116,7 +122,7 @@ public abstract class AbstractTask extends RoboAsyncTask<Void> implements Task {
     }
 
     private void onCancel() {
-        Logger.debug(getTaskName()+" onCancel()");
+        Logger.debug(getTaskName() + " onCancel()");
         getActivity().setResult(Activity.RESULT_CANCELED);
         getActivity().finish();
     }

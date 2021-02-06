@@ -5,8 +5,15 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.location.LocationManager;
+
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+
 import fi.testbed2.R;
 import fi.testbed2.android.app.Logger;
 import fi.testbed2.android.app.MainApplication;
@@ -16,11 +23,6 @@ import fi.testbed2.domain.Municipality;
 import fi.testbed2.service.LocationService;
 import fi.testbed2.service.MunicipalityService;
 import fi.testbed2.service.SettingsService;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
 
 @Singleton
 public class SharedPreferenceSettingsService implements SettingsService {
@@ -63,8 +65,8 @@ public class SharedPreferenceSettingsService implements SettingsService {
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        if (editor!=null) {
-            if (bounds!=null) {
+        if (editor != null) {
+            if (bounds != null) {
                 // bounds String format is left:top:right:bottom
                 editor.putString(getMapBoundsPreferenceKey(orientation),
                         "" + bounds.left + ":" + bounds.top + ":" + bounds.right + ":" + bounds.bottom);
@@ -83,7 +85,7 @@ public class SharedPreferenceSettingsService implements SettingsService {
         // left:top:right:bottom
         String frameBoundsPref = sharedPreferences.getString(getMapBoundsPreferenceKey(orientation), null);
 
-        if (frameBoundsPref==null) {
+        if (frameBoundsPref == null) {
             return null;
         }
 
@@ -114,7 +116,7 @@ public class SharedPreferenceSettingsService implements SettingsService {
 
         for (String municipalityName : municipalityList) {
             Municipality municipality = municipalityService.getMunicipality(municipalityName);
-            if (municipality!=null) {
+            if (municipality != null) {
                 municipalities.add(municipality);
             }
         }
@@ -206,8 +208,7 @@ public class SharedPreferenceSettingsService implements SettingsService {
             red = Integer.parseInt(argb.substring(2, 4), 16);
             green = Integer.parseInt(argb.substring(4, 6), 16);
             blue = Integer.parseInt(argb.substring(6, 8), 16);
-        }
-        else if (argb.length() == 6) {
+        } else if (argb.length() == 6) {
             alpha = 255;
             red = Integer.parseInt(argb.substring(0, 2), 16);
             green = Integer.parseInt(argb.substring(2, 4), 16);
@@ -287,7 +288,7 @@ public class SharedPreferenceSettingsService implements SettingsService {
         double lat = Double.parseDouble(sharedPreferences.getString(PREF_LOCATION_FIXED_LAT, "-1"));
         double lon = Double.parseDouble(sharedPreferences.getString(PREF_LOCATION_FIXED_LON, "-1"));
 
-        if (lat<0 || lon<0) {
+        if (lat < 0 || lon < 0) {
             return null;
         }
 
@@ -305,11 +306,11 @@ public class SharedPreferenceSettingsService implements SettingsService {
 
         MapLocationGPS lastKnownLocation = locationService.getUserLastLocation();
 
-        if (lastKnownLocation!=null) {
+        if (lastKnownLocation != null) {
             Logger.debug("Saving last known location to preferences: " + lastKnownLocation);
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString(SettingsService.PREF_LOCATION_FIXED_LAT,""+lastKnownLocation.getLatitude());
-            editor.putString(SettingsService.PREF_LOCATION_FIXED_LON,""+lastKnownLocation.getLongitude());
+            editor.putString(SettingsService.PREF_LOCATION_FIXED_LAT, "" + lastKnownLocation.getLatitude());
+            editor.putString(SettingsService.PREF_LOCATION_FIXED_LON, "" + lastKnownLocation.getLongitude());
             editor.apply();
         }
 

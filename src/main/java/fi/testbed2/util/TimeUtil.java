@@ -15,7 +15,7 @@ public class TimeUtil {
      */
     public static String getLocalTimestampFromGMTTimestamp(String gmtTimestamp) {
 
-        if (gmtTimestamp==null || gmtTimestamp.length()==0) {
+        if (gmtTimestamp == null || gmtTimestamp.length() == 0) {
             return null;
         }
 

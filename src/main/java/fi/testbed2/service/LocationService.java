@@ -10,9 +10,11 @@ public interface LocationService {
     String LOCATION_PROVIDER_GPS = "gps";
 
     MapLocationGPS getUserLastLocation();
+
     MapLocationXY getUserLocationXY();
 
     void startListeningLocationChanges();
+
     void stopListeningLocationChanges();
 
 }

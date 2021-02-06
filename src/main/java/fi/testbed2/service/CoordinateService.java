@@ -10,6 +10,7 @@ import fi.testbed2.domain.MapLocationXY;
 public interface CoordinateService {
 
     MapLocationXY getKnownPositionForTesting();
+
     MapLocationXY convertLocationToXyPos(MapLocationGPS location);
 
 }

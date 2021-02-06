@@ -1,11 +1,5 @@
 package fi.testbed2.service.impl;
 
-import fi.testbed2.AbstractTestCase;
-import fi.testbed2.InjectedTestRunner;
-import fi.testbed2.android.task.Task;
-import fi.testbed2.android.task.exception.DownloadTaskException;
-import fi.testbed2.domain.TestbedParsedPage;
-import fi.testbed2.service.HttpUrlService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +7,13 @@ import org.mockito.Mock;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+
+import fi.testbed2.AbstractTestCase;
+import fi.testbed2.InjectedTestRunner;
+import fi.testbed2.android.task.Task;
+import fi.testbed2.android.task.exception.DownloadTaskException;
+import fi.testbed2.domain.TestbedParsedPage;
+import fi.testbed2.service.HttpUrlService;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -47,20 +48,20 @@ public class LruCachePageServiceTest extends AbstractTestCase {
         assertEquals(15, page.getAllTestbedImages().size());
 
         assertEquals("12:40", page.getAllTestbedImages().get(0).getLocalTimestamp());
-        assertEquals("12:45",page.getAllTestbedImages().get(1).getLocalTimestamp());
-        assertEquals("12:50",page.getAllTestbedImages().get(2).getLocalTimestamp());
-        assertEquals("12:55",page.getAllTestbedImages().get(3).getLocalTimestamp());
-        assertEquals("13:00",page.getAllTestbedImages().get(4).getLocalTimestamp());
-        assertEquals("13:05",page.getAllTestbedImages().get(5).getLocalTimestamp());
-        assertEquals("13:10",page.getAllTestbedImages().get(6).getLocalTimestamp());
-        assertEquals("13:15",page.getAllTestbedImages().get(7).getLocalTimestamp());
-        assertEquals("13:20",page.getAllTestbedImages().get(8).getLocalTimestamp());
-        assertEquals("13:25",page.getAllTestbedImages().get(9).getLocalTimestamp());
-        assertEquals("13:30",page.getAllTestbedImages().get(10).getLocalTimestamp());
-        assertEquals("13:35",page.getAllTestbedImages().get(11).getLocalTimestamp());
-        assertEquals("13:40",page.getAllTestbedImages().get(12).getLocalTimestamp());
-        assertEquals("13:45",page.getAllTestbedImages().get(13).getLocalTimestamp());
-        assertEquals("13:50",page.getAllTestbedImages().get(14).getLocalTimestamp());
+        assertEquals("12:45", page.getAllTestbedImages().get(1).getLocalTimestamp());
+        assertEquals("12:50", page.getAllTestbedImages().get(2).getLocalTimestamp());
+        assertEquals("12:55", page.getAllTestbedImages().get(3).getLocalTimestamp());
+        assertEquals("13:00", page.getAllTestbedImages().get(4).getLocalTimestamp());
+        assertEquals("13:05", page.getAllTestbedImages().get(5).getLocalTimestamp());
+        assertEquals("13:10", page.getAllTestbedImages().get(6).getLocalTimestamp());
+        assertEquals("13:15", page.getAllTestbedImages().get(7).getLocalTimestamp());
+        assertEquals("13:20", page.getAllTestbedImages().get(8).getLocalTimestamp());
+        assertEquals("13:25", page.getAllTestbedImages().get(9).getLocalTimestamp());
+        assertEquals("13:30", page.getAllTestbedImages().get(10).getLocalTimestamp());
+        assertEquals("13:35", page.getAllTestbedImages().get(11).getLocalTimestamp());
+        assertEquals("13:40", page.getAllTestbedImages().get(12).getLocalTimestamp());
+        assertEquals("13:45", page.getAllTestbedImages().get(13).getLocalTimestamp());
+        assertEquals("13:50", page.getAllTestbedImages().get(14).getLocalTimestamp());
 
         assertEquals("http://2.img.fmi.fi/php/img.php?A=dA4ndr1aWd17/dRUXRLUWda7Rd9ULdq1Uqd1qWq1dRU4rU1qR71UdbHhvJNvJYvMJYzJ.r/D", page.getAllTestbedImages().get(0).getImageURL());
         assertEquals("http://2.img.fmi.fi/php/img.php?A=dA4ndr1aWd17/dRUXRLUWda7Rd9ULdq1Uqd1qWq1dRU4rU1qR71UdbHhvJNvJYvMJYzl.r/D", page.getAllTestbedImages().get(1).getImageURL());
@@ -88,8 +89,8 @@ public class LruCachePageServiceTest extends AbstractTestCase {
 
         assertEquals(1, page.getAllTestbedImages().size());
 
-        assertEquals("14:30",page.getAllTestbedImages().get(0).getLocalTimestamp());
-        assertEquals("http://3.img.fmi.fi/php/img.php?A=dA4ndr1aWd17/dRUXRLUWda7Rd9ULdq1Uqd9n/WdbHhvJNvJYvMNNMJ.r/D",page.getAllTestbedImages().get(0).getImageURL());
+        assertEquals("14:30", page.getAllTestbedImages().get(0).getLocalTimestamp());
+        assertEquals("http://3.img.fmi.fi/php/img.php?A=dA4ndr1aWd17/dRUXRLUWda7Rd9ULdq1Uqd9n/WdbHhvJNvJYvMNNMJ.r/D", page.getAllTestbedImages().get(0).getImageURL());
 
     }
 
@@ -101,17 +102,17 @@ public class LruCachePageServiceTest extends AbstractTestCase {
 
         assertEquals(5, page.getAllTestbedImages().size());
 
-        assertEquals("00:00",page.getAllTestbedImages().get(0).getLocalTimestamp());
-        assertEquals("03:00",page.getAllTestbedImages().get(1).getLocalTimestamp());
-        assertEquals("06:00",page.getAllTestbedImages().get(2).getLocalTimestamp());
-        assertEquals("09:00",page.getAllTestbedImages().get(3).getLocalTimestamp());
-        assertEquals("12:00",page.getAllTestbedImages().get(4).getLocalTimestamp());
+        assertEquals("00:00", page.getAllTestbedImages().get(0).getLocalTimestamp());
+        assertEquals("03:00", page.getAllTestbedImages().get(1).getLocalTimestamp());
+        assertEquals("06:00", page.getAllTestbedImages().get(2).getLocalTimestamp());
+        assertEquals("09:00", page.getAllTestbedImages().get(3).getLocalTimestamp());
+        assertEquals("12:00", page.getAllTestbedImages().get(4).getLocalTimestamp());
 
-        assertEquals("http://1.img.fmi.fi/php/img.php?A=dA4ndr1aWd17/dRUXRLUWda7Rd9ULdq1Uqdr1UXX71UdbHhvJNvJYvvvNJJ.r/D",page.getAllTestbedImages().get(0).getImageURL());
-        assertEquals("http://3.img.fmi.fi/php/img.php?A=dA4ndr1aWd17/dRUXRLUWda7Rd9ULdq1Uqdr1UXX71UdbHhvJNvJYvMJJJJ.r/D",page.getAllTestbedImages().get(1).getImageURL());
-        assertEquals("http://4.img.fmi.fi/php/img.php?A=dA4ndr1aWd17/dRUXRLUWda7Rd9ULdq1Uqdr1UXX71UdbHhvJNvJYvMJMJJ.r/D",page.getAllTestbedImages().get(2).getImageURL());
-        assertEquals("http://1.img.fmi.fi/php/img.php?A=dA4ndr1aWd17/dRUXRLUWda7Rd9ULdq1Uqdr1UXX71UdbHhvJNvJYvMJ_JJ.r/D",page.getAllTestbedImages().get(3).getImageURL());
-        assertEquals("http://2.img.fmi.fi/php/img.php?A=dA4ndr1aWd17/dRUXRLUWda7Rd9ULdq1Uqdr1UXX71UdbHhvJNvJYvMJYJJ.r/D",page.getAllTestbedImages().get(4).getImageURL());
+        assertEquals("http://1.img.fmi.fi/php/img.php?A=dA4ndr1aWd17/dRUXRLUWda7Rd9ULdq1Uqdr1UXX71UdbHhvJNvJYvvvNJJ.r/D", page.getAllTestbedImages().get(0).getImageURL());
+        assertEquals("http://3.img.fmi.fi/php/img.php?A=dA4ndr1aWd17/dRUXRLUWda7Rd9ULdq1Uqdr1UXX71UdbHhvJNvJYvMJJJJ.r/D", page.getAllTestbedImages().get(1).getImageURL());
+        assertEquals("http://4.img.fmi.fi/php/img.php?A=dA4ndr1aWd17/dRUXRLUWda7Rd9ULdq1Uqdr1UXX71UdbHhvJNvJYvMJMJJ.r/D", page.getAllTestbedImages().get(2).getImageURL());
+        assertEquals("http://1.img.fmi.fi/php/img.php?A=dA4ndr1aWd17/dRUXRLUWda7Rd9ULdq1Uqdr1UXX71UdbHhvJNvJYvMJ_JJ.r/D", page.getAllTestbedImages().get(3).getImageURL());
+        assertEquals("http://2.img.fmi.fi/php/img.php?A=dA4ndr1aWd17/dRUXRLUWda7Rd9ULdq1Uqdr1UXX71UdbHhvJNvJYvMJYJJ.r/D", page.getAllTestbedImages().get(4).getImageURL());
 
     }
 
@@ -140,18 +141,18 @@ public class LruCachePageServiceTest extends AbstractTestCase {
 
         // These test are not currently executed since there will be exception
 
-        assertEquals("06:00",page.getAllTestbedImages().get(0).getLocalTimestamp());
-        assertEquals("07:00",page.getAllTestbedImages().get(1).getLocalTimestamp());
+        assertEquals("06:00", page.getAllTestbedImages().get(0).getLocalTimestamp());
+        assertEquals("07:00", page.getAllTestbedImages().get(1).getLocalTimestamp());
         // There was a time gap in the servers while saving test data
-        assertEquals("12:00",page.getAllTestbedImages().get(2).getLocalTimestamp());
-        assertEquals("13:00",page.getAllTestbedImages().get(3).getLocalTimestamp());
-        assertEquals("14:00",page.getAllTestbedImages().get(4).getLocalTimestamp());
+        assertEquals("12:00", page.getAllTestbedImages().get(2).getLocalTimestamp());
+        assertEquals("13:00", page.getAllTestbedImages().get(3).getLocalTimestamp());
+        assertEquals("14:00", page.getAllTestbedImages().get(4).getLocalTimestamp());
 
-        assertEquals("http://2.img.fmi.fi/php/img.php?A=dA4ndr1aWd17/dRUXRLUWda7Rd9ULdq1Uqd1qWq1dRU4rU1qR71UdbHhvJNvJYvMJMJJ.r/D",page.getAllTestbedImages().get(0).getImageURL());
-        assertEquals("http://4.img.fmi.fi/php/img.php?A=dA4ndr1aWd17/dRUXRLUWda7Rd9ULdq1Uqd1qWq1dRU4rU1qR71UdbHhvJNvJYvMJzJJ.r/D",page.getAllTestbedImages().get(1).getImageURL());
-        assertEquals("http://4.img.fmi.fi/php/img.php?A=dA4ndr1aWd17/dRUXRLUWda7Rd9ULdq1Uqd1qWq1dRU4rU1qR71UdbHhvJNvJYvMJYJJ.r/D",page.getAllTestbedImages().get(2).getImageURL());
-        assertEquals("http://3.img.fmi.fi/php/img.php?A=dA4ndr1aWd17/dRUXRLUWda7Rd9ULdq1Uqd1qWq1dRU4rU1qR71UdbHhvJNvJYvMNJJJ.r/D",page.getAllTestbedImages().get(3).getImageURL());
-        assertEquals("http://3.img.fmi.fi/php/img.php?A=dA4ndr1aWd17/dRUXRLUWda7Rd9ULdq1Uqd1qWq1dRU4rU1qR71UdbHhvJNvJYvMNNJJ.r/D",page.getAllTestbedImages().get(4).getImageURL());
+        assertEquals("http://2.img.fmi.fi/php/img.php?A=dA4ndr1aWd17/dRUXRLUWda7Rd9ULdq1Uqd1qWq1dRU4rU1qR71UdbHhvJNvJYvMJMJJ.r/D", page.getAllTestbedImages().get(0).getImageURL());
+        assertEquals("http://4.img.fmi.fi/php/img.php?A=dA4ndr1aWd17/dRUXRLUWda7Rd9ULdq1Uqd1qWq1dRU4rU1qR71UdbHhvJNvJYvMJzJJ.r/D", page.getAllTestbedImages().get(1).getImageURL());
+        assertEquals("http://4.img.fmi.fi/php/img.php?A=dA4ndr1aWd17/dRUXRLUWda7Rd9ULdq1Uqd1qWq1dRU4rU1qR71UdbHhvJNvJYvMJYJJ.r/D", page.getAllTestbedImages().get(2).getImageURL());
+        assertEquals("http://3.img.fmi.fi/php/img.php?A=dA4ndr1aWd17/dRUXRLUWda7Rd9ULdq1Uqd1qWq1dRU4rU1qR71UdbHhvJNvJYvMNJJJ.r/D", page.getAllTestbedImages().get(3).getImageURL());
+        assertEquals("http://3.img.fmi.fi/php/img.php?A=dA4ndr1aWd17/dRUXRLUWda7Rd9ULdq1Uqd1qWq1dRU4rU1qR71UdbHhvJNvJYvMNNJJ.r/D", page.getAllTestbedImages().get(4).getImageURL());
 
 
     }
@@ -171,7 +172,7 @@ public class LruCachePageServiceTest extends AbstractTestCase {
 
         try {
 
-            InputStream in = new FileInputStream(TEST_DATA_PATH+pageName);
+            InputStream in = new FileInputStream(TEST_DATA_PATH + pageName);
             when(getInjectedMock(HttpUrlService.class).
                     getInputStreamForHttpUrl(any(String.class))).thenReturn(in);
 

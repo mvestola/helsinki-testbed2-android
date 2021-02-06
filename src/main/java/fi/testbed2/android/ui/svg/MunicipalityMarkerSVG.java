@@ -26,7 +26,7 @@ public class MunicipalityMarkerSVG {
                 " <g>\n" +
                 "  <title>Layer 1</title>\n" +
                 "  <g id=\"Layer_1\">\n" +
-                "    <circle id=\"point_circle\" cx=\"100\" cy=\"100\" r=\"80\" stroke=\"#000000\" stroke-width=\""+strokeWidth+"\" fill=\""+colorWithoutAlpha+"\" fill-opacity=\""+opacity+"\" />\n" +
+                "    <circle id=\"point_circle\" cx=\"100\" cy=\"100\" r=\"80\" stroke=\"#000000\" stroke-width=\"" + strokeWidth + "\" fill=\"" + colorWithoutAlpha + "\" fill-opacity=\"" + opacity + "\" />\n" +
                 "  </g>\n" +
                 " </g>\n" +
                 "</svg>";

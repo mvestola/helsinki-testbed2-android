@@ -4,11 +4,11 @@ import fi.testbed2.android.app.MainApplication;
 
 public class DownloadTaskException extends Exception {
 
-	private static final long serialVersionUID = -1L;
+    private static final long serialVersionUID = -1L;
 
-	public DownloadTaskException(String detailMessage) {
-		super(detailMessage);
-	}
+    public DownloadTaskException(String detailMessage) {
+        super(detailMessage);
+    }
 
     public DownloadTaskException(int detailMessageId) {
         super(MainApplication.getContext().getString(detailMessageId));

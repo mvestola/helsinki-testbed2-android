@@ -1,7 +1,8 @@
 package fi.testbed2.util;
 
-import fi.testbed2.AbstractTestCase;
 import org.junit.Test;
+
+import fi.testbed2.AbstractTestCase;
 
 import static junit.framework.Assert.assertEquals;
 
@@ -24,7 +25,7 @@ public class SeekBarUtilTest extends AbstractTestCase {
         assertEquals(0, SeekBarUtil.getFrameIndexFromSeekBarValue(50, 1));
         assertEquals(0, SeekBarUtil.getFrameIndexFromSeekBarValue(100, 1));
 
-        assertEquals(10000-1, SeekBarUtil.getFrameIndexFromSeekBarValue(100, 10000));
+        assertEquals(10000 - 1, SeekBarUtil.getFrameIndexFromSeekBarValue(100, 10000));
 
         // Error values
         assertEquals(-1, SeekBarUtil.getFrameIndexFromSeekBarValue(100, 0));

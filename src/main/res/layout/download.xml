@@ -1,31 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/DownloadRootView">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/DownloadRootView">
+
     <include layout="@layout/toolbar_and_ad" />
+
     <ProgressBar
-            android:id="@+id/progressbar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_centerInParent="true"
-            android:layout_centerHorizontal="true"
-            style="@android:style/Widget.ProgressBar.Large.Inverse"
-            />
+        android:id="@+id/progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        style="@android:style/Widget.ProgressBar.Large.Inverse" />
 
     <TextView
-            android:id="@+id/progresstext"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold"
-            android:layout_centerInParent="true"
-            android:layout_centerHorizontal="true"
-            android:text="@string/progress_initializing"
-            />
+        android:id="@+id/progresstext"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/progress_initializing" />
 </RelativeLayout>

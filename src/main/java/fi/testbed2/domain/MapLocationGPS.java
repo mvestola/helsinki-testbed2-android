@@ -16,6 +16,6 @@ public class MapLocationGPS {
     @NonNull
     @Override
     public String toString() {
-        return "Lat: "+latitude+", Lon: "+longitude;
+        return "Lat: " + latitude + ", Lon: " + longitude;
     }
 }

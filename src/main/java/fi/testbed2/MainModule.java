@@ -6,8 +6,20 @@ import fi.testbed2.android.ui.ads.AdManager;
 import fi.testbed2.android.ui.ads.CachedAdMobAdManager;
 import fi.testbed2.android.ui.dialog.AlertDialogBuilder;
 import fi.testbed2.android.ui.dialog.DialogBuilder;
-import fi.testbed2.service.*;
-import fi.testbed2.service.impl.*;
+import fi.testbed2.service.BitmapService;
+import fi.testbed2.service.CoordinateService;
+import fi.testbed2.service.HttpUrlService;
+import fi.testbed2.service.LocationService;
+import fi.testbed2.service.MunicipalityService;
+import fi.testbed2.service.PageService;
+import fi.testbed2.service.SettingsService;
+import fi.testbed2.service.impl.InlineMunicipalityService;
+import fi.testbed2.service.impl.LruCacheBitmapService;
+import fi.testbed2.service.impl.LruCachePageService;
+import fi.testbed2.service.impl.MercatorCoordinateService;
+import fi.testbed2.service.impl.PreferenceBasedLocationService;
+import fi.testbed2.service.impl.SharedPreferenceSettingsService;
+import fi.testbed2.service.impl.URLConnectionHttpUrlService;
 import roboguice.inject.SharedPreferencesName;
 
 /**

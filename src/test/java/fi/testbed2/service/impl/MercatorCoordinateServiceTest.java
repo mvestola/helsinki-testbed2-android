@@ -1,12 +1,13 @@
 package fi.testbed2.service.impl;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
 import fi.testbed2.AbstractTestCase;
 import fi.testbed2.InjectedTestRunner;
 import fi.testbed2.domain.MapLocationGPS;
 import fi.testbed2.domain.MapLocationXY;
 import fi.testbed2.service.CoordinateService;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
@@ -202,7 +203,7 @@ public class MercatorCoordinateServiceTest extends AbstractTestCase {
         MapLocationXY nullPos = coordinateService.convertLocationToXyPos(null);
         assertNull(nullPos);
 
-        MapLocationGPS point = new MapLocationGPS(0,0);
+        MapLocationGPS point = new MapLocationGPS(0, 0);
         MapLocationXY emptyPos = coordinateService.convertLocationToXyPos(point);
         assertNotNull(emptyPos);
 

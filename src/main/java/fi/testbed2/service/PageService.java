@@ -8,6 +8,7 @@ public interface PageService {
 
     /**
      * Use this to initialize the page object for the service.
+     *
      * @param url
      * @param task
      * @return
@@ -18,6 +19,7 @@ public interface PageService {
     TestbedParsedPage getTestbedParsedPage();
 
     int getNotDownloadedImagesCount();
+
     void evictPage();
 
 }

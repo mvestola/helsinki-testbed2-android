@@ -1,11 +1,12 @@
 package fi.testbed2.service;
 
 import android.graphics.Rect;
+
+import java.util.List;
+
 import fi.testbed2.android.ui.view.MapScaleInfo;
 import fi.testbed2.domain.MapLocationGPS;
 import fi.testbed2.domain.Municipality;
-
-import java.util.List;
 
 public interface SettingsService {
 
@@ -41,6 +42,7 @@ public interface SettingsService {
 
 
     void setMapType(String mapType);
+
     String getMapType();
 
     /**
@@ -59,9 +61,11 @@ public interface SettingsService {
     boolean isStartAnimationAutomatically();
 
     boolean isShowWhatsNewDialog();
+
     boolean isShowHardwareAccelerationDialog();
 
     void saveWhatsNewDialogShownForCurrentVersion();
+
     void saveHardwareAccelerationDialogShown();
 
     boolean showUserLocation();
@@ -69,15 +73,19 @@ public interface SettingsService {
     String getTestbedPageURL();
 
     String getMapMarkerColor();
+
     String getMapPointColor();
 
     int getMapMarkerSizePx();
+
     int getMapPointSizePx();
 
     String getLocationProvider();
+
     void setLocationProvider(String provider);
 
     MapLocationGPS getSavedFixedLocation();
+
     MapLocationGPS saveCurrentLocationAsFixedLocation();
 
     boolean showAds();

@@ -115,7 +115,7 @@ public class AnimationActivity extends AbstractActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        if (task!=null) {
+        if (task != null) {
             task.cancel();
         }
         pauseAnimation();
@@ -149,6 +149,7 @@ public class AnimationActivity extends AbstractActivity {
 
     /**
      * Updates the Downloading text in top left corner
+     *
      * @param text
      */
     @UiThread
@@ -202,7 +203,7 @@ public class AnimationActivity extends AbstractActivity {
     }
 
     private void updateSettingsToView() {
-        setTitle(this.getResources().getIdentifier("map_type_"+settingsService.getMapType(), "string", this.getPackageName()));
+        setTitle(this.getResources().getIdentifier("map_type_" + settingsService.getMapType(), "string", this.getPackageName()));
         animationView.setScaleInfo(settingsService.getSavedScaleInfo(orientation));
         animationView.updateBounds(settingsService.getSavedMapBounds(orientation));
         animationView.setMunicipalities(settingsService.getSavedMunicipalities());
@@ -222,14 +223,14 @@ public class AnimationActivity extends AbstractActivity {
         TestbedParsedPage page = pageService.getTestbedParsedPage();
 
         /*
-        * Parsed page should always be non-null.
-        */
-        if (page==null) {
+         * Parsed page should always be non-null.
+         */
+        if (page == null) {
             return true;
         }
 
-        boolean noImagesExist = page.getAllTestbedImages()==null || page.getAllTestbedImages().isEmpty();
-        boolean allImagesDownloadedButSomeAreMissing = allImagesDownloaded && pageService.getNotDownloadedImagesCount()>0;
+        boolean noImagesExist = page.getAllTestbedImages() == null || page.getAllTestbedImages().isEmpty();
+        boolean allImagesDownloadedButSomeAreMissing = allImagesDownloaded && pageService.getNotDownloadedImagesCount() > 0;
 
         return noImagesExist || allImagesDownloadedButSomeAreMissing;
 
@@ -250,11 +251,11 @@ public class AnimationActivity extends AbstractActivity {
         try {
             // isHardwareAccelerated exists in API level >=11
             Method m = View.class.getMethod("isHardwareAccelerated");
-            boolean isHardwareAccelerated = (Boolean)m.invoke(this.findViewById(android.R.id.content));
+            boolean isHardwareAccelerated = (Boolean) m.invoke(this.findViewById(android.R.id.content));
 
             Logger.debug("Hardware acceleration status: " + isHardwareAccelerated);
 
-            if(settingsService.isShowHardwareAccelerationDialog() &&
+            if (settingsService.isShowHardwareAccelerationDialog() &&
                     isHardwareAccelerated) {
                 dialogBuilder.getHardwareAccelerationDialog().show();
             }

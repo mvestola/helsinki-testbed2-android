@@ -1,8 +1,8 @@
 package fi.testbed2.service;
 
-import fi.testbed2.android.task.exception.DownloadTaskException;
-
 import java.io.InputStream;
+
+import fi.testbed2.android.task.exception.DownloadTaskException;
 
 public interface HttpUrlService {
 

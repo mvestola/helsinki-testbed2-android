@@ -1,9 +1,5 @@
 package fi.testbed2.service.impl;
 
-import fi.testbed2.AbstractTestCase;
-import fi.testbed2.InjectedTestRunner;
-import fi.testbed2.android.task.exception.DownloadTaskException;
-import fi.testbed2.domain.TestbedMapImage;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -11,6 +7,11 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 
 import java.io.File;
+
+import fi.testbed2.AbstractTestCase;
+import fi.testbed2.InjectedTestRunner;
+import fi.testbed2.android.task.exception.DownloadTaskException;
+import fi.testbed2.domain.TestbedMapImage;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -44,7 +45,7 @@ public class LruCacheBitmapServiceTest extends AbstractTestCase {
 
         thrown.expect(DownloadTaskException.class);
         thrown.expectMessage("Could not download map image. Please try again later.");
-        TestbedMapImage imageNotExists = new TestbedMapImage(mapFileExists.toURI().toURL().toString()+".invalid",
+        TestbedMapImage imageNotExists = new TestbedMapImage(mapFileExists.toURI().toURL().toString() + ".invalid",
                 "201210141130");
 
         assertNull(lruCacheBitmapService.downloadBitmap(imageNotExists));

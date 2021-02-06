@@ -5,19 +5,20 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 
-import androidx.annotation.NonNull;
-import androidx.collection.LruCache;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+
+import androidx.annotation.NonNull;
+import androidx.collection.LruCache;
 import fi.testbed2.R;
 import fi.testbed2.android.app.Logger;
 import fi.testbed2.android.task.exception.DownloadTaskException;
 import fi.testbed2.domain.TestbedMapImage;
 import fi.testbed2.service.BitmapService;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 
 @Singleton
 public class LruCacheBitmapService implements BitmapService {
@@ -34,7 +35,7 @@ public class LruCacheBitmapService implements BitmapService {
     }
 
     private LruCache<String, Bitmap> getCache() {
-        if (imageCache==null) {
+        if (imageCache == null) {
             initImageCache();
         }
         return imageCache;
@@ -47,9 +48,9 @@ public class LruCacheBitmapService implements BitmapService {
     private int getCacheSizeInBytes() {
         if (cacheSizeInBytes == -1) {
             /*
-            * Get memory class of this device, exceeding this amount
-            * will throw an OutOfMemory exception.
-            */
+             * Get memory class of this device, exceeding this amount
+             * will throw an OutOfMemory exception.
+             */
             final int memClass = activityManager.getMemoryClass();
             cacheSizeInBytes = 1024 * 1024 * memClass;
         }
@@ -61,8 +62,9 @@ public class LruCacheBitmapService implements BitmapService {
         imageCache = new LruCache<String, Bitmap>(getCacheSizeInBytes()) {
             @Override
             protected int sizeOf(@NonNull String key, @NonNull Bitmap bitmap) {
-                return bitmap.getRowBytes()*bitmap.getHeight();
+                return bitmap.getRowBytes() * bitmap.getHeight();
             }
+
             @Override
             protected void entryRemoved(boolean evicted, @NonNull String key, @NonNull Bitmap oldValue, Bitmap newValue) {
                 if (evicted) {
@@ -103,12 +105,12 @@ public class LruCacheBitmapService implements BitmapService {
             Logger.debug("Downloading bitmap from url: " + imageURL);
 
             BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inTempStorage =  new byte[16 * 1024];
+            options.inTempStorage = new byte[16 * 1024];
 
             stream = new URL(imageURL).openStream();
-            Bitmap downloadedBitmapImage = BitmapFactory.decodeStream(stream, new Rect(-1,-1,-1,-1), options);
+            Bitmap downloadedBitmapImage = BitmapFactory.decodeStream(stream, new Rect(-1, -1, -1, -1), options);
 
-            if (downloadedBitmapImage==null) {
+            if (downloadedBitmapImage == null) {
                 throw new DownloadTaskException(R.string.error_msg_map_image_could_not_download);
             }
 
@@ -119,7 +121,7 @@ public class LruCacheBitmapService implements BitmapService {
         } catch (IOException e) {
             throw new DownloadTaskException(R.string.error_msg_io_exception);
         } finally {
-            if (stream!=null) {
+            if (stream != null) {
                 try {
                     stream.close();
                 } catch (IOException e) {

@@ -69,7 +69,7 @@ public class ParsingActivity extends AbstractActivity {
 
     private void startParsingTask() {
         parsingFinished = false;
-        if (task!=null) {
+        if (task != null) {
             task.cancel();
         }
         task = new ParseAndInitTask(this);
@@ -94,7 +94,7 @@ public class ParsingActivity extends AbstractActivity {
 
     private void handleAnimationResult(int resultCode, Intent data) {
 
-        switch(resultCode) {
+        switch (resultCode) {
             case MainApplication.RESULT_REFRESH:
                 startParsingTask();
                 break;

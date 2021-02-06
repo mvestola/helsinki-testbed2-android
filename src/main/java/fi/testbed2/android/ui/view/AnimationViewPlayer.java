@@ -15,13 +15,16 @@ public class AnimationViewPlayer {
     @Getter
     private boolean isPlaying;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private int currentFrame;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private int frames;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private int frameDelay;
 
     public AnimationViewPlayer(AnimationView view) {
@@ -30,7 +33,7 @@ public class AnimationViewPlayer {
 
     public void playOrPause() {
         Logger.debug("AnimationViewPlayer playOrPause");
-        if(isPlaying) {
+        if (isPlaying) {
             isPlaying = false;
         } else {
             isPlaying = true;
@@ -55,7 +58,7 @@ public class AnimationViewPlayer {
         Logger.debug("AnimationViewPlayer previous");
         this.isPlaying = false;
         currentFrame--;
-        if(currentFrame < 0)
+        if (currentFrame < 0)
             currentFrame = Math.abs((frames - 1) - currentFrame);
         view.invalidate();
     }
@@ -64,7 +67,7 @@ public class AnimationViewPlayer {
 
         currentFrame++;
 
-        if(currentFrame > frames)
+        if (currentFrame > frames)
             currentFrame = 0;
 
         view.invalidate();
@@ -74,9 +77,9 @@ public class AnimationViewPlayer {
 
     public void goToFrame(int frameNumber) {
         this.isPlaying = false;
-        currentFrame=frameNumber;
+        currentFrame = frameNumber;
 
-        if(currentFrame > frames)
+        if (currentFrame > frames)
             currentFrame = 0;
 
         view.invalidate();

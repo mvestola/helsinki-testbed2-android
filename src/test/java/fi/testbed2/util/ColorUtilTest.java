@@ -1,7 +1,8 @@
 package fi.testbed2.util;
 
-import fi.testbed2.AbstractTestCase;
 import org.junit.Test;
+
+import fi.testbed2.AbstractTestCase;
 
 import static org.junit.Assert.assertEquals;
 

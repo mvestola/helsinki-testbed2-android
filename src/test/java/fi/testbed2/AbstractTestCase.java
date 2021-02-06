@@ -10,7 +10,7 @@ import roboguice.RoboGuice;
 /**
  * Base class for all test classes.
  */
-public abstract class AbstractTestCase  {
+public abstract class AbstractTestCase {
 
     protected static final String TEST_DATA_PATH = "src/test/resources/";
 

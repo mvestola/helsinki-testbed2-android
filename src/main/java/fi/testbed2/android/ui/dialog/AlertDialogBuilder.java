@@ -10,7 +10,9 @@ import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
 import android.widget.TextView;
+
 import com.google.inject.Inject;
+
 import fi.testbed2.R;
 import fi.testbed2.android.app.Logger;
 import fi.testbed2.android.app.MainApplication;
@@ -110,11 +112,11 @@ public class AlertDialogBuilder implements DialogBuilder {
     public Dialog getErrorDialog(String errorMessage) {
         AlertDialog.Builder builder = getAlertDialogBuilder();
         builder.setMessage(errorMessage)
-            .setPositiveButton(context.getText(R.string.close_button), new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    dialog.dismiss();
-                }
-            });
+                .setPositiveButton(context.getText(R.string.close_button), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
         AlertDialog alertDialog = builder.create();
         alertDialog.setCancelable(false); // This blocks the 'BACK' button
         return alertDialog;

@@ -2,6 +2,9 @@ package fi.testbed2.android.task;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+
+import java.util.List;
+
 import fi.testbed2.R;
 import fi.testbed2.android.activity.AnimationActivity;
 import fi.testbed2.android.app.Logger;
@@ -10,8 +13,6 @@ import fi.testbed2.android.task.exception.DownloadTaskException;
 import fi.testbed2.android.task.exception.TaskCancelledException;
 import fi.testbed2.domain.TestbedMapImage;
 import roboguice.inject.InjectResource;
-
-import java.util.List;
 
 /**
  * Task which downloads all map images and reloads the animation view.
@@ -64,11 +65,11 @@ public class DownloadImagesTask extends AbstractTask {
 
         List<TestbedMapImage> testbedMapImages = pageService.getTestbedParsedPage().getAllTestbedImages();
         int totalImagesNotDownloaded = pageService.getNotDownloadedImagesCount();
-        int i= 1;
+        int i = 1;
 
-        for(TestbedMapImage image : testbedMapImages) {
+        for (TestbedMapImage image : testbedMapImages) {
 
-            if (image==null) {
+            if (image == null) {
                 throw new DownloadTaskException(errorMapImageNull);
             }
 

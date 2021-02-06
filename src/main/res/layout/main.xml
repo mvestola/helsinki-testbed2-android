@@ -44,25 +44,25 @@
             android:layout_height="wrap_content">
 
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <com.github.pwittchen.weathericonview.WeatherIconView
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                custom:weatherIconResource="@string/wi_day_rain"
-                custom:weatherIconColor="#8b8b8b"
-                custom:weatherIconSize="35" />
+                android:layout_height="wrap_content">
 
-            <com.github.pwittchen.weathericonview.WeatherIconView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                custom:weatherIconResource="@string/wi_thermometer"
-                custom:weatherIconColor="#8b8b8b"
-                custom:weatherIconSize="35" />
+                <com.github.pwittchen.weathericonview.WeatherIconView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    custom:weatherIconResource="@string/wi_day_rain"
+                    custom:weatherIconColor="#8b8b8b"
+                    custom:weatherIconSize="35" />
+
+                <com.github.pwittchen.weathericonview.WeatherIconView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    custom:weatherIconResource="@string/wi_thermometer"
+                    custom:weatherIconColor="#8b8b8b"
+                    custom:weatherIconSize="35" />
 
             </LinearLayout>
 

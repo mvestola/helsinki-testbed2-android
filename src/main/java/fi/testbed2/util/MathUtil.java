@@ -9,7 +9,7 @@ public class MathUtil {
      * Implementation copied from:
      * http://stackoverflow.com/questions/1187352/find-closest-value-in-an-ordererd-list
      *
-     * @param value Some integer
+     * @param value         Some integer
      * @param allowedValues List of allowed values.
      * @return The closest allowed value. For example, if value is 4 and the allowed values are
      * [1,2,3,5,10], returns 3. For value 8, returns 10.

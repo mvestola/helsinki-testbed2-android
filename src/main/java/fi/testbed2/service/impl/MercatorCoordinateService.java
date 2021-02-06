@@ -3,6 +3,7 @@ package fi.testbed2.service.impl;
 import com.google.inject.Singleton;
 import com.jhlabs.map.Point2D;
 import com.jhlabs.map.proj.MercatorProjection;
+
 import fi.testbed2.android.app.Logger;
 import fi.testbed2.domain.MapLocationGPS;
 import fi.testbed2.domain.MapLocationXY;
@@ -28,10 +29,10 @@ public class MercatorCoordinateService implements CoordinateService {
     private static final MapLocationXY humppilaTestbedXY = new MapLocationXY(99d, 16d);
 
     /*
-    * These are calculated manually and scale the x,y coordinates
-    * which are given from Mercator projection to the x,y coordinates
-    * of the testbed map still image.
-    */
+     * These are calculated manually and scale the x,y coordinates
+     * which are given from Mercator projection to the x,y coordinates
+     * of the testbed map still image.
+     */
     private static final double xScale = 8314.6379;
     private static final double yScale = -8525.3994;
 
@@ -44,6 +45,7 @@ public class MercatorCoordinateService implements CoordinateService {
      * Returns a known point directly at the road intersection near Humppila.
      * This point can be used to check that the x,y coordinates are calculated correctly.
      * The x,y coordinates correspond to the testbed map image x,y coordinates in pixels.
+     *
      * @return
      */
     @Override
@@ -53,12 +55,13 @@ public class MercatorCoordinateService implements CoordinateService {
 
     /**
      * Converts given location coordinates to the x,y coordinates in the testbed map image.
+     *
      * @param location
      * @return
      */
     @Override
     public MapLocationXY convertLocationToXyPos(MapLocationGPS location) {
-        if (location==null) {
+        if (location == null) {
             return null;
         }
         Point2D.Double mercatorPoint = convertLocationToMercatorXY(location);
@@ -80,8 +83,8 @@ public class MercatorCoordinateService implements CoordinateService {
         double distanceInTestbedImagePxX = (point.x - humppilaMercatorXY.x) * xScale;
         double distanceInTestbedImagePxY = (point.y - humppilaMercatorXY.y) * yScale;
 
-        double distanceInMercatorPxX = humppilaTestbedXY.getX()+distanceInTestbedImagePxX;
-        double finalYPos = humppilaTestbedXY.getY()+distanceInTestbedImagePxY;
+        double distanceInMercatorPxX = humppilaTestbedXY.getX() + distanceInTestbedImagePxX;
+        double finalYPos = humppilaTestbedXY.getY() + distanceInTestbedImagePxY;
 
         return new Point2D.Double(distanceInMercatorPxX, finalYPos);
     }
@@ -97,7 +100,7 @@ public class MercatorCoordinateService implements CoordinateService {
      */
     private Point2D.Double convertLocationToMercatorXY(MapLocationGPS coordinate) {
 
-        if (coordinate==null) {
+        if (coordinate == null) {
             return null;
         }
 

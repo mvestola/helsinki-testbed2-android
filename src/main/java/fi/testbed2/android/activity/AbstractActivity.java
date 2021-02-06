@@ -56,14 +56,16 @@ public abstract class AbstractActivity extends AppCompatActivity {
         }
     }
 
-    /** Called when resuming, BUT after onActivityResult! */
+    /**
+     * Called when resuming, BUT after onActivityResult!
+     */
     @Override
     protected void onResume() {
         super.onResume();
 
         AdView adView = this.findViewById(R.id.adView);
 
-        if (adView!=null) {
+        if (adView != null) {
             if (settingsService.showAds()) {
                 adView.setVisibility(AdView.VISIBLE);
             } else {
@@ -123,10 +125,11 @@ public abstract class AbstractActivity extends AppCompatActivity {
 
     /**
      * Possibly helps freeing up memory
+     *
      * @param view
      */
     protected void unbindDrawables(View view) {
-        if (view==null) {
+        if (view == null) {
             return;
         }
         if (view.getBackground() != null) {

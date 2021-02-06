@@ -3,9 +3,7 @@ package fi.testbed2.android.activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.view.MenuItem;
-import fi.testbed2.AbstractTestCase;
-import fi.testbed2.InjectedTestRunner;
-import fi.testbed2.R;
+
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -15,7 +13,13 @@ import org.robolectric.fakes.RoboMenuItem;
 import org.robolectric.shadows.ShadowActivity;
 import org.robolectric.shadows.ShadowAlertDialog;
 
-import static org.junit.Assert.*;
+import fi.testbed2.AbstractTestCase;
+import fi.testbed2.InjectedTestRunner;
+import fi.testbed2.R;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.robolectric.Shadows.shadowOf;
 
 @RunWith(InjectedTestRunner.class)
