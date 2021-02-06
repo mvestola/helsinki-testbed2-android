@@ -24,7 +24,6 @@ public class CachedAdMobAdManager implements AdManager {
         Logger.debug("CachedAdMobAdManager instantiated");
     }
 
-    @SuppressWarnings("ConstantConditions")
     @Override
     public AdRequest getAdRequest() {
         if (BuildConfig.ENVIRONMENT.equals("TEST")) {

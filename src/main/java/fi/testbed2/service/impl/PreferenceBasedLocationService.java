@@ -145,7 +145,6 @@ public class PreferenceBasedLocationService implements LocationService, Location
         return settingsService.getLocationProvider();
     }
 
-    @SuppressWarnings("ConstantConditions")
     private boolean isTestEnvironment() {
         return BuildConfig.ENVIRONMENT.equals("TEST");
     }

@@ -17,23 +17,23 @@ public class MercatorCoordinateService implements CoordinateService {
 
     public static final String STATIC_PROVIDER_NAME = "dummy_provider";
 
-    private MapLocationGPS humppila = new MapLocationGPS(60.95357, 23.33907);
-    private MapLocationGPS porvoo = new MapLocationGPS(60.39069, 25.61653);
+    private static final MapLocationGPS humppila = new MapLocationGPS(60.95357, 23.33907);
+    private static final MapLocationGPS porvoo = new MapLocationGPS(60.39069, 25.61653);
 
-    private Point2D.Double humppilaMercatorXY;
+    private final Point2D.Double humppilaMercatorXY;
 
     /**
      * Manually calculated known point in the testbed map image
      */
-    private MapLocationXY humppilaTestbedXY = new MapLocationXY(99d, 16d);
+    private static final MapLocationXY humppilaTestbedXY = new MapLocationXY(99d, 16d);
 
     /*
     * These are calculated manually and scale the x,y coordinates
     * which are given from Mercator projection to the x,y coordinates
     * of the testbed map still image.
     */
-    private double xScale = 8314.6379;
-    private double yScale = -8525.3994;
+    private static final double xScale = 8314.6379;
+    private static final double yScale = -8525.3994;
 
     public MercatorCoordinateService() {
         Logger.debug("MercatorCoordinateService instantiated");

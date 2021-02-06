@@ -245,7 +245,6 @@ public class AnimationActivity extends AbstractActivity {
         finish();
     }
 
-    @SuppressWarnings("ConstantConditions")
     private void showHardwareAccelerationWarningIfNeeded() {
 
         try {

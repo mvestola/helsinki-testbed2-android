@@ -759,7 +759,7 @@ public class SVGParser {
         }
     }
 
-    @SuppressWarnings({"StatementWithEmptyBody", "ConstantConditions"})
+    @SuppressWarnings({"StatementWithEmptyBody"})
     private static class SVGHandler extends DefaultHandler {
 
         final Picture picture;

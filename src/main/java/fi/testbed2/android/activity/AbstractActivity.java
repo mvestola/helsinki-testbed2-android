@@ -81,7 +81,6 @@ public abstract class AbstractActivity extends AppCompatActivity {
         }
     }
 
-    @SuppressWarnings("ConstantConditions")
     @AfterViews
     void bindActionBar() {
         setSupportActionBar(toolbar);
