@@ -124,15 +124,23 @@ public class MainActivity extends AbstractActivity implements AlertDialogBuilder
     private void checkPermissionsAndStartMainParsingActivity() {
         String locationProvider = settingsService.getLocationProvider();
         if (settingsService.showUserLocation() && (LocationService.LOCATION_PROVIDER_NETWORK.equals(locationProvider) || LocationService.LOCATION_PROVIDER_GPS.equals(locationProvider))) {
-            checkAndRequestLocationPermission();
+            checkAndRequestLocationPermission(locationProvider);
         } else {
             Logger.debug("No need to request location permission");
             startMainParsingActivity();
         }
     }
 
-    private void checkAndRequestLocationPermission() {
-        String permission = Manifest.permission.ACCESS_FINE_LOCATION;
+    private String getPermissionToRequest(String locationProvider) {
+        if (LocationService.LOCATION_PROVIDER_GPS.equals(locationProvider)) {
+            return Manifest.permission.ACCESS_FINE_LOCATION;
+        } else {
+            return Manifest.permission.ACCESS_COARSE_LOCATION;
+        }
+    }
+
+    private void checkAndRequestLocationPermission(String locationProvider) {
+        String permission = getPermissionToRequest(locationProvider);
         Logger.debug("Checking location permission");
         if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
