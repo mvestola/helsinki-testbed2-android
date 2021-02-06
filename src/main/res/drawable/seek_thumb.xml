@@ -2,7 +2,6 @@
     android:shape="oval">
     <size
         android:height="@dimen/seek_bar_thumb_size"
-        android:width="@dimen/seek_bar_thumb_size"
-        />
-    <solid android:color="@color/seek_bar_progress"/>
+        android:width="@dimen/seek_bar_thumb_size" />
+    <solid android:color="@color/seek_bar_progress" />
 </shape>
