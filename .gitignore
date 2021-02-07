@@ -1,6 +1,7 @@
 .gradle/
 .idea/
 build/
+release/
 
 *.apk
 *.iml
