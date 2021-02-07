@@ -110,9 +110,9 @@ Checklist for publishing a new release
 1. Change the version code and version name from `build.gradle`
 2. Update `CHANGELOG.md`
 3. Update `whats_new_text` from `res/values/strings.xml` (both English and Finnish)
-4. Create a signed apk package by running `Build...Build APK` from the Android studio using the build variant `release` (bottom left corner in Android Studio)
+4. Create a signed package by running `Build...Build Bundles / APKs...Build bundles` from the Android studio using the build variant `release` (bottom left corner in Android Studio)
 5. Tag the code: `git tag -a 2.0.x -m 'Tagged 2.0.x'; git push --tags`
-6. Upload the file `build/outputs/apk/testbed-release.apk` to [Google Play](https://play.google.com/apps/publish/) and activate it
+6. Upload the file `build/outputs/apk/testbed-release.aab` to [Google Play](https://play.google.com/apps/publish/) and activate it
 7. Update "Recent Changes" in Google Play (both English and Finnish)
 
 Future refactoring plans
