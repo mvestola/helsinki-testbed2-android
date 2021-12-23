@@ -32,6 +32,17 @@ Download
 The latest stable version of this application can be downloaded to an Android phone
 from [the application website in Google Play](https://play.google.com/store/apps/details?id=fi.testbed2).
 
+Old versions can be downloaded directly as APK packages from below:
+* [2.0.15](old-apks/23.apk)
+* [2.0.14](old-apks/22.apk)
+* [2.0.13](old-apks/21.apk)
+* [2.0.12](old-apks/20.apk)
+* [2.0.11](old-apks/19.apk)
+* [2.0.10](old-apks/18.apk)
+* [2.0.9](old-apks/17.apk)
+* [2.0.8](old-apks/16.apk)
+* [2.0.7](old-apks/15.apk)
+
 Documentation
 -------
 
