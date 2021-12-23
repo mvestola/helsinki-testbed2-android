@@ -1,10 +1,10 @@
-## Old versions
+## Old applications versions
 
-Old versions which can no longer be found from the Google Play store can be downloaded as APK packages from below. 
+Old versions of the application which can no longer be found from the Google Play store can be downloaded as APK packages from below. 
 Since these are old versions of the applications, there is no guarantee that they no longer work. Use them only if you have so old phone that the 
-latest version does not work at all.
+latest version does not work at all. See [[instructions how to install application from the APK package](https://www.androidauthority.com/how-to-install-apks-31494/).
 
-Old versions download links:
+APK download links:
 * [2.0.16](old-apks/24.apk)
 * [2.0.15](old-apks/23.apk)
 * [2.0.14](old-apks/22.apk)
