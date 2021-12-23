@@ -4,7 +4,7 @@ Old versions of the application which can no longer be found from the Google Pla
 Since these are old versions of the applications, there is no guarantee that they no longer work. Use them only if you have so old phone that the 
 latest version does not work at all. See [instructions how to install application from the APK package](https://www.androidauthority.com/how-to-install-apks-31494/).
 
-APK download links, see [./CHANGELOG.md](changelog) what changes each version contains:
+APK download links, see [changelog](./CHANGELOG.md) what changes each version contains:
 * [2.0.16](https://github.com/mvestola/helsinki-testbed2-android/raw/master/old-apks/24.apk)
 * [2.0.15](https://github.com/mvestola/helsinki-testbed2-android/raw/master/old-apks/23.apk)
 * [2.0.14](https://github.com/mvestola/helsinki-testbed2-android/raw/master/old-apks/22.apk)
