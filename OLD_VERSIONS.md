@@ -5,6 +5,7 @@ Since these are old versions of the applications, there is no guarantee that the
 latest version does not work at all.
 
 Old versions download links:
+* [2.0.16](old-apks/24.apk)
 * [2.0.15](old-apks/23.apk)
 * [2.0.14](old-apks/22.apk)
 * [2.0.13](old-apks/21.apk)
