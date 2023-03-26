@@ -24,10 +24,7 @@
 
     <string name="whats_new_title">New in version %1$s</string>
     <string name="whats_new_text">
-        - Better dark mode support\n\n
-        - Improved animation seek bar and preferences\n\n
-        - Updated support libraries and target Android version to Android 11 (API level 30)\n\n
-        - Dropped support for old Android versions. The minimum supported Android version is now 8.0 Oreo (API level 26)
+        - Updated support libraries and target Android version to Android 13 (API level 33)
     </string>
 
     <string name="location_permission_title">Allowing to read current location</string>

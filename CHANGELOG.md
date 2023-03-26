@@ -1,6 +1,11 @@
 Helsinki Testbed Viewer 2.0
 =============
 
+Version 2.0.17 (2023-03-26)
+---------------------------
+
+* Updated support libraries and target Android version to Android 13 (API level 33)
+
 Version 2.0.16 (2021-02-06)
 ---------------------------
 
